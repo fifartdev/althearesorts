@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { generateMetadata as genMeta } from '@/lib/seo'
+import { SITE_URL } from '@/lib/constants'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 
@@ -8,6 +9,7 @@ export const metadata = genMeta({
   title: 'Journal',
   description: 'Stories from Corinthia — the Althea Resorts journal. Local guides, hotel stories, gastronomy, wellness, and the life of the region.',
   keywords: ['Althea Resorts blog', 'Corinthia travel guide', 'Greece hotel journal', 'Xylokastro travel'],
+  canonical: `${SITE_URL}/journal`,
 })
 
 const S = 'https://staging.althearesorts.com/wp-content/uploads/2026/02'

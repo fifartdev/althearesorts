@@ -5,12 +5,13 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
-import { BOOKING_URL } from '@/lib/constants'
+import { BOOKING_URL, SITE_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
   title: 'Gastronomy',
   description: 'Food at Althea Resorts is not an afterthought. Narrativa rooftop restaurant, all-day dining, breakfast rituals, and the bar — every meal tells the story of Corinthia.',
   keywords: ['Narrativa restaurant', 'rooftop dining Corinthia', 'Greek gastronomy', 'Althea Resorts restaurant'],
+  canonical: `${SITE_URL}/gastronomy`,
 })
 
 const venues = [

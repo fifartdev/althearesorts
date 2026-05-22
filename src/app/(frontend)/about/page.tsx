@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { generateMetadata as genMeta } from '@/lib/seo'
+import { SITE_URL } from '@/lib/constants'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
@@ -11,6 +12,7 @@ export const metadata = genMeta({
   title: 'About Us',
   description: 'Althea Resorts — built on a simple idea. Luxury is about how a place makes you feel. 41 rooms and suites on the hillside of Ano Loutro, Corinthia, Greece.',
   keywords: ['luxury hotel Greece', 'boutique resort Corinthia', 'about Althea Resorts'],
+  canonical: `${SITE_URL}/about`,
 })
 
 export default function AboutPage() {

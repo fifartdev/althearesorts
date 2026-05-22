@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { generateMetadata as genMeta } from '@/lib/seo'
-import { ROOMS, BOOKING_URL } from '@/lib/constants'
+import { ROOMS, BOOKING_URL, SITE_URL } from '@/lib/constants'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
@@ -24,6 +24,8 @@ export async function generateMetadata({ params }: Props) {
     title: room.title,
     description: `${room.title} at Althea Resorts — ${room.shortDesc} ${room.size}. ${room.view}.`,
     keywords: [`${room.title} Althea`, 'luxury room Corinthia', 'book hotel room Greece'],
+    canonical: `${SITE_URL}/accommodation/${room.slug}`,
+    image: room.image,
   })
 }
 

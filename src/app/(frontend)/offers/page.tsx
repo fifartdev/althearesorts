@@ -5,12 +5,13 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { DirectBookingReasons } from '@/components/sections/DirectBookingReasons'
-import { BOOKING_URL, PHONE, EMAIL } from '@/lib/constants'
+import { BOOKING_URL, PHONE, EMAIL, SITE_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
   title: 'Offers & Special Rates',
   description: '10% off for all direct bookings at Althea Resorts. Opening offer valid until June 30, 2026. Book direct via our website, phone, or email for the best rate guaranteed.',
   keywords: ['Althea Resorts offers', 'hotel discount Corinthia', 'direct booking discount Greece', 'opening offer hotel'],
+  canonical: `${SITE_URL}/offers`,
 })
 
 export default function OffersPage() {

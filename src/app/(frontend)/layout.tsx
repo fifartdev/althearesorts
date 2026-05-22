@@ -4,7 +4,7 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { StickyBookingBar, FloatingBookingButton } from '@/components/layout/BookingCTA'
 import { CustomCursor } from '@/components/animations/CustomCursor'
-import { hotelSchema } from '@/lib/seo'
+import { hotelSchema, organizationSchema } from '@/lib/seo'
 import './globals.css'
 
 const cormorant = Cormorant_Garamond({
@@ -30,6 +30,10 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(hotelSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
       </head>
       <body className="antialiased">

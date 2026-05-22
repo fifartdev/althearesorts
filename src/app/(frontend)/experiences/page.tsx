@@ -5,12 +5,13 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
-import { BOOKING_URL } from '@/lib/constants'
+import { BOOKING_URL, SITE_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
   title: 'Experiences',
   description: 'The Ocean Spa, pool, activities, weddings, and corporate events at Althea Resorts, Corinthia. Ancient wellness traditions meet contemporary therapies using Oceanis cosmetics.',
   keywords: ['Ocean Spa Althea', 'spa Corinthia Greece', 'Oceanis cosmetics hotel', 'wedding venue Corinthia', 'corporate events Greece'],
+  canonical: `${SITE_URL}/experiences`,
 })
 
 export default function ExperiencesPage() {

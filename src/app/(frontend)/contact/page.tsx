@@ -4,12 +4,13 @@ import { generateMetadata as genMeta } from '@/lib/seo'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
-import { PHONE, EMAIL, ADDRESS, BOOKING_URL } from '@/lib/constants'
+import { PHONE, EMAIL, ADDRESS, BOOKING_URL, COORDINATES, SITE_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
   title: 'Contact',
   description: 'Contact Althea Resorts. Located in Ano Loutro, Xylokastro, Corinthia, Greece. Phone: +30 211 41 84 108. Email: reservations@althearesorts.com.',
   keywords: ['contact Althea Resorts', 'hotel phone number Corinthia', 'reservations Greece'],
+  canonical: `${SITE_URL}/contact`,
 })
 
 export default function ContactPage() {
@@ -208,7 +209,7 @@ export default function ContactPage() {
       {/* Map */}
       <section className="relative h-[500px] overflow-hidden" aria-label="Map — Althea Resorts location">
         <iframe
-          src="https://maps.google.com/maps?q=38.076875,22.635913&z=15&output=embed"
+          src={`https://maps.google.com/maps?q=${COORDINATES.lat},${COORDINATES.lng}&z=15&output=embed`}
           width="100%"
           height="100%"
           style={{ border: 0 }}
@@ -225,7 +226,7 @@ export default function ContactPage() {
             <p className="text-sm font-light text-white/70">Ano Loutro, Xylokastro, Corinthia, Greece</p>
           </div>
           <a
-            href="https://www.google.com/maps/dir/?api=1&destination=38.076875,22.635913"
+            href={`https://www.google.com/maps/dir/?api=1&destination=${COORDINATES.lat},${COORDINATES.lng}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-white/50 hover:text-[#ad8b27] transition-colors duration-300 shrink-0"

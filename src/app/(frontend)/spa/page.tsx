@@ -5,12 +5,13 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
-import { BOOKING_URL } from '@/lib/constants'
+import { BOOKING_URL, SITE_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
   title: 'Ocean Spa',
   description: 'The Ocean Spa at Althea Resorts — sauna, hammam, ice bath, dedicated pool, treatment cabins, yoga room and gym. Treatments built around Oceanis cosmetics, a certified Greek brand.',
   keywords: ['Ocean Spa Althea', 'spa Corinthia Greece', 'Oceanis cosmetics', 'hammam Greece', 'wellness hotel Corinthia', 'spa treatments Xylokastro'],
+  canonical: `${SITE_URL}/spa`,
 })
 
 const facilities = [

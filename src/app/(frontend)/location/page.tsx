@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { generateMetadata as genMeta } from '@/lib/seo'
+import { SITE_URL } from '@/lib/constants'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
@@ -10,6 +11,7 @@ export const metadata = genMeta({
   title: 'Location',
   description: 'Althea Resorts is located in Ano Loutro, near Xylokastro, Corinthia, Greece. 60 minutes from Athens. Private beach on the Corinthian Gulf. Near Ancient Corinth, the Acrocorinth, and the Corinth Canal.',
   keywords: ['Althea Resorts location', 'Xylokastro hotel', 'Corinthia Greece', 'near Ancient Corinth', 'hotel near Athens'],
+  canonical: `${SITE_URL}/location`,
 })
 
 const sights = [
