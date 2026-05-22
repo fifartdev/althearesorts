@@ -1,0 +1,410 @@
+@import "tailwindcss";
+
+/* ============================================
+   ALTHEA RESORTS — DESIGN SYSTEM
+   ============================================ */
+
+@theme {
+  /* ── Color Palette ── */
+  --color-gold:        #ad8b27;
+  --color-gold-light:  #c9a84c;
+  --color-gold-dark:   #8a6e1e;
+  --color-deep:        #102027;
+  --color-deep-mid:    #1a3040;
+  --color-soft:        #f2f8fb;
+  --color-soft-warm:   #f7f4ef;
+  --color-cream:       #faf8f4;
+  --color-stone:       #e8e4dd;
+  --color-mist:        #dde6ea;
+  --color-charcoal:    #2c2c2c;
+  --color-ink:         #1a1a1a;
+  --color-smoke:       #6b6b6b;
+  --color-fog:         #a0a0a0;
+  --color-white:       #ffffff;
+  --color-black:       #000000;
+
+  /* ── Typography ── */
+  --font-canela:       'Canela', 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --font-sohne:        'Söhne', 'DM Sans', 'Inter', system-ui, sans-serif;
+
+  /* Font sizes — fluid typographic scale */
+  --text-display-2xl: clamp(4rem, 10vw, 9rem);
+  --text-display-xl:  clamp(3rem, 7vw, 6.5rem);
+  --text-display-lg:  clamp(2.5rem, 5.5vw, 5rem);
+  --text-display-md:  clamp(2rem, 4vw, 3.5rem);
+  --text-display-sm:  clamp(1.5rem, 3vw, 2.5rem);
+  --text-body-lg:     1.125rem;
+  --text-body-md:     1rem;
+  --text-body-sm:     0.875rem;
+  --text-label:       0.75rem;
+  --text-micro:       0.6875rem;
+
+  /* ── Spacing ── */
+  --spacing-section:  clamp(5rem, 10vw, 10rem);
+  --spacing-gutter:   clamp(1.5rem, 5vw, 6rem);
+
+  /* ── Border Radius ── */
+  --radius-none:  0;
+  --radius-sm:    2px;
+  --radius-md:    4px;
+
+  /* ── Transitions ── */
+  --ease-luxury:    cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-cinematic: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-soft:      cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-slow:  800ms;
+  --duration-xslow: 1200ms;
+  --duration-xxslow: 1800ms;
+}
+
+/* ============================================
+   FONT FACE DECLARATIONS
+   ============================================ */
+
+@font-face {
+  font-family: 'Canela';
+  src: url('/fonts/Canela-Light.woff2') format('woff2'),
+       url('/fonts/Canela-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Canela';
+  src: url('/fonts/Canela-Regular.woff2') format('woff2'),
+       url('/fonts/Canela-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Canela';
+  src: url('/fonts/Canela-LightItalic.woff2') format('woff2'),
+       url('/fonts/Canela-LightItalic.woff') format('woff');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Söhne';
+  src: url('/fonts/Sohne-Leicht.woff2') format('woff2'),
+       url('/fonts/Sohne-Leicht.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Söhne';
+  src: url('/fonts/Sohne-Buch.woff2') format('woff2'),
+       url('/fonts/Sohne-Buch.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Söhne';
+  src: url('/fonts/Sohne-Kraftig.woff2') format('woff2'),
+       url('/fonts/Sohne-Kraftig.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================
+   CSS RESET & BASE
+   ============================================ */
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-sohne);
+    font-weight: 300;
+    color: var(--color-ink);
+    background-color: var(--color-white);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--color-soft); }
+  ::-webkit-scrollbar-thumb { background: var(--color-gold); }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-white);
+  }
+
+  img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: inherit;
+  }
+}
+
+/* ============================================
+   TYPOGRAPHY UTILITIES
+   ============================================ */
+
+@layer components {
+  .font-editorial {
+    font-family: var(--font-canela);
+  }
+
+  .font-ui {
+    font-family: var(--font-sohne);
+  }
+
+  .text-display-2xl {
+    font-family: var(--font-canela);
+    font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+
+  .text-display-xl {
+    font-family: var(--font-canela);
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .text-display-lg {
+    font-family: var(--font-canela);
+    font-size: clamp(2.5rem, 5.5vw, 5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+  }
+
+  .text-display-md {
+    font-family: var(--font-canela);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .text-display-sm {
+    font-family: var(--font-canela);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .text-label-upper {
+    font-family: var(--font-sohne);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .text-body-refined {
+    font-family: var(--font-sohne);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--color-smoke);
+  }
+}
+
+/* ============================================
+   LAYOUT UTILITIES
+   ============================================ */
+
+@layer components {
+  .container-luxury {
+    width: 100%;
+    max-width: 1600px;
+    margin-inline: auto;
+    padding-inline: clamp(1.5rem, 5vw, 6rem);
+  }
+
+  .container-narrow {
+    width: 100%;
+    max-width: 800px;
+    margin-inline: auto;
+    padding-inline: clamp(1.5rem, 5vw, 6rem);
+  }
+
+  .section-padding {
+    padding-top: clamp(5rem, 10vw, 10rem);
+    padding-bottom: clamp(5rem, 10vw, 10rem);
+  }
+}
+
+/* ============================================
+   ANIMATION BASE CLASSES
+   ============================================ */
+
+@layer components {
+  .reveal-fade {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .reveal-fade.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-32px);
+    transition: opacity 0.9s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .reveal-left.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .image-reveal {
+    overflow: hidden;
+  }
+
+  .image-reveal img {
+    transform: scale(1.08);
+    transition: transform 1.6s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .image-reveal.is-visible img {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-fade,
+  .reveal-left,
+  .image-reveal img {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================
+   CUSTOM CURSOR
+   ============================================ */
+
+@layer components {
+  .cursor {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-gold);
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translate(-50%, -50%);
+  }
+
+  .cursor-follower {
+    position: fixed;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--color-gold);
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translate(-50%, -50%);
+    opacity: 0.6;
+  }
+}
+
+/* ============================================
+   BOOKING BAR
+   ============================================ */
+
+@layer components {
+  .booking-bar {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(16, 32, 39, 0.85);
+  }
+}
+
+/* ============================================
+   PAGE TRANSITIONS
+   ============================================ */
+
+@layer utilities {
+  .page-enter {
+    opacity: 0;
+  }
+  .page-enter-active {
+    opacity: 1;
+    transition: opacity 600ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+}
+
+/* ============================================
+   GOLD ACCENT LINE
+   ============================================ */
+
+@layer components {
+  .gold-line {
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--color-gold);
+  }
+
+  .gold-line-sm {
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--color-gold);
+  }
+}
+
+/* ============================================
+   HERO ANIMATIONS
+   ============================================ */
+
+@keyframes scrollLine {
+  0%, 100% { transform: translateY(-100%); }
+  50%       { transform: translateY(100%); }
+}
+
+@layer utilities {
+  .animate-scroll-line {
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+}

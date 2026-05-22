@@ -9,10 +9,45 @@ const dirname = path.dirname(__filename)
 const nextConfig: NextConfig = {
   images: {
     localPatterns: [
-      {
-        pathname: '/api/media/file/**',
-      },
+      { pathname: '/api/media/file/**' },
+      { pathname: '/images/**' },
+      { pathname: '/logos/**' },
     ],
+    remotePatterns: [
+      { protocol: 'https', hostname: '**.althearesorts.com' },
+      { protocol: 'https', hostname: 'althearesorts.com' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+    ],
+    formats: ['image/avif', 'image/webp'],
+    qualities: [75, 90],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+  },
+  // Headers for security and performance
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+        ],
+      },
+      {
+        source: '/fonts/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        source: '/images/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' },
+        ],
+      },
+    ]
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
