@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
+import { isAdmin, isSuperAdmin } from '../access'
 
 export const Rooms: CollectionConfig = {
   slug: 'rooms',
@@ -9,7 +10,12 @@ export const Rooms: CollectionConfig = {
     defaultColumns: ['title', 'category', 'size', 'status', 'updatedAt'],
     group: 'Accommodation',
   },
-  access: { read: () => true },
+  access: {
+    create: isAdmin,
+    read: () => true,
+    update: isAdmin,
+    delete: isSuperAdmin,
+  },
   versions: {
     drafts: { autosave: true },
   },
@@ -28,7 +34,7 @@ export const Rooms: CollectionConfig = {
       options: [
         { label: 'Standard Double', value: 'standard-double' },
         { label: 'Deluxe Double M.V / P.V.', value: 'deluxe-double-mv-pv' },
-        { label: 'Deluxe Double with Sharing Pool', value: 'deluxe-sharing-pool' },
+        { label: 'Deluxe Double with Private Pool', value: 'deluxe-private-pool' },
         { label: 'Superior Sea View Room', value: 'superior-sea-view' },
         { label: 'Junior Suite with Private Pool', value: 'junior-suite' },
         { label: 'Althea Loft Suite Outdoor Jacuzzi', value: 'loft-suite' },
@@ -65,22 +71,26 @@ export const Rooms: CollectionConfig = {
                 {
                   name: 'caption',
                   type: 'text',
+                  localized: true,
                 },
               ],
             },
             {
               name: 'tagline',
               type: 'text',
-              admin: { description: 'Short editorial statement (e.g. "The One Room That Changes Everything")' },
+              localized: true,
+              admin: { description: 'e.g. "The One Room That Changes Everything"' },
             },
             {
               name: 'shortDescription',
               type: 'textarea',
               required: true,
+              localized: true,
             },
             {
               name: 'description',
               type: 'richText',
+              localized: true,
             },
             {
               name: 'size',
@@ -91,6 +101,7 @@ export const Rooms: CollectionConfig = {
             {
               name: 'viewType',
               type: 'text',
+              localized: true,
               admin: { description: 'e.g. Panoramic Gulf views' },
             },
             {
@@ -125,6 +136,7 @@ export const Rooms: CollectionConfig = {
                   name: 'label',
                   type: 'text',
                   required: true,
+                  localized: true,
                 },
               ],
             },
@@ -137,6 +149,7 @@ export const Rooms: CollectionConfig = {
                   name: 'text',
                   type: 'text',
                   required: true,
+                  localized: true,
                 },
               ],
             },

@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
+import { isAdmin, isSuperAdmin } from '../access'
 
 export const Experiences: CollectionConfig = {
   slug: 'experiences',
@@ -9,12 +10,17 @@ export const Experiences: CollectionConfig = {
     defaultColumns: ['title', 'category', 'status', 'updatedAt'],
     group: 'Content',
   },
-  access: { read: () => true },
+  access: {
+    create: isAdmin,
+    read: () => true,
+    update: isAdmin,
+    delete: isSuperAdmin,
+  },
   versions: {
     drafts: { autosave: true },
   },
   fields: [
-    { name: 'title', type: 'text', required: true },
+    { name: 'title', type: 'text', required: true, localized: true },
     ...slugField('title'),
     {
       name: 'category',
@@ -27,35 +33,27 @@ export const Experiences: CollectionConfig = {
         { label: 'Corporate', value: 'corporate' },
       ],
     },
-    {
-      name: 'heroImage',
-      type: 'upload',
-      relationTo: 'media',
-    },
+    { name: 'heroImage', type: 'upload', relationTo: 'media' },
     {
       name: 'gallery',
       type: 'array',
       fields: [
         { name: 'image', type: 'upload', relationTo: 'media', required: true },
-        { name: 'caption', type: 'text' },
+        { name: 'caption', type: 'text', localized: true },
       ],
     },
-    { name: 'tagline', type: 'text' },
-    { name: 'shortDescription', type: 'textarea', required: true },
-    { name: 'description', type: 'richText' },
+    { name: 'tagline', type: 'text', localized: true },
+    { name: 'shortDescription', type: 'textarea', required: true, localized: true },
+    { name: 'description', type: 'richText', localized: true },
     {
       name: 'highlights',
       type: 'array',
       fields: [
-        { name: 'label', type: 'text', required: true },
-        { name: 'value', type: 'text', required: true },
+        { name: 'label', type: 'text', required: true, localized: true },
+        { name: 'value', type: 'text', required: true, localized: true },
       ],
     },
-    {
-      name: 'ctaLabel',
-      type: 'text',
-      defaultValue: 'Book Now',
-    },
+    { name: 'ctaLabel', type: 'text', defaultValue: 'Book Now', localized: true },
     {
       name: 'ctaUrl',
       type: 'text',

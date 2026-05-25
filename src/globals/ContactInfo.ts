@@ -1,9 +1,14 @@
 import type { GlobalConfig } from 'payload'
+import { isAdmin } from '../access'
 
 export const ContactInfo: GlobalConfig = {
   slug: 'contact-info',
   label: 'Contact Information',
   admin: { group: 'Settings' },
+  access: {
+    read: isAdmin,
+    update: isAdmin,
+  },
   fields: [
     { name: 'address', type: 'text', defaultValue: 'Ano Loutro, Xylokastro, Corinthia, Greece' },
     { name: 'phone', type: 'text', defaultValue: '+30 211 41 84 108' },
@@ -20,6 +25,7 @@ export const ContactInfo: GlobalConfig = {
     {
       name: 'directions',
       type: 'textarea',
+      localized: true,
       defaultValue: '60 minutes from Athens by car. Follow the Athens–Corinth motorway toward the Peloponnese, exit at Xylokastro.',
     },
   ],

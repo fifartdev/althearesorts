@@ -4,6 +4,7 @@ import { generateMetadata as genMeta } from '@/lib/seo'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
+import { ContactForm } from '@/components/contact/ContactForm'
 import { PHONE, EMAIL, ADDRESS, BOOKING_URL, COORDINATES, SITE_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
@@ -101,105 +102,7 @@ export default function ContactPage() {
             {/* Contact form */}
             <div className="lg:col-span-6 lg:col-start-7">
               <ScrollReveal delay={100}>
-                <form
-                  action="mailto:reservations@althearesorts.com"
-                  method="post"
-                  className="flex flex-col gap-6"
-                  aria-label="Contact form"
-                >
-                  <h3 className="text-label-upper text-[#102027] mb-2">Send a Message</h3>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="flex flex-col gap-2">
-                      <label htmlFor="firstName" className="text-xs uppercase tracking-wider text-[#6b6b6b]">
-                        First Name
-                      </label>
-                      <input
-                        id="firstName"
-                        name="firstName"
-                        type="text"
-                        required
-                        className="h-11 px-4 border border-[#e8e4dd] text-sm font-light text-[#102027]
-                                   bg-transparent focus:outline-none focus:border-[#102027]
-                                   transition-colors duration-200 w-full"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label htmlFor="lastName" className="text-xs uppercase tracking-wider text-[#6b6b6b]">
-                        Last Name
-                      </label>
-                      <input
-                        id="lastName"
-                        name="lastName"
-                        type="text"
-                        required
-                        className="h-11 px-4 border border-[#e8e4dd] text-sm font-light text-[#102027]
-                                   bg-transparent focus:outline-none focus:border-[#102027]
-                                   transition-colors duration-200 w-full"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="email" className="text-xs uppercase tracking-wider text-[#6b6b6b]">
-                      Email Address
-                    </label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      className="h-11 px-4 border border-[#e8e4dd] text-sm font-light text-[#102027]
-                                 bg-transparent focus:outline-none focus:border-[#102027]
-                                 transition-colors duration-200 w-full"
-                    />
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="subject" className="text-xs uppercase tracking-wider text-[#6b6b6b]">
-                      Subject
-                    </label>
-                    <select
-                      id="subject"
-                      name="subject"
-                      className="h-11 px-4 border border-[#e8e4dd] text-sm font-light text-[#102027]
-                                 bg-transparent focus:outline-none focus:border-[#102027]
-                                 transition-colors duration-200 w-full appearance-none"
-                    >
-                      <option value="reservation">Reservation Enquiry</option>
-                      <option value="wedding">Wedding Enquiry</option>
-                      <option value="corporate">Corporate Events</option>
-                      <option value="spa">Spa & Wellness</option>
-                      <option value="general">General Enquiry</option>
-                    </select>
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="message" className="text-xs uppercase tracking-wider text-[#6b6b6b]">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows={5}
-                      required
-                      className="px-4 py-3 border border-[#e8e4dd] text-sm font-light text-[#102027]
-                                 bg-transparent focus:outline-none focus:border-[#102027]
-                                 transition-colors duration-200 w-full resize-none"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="h-11 px-7 inline-flex items-center justify-center
-                               text-xs uppercase tracking-[0.2em]
-                               bg-[#102027] text-white border border-[#102027]
-                               hover:bg-transparent hover:text-[#102027]
-                               transition-all duration-500 self-start"
-                  >
-                    Send Message
-                  </button>
-                </form>
+                <ContactForm />
               </ScrollReveal>
             </div>
           </div>

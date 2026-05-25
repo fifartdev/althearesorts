@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin, isSuperAdmin } from '../access'
 
 export const FAQs: CollectionConfig = {
   slug: 'faqs',
@@ -7,10 +8,15 @@ export const FAQs: CollectionConfig = {
     defaultColumns: ['question', 'category', 'order', 'updatedAt'],
     group: 'Content',
   },
-  access: { read: () => true },
+  access: {
+    create: isAdmin,
+    read: () => true,
+    update: isAdmin,
+    delete: isSuperAdmin,
+  },
   fields: [
-    { name: 'question', type: 'text', required: true },
-    { name: 'answer', type: 'richText', required: true },
+    { name: 'question', type: 'text', required: true, localized: true },
+    { name: 'answer', type: 'richText', required: true, localized: true },
     {
       name: 'category',
       type: 'select',

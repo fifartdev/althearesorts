@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
+import { isAdmin, isSuperAdmin } from '../access'
 
 export const Journal: CollectionConfig = {
   slug: 'journal',
@@ -9,12 +10,17 @@ export const Journal: CollectionConfig = {
     defaultColumns: ['title', 'category', 'publishedAt', 'status', 'updatedAt'],
     group: 'Content',
   },
-  access: { read: () => true },
+  access: {
+    create: isAdmin,
+    read: () => true,
+    update: isAdmin,
+    delete: isSuperAdmin,
+  },
   versions: {
     drafts: { autosave: true },
   },
   fields: [
-    { name: 'title', type: 'text', required: true },
+    { name: 'title', type: 'text', required: true, localized: true },
     ...slugField('title'),
     {
       name: 'category',
@@ -38,21 +44,9 @@ export const Journal: CollectionConfig = {
       type: 'text',
       defaultValue: 'Althea Resorts',
     },
-    {
-      name: 'heroImage',
-      type: 'upload',
-      relationTo: 'media',
-      required: true,
-    },
-    {
-      name: 'excerpt',
-      type: 'textarea',
-      required: true,
-    },
-    {
-      name: 'content',
-      type: 'richText',
-    },
+    { name: 'heroImage', type: 'upload', relationTo: 'media', required: true },
+    { name: 'excerpt', type: 'textarea', required: true, localized: true },
+    { name: 'content', type: 'richText', localized: true },
     {
       name: 'featured',
       type: 'checkbox',

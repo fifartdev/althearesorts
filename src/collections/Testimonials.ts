@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin, isSuperAdmin } from '../access'
 
 export const Testimonials: CollectionConfig = {
   slug: 'testimonials',
@@ -7,18 +8,15 @@ export const Testimonials: CollectionConfig = {
     defaultColumns: ['authorName', 'rating', 'featured', 'updatedAt'],
     group: 'Content',
   },
-  access: { read: () => true },
+  access: {
+    create: isAdmin,
+    read: () => true,
+    update: isAdmin,
+    delete: isSuperAdmin,
+  },
   fields: [
-    {
-      name: 'quote',
-      type: 'textarea',
-      required: true,
-    },
-    {
-      name: 'authorName',
-      type: 'text',
-      required: true,
-    },
+    { name: 'quote', type: 'textarea', required: true },
+    { name: 'authorName', type: 'text', required: true },
     {
       name: 'authorOrigin',
       type: 'text',
@@ -40,11 +38,7 @@ export const Testimonials: CollectionConfig = {
       options: ['1', '2', '3', '4', '5'],
       defaultValue: '5',
     },
-    {
-      name: 'featured',
-      type: 'checkbox',
-      defaultValue: false,
-    },
+    { name: 'featured', type: 'checkbox', defaultValue: false },
     {
       name: 'source',
       type: 'select',

@@ -1,9 +1,14 @@
 import type { GlobalConfig } from 'payload'
+import { isAdmin } from '../access'
 
 export const BookingSettings: GlobalConfig = {
   slug: 'booking-settings',
   label: 'Booking Settings',
   admin: { group: 'Settings' },
+  access: {
+    read: isAdmin,
+    update: isAdmin,
+  },
   fields: [
     {
       name: 'bookingEngineUrl',
@@ -26,6 +31,7 @@ export const BookingSettings: GlobalConfig = {
     {
       name: 'stickyBarText',
       type: 'text',
+      localized: true,
       defaultValue: 'Reserve your stay — 60 minutes from Athens',
     },
     {
@@ -34,9 +40,6 @@ export const BookingSettings: GlobalConfig = {
       defaultValue: 10,
       admin: { description: 'Direct booking discount percentage' },
     },
-    {
-      name: 'openingOfferEndDate',
-      type: 'date',
-    },
+    { name: 'openingOfferEndDate', type: 'date' },
   ],
 }

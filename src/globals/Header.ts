@@ -1,15 +1,20 @@
 import type { GlobalConfig } from 'payload'
+import { isAdmin } from '../access'
 
 export const Header: GlobalConfig = {
   slug: 'header',
   label: 'Header & Navigation',
   admin: { group: 'Settings' },
+  access: {
+    read: isAdmin,
+    update: isAdmin,
+  },
   fields: [
     {
       name: 'navItems',
       type: 'array',
       fields: [
-        { name: 'label', type: 'text', required: true },
+        { name: 'label', type: 'text', required: true, localized: true },
         {
           name: 'type',
           type: 'select',
@@ -36,21 +41,13 @@ export const Header: GlobalConfig = {
           name: 'dropdown',
           type: 'array',
           fields: [
-            { name: 'label', type: 'text', required: true },
+            { name: 'label', type: 'text', required: true, localized: true },
             { name: 'url', type: 'text', required: true },
           ],
         },
       ],
     },
-    {
-      name: 'ctaLabel',
-      type: 'text',
-      defaultValue: 'Book Now',
-    },
-    {
-      name: 'ctaUrl',
-      type: 'text',
-      defaultValue: 'https://althearesort.reserve-online.net',
-    },
+    { name: 'ctaLabel', type: 'text', defaultValue: 'Book Now', localized: true },
+    { name: 'ctaUrl', type: 'text', defaultValue: 'https://althearesort.reserve-online.net' },
   ],
 }

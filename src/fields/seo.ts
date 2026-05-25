@@ -9,6 +9,7 @@ export const seoFields: Field[] = [
       {
         name: 'title',
         type: 'text',
+        localized: true,
         admin: {
           description: 'Overrides the page title. Max 60 characters.',
         },
@@ -16,6 +17,7 @@ export const seoFields: Field[] = [
       {
         name: 'description',
         type: 'textarea',
+        localized: true,
         admin: {
           description: 'Meta description. 150–160 characters recommended.',
         },
@@ -31,6 +33,7 @@ export const seoFields: Field[] = [
       {
         name: 'keywords',
         type: 'text',
+        localized: true,
         admin: {
           description: 'Comma-separated keywords.',
         },

@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
+import { isAdmin, isSuperAdmin } from '../access'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -9,12 +10,17 @@ export const Pages: CollectionConfig = {
     defaultColumns: ['title', 'slug', 'status', 'updatedAt'],
     group: 'Content',
   },
-  access: { read: () => true },
+  access: {
+    create: isAdmin,
+    read: () => true,
+    update: isAdmin,
+    delete: isSuperAdmin,
+  },
   versions: {
     drafts: { autosave: true },
   },
   fields: [
-    { name: 'title', type: 'text', required: true },
+    { name: 'title', type: 'text', required: true, localized: true },
     ...slugField('title'),
     {
       name: 'hero',
@@ -30,9 +36,9 @@ export const Pages: CollectionConfig = {
           ],
           defaultValue: 'cinematic',
         },
-        { name: 'label', type: 'text' },
-        { name: 'headline', type: 'text' },
-        { name: 'intro', type: 'textarea' },
+        { name: 'label', type: 'text', localized: true },
+        { name: 'headline', type: 'text', localized: true },
+        { name: 'intro', type: 'textarea', localized: true },
         { name: 'image', type: 'upload', relationTo: 'media' },
       ],
     },
@@ -44,8 +50,8 @@ export const Pages: CollectionConfig = {
           slug: 'content-block',
           labels: { singular: 'Content Block', plural: 'Content Blocks' },
           fields: [
-            { name: 'heading', type: 'text' },
-            { name: 'content', type: 'richText' },
+            { name: 'heading', type: 'text', localized: true },
+            { name: 'content', type: 'richText', localized: true },
           ],
         },
         {
@@ -53,7 +59,7 @@ export const Pages: CollectionConfig = {
           labels: { singular: 'Image Block', plural: 'Image Blocks' },
           fields: [
             { name: 'image', type: 'upload', relationTo: 'media', required: true },
-            { name: 'caption', type: 'text' },
+            { name: 'caption', type: 'text', localized: true },
             {
               name: 'size',
               type: 'select',
@@ -70,10 +76,14 @@ export const Pages: CollectionConfig = {
           slug: 'cta-block',
           labels: { singular: 'CTA Block', plural: 'CTA Blocks' },
           fields: [
-            { name: 'heading', type: 'text' },
-            { name: 'subtext', type: 'textarea' },
-            { name: 'buttonLabel', type: 'text', defaultValue: 'Book Now' },
-            { name: 'buttonUrl', type: 'text', defaultValue: 'https://althearesort.reserve-online.net' },
+            { name: 'heading', type: 'text', localized: true },
+            { name: 'subtext', type: 'textarea', localized: true },
+            { name: 'buttonLabel', type: 'text', defaultValue: 'Book Now', localized: true },
+            {
+              name: 'buttonUrl',
+              type: 'text',
+              defaultValue: 'https://althearesort.reserve-online.net',
+            },
           ],
         },
       ],

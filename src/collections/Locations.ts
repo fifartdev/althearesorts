@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { slugField } from '../fields/slug'
+import { isAdmin, isSuperAdmin } from '../access'
 
 export const Locations: CollectionConfig = {
   slug: 'locations',
@@ -8,7 +9,12 @@ export const Locations: CollectionConfig = {
     defaultColumns: ['name', 'category', 'distance', 'updatedAt'],
     group: 'Content',
   },
-  access: { read: () => true },
+  access: {
+    create: isAdmin,
+    read: () => true,
+    update: isAdmin,
+    delete: isSuperAdmin,
+  },
   fields: [
     { name: 'name', type: 'text', required: true },
     ...slugField('name'),
@@ -24,15 +30,12 @@ export const Locations: CollectionConfig = {
         { label: 'Day Trips', value: 'day-trips' },
       ],
     },
-    {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
-    },
+    { name: 'image', type: 'upload', relationTo: 'media' },
     {
       name: 'description',
       type: 'textarea',
       required: true,
+      localized: true,
     },
     {
       name: 'distance',
@@ -47,10 +50,6 @@ export const Locations: CollectionConfig = {
         { name: 'lng', type: 'number' },
       ],
     },
-    {
-      name: 'featured',
-      type: 'checkbox',
-      defaultValue: false,
-    },
+    { name: 'featured', type: 'checkbox', defaultValue: false },
   ],
 }

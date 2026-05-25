@@ -1,0 +1,56 @@
+// Althea Resorts — Payload Admin Brand Theme
+// Deep teal (#102027) for nav/sidebar, gold (#ad8b27) for accents
+
+// Nav sidebar
+.nav {
+  --nav-background: #102027;
+  background: #102027 !important;
+}
+
+// Top header bar
+.app-header {
+  background: #102027 !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+// Nav links hover / active state
+.nav__link--active,
+.nav__link:hover {
+  color: #ad8b27 !important;
+}
+
+// Dashboard logo area
+.logo {
+  padding: 0 !important;
+}
+
+// Primary action buttons (Save, Create, etc.)
+.btn--style-primary,
+.btn.btn--style-primary {
+  background-color: #ad8b27 !important;
+  border-color: #ad8b27 !important;
+
+  &:hover {
+    background-color: #96781e !important;
+    border-color: #96781e !important;
+  }
+}
+
+// Pill/badge for active status
+.pill--style-success {
+  background-color: rgba(173, 139, 39, 0.15) !important;
+  color: #ad8b27 !important;
+}
+
+// Sidebar group headings
+.nav__group-label {
+  color: rgba(255, 255, 255, 0.4) !important;
+  letter-spacing: 0.1em !important;
+  font-size: 0.65rem !important;
+  text-transform: uppercase !important;
+}
+
+// Locale switcher accent
+.locale-selector__current {
+  border-color: #ad8b27 !important;
+}

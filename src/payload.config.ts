@@ -17,6 +17,7 @@ import { Journal } from './collections/Journal'
 import { FAQs } from './collections/FAQs'
 import { Locations } from './collections/Locations'
 import { Pages } from './collections/Pages'
+import { FormSubmissions } from './collections/FormSubmissions'
 
 import { SiteSettings } from './globals/SiteSettings'
 import { Header } from './globals/Header'
@@ -33,7 +34,15 @@ export default buildConfig({
     user: Users.slug,
     meta: {
       titleSuffix: '— Althea Resorts CMS',
+      icons: [{ url: '/logos/althea_logo_white-f.png' }],
     },
+    components: {
+      graphics: {
+        Logo: '/components/admin/Logo',
+        Icon: '/components/admin/Icon',
+      },
+    },
+    css: path.resolve(dirname, 'app/(payload)/custom.scss'),
     importMap: {
       baseDir: path.resolve(dirname),
     },
@@ -51,6 +60,7 @@ export default buildConfig({
     FAQs,
     Locations,
     Pages,
+    FormSubmissions,
   ],
   globals: [
     SiteSettings,

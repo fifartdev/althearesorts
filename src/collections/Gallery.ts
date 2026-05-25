@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin, isSuperAdmin } from '../access'
 
 export const Gallery: CollectionConfig = {
   slug: 'gallery',
@@ -7,18 +8,15 @@ export const Gallery: CollectionConfig = {
     defaultColumns: ['caption', 'category', 'order', 'updatedAt'],
     group: 'Content',
   },
-  access: { read: () => true },
+  access: {
+    create: isAdmin,
+    read: () => true,
+    update: isAdmin,
+    delete: isSuperAdmin,
+  },
   fields: [
-    {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
-      required: true,
-    },
-    {
-      name: 'caption',
-      type: 'text',
-    },
+    { name: 'image', type: 'upload', relationTo: 'media', required: true },
+    { name: 'caption', type: 'text', localized: true },
     {
       name: 'category',
       type: 'select',
@@ -41,7 +39,7 @@ export const Gallery: CollectionConfig = {
       name: 'order',
       type: 'number',
       defaultValue: 0,
-      admin: { description: 'Sort order' },
+      admin: { description: 'Sort order (lower = first)' },
     },
   ],
 }

@@ -69,6 +69,17 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    rooms: Room;
+    offers: Offer;
+    experiences: Experience;
+    dining: Dining;
+    gallery: Gallery;
+    testimonials: Testimonial;
+    journal: Journal;
+    faqs: Faq;
+    locations: Location;
+    pages: Page;
+    'form-submissions': FormSubmission;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,18 +89,43 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    rooms: RoomsSelect<false> | RoomsSelect<true>;
+    offers: OffersSelect<false> | OffersSelect<true>;
+    experiences: ExperiencesSelect<false> | ExperiencesSelect<true>;
+    dining: DiningSelect<false> | DiningSelect<true>;
+    gallery: GallerySelect<false> | GallerySelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    journal: JournalSelect<false> | JournalSelect<true>;
+    faqs: FaqsSelect<false> | FaqsSelect<true>;
+    locations: LocationsSelect<false> | LocationsSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
-  fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
-  locale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'el' | 'fr') | ('en' | 'el' | 'fr')[];
+  globals: {
+    'site-settings': SiteSetting;
+    header: Header;
+    footer: Footer;
+    'booking-settings': BookingSetting;
+    'contact-info': ContactInfo;
+    'seo-settings': SeoSetting;
+  };
+  globalsSelect: {
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    'booking-settings': BookingSettingsSelect<false> | BookingSettingsSelect<true>;
+    'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
+    'seo-settings': SeoSettingsSelect<false> | SeoSettingsSelect<true>;
+  };
+  locale: 'en' | 'el' | 'fr';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -118,11 +154,19 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Manage CMS users and their access roles.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
+  firstName?: string | null;
+  lastName?: string | null;
+  /**
+   * Super Admin has full system access. Admin manages content and settings.
+   */
+  role: 'superadmin' | 'admin';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -147,7 +191,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -163,10 +207,628 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rooms".
+ */
+export interface Room {
+  id: number;
+  /**
+   * Room or suite name
+   */
+  title: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title if left blank.
+   */
+  slug: string;
+  category:
+    | 'standard-double'
+    | 'deluxe-double-mv-pv'
+    | 'deluxe-private-pool'
+    | 'superior-sea-view'
+    | 'junior-suite'
+    | 'loft-suite';
+  /**
+   * Feature on homepage
+   */
+  featured?: boolean | null;
+  heroImage: number | Media;
+  gallery?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * e.g. "The One Room That Changes Everything"
+   */
+  tagline?: string | null;
+  shortDescription: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * e.g. 45 m²
+   */
+  size: string;
+  /**
+   * e.g. Panoramic Gulf views
+   */
+  viewType?: string | null;
+  maxOccupancy?: number | null;
+  bedType?: ('king-twin' | 'king' | 'twin') | null;
+  amenities?:
+    | {
+        /**
+         * Icon identifier
+         */
+        icon?: string | null;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Key selling features (3–5 items)
+   */
+  highlights?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Starting price per night in EUR
+   */
+  startingPrice?: number | null;
+  /**
+   * Direct booking URL for this room type
+   */
+  bookingUrl?: string | null;
+  meta?: {
+    /**
+     * Overrides the page title. Max 60 characters.
+     */
+    title?: string | null;
+    /**
+     * Meta description. 150–160 characters recommended.
+     */
+    description?: string | null;
+    /**
+     * OpenGraph image. 1200×630px recommended.
+     */
+    image?: (number | null) | Media;
+    /**
+     * Comma-separated keywords.
+     */
+    keywords?: string | null;
+    /**
+     * Prevent search engines from indexing this page.
+     */
+    noIndex?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "offers".
+ */
+export interface Offer {
+  id: number;
+  title: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title if left blank.
+   */
+  slug: string;
+  /**
+   * Short badge text, e.g. "Opening Offer" or "10% Off"
+   */
+  badge?: string | null;
+  heroImage?: (number | null) | Media;
+  tagline?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Discount percentage (e.g. 10)
+   */
+  discountPercent?: number | null;
+  validFrom?: string | null;
+  validUntil?: string | null;
+  conditions?:
+    | {
+        condition: string;
+        id?: string | null;
+      }[]
+    | null;
+  howToBook?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  ctaLabel?: string | null;
+  ctaUrl?: string | null;
+  meta?: {
+    /**
+     * Overrides the page title. Max 60 characters.
+     */
+    title?: string | null;
+    /**
+     * Meta description. 150–160 characters recommended.
+     */
+    description?: string | null;
+    /**
+     * OpenGraph image. 1200×630px recommended.
+     */
+    image?: (number | null) | Media;
+    /**
+     * Comma-separated keywords.
+     */
+    keywords?: string | null;
+    /**
+     * Prevent search engines from indexing this page.
+     */
+    noIndex?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "experiences".
+ */
+export interface Experience {
+  id: number;
+  title: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title if left blank.
+   */
+  slug: string;
+  category?: ('activities' | 'spa' | 'pool' | 'events' | 'corporate') | null;
+  heroImage?: (number | null) | Media;
+  gallery?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  tagline?: string | null;
+  shortDescription: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  highlights?:
+    | {
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  ctaLabel?: string | null;
+  ctaUrl?: string | null;
+  meta?: {
+    /**
+     * Overrides the page title. Max 60 characters.
+     */
+    title?: string | null;
+    /**
+     * Meta description. 150–160 characters recommended.
+     */
+    description?: string | null;
+    /**
+     * OpenGraph image. 1200×630px recommended.
+     */
+    image?: (number | null) | Media;
+    /**
+     * Comma-separated keywords.
+     */
+    keywords?: string | null;
+    /**
+     * Prevent search engines from indexing this page.
+     */
+    noIndex?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dining".
+ */
+export interface Dining {
+  id: number;
+  name: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title if left blank.
+   */
+  slug: string;
+  venue?: ('aither' | 'breakfast' | 'all-day' | 'bar' | 'pool-bar') | null;
+  heroImage?: (number | null) | Media;
+  gallery?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  tagline?: string | null;
+  shortDescription: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * e.g. "Open from late afternoon into the night"
+   */
+  openingHours?: string | null;
+  reservationUrl?: string | null;
+  meta?: {
+    /**
+     * Overrides the page title. Max 60 characters.
+     */
+    title?: string | null;
+    /**
+     * Meta description. 150–160 characters recommended.
+     */
+    description?: string | null;
+    /**
+     * OpenGraph image. 1200×630px recommended.
+     */
+    image?: (number | null) | Media;
+    /**
+     * Comma-separated keywords.
+     */
+    keywords?: string | null;
+    /**
+     * Prevent search engines from indexing this page.
+     */
+    noIndex?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery".
+ */
+export interface Gallery {
+  id: number;
+  image: number | Media;
+  caption?: string | null;
+  category?: ('rooms' | 'dining' | 'spa' | 'exterior' | 'pool' | 'events') | null;
+  /**
+   * Show in homepage gallery preview
+   */
+  featured?: boolean | null;
+  /**
+   * Sort order (lower = first)
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  quote: string;
+  authorName: string;
+  /**
+   * e.g. "Athens, Greece" or "Paris, France"
+   */
+  authorOrigin?: string | null;
+  /**
+   * e.g. "May 2025"
+   */
+  stayDate?: string | null;
+  /**
+   * Room or suite category where the guest stayed
+   */
+  roomStayed?: string | null;
+  rating?: ('1' | '2' | '3' | '4' | '5') | null;
+  featured?: boolean | null;
+  source?: ('google' | 'booking' | 'tripadvisor' | 'direct') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "journal".
+ */
+export interface Journal {
+  id: number;
+  title: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title if left blank.
+   */
+  slug: string;
+  category?: ('local-guides' | 'hotel-stories' | 'gastronomy' | 'wellness' | 'events' | 'corinthia') | null;
+  publishedAt?: string | null;
+  author?: string | null;
+  heroImage: number | Media;
+  excerpt: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Show in homepage journal preview
+   */
+  featured?: boolean | null;
+  /**
+   * Estimated reading time in minutes
+   */
+  readingTime?: number | null;
+  meta?: {
+    /**
+     * Overrides the page title. Max 60 characters.
+     */
+    title?: string | null;
+    /**
+     * Meta description. 150–160 characters recommended.
+     */
+    description?: string | null;
+    /**
+     * OpenGraph image. 1200×630px recommended.
+     */
+    image?: (number | null) | Media;
+    /**
+     * Comma-separated keywords.
+     */
+    keywords?: string | null;
+    /**
+     * Prevent search engines from indexing this page.
+     */
+    noIndex?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: number;
+  question: string;
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  category?: ('rooms' | 'checkin' | 'dining' | 'spa' | 'family' | 'location' | 'reservations' | 'general') | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations".
+ */
+export interface Location {
+  id: number;
+  name: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title if left blank.
+   */
+  slug: string;
+  category?: ('beaches' | 'archaeological' | 'towns' | 'activities' | 'dining' | 'day-trips') | null;
+  image?: (number | null) | Media;
+  description: string;
+  /**
+   * e.g. "5 minutes by shuttle" or "45 minutes by car"
+   */
+  distance?: string | null;
+  coordinates?: {
+    lat?: number | null;
+    lng?: number | null;
+  };
+  featured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title if left blank.
+   */
+  slug: string;
+  hero?: {
+    style?: ('cinematic' | 'minimal' | 'text') | null;
+    label?: string | null;
+    headline?: string | null;
+    intro?: string | null;
+    image?: (number | null) | Media;
+  };
+  layout?:
+    | (
+        | {
+            heading?: string | null;
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'content-block';
+          }
+        | {
+            image: number | Media;
+            caption?: string | null;
+            size?: ('full' | 'content' | 'small') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'image-block';
+          }
+        | {
+            heading?: string | null;
+            subtext?: string | null;
+            buttonLabel?: string | null;
+            buttonUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta-block';
+          }
+      )[]
+    | null;
+  meta?: {
+    /**
+     * Overrides the page title. Max 60 characters.
+     */
+    title?: string | null;
+    /**
+     * Meta description. 150–160 characters recommended.
+     */
+    description?: string | null;
+    /**
+     * OpenGraph image. 1200×630px recommended.
+     */
+    image?: (number | null) | Media;
+    /**
+     * Comma-separated keywords.
+     */
+    keywords?: string | null;
+    /**
+     * Prevent search engines from indexing this page.
+     */
+    noIndex?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * All enquiries and contact form submissions from the website.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "form-submissions".
+ */
+export interface FormSubmission {
+  id: number;
+  /**
+   * Full name of the enquirer
+   */
+  name: string;
+  email: string;
+  phone?: string | null;
+  formType?: ('contact' | 'reservation' | 'wedding' | 'corporate' | 'restaurant' | 'general') | null;
+  status?: ('new' | 'read' | 'replied' | 'archived') | null;
+  subject?: string | null;
+  message: string;
+  /**
+   * Internal notes — not visible to the enquirer.
+   */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -183,20 +845,64 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'rooms';
+        value: number | Room;
+      } | null)
+    | ({
+        relationTo: 'offers';
+        value: number | Offer;
+      } | null)
+    | ({
+        relationTo: 'experiences';
+        value: number | Experience;
+      } | null)
+    | ({
+        relationTo: 'dining';
+        value: number | Dining;
+      } | null)
+    | ({
+        relationTo: 'gallery';
+        value: number | Gallery;
+      } | null)
+    | ({
+        relationTo: 'testimonials';
+        value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'journal';
+        value: number | Journal;
+      } | null)
+    | ({
+        relationTo: 'faqs';
+        value: number | Faq;
+      } | null)
+    | ({
+        relationTo: 'locations';
+        value: number | Location;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'form-submissions';
+        value: number | FormSubmission;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -206,10 +912,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -229,7 +935,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -240,6 +946,9 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -274,6 +983,335 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rooms_select".
+ */
+export interface RoomsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  category?: T;
+  featured?: T;
+  heroImage?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  tagline?: T;
+  shortDescription?: T;
+  description?: T;
+  size?: T;
+  viewType?: T;
+  maxOccupancy?: T;
+  bedType?: T;
+  amenities?:
+    | T
+    | {
+        icon?: T;
+        label?: T;
+        id?: T;
+      };
+  highlights?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  startingPrice?: T;
+  bookingUrl?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        keywords?: T;
+        noIndex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "offers_select".
+ */
+export interface OffersSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  badge?: T;
+  heroImage?: T;
+  tagline?: T;
+  description?: T;
+  discountPercent?: T;
+  validFrom?: T;
+  validUntil?: T;
+  conditions?:
+    | T
+    | {
+        condition?: T;
+        id?: T;
+      };
+  howToBook?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        keywords?: T;
+        noIndex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "experiences_select".
+ */
+export interface ExperiencesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  category?: T;
+  heroImage?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  tagline?: T;
+  shortDescription?: T;
+  description?: T;
+  highlights?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  ctaLabel?: T;
+  ctaUrl?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        keywords?: T;
+        noIndex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dining_select".
+ */
+export interface DiningSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  venue?: T;
+  heroImage?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  tagline?: T;
+  shortDescription?: T;
+  description?: T;
+  openingHours?: T;
+  reservationUrl?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        keywords?: T;
+        noIndex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery_select".
+ */
+export interface GallerySelect<T extends boolean = true> {
+  image?: T;
+  caption?: T;
+  category?: T;
+  featured?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  quote?: T;
+  authorName?: T;
+  authorOrigin?: T;
+  stayDate?: T;
+  roomStayed?: T;
+  rating?: T;
+  featured?: T;
+  source?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "journal_select".
+ */
+export interface JournalSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  category?: T;
+  publishedAt?: T;
+  author?: T;
+  heroImage?: T;
+  excerpt?: T;
+  content?: T;
+  featured?: T;
+  readingTime?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        keywords?: T;
+        noIndex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs_select".
+ */
+export interface FaqsSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  category?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations_select".
+ */
+export interface LocationsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  category?: T;
+  image?: T;
+  description?: T;
+  distance?: T;
+  coordinates?:
+    | T
+    | {
+        lat?: T;
+        lng?: T;
+      };
+  featured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  hero?:
+    | T
+    | {
+        style?: T;
+        label?: T;
+        headline?: T;
+        intro?: T;
+        image?: T;
+      };
+  layout?:
+    | T
+    | {
+        'content-block'?:
+          | T
+          | {
+              heading?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'image-block'?:
+          | T
+          | {
+              image?: T;
+              caption?: T;
+              size?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'cta-block'?:
+          | T
+          | {
+              heading?: T;
+              subtext?: T;
+              buttonLabel?: T;
+              buttonUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        keywords?: T;
+        noIndex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "form-submissions_select".
+ */
+export interface FormSubmissionsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  formType?: T;
+  status?: T;
+  subject?: T;
+  message?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -314,6 +1352,295 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  siteName: string;
+  tagline?: string | null;
+  logo?: (number | null) | Media;
+  /**
+   * Light version of the logo (for dark backgrounds)
+   */
+  logoLight?: (number | null) | Media;
+  favicon?: (number | null) | Media;
+  maintenanceMode?: boolean | null;
+  announcementBanner?: {
+    enabled?: boolean | null;
+    message?: string | null;
+    ctaLabel?: string | null;
+    ctaUrl?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  navItems?:
+    | {
+        label: string;
+        type?: ('internal' | 'external') | null;
+        url?: string | null;
+        /**
+         * Internal URL path (e.g. /accommodation)
+         */
+        internalUrl?: string | null;
+        dropdown?:
+          | {
+              label: string;
+              url: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  ctaLabel?: string | null;
+  ctaUrl?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  columns?:
+    | {
+        heading?: string | null;
+        links?:
+          | {
+              label: string;
+              url: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  social?: {
+    instagram?: string | null;
+    facebook?: string | null;
+    tripadvisor?: string | null;
+  };
+  legalLinks?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  copyrightText?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking-settings".
+ */
+export interface BookingSetting {
+  id: number;
+  bookingEngineUrl: string;
+  /**
+   * Show sticky booking bar on desktop
+   */
+  stickyBarEnabled?: boolean | null;
+  /**
+   * Show floating CTA button on mobile
+   */
+  floatingCTAEnabled?: boolean | null;
+  stickyBarText?: string | null;
+  /**
+   * Direct booking discount percentage
+   */
+  directBookingDiscount?: number | null;
+  openingOfferEndDate?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-info".
+ */
+export interface ContactInfo {
+  id: number;
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  reservationsEmail?: string | null;
+  coordinates?: {
+    lat?: number | null;
+    lng?: number | null;
+  };
+  directions?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo-settings".
+ */
+export interface SeoSetting {
+  id: number;
+  defaultTitle?: string | null;
+  titleSuffix?: string | null;
+  defaultDescription?: string | null;
+  defaultOGImage?: (number | null) | Media;
+  googleVerification?: string | null;
+  bingVerification?: string | null;
+  googleAnalyticsId?: string | null;
+  googleTagManagerId?: string | null;
+  robotsTxt?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteName?: T;
+  tagline?: T;
+  logo?: T;
+  logoLight?: T;
+  favicon?: T;
+  maintenanceMode?: T;
+  announcementBanner?:
+    | T
+    | {
+        enabled?: T;
+        message?: T;
+        ctaLabel?: T;
+        ctaUrl?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  navItems?:
+    | T
+    | {
+        label?: T;
+        type?: T;
+        url?: T;
+        internalUrl?: T;
+        dropdown?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  ctaLabel?: T;
+  ctaUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  columns?:
+    | T
+    | {
+        heading?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  social?:
+    | T
+    | {
+        instagram?: T;
+        facebook?: T;
+        tripadvisor?: T;
+      };
+  legalLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  copyrightText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking-settings_select".
+ */
+export interface BookingSettingsSelect<T extends boolean = true> {
+  bookingEngineUrl?: T;
+  stickyBarEnabled?: T;
+  floatingCTAEnabled?: T;
+  stickyBarText?: T;
+  directBookingDiscount?: T;
+  openingOfferEndDate?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-info_select".
+ */
+export interface ContactInfoSelect<T extends boolean = true> {
+  address?: T;
+  phone?: T;
+  email?: T;
+  reservationsEmail?: T;
+  coordinates?:
+    | T
+    | {
+        lat?: T;
+        lng?: T;
+      };
+  directions?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo-settings_select".
+ */
+export interface SeoSettingsSelect<T extends boolean = true> {
+  defaultTitle?: T;
+  titleSuffix?: T;
+  defaultDescription?: T;
+  defaultOGImage?: T;
+  googleVerification?: T;
+  bingVerification?: T;
+  googleAnalyticsId?: T;
+  googleTagManagerId?: T;
+  robotsTxt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
