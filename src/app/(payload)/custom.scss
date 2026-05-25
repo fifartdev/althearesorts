@@ -64,6 +64,20 @@
   stroke: rgba(255, 255, 255, 0.4) !important;
 }
 
+// ─── Logo container ─────────────────────────────────────────────────────────
+
+// Payload wraps the Logo component in a fixed-size anchor — give it room
+.nav__brand,
+.nav__header a,
+.nav__header > a {
+  display: flex !important;
+  align-items: center !important;
+  padding: 8px 16px !important;
+  overflow: visible !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
 // ─── Top header bar ─────────────────────────────────────────────────────────
 
 .app-header {
