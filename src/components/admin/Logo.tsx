@@ -6,14 +6,13 @@ export default function Logo() {
       style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '10px',
-        padding: '4px 0',
+        padding: '6px 12px',
       }}
     >
       <img
         src="/logos/althea_logo_sqr.png"
         alt="Althea Resorts"
-        style={{ height: '48px', width: 'auto', display: 'block' }}
+        style={{ height: '40px', width: '40px', objectFit: 'contain', display: 'block' }}
       />
     </div>
   )
