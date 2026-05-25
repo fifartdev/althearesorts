@@ -11,9 +11,9 @@ export default function Logo() {
       }}
     >
       <img
-        src="/logos/althea_logo_white-f.png"
+        src="/logos/althea_logo_sqr.png"
         alt="Althea Resorts"
-        style={{ height: '38px', width: 'auto', display: 'block' }}
+        style={{ height: '48px', width: 'auto', display: 'block' }}
       />
     </div>
   )
