@@ -34,7 +34,7 @@ const faqs = [
   {
     category: 'Dining',
     items: [
-      { q: 'Do I need to book Narrativa in advance?', a: 'We recommend making a reservation for Narrativa, our rooftop restaurant, particularly during the high season. Tables can be arranged through the resort directly.' },
+      { q: 'Do I need to book AITHER in advance?', a: 'We recommend making a reservation for AITHER, our rooftop restaurant, particularly during the high season. Tables can be arranged by calling the resort directly.' },
       { q: 'Is breakfast included?', a: 'Breakfast is available as part of certain packages. Please check room rates at time of booking or contact us to add breakfast to your reservation.' },
       { q: 'Do you cater for dietary requirements?', a: 'Yes. Our kitchen can accommodate most dietary requirements including vegetarian, vegan, and allergen-specific needs. Please inform us at the time of booking.' },
     ],

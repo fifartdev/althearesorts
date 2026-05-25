@@ -21,7 +21,7 @@ const galleryItems = [
   },
   {
     span: 'col-span-1',
-    label: 'Narrativa Rooftop',
+    label: 'AITHER Rooftop',
     image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600&q=80',
   },
   {

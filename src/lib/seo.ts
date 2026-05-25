@@ -67,7 +67,7 @@ export const hotelSchema = {
   '@type': 'LodgingBusiness',
   name: 'Althea Resorts',
   alternateName: 'Althea Exclusive Resorts & Spa',
-  description: 'A luxury boutique resort on the hillside of Ano Loutro, near Xylokastro, Corinthia, Greece. 60 minutes from Athens. 41 rooms and suites, Ocean Spa, rooftop restaurant Narrativa, and private beach access.',
+  description: 'A luxury boutique resort on the hillside of Ano Loutro, near Xylokastro, Corinthia, Greece. 60 minutes from Athens. 41 rooms and suites, Ocean Spa, rooftop restaurant AITHER, and private beach access.',
   url: SITE_URL,
   telephone: '+302114184108',
   email: 'reservations@althearesorts.com',
@@ -123,11 +123,11 @@ export const hotelSchema = {
   containsPlace: [
     {
       '@type': 'Restaurant',
-      name: 'Narrativa',
+      name: 'AITHER',
       description: 'Rooftop restaurant with panoramic views of the Corinthian Gulf. Mediterranean cuisine told through a Greek lens.',
       servesCuisine: ['Greek', 'Mediterranean'],
       priceRange: '€€€€',
-      url: `${SITE_URL}/gastronomy#narrativa`,
+      url: `${SITE_URL}/gastronomy#aither`,
     },
     {
       '@type': 'HealthAndBeautyBusiness',

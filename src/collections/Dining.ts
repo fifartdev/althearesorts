@@ -20,7 +20,7 @@ export const Dining: CollectionConfig = {
       name: 'venue',
       type: 'select',
       options: [
-        { label: 'Narrativa (Rooftop Restaurant)', value: 'narrativa' },
+        { label: 'AITHER (Rooftop Restaurant)', value: 'aither' },
         { label: 'Breakfast', value: 'breakfast' },
         { label: 'All-Day Dining', value: 'all-day' },
         { label: 'Bar', value: 'bar' },

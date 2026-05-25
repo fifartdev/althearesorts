@@ -14,7 +14,7 @@ export function GastronomySection() {
             <ScrollReveal variant="image" className="aspect-[3/4] w-full relative overflow-hidden">
               <Image
                 src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80"
-                alt="Narrativa — Althea Resorts rooftop restaurant"
+                alt="AITHER — Althea Resorts rooftop restaurant"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -22,10 +22,10 @@ export function GastronomySection() {
               {/* Overlapping card */}
               <div className="absolute -right-6 -bottom-6 bg-[#102027] p-6 w-56 hidden lg:block z-10">
                 <p className="font-editorial text-lg font-light text-white/90 leading-snug mb-2">
-                  "A different story<br />
-                  <em className="italic">every evening"</em>
+                  "Above the Gulf.<br />
+                  <em className="italic">Above Everything."</em>
                 </p>
-                <span className="text-label-upper text-[#ad8b27]">Narrativa</span>
+                <span className="text-label-upper text-[#ad8b27]">AITHER</span>
               </div>
             </ScrollReveal>
           </div>
@@ -54,17 +54,17 @@ export function GastronomySection() {
                 have worked this soil for generations.
               </p>
               <p className="text-body-refined mb-10">
-                NARRATIVA, the resort's rooftop restaurant, follows a different
-                Mediterranean story each evening — told through a Greek lens.
-                The panoramic views of the Corinthian Gulf are not decoration.
-                They are part of the meal.
+                AITHER, the resort's rooftop restaurant, sits above the Corinthian Gulf,
+                open to the horizon in every direction. The kitchen works with the
+                Mediterranean as its reference point and Greece as its lens.
+                The panoramic views are not decoration. They are part of the meal.
               </p>
             </ScrollReveal>
 
             {/* Dining venues list */}
             <ScrollReveal delay={250}>
               <div className="flex flex-col gap-4 mb-10">
-                {['Narrativa Rooftop', 'Morning Breakfast', 'All-Day Dining', 'Bar & Pool Bar'].map((v) => (
+                {['AITHER Rooftop', 'Morning Breakfast', 'All-Day Dining', 'Bar & Pool Bar'].map((v) => (
                   <div key={v} className="flex items-center gap-4 py-3 border-b border-[#e8e4dd]">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#ad8b27]" aria-hidden="true" />
                     <span className="text-sm uppercase tracking-widest text-[#102027] font-light">{v}</span>

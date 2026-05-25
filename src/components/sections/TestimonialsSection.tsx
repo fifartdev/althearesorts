@@ -18,7 +18,7 @@ const testimonials = [
     stay: 'Althea Loft Suite',
   },
   {
-    quote: "Narrativa is the kind of restaurant that changes your expectations. The menu told a story across every course. The views made it impossible to be anywhere else in your mind.",
+    quote: "AITHER is the kind of restaurant that changes your expectations. The kitchen had thought carefully about every part of the evening, not just the food. The views made it impossible to be anywhere else in your mind.",
     name: 'Catherine R.',
     origin: 'London, United Kingdom',
     stay: 'Superior Sea View Room',

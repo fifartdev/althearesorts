@@ -37,7 +37,7 @@ export default function OffersPage() {
         </div>
         <div className="relative z-10 container-luxury pb-16 lg:pb-24 w-full">
           <ScrollReveal>
-            <SectionLabel light className="mb-5">Special Rates</SectionLabel>
+            <SectionLabel light className="mb-5">Offers</SectionLabel>
           </ScrollReveal>
           <ScrollReveal delay={100}>
             <h1 className="text-display-xl text-white max-w-2xl">
@@ -77,10 +77,14 @@ export default function OffersPage() {
                   applies across all room categories — from the Standard Double to the
                   Althea Loft Suite with Outdoor Jacuzzi.
                 </p>
-                <p className="text-body-refined mb-10">
+                <p className="text-body-refined mb-5">
                   Booking direct also means you speak to us directly. Questions about your
                   stay, requests before arrival, specific arrangements — all handled by the
                   people who actually know the property, without a third party in between.
+                </p>
+                <p className="text-body-refined mb-10">
+                  This is how we prefer to welcome our first guests. With a real offer
+                  and a direct conversation.
                 </p>
               </ScrollReveal>
 

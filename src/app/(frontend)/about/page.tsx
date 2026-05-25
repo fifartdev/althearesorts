@@ -119,9 +119,17 @@ export default function AboutPage() {
                   produced. It is the staff member who remembers your name on the second day
                   without being reminded.
                 </p>
-                <p className="text-body-refined">
+                <p className="text-body-refined mb-5">
                   Althea was designed around these details. Forty-one rooms and suites, each
-                  one positioned to make the most of the Corinthian landscape.
+                  one positioned to make the most of the Corinthian landscape. A rooftop
+                  restaurant, AITHER, that tells a different Mediterranean story every evening.
+                  A spa — the Ocean Spa — built as a modern Asclepeion, where ancient wellness
+                  traditions meet contemporary therapies using Oceanis cosmetics, a Greek brand
+                  as rooted in this land as we are.
+                </p>
+                <p className="text-body-refined">
+                  A private beach five minutes away. A kitchen that begins every morning
+                  with what is fresh, local, and worth eating.
                 </p>
               </ScrollReveal>
             </div>
@@ -154,8 +162,13 @@ export default function AboutPage() {
                   the coastline of the Gulf, all within reach, all still quiet enough
                   to feel like a discovery.
                 </p>
+                <p className="text-sm font-light text-white/60 leading-relaxed mb-5">
+                  The town of Xylokastro sits ten minutes from our door, with its seafront,
+                  its fish, and its unhurried pace. The sea is always close. Athens is sixty
+                  minutes away.
+                </p>
                 <p className="text-sm font-light text-white/60 leading-relaxed">
-                  The sea is always close. Athens is sixty minutes away. Everything else can wait.
+                  Everything else can wait.
                 </p>
               </ScrollReveal>
             </div>
@@ -194,17 +207,22 @@ export default function AboutPage() {
                 Greek hospitality is not a concept that needs explaining to a Greek.
                 It is something you grow up understanding — that a guest is to be received
                 properly, fed well, made comfortable, and sent away with the feeling that
-                they were genuinely wanted.
+                they were genuinely wanted. At Althea, we have taken that instinct and built
+                a five-star property around it. The result is a place that feels neither
+                stiff nor casual, neither anonymous nor intrusive. It feels, if we have done
+                our job correctly, like the best version of somewhere you already belong.
               </p>
               <p className="text-body-refined text-center mb-6">
-                At Althea, we have taken that instinct and built a five-star property around it.
-                The result is a place that feels neither stiff nor casual, neither anonymous
-                nor intrusive. It feels, if we have done our job correctly, like the best
-                version of somewhere you already belong.
+                Sixty minutes from Athens. Not sixty minutes and a ferry. Not sixty minutes
+                and a connecting flight. Sixty minutes by car, on a good road, with the Gulf
+                appearing on your left before you have finished your first coffee. That proximity
+                is one of the quiet advantages of Althea — close enough to be spontaneous,
+                far enough to feel completely removed from the city you left behind.
               </p>
               <p className="font-editorial text-xl font-light italic text-[#102027] mt-8">
                 "This is Greek hospitality at its most honest. Not performed for tourists.
-                Simply offered, the way it has always been offered here."
+                Not packaged for a brochure. Simply offered, the way it has always been
+                offered here, to anyone who arrives at the door."
               </p>
             </ScrollReveal>
           </div>

@@ -51,11 +51,17 @@ export default function AccommodationPage() {
             <GoldLine className="mx-auto mb-8" />
           </ScrollReveal>
           <ScrollReveal delay={100}>
-            <p className="text-body-refined text-lg leading-relaxed">
+            <p className="text-body-refined text-lg leading-relaxed mb-5">
               Every room at Althea begins with the same question: what does this guest
               need to feel completely at ease? The answer changes depending on the view
               outside the window, the size of the terrace, the depth of the pool.
-              What doesn't change is the quality of what's inside.
+              What doesn't change is the quality of what's inside. Natural materials,
+              considered design, amenities by Oceanis, and the kind of stillness that
+              only comes when a place has been built with genuine care.
+            </p>
+            <p className="text-body-refined text-lg leading-relaxed">
+              From the hillside of Ano Loutro, the Corinthian Gulf sits at the edge of
+              every view. The sea is always there. The rest is up to you.
             </p>
           </ScrollReveal>
           <ScrollReveal delay={150}>
@@ -114,10 +120,17 @@ export default function AccommodationPage() {
                     <span className="text-label-upper text-[#ad8b27] mb-6 block">{room.view}</span>
                   </ScrollReveal>
                   <ScrollReveal delay={80}>
-                    <h2 className={`text-display-sm mb-4 ${isFeatured ? 'text-white' : 'text-[#102027]'}`}>
+                    <h2 className={`text-display-sm mb-3 ${isFeatured ? 'text-white' : 'text-[#102027]'}`}>
                       {room.title}
                     </h2>
                   </ScrollReveal>
+                  {'tagline' in room && room.tagline && (
+                    <ScrollReveal delay={100}>
+                      <p className={`font-editorial text-lg font-light italic mb-4 ${isFeatured ? 'text-white/70' : 'text-[#6b6b6b]'}`}>
+                        {room.tagline}
+                      </p>
+                    </ScrollReveal>
+                  )}
                   <ScrollReveal delay={120}>
                     <div className="flex items-center gap-4 mb-6">
                       <span className={`text-sm font-light ${isFeatured ? 'text-white/50' : 'text-[#6b6b6b]'}`}>

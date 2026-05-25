@@ -42,7 +42,7 @@ const sights = [
   {
     name: 'Epidaurus',
     distance: '1.5 hr by car',
-    desc: 'The ancient theatre, set in a valley of perfect acoustics and quiet beauty. One of Greece\'s most moving sites.',
+    desc: 'The ancient theatre of Epidaurus, set in a valley of perfect acoustics. One of Greece\'s most moving sites.',
     category: 'Day Trip',
   },
   {
@@ -92,6 +92,12 @@ export default function LocationPage() {
                 </p>
               </ScrollReveal>
               <ScrollReveal delay={100}>
+                <p className="text-body-refined mb-5">
+                  Most people drive through Corinthia on the way to somewhere else. That is
+                  their loss and, quietly, your gain. The region sits between Athens and the
+                  Peloponnese, close enough to the city to reach without effort, far enough
+                  to feel like a different world entirely.
+                </p>
                 <p className="text-body-refined mb-5">
                   The light here is different from the light in the islands. Softer in the
                   morning, golden in the afternoon, and at dusk it does something to the water
@@ -154,10 +160,16 @@ export default function LocationPage() {
                   quiet stretch of coastline reserved for guests, with comfortable sunbeds and
                   the kind of privacy that public beaches cannot offer.
                 </p>
-                <p className="text-body-refined">
+                <p className="text-body-refined mb-5">
                   The Corinthian Gulf is calm by nature. The water is clean, the temperature
-                  generous from early summer through October. Swimming here feels unhurried
-                  in a way that the more crowded Aegean beaches rarely do.
+                  generous from early summer through October, and the experience of swimming
+                  here feels unhurried in a way that the more crowded Aegean beaches rarely do.
+                </p>
+                <p className="text-body-refined">
+                  For those who want to explore further, the coastline of Xylokastro and the
+                  surrounding area offers a series of smaller beaches worth finding — some
+                  with tavernas, some with nothing at all, which is sometimes exactly
+                  what you need.
                 </p>
               </ScrollReveal>
             </div>
@@ -168,7 +180,7 @@ export default function LocationPage() {
       {/* Sightseeing Grid */}
       <section className="section-padding bg-white">
         <div className="container-luxury">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-6">
             <div>
               <ScrollReveal>
                 <SectionLabel className="mb-4">Sightseeing</SectionLabel>
@@ -180,6 +192,15 @@ export default function LocationPage() {
               </ScrollReveal>
             </div>
           </div>
+          <ScrollReveal delay={150}>
+            <p className="text-body-refined max-w-2xl mb-12">
+              Corinthia is one of the most historically layered regions in Greece and one
+              of the least overrun by tourism — a place where the ancient world is still
+              legible and still quiet. Althea is a base as much as it is a destination.
+              The region around it is worth exploring and we are happy to help you do
+              exactly that.
+            </p>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {sights.map((sight, i) => (

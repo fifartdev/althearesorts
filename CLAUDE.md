@@ -7,7 +7,7 @@ Start with `.claude/skills/payload/SKILL.md` for a quick reference, then see `.c
 
 ## Project overview
 
-Luxury hotel website for **Althea Resorts** (althearesorts.com) — a 5-star boutique resort in Ano Loutro, Xylokastro, Corinthia, Greece. 41 rooms and suites, Ocean Spa, rooftop restaurant Narrativa, conference facilities.
+Luxury hotel website for **Althea Resorts** (althearesorts.com) — a 5-star boutique resort in Ano Loutro, Xylokastro, Corinthia, Greece. 41 rooms and suites, Ocean Spa, rooftop restaurant AITHER, conference facilities.
 
 **Stack:** Next.js 16 App Router · TypeScript · Tailwind CSS v4 · GSAP · Payload CMS 3.x · PostgreSQL (NEON) · Vercel
 
@@ -147,7 +147,7 @@ export async function generateMetadata({ params }) {
 
 **robots.ts** — AI training bots blocked (GPTBot, ChatGPT-User, CCBot, anthropic-ai, Claude-Web). Social crawlers allowed (FacebookBot, Twitterbot).
 
-**hotelSchema** — `LodgingBusiness` with correct coordinates from `COORDINATES`, check-in/out times, languages, amenities, nested Restaurant (Narrativa) and HealthAndBeautyBusiness (Ocean Spa).
+**hotelSchema** — `LodgingBusiness` with correct coordinates from `COORDINATES`, check-in/out times, languages, amenities, nested Restaurant (AITHER) and HealthAndBeautyBusiness (Ocean Spa).
 
 **sitemap.ts** — add every new static route. Dynamic routes (future journal slugs, future room types) must be fetched from Payload and mapped at build time.
 
