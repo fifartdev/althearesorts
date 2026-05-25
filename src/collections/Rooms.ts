@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { seoFields } from '../fields/seo'
+
 import { slugField } from '../fields/slug'
 import { isAdmin, isSuperAdmin } from '../access'
 
@@ -170,10 +170,6 @@ export const Rooms: CollectionConfig = {
               admin: { description: 'Direct booking URL for this room type' },
             },
           ],
-        },
-        {
-          label: 'SEO',
-          fields: seoFields,
         },
       ],
     },

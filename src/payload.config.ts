@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -80,7 +81,46 @@ export default buildConfig({
     },
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    seoPlugin({
+      collections: ['rooms', 'offers', 'experiences', 'dining', 'journal', 'pages'],
+      uploadsCollection: 'media',
+      tabbedUI: true,
+      generateTitle: ({ doc }) =>
+        `${(doc as any).title ?? (doc as any).name ?? ''} | Althea Resorts`,
+      generateDescription: ({ doc }) =>
+        (doc as any).excerpt ?? (doc as any).shortDescription ?? (doc as any).tagline ?? '',
+      generateURL: ({ doc, collectionSlug }) => {
+        const base = 'https://althearesorts.com'
+        const paths: Record<string, string> = {
+          rooms: `/accommodation/${(doc as any).slug ?? ''}`,
+          offers: '/offers',
+          experiences: '/experiences',
+          dining: '/gastronomy',
+          journal: `/journal/${(doc as any).slug ?? ''}`,
+          pages: `/${(doc as any).slug ?? ''}`,
+        }
+        return base + (paths[collectionSlug ?? ''] ?? '/')
+      },
+      fields: ({ defaultFields }) => [
+        ...defaultFields,
+        {
+          name: 'keywords',
+          type: 'text',
+          label: 'Keywords',
+          localized: true,
+          admin: { description: 'Comma-separated keywords.' },
+        },
+        {
+          name: 'noIndex',
+          type: 'checkbox',
+          label: 'No Index',
+          defaultValue: false,
+          admin: { description: 'Prevent search engines from indexing this page.' },
+        },
+      ],
+    }),
+  ],
   localization: {
     locales: [
       { label: 'English', code: 'en' },

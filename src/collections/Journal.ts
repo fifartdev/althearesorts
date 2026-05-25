@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { seoFields } from '../fields/seo'
+
 import { slugField } from '../fields/slug'
 import { isAdmin, isSuperAdmin } from '../access'
 
@@ -57,10 +57,6 @@ export const Journal: CollectionConfig = {
       name: 'readingTime',
       type: 'number',
       admin: { description: 'Estimated reading time in minutes' },
-    },
-    {
-      type: 'tabs',
-      tabs: [{ label: 'SEO', fields: seoFields }],
     },
   ],
 }

@@ -296,16 +296,10 @@ export interface Room {
    */
   bookingUrl?: string | null;
   meta?: {
-    /**
-     * Overrides the page title. Max 60 characters.
-     */
     title?: string | null;
-    /**
-     * Meta description. 150–160 characters recommended.
-     */
     description?: string | null;
     /**
-     * OpenGraph image. 1200×630px recommended.
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
     image?: (number | null) | Media;
     /**
@@ -383,16 +377,10 @@ export interface Offer {
   ctaLabel?: string | null;
   ctaUrl?: string | null;
   meta?: {
-    /**
-     * Overrides the page title. Max 60 characters.
-     */
     title?: string | null;
-    /**
-     * Meta description. 150–160 characters recommended.
-     */
     description?: string | null;
     /**
-     * OpenGraph image. 1200×630px recommended.
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
     image?: (number | null) | Media;
     /**
@@ -455,16 +443,10 @@ export interface Experience {
   ctaLabel?: string | null;
   ctaUrl?: string | null;
   meta?: {
-    /**
-     * Overrides the page title. Max 60 characters.
-     */
     title?: string | null;
-    /**
-     * Meta description. 150–160 characters recommended.
-     */
     description?: string | null;
     /**
-     * OpenGraph image. 1200×630px recommended.
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
     image?: (number | null) | Media;
     /**
@@ -523,16 +505,10 @@ export interface Dining {
   openingHours?: string | null;
   reservationUrl?: string | null;
   meta?: {
-    /**
-     * Overrides the page title. Max 60 characters.
-     */
     title?: string | null;
-    /**
-     * Meta description. 150–160 characters recommended.
-     */
     description?: string | null;
     /**
-     * OpenGraph image. 1200×630px recommended.
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
     image?: (number | null) | Media;
     /**
@@ -634,16 +610,10 @@ export interface Journal {
    */
   readingTime?: number | null;
   meta?: {
-    /**
-     * Overrides the page title. Max 60 characters.
-     */
     title?: string | null;
-    /**
-     * Meta description. 150–160 characters recommended.
-     */
     description?: string | null;
     /**
-     * OpenGraph image. 1200×630px recommended.
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
     image?: (number | null) | Media;
     /**
@@ -773,16 +743,10 @@ export interface Page {
       )[]
     | null;
   meta?: {
-    /**
-     * Overrides the page title. Max 60 characters.
-     */
     title?: string | null;
-    /**
-     * Meta description. 150–160 characters recommended.
-     */
     description?: string | null;
     /**
-     * OpenGraph image. 1200×630px recommended.
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
     image?: (number | null) | Media;
     /**

@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { seoFields } from '../fields/seo'
+
 import { slugField } from '../fields/slug'
 import { isAdmin, isSuperAdmin } from '../access'
 
@@ -58,10 +58,6 @@ export const Experiences: CollectionConfig = {
       name: 'ctaUrl',
       type: 'text',
       defaultValue: 'https://althearesort.reserve-online.net',
-    },
-    {
-      type: 'tabs',
-      tabs: [{ label: 'SEO', fields: seoFields }],
     },
   ],
 }

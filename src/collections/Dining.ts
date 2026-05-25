@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { seoFields } from '../fields/seo'
+
 import { slugField } from '../fields/slug'
 import { isAdmin, isSuperAdmin } from '../access'
 
@@ -52,9 +52,5 @@ export const Dining: CollectionConfig = {
       admin: { description: 'e.g. "Open from late afternoon into the night"' },
     },
     { name: 'reservationUrl', type: 'text' },
-    {
-      type: 'tabs',
-      tabs: [{ label: 'SEO', fields: seoFields }],
-    },
   ],
 }
