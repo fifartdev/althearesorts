@@ -1,56 +1,111 @@
 // Althea Resorts — Payload Admin Brand Theme
-// Deep teal (#102027) for nav/sidebar, gold (#ad8b27) for accents
+// Deep teal (#102027) sidebar, gold (#ad8b27) accents
 
-// Nav sidebar
+// ─── Sidebar nav ────────────────────────────────────────────────────────────
+
 .nav {
-  --nav-background: #102027;
   background: #102027 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.07) !important;
+
+  // Flip Payload's base colour tokens so every component inside
+  // the nav that uses var(--color-base-*) reads white-on-dark
+  --color-base-0:    #ffffff;
+  --color-base-50:   rgba(255, 255, 255, 0.97);
+  --color-base-100:  rgba(255, 255, 255, 0.92);
+  --color-base-200:  rgba(255, 255, 255, 0.85);
+  --color-base-300:  rgba(255, 255, 255, 0.75);
+  --color-base-400:  rgba(255, 255, 255, 0.65);
+  --color-base-500:  rgba(255, 255, 255, 0.55);
+  --color-base-600:  rgba(255, 255, 255, 0.45);
+  --color-base-700:  rgba(255, 255, 255, 0.38);
+  --color-base-800:  rgba(255, 255, 255, 0.30);
+  --color-base-900:  rgba(255, 255, 255, 0.20);
+  --color-base-1000: #102027;
+
+  // Ensure any background that derives from base tokens stays dark
+  --color-panel-dark:  #0c1a1f;
+  --color-panel-light: #102027;
 }
 
-// Top header bar
-.app-header {
-  background: #102027 !important;
-  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
-}
-
-// Nav links hover / active state
-.nav__link--active,
-.nav__link:hover {
-  color: #ad8b27 !important;
-}
-
-// Dashboard logo area
-.logo {
-  padding: 0 !important;
-}
-
-// Primary action buttons (Save, Create, etc.)
-.btn--style-primary,
-.btn.btn--style-primary {
-  background-color: #ad8b27 !important;
-  border-color: #ad8b27 !important;
+// Nav link items — explicit white fallback for any token gap
+.nav__link,
+.nav a {
+  color: rgba(255, 255, 255, 0.82) !important;
+  transition: color 0.2s, background 0.2s;
 
   &:hover {
-    background-color: #96781e !important;
-    border-color: #96781e !important;
+    color: #ad8b27 !important;
+    background: rgba(255, 255, 255, 0.06) !important;
   }
 }
 
-// Pill/badge for active status
+// Active / selected link
+.nav__link--active,
+.nav__link--active:hover {
+  color: #ad8b27 !important;
+  background: rgba(173, 139, 39, 0.12) !important;
+  border-left: 2px solid #ad8b27;
+}
+
+// Group headings (System, Accommodation, Content…)
+.nav__group-label,
+.nav__group > button > span,
+.nav__group > span {
+  color: rgba(255, 255, 255, 0.35) !important;
+  letter-spacing: 0.1em !important;
+  font-size: 0.62rem !important;
+  text-transform: uppercase !important;
+}
+
+// Collapse toggle chevrons
+.nav__group-toggle,
+.nav__group > button svg {
+  color: rgba(255, 255, 255, 0.4) !important;
+  stroke: rgba(255, 255, 255, 0.4) !important;
+}
+
+// ─── Top header bar ─────────────────────────────────────────────────────────
+
+.app-header {
+  background: #0c1a1f !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+
+  // Same token flip for the header
+  --color-base-0:    #ffffff;
+  --color-base-1000: #0c1a1f;
+}
+
+// Breadcrumb / step-nav text
+.step-nav a,
+.step-nav span {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+// ─── Buttons ────────────────────────────────────────────────────────────────
+
+.btn--style-primary,
+.btn.btn--style-primary {
+  background-color: #ad8b27 !important;
+  border-color:     #ad8b27 !important;
+  color: #ffffff !important;
+
+  &:hover {
+    background-color: #96781e !important;
+    border-color:     #96781e !important;
+  }
+}
+
+// ─── Status pills ───────────────────────────────────────────────────────────
+
 .pill--style-success {
   background-color: rgba(173, 139, 39, 0.15) !important;
   color: #ad8b27 !important;
 }
 
-// Sidebar group headings
-.nav__group-label {
-  color: rgba(255, 255, 255, 0.4) !important;
-  letter-spacing: 0.1em !important;
-  font-size: 0.65rem !important;
-  text-transform: uppercase !important;
-}
+// ─── Locale switcher ────────────────────────────────────────────────────────
 
-// Locale switcher accent
-.locale-selector__current {
-  border-color: #ad8b27 !important;
+.locale-selector__current,
+.locale-selector button {
+  border-color: rgba(173, 139, 39, 0.6) !important;
+  color: rgba(255, 255, 255, 0.85) !important;
 }
