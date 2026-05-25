@@ -575,7 +575,7 @@ async function seedJournal(payload: Payload) {
         content: post.content,
         readingTime: post.readingTime,
         featured: post.featured,
-        publishedAt: post.publishedDate,
+        publishedAt: post.publishedAt,
         meta: {
           title: post.metaTitle,
           description: post.metaDescription,
