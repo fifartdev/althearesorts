@@ -42,7 +42,6 @@ export default buildConfig({
         Icon: '/components/admin/Icon',
       },
     },
-    css: path.resolve(dirname, 'app/(payload)/custom.scss'),
     importMap: {
       baseDir: path.resolve(dirname),
     },

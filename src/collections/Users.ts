@@ -15,7 +15,10 @@ export const Users: CollectionConfig = {
     read: isAdmin,
     update: isAdminOrSelf,
     delete: isSuperAdmin,
-    admin: isAdmin,
+    admin: ({ req }) => {
+      const role = (req.user as any)?.role
+      return role === 'admin' || role === 'superadmin'
+    },
   },
   fields: [
     {
