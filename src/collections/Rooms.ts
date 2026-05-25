@@ -56,7 +56,6 @@ export const Rooms: CollectionConfig = {
               name: 'heroImage',
               type: 'upload',
               relationTo: 'media',
-              required: true,
             },
             {
               name: 'gallery',
@@ -66,7 +65,6 @@ export const Rooms: CollectionConfig = {
                   name: 'image',
                   type: 'upload',
                   relationTo: 'media',
-                  required: true,
                 },
                 {
                   name: 'caption',

@@ -34,6 +34,15 @@ function meta(title: string, description: string, keywords: string) {
   return { meta: { title, description, keywords, noIndex: false } }
 }
 
+async function slugExists(payload: Payload, collection: string, slug: string): Promise<boolean> {
+  const { totalDocs } = await payload.find({
+    collection: collection as any,
+    where: { slug: { equals: slug } },
+    limit: 1,
+  })
+  return totalDocs > 0
+}
+
 async function isEmpty(payload: Payload, collection: string): Promise<boolean> {
   const { totalDocs } = await payload.find({ collection: collection as any, limit: 1 })
   return totalDocs === 0
@@ -44,7 +53,7 @@ async function isEmpty(payload: Payload, collection: string): Promise<boolean> {
 // ---------------------------------------------------------------------------
 
 async function seedRooms(payload: Payload) {
-  if (!await isEmpty(payload, 'rooms')) { console.log('  ✓ Rooms already seeded'); return }
+  if (await slugExists(payload, 'rooms', 'standard-double')) { console.log('  ✓ Rooms already seeded'); return }
 
   const rooms = [
     {
@@ -252,7 +261,7 @@ async function seedRooms(payload: Payload) {
 // ---------------------------------------------------------------------------
 
 async function seedDining(payload: Payload) {
-  if (!await isEmpty(payload, 'dining')) { console.log('  ✓ Dining already seeded'); return }
+  if (await slugExists(payload, 'dining', 'aither')) { console.log('  ✓ Dining already seeded'); return }
 
   const venues = [
     {
@@ -355,7 +364,7 @@ async function seedDining(payload: Payload) {
 // ---------------------------------------------------------------------------
 
 async function seedOffers(payload: Payload) {
-  if (!await isEmpty(payload, 'offers')) { console.log('  ✓ Offers already seeded'); return }
+  if (await slugExists(payload, 'offers', 'opening-offer-10-percent')) { console.log('  ✓ Offers already seeded'); return }
 
   await (payload.create as Function)({
     collection: 'offers',
@@ -441,7 +450,7 @@ async function seedFAQs(payload: Payload) {
 // ---------------------------------------------------------------------------
 
 async function seedJournal(payload: Payload) {
-  if (!await isEmpty(payload, 'journal')) { console.log('  ✓ Journal already seeded'); return }
+  if (await slugExists(payload, 'journal', 'ancient-corinth')) { console.log('  ✓ Journal already seeded'); return }
 
   const posts = [
     {
@@ -660,7 +669,7 @@ async function seedLocations(payload: Payload) {
 // ---------------------------------------------------------------------------
 
 async function seedExperiences(payload: Payload) {
-  if (!await isEmpty(payload, 'experiences')) { console.log('  ✓ Experiences already seeded'); return }
+  if (await slugExists(payload, 'experiences', 'ocean-spa')) { console.log('  ✓ Experiences already seeded'); return }
 
   const items = [
     {
