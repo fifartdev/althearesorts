@@ -20,42 +20,49 @@ const sights = [
     distance: '45 min by car',
     desc: 'One of the most powerful city-states of antiquity. The archaeological site and museum hold their own against anything in Attica.',
     category: 'Archaeological',
+    image: 'https://images.unsplash.com/photo-1603566541830-972ff1b4b2cd?auto=format&fit=crop&w=800&q=80',
   },
   {
     name: 'Acrocorinth',
     distance: '45 min by car',
     desc: 'The fortified hill rising above the ancient city. A climb that earns its view.',
     category: 'Archaeological',
+    image: 'https://images.unsplash.com/photo-1748560549903-d34da91a2db0?auto=format&fit=crop&w=800&q=80',
   },
   {
     name: 'Corinth Canal',
     distance: '40 min by car',
     desc: 'One of the great feats of nineteenth-century engineering. It still stops people in their tracks when they see it for the first time.',
     category: 'Landmark',
+    image: 'https://images.unsplash.com/photo-1717518213008-16af162e8494?auto=format&fit=crop&w=800&q=80',
   },
   {
     name: 'Xylokastro',
     distance: '10 min by car',
     desc: 'A seafront promenade, good coffee, local fish, and the feeling of a place that has not been arranged for visitors.',
     category: 'Town',
+    image: 'https://images.unsplash.com/photo-1710107655752-92edd8d02afb?auto=format&fit=crop&w=800&q=80',
   },
   {
     name: 'Epidaurus',
     distance: '1.5 hr by car',
     desc: 'The ancient theatre of Epidaurus, set in a valley of perfect acoustics. One of Greece\'s most moving sites.',
     category: 'Day Trip',
+    image: 'https://images.unsplash.com/photo-1681118143040-e81720f92a27?auto=format&fit=crop&w=800&q=80',
   },
   {
     name: 'Mystras',
     distance: '2 hr by car',
     desc: 'The medieval city rising above the Peloponnese. A UNESCO World Heritage Site worth a full day.',
     category: 'Day Trip',
+    image: 'https://images.unsplash.com/photo-1776845791455-dbb7383628a0?auto=format&fit=crop&w=800&q=80',
   },
   {
     name: 'Mycenae',
     distance: '1 hr by car',
     desc: 'The citadel of Agamemnon. One of the most significant sites of ancient Greece — the Lion Gate alone justifies the journey.',
     category: 'Day Trip',
+    image: 'https://images.unsplash.com/photo-1573314105642-342e876cae22?auto=format&fit=crop&w=800&q=80',
   },
 ]
 
@@ -211,13 +218,29 @@ export default function LocationPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {sights.map((sight, i) => (
               <ScrollReveal key={sight.name} delay={i * 60}>
-                <div className="p-6 border border-[#e8e4dd] h-full flex flex-col gap-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-label-upper text-[#ad8b27]">{sight.category}</span>
-                    <span className="text-xs font-light text-[#a0a0a0] uppercase tracking-wider">{sight.distance}</span>
+                <div className="border border-[#e8e4dd] h-full flex flex-col overflow-hidden">
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image
+                      src={sight.image}
+                      alt={sight.name}
+                      fill
+                      className="object-cover transition-transform duration-700 hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-[#102027]/20" />
+                    <div className="absolute top-4 left-4">
+                      <span className="text-[10px] uppercase tracking-[0.18em] text-white bg-[#102027]/60 backdrop-blur-sm px-2.5 py-1">
+                        {sight.category}
+                      </span>
+                    </div>
                   </div>
-                  <h3 className="font-editorial text-xl font-light text-[#102027]">{sight.name}</h3>
-                  <p className="text-sm font-light text-[#6b6b6b] leading-relaxed">{sight.desc}</p>
+                  <div className="p-6 flex flex-col gap-2 flex-1">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="font-editorial text-xl font-light text-[#102027]">{sight.name}</h3>
+                      <span className="text-xs font-light text-[#a0a0a0] uppercase tracking-wider shrink-0 mt-1">{sight.distance}</span>
+                    </div>
+                    <p className="text-sm font-light text-[#6b6b6b] leading-relaxed">{sight.desc}</p>
+                  </div>
                 </div>
               </ScrollReveal>
             ))}

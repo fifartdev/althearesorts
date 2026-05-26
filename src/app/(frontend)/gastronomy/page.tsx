@@ -20,7 +20,7 @@ const venues = [
     label: 'All Day Dining',
     title: 'Something Good, Any Hour You Want It',
     desc: 'Between meals, Althea keeps the kitchen open. Light plates, honest flavors, ingredients that don\'t need much done to them. Whether you come in from the pool or off the beach, there is always something worth sitting down for. The all-day menu follows the same philosophy as everything else at Althea: good produce, treated with respect, served without pretense.',
-    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=80',
+    image: '/images/dining%20pexel%20photo.jpg',
     imageAlt: 'All-day dining at Althea',
     bg: 'bg-[#dde6ea]',
   },
@@ -29,7 +29,7 @@ const venues = [
     label: 'Breakfast',
     title: 'Morning, the Greek Way',
     desc: 'Breakfast at Althea is a slow ritual. The table is set with what the season offers. Local honey, fresh bread, cheeses from nearby villages, eggs, olives, fruit picked at the right time. It is a buffet, but it doesn\'t feel like one. It feels like someone\'s kitchen, scaled up with care. There is no rush here. The morning light over the Corinthian Gulf is reason enough to linger a little longer over your second cup of coffee.',
-    image: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=900&q=80',
+    image: '/images/breakfast.jpg',
     imageAlt: 'Mediterranean breakfast spread',
     bg: 'bg-[#f7f4ef]',
   },
@@ -62,7 +62,7 @@ export default function GastronomyPage() {
         aria-label="Gastronomy"
       >
         <Image
-          src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=2000&q=80"
+          src="/images/restaurant%20pexel%20photo.jpg"
           alt="AITHER — Althea Resorts rooftop restaurant"
           fill
           priority
@@ -149,7 +149,7 @@ export default function GastronomyPage() {
             </div>
             <ScrollReveal variant="image" className="aspect-[3/4] w-full relative overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80"
+                src="/images/restaurant%20pexel%20photo.jpg"
                 alt="AITHER rooftop restaurant with Gulf views"
                 fill
                 className="object-cover"

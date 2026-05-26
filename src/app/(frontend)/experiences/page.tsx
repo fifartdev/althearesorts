@@ -81,7 +81,7 @@ export default function ExperiencesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <ScrollReveal variant="image" className="aspect-[4/5] w-full relative overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=900&q=80"
+                src="/images/activities%20pexel%20photo.jpg"
                 alt="Hiking and activities in Corinthia"
                 fill
                 className="object-cover"
@@ -234,7 +234,7 @@ export default function ExperiencesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <ScrollReveal variant="image" className="aspect-[4/3] w-full relative overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=900&q=80"
+                src="https://images.unsplash.com/photo-1694125852939-1267174f2770?auto=format&fit=crop&w=900&q=80"
                 alt="Main pool at Althea Resorts"
                 fill
                 className="object-cover"
@@ -396,7 +396,7 @@ export default function ExperiencesPage() {
 
             <ScrollReveal variant="image" delay={100} className="aspect-[4/5] w-full relative overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1431540015161-0bf868a2d407?auto=format&fit=crop&w=900&q=80"
+                src="/images/conference%20pexel%20photo.jpg"
                 alt="Conference facilities — Althea Resorts"
                 fill
                 className="object-cover"

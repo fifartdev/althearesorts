@@ -25,8 +25,6 @@ export const NAV_LINKS = [
   { label: 'Contact', href: '/contact' },
 ]
 
-const S = 'https://staging.althearesorts.com/wp-content/uploads/2026/02'
-
 export const ROOMS = [
   {
     slug: 'standard-double',
@@ -36,7 +34,7 @@ export const ROOMS = [
     shortDesc: 'Clean lines, comfortable proportions, and the natural light of Corinthia coming through every morning. The Standard Double meets good design and honest value — a room that gives you everything you need and nothing you don\'t.',
     features: ['King size or twin beds', 'Balcony', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Garden view',
-    image: `${S}/althea-exclusive-resorts-spa-1.png`,
+    image: '/images/standard.jpg',
   },
   {
     slug: 'deluxe-double-mv-pv',
@@ -46,7 +44,7 @@ export const ROOMS = [
     shortDesc: 'Mountain or pool view from a generous private balcony. The Deluxe Double is where you spend a morning with coffee and no particular plan, watching the hills or the water below. Refined furnishings, premium Oceanis amenities, and a room that feels larger than its category suggests.',
     features: ['King size or twin beds', 'Balcony with view', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Mountain or pool view',
-    image: `${S}/althea-exclusive-resorts-spa-4.png`,
+    image: '/images/deluxe%20double.jpg',
   },
   {
     slug: 'deluxe-double-private-pool',
@@ -56,7 +54,7 @@ export const ROOMS = [
     shortDesc: 'Step outside and the pool is waiting. Ideal for guests who want the resort experience at its most exclusive, with seamless access to a shared pool. Elegant interiors open directly to the water, and the day becomes entirely yours to arrange.',
     features: ['King size or twin beds', 'Sharing pool', 'Balcony', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Sharing pool',
-    image: `${S}/althea-exclusive-resorts-spa-5.png`,
+    image: '/images/del.double.jpg',
   },
   {
     slug: 'superior-sea-view',
@@ -66,7 +64,7 @@ export const ROOMS = [
     shortDesc: 'The most expansive room category at Althea, designed around one thing: the view. A generous private terrace looks out over the Corinthian Gulf with nothing in the way. This is the room for those who came here for the sea and want it always in front of them.',
     features: ['King size or twin beds', 'Sea view', 'Terrace or Balcony', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Sea view',
-    image: `${S}/althea-exclusive-resorts-spa-6.png`,
+    image: '/images/superior%20sea%20view.jpg',
   },
   {
     slug: 'junior-suite-private-pool',
@@ -76,7 +74,7 @@ export const ROOMS = [
     shortDesc: 'The Junior Suite raises the experience in every direction. Elevated finishes, a private pool, and the kind of space that makes you rearrange your plans and stay closer to the room than you expected. One of the most requested accommodations at Althea, and it\'s easy to understand why.',
     features: ['King size or twin beds', '1 bedroom', '1 living room', 'Private pool', 'Balcony with view', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Soundproofing'],
     view: 'Private pool & views',
-    image: `${S}/althea-exclusive-resorts-spa-8.png`,
+    image: '/images/Junior%20suite%20.jpg',
   },
   {
     slug: 'althea-loft-suite',
@@ -86,7 +84,7 @@ export const ROOMS = [
     shortDesc: 'Two levels. A sky-lit upper bedroom. Dramatic views of the Corinthian Gulf. And outside, a private jacuzzi that makes the evening something to look forward to all day. The Althea Loft Suite is the signature room of the resort — an architectural statement that also happens to be the most comfortable place in Corinthia to do absolutely nothing.',
     features: ['King size or twin beds', '1 bedroom', '1 living room with sofa bed', 'Outdoor Jacuzzi', 'Balcony with view', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Panoramic Gulf views',
-    image: `${S}/althea-exclusive-resorts-spa-9.png`,
+    image: '/images/js%20living%20room.jpg',
     featured: true,
   },
 ]
