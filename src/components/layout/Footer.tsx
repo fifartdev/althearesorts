@@ -91,13 +91,13 @@ export function Footer() {
               Terms
             </Link>
             <div className="flex gap-4">
-              <a href="https://instagram.com/althearesorts" target="_blank" rel="noopener noreferrer" className="text-xs text-white/30 hover:text-[#ad8b27] transition-colors duration-200 uppercase tracking-wider">
+              <a href="https://www.instagram.com/althearesorts" target="_blank" rel="noopener noreferrer" className="text-xs text-white/30 hover:text-[#ad8b27] transition-colors duration-200 uppercase tracking-wider">
                 Instagram
               </a>
-              <a href="https://facebook.com/althearesorts" target="_blank" rel="noopener noreferrer" className="text-xs text-white/30 hover:text-[#ad8b27] transition-colors duration-200 uppercase tracking-wider">
+              <a href="https://www.facebook.com/profile.php?id=61589365637032" target="_blank" rel="noopener noreferrer" className="text-xs text-white/30 hover:text-[#ad8b27] transition-colors duration-200 uppercase tracking-wider">
                 Facebook
               </a>
-              <a href="https://linkedin.com/company/althearesorts" target="_blank" rel="noopener noreferrer" className="text-xs text-white/30 hover:text-[#ad8b27] transition-colors duration-200 uppercase tracking-wider">
+              <a href="https://www.linkedin.com/company/althearesorts" target="_blank" rel="noopener noreferrer" className="text-xs text-white/30 hover:text-[#ad8b27] transition-colors duration-200 uppercase tracking-wider">
                 LinkedIn
               </a>
             </div>
