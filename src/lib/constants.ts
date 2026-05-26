@@ -2,8 +2,10 @@ export const BOOKING_URL = 'https://althearesort.reserve-online.net'
 export const SITE_URL = 'https://althearesorts.com'
 export const SITE_NAME = 'Althea Resorts'
 export const SITE_TAGLINE = 'Redefining Hospitality With Timeless Elegance'
-export const PHONE = '+30 211 41 84 108'
+export const PHONE = '+30 27430 41041'
+export const PHONE_MOBILE = '+30 211 41 84 108'
 export const EMAIL = 'reservations@althearesorts.com'
+export const INFO_EMAIL = 'info@althearesorts.com'
 export const ADDRESS = 'Ano Loutro, Xylokastro, Corinthia, Greece'
 export const COORDINATES = { lat: 38.076875, lng: 22.635913 }
 export const SOCIAL = {
@@ -12,12 +14,12 @@ export const SOCIAL = {
 }
 
 export const NAV_LINKS = [
+  { label: 'About', href: '/about' },
   { label: 'Accommodation', href: '/accommodation' },
   { label: 'Experiences', href: '/experiences' },
   { label: 'Spa', href: '/spa' },
   { label: 'Gastronomy', href: '/gastronomy' },
   { label: 'Gallery', href: '/gallery' },
-  { label: 'About', href: '/about' },
   { label: 'Location', href: '/location' },
   { label: 'Offers', href: '/offers' },
   { label: 'Contact', href: '/contact' },
@@ -38,7 +40,7 @@ export const ROOMS = [
   },
   {
     slug: 'deluxe-double-mv-pv',
-    title: 'Deluxe Double M.V / P.V.',
+    title: 'Deluxe Double',
     tagline: 'A Room That Earns Its View',
     size: '27 m²',
     shortDesc: 'Mountain or pool view from a generous private balcony. The Deluxe Double is where you spend a morning with coffee and no particular plan, watching the hills or the water below. Refined furnishings, premium Oceanis amenities, and a room that feels larger than its category suggests.',
@@ -48,17 +50,17 @@ export const ROOMS = [
   },
   {
     slug: 'deluxe-double-private-pool',
-    title: 'Deluxe Double with Private Pool',
+    title: 'Deluxe Double with Sharing Pool',
     tagline: 'Your Own Water, Your Own Hours',
     size: '22 m²',
-    shortDesc: 'Step outside and the pool is waiting. The Deluxe Double with Private Pool is for guests who want the resort experience without sharing it. Elegant interiors open directly to the water, and the day becomes entirely yours to arrange.',
-    features: ['King size or twin beds', 'Private pool', 'Balcony', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
-    view: 'Private pool',
+    shortDesc: 'Step outside and the pool is waiting. Ideal for guests who want the resort experience at its most exclusive, with seamless access to a shared pool. Elegant interiors open directly to the water, and the day becomes entirely yours to arrange.',
+    features: ['King size or twin beds', 'Sharing pool', 'Balcony', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
+    view: 'Sharing pool',
     image: `${S}/althea-exclusive-resorts-spa-5.png`,
   },
   {
     slug: 'superior-sea-view',
-    title: 'Superior Sea View Room',
+    title: 'Superior Sea View',
     tagline: 'The Gulf, Uninterrupted',
     size: '27 m²',
     shortDesc: 'The most expansive room category at Althea, designed around one thing: the view. A generous private terrace looks out over the Corinthian Gulf with nothing in the way. This is the room for those who came here for the sea and want it always in front of them.',
@@ -71,7 +73,7 @@ export const ROOMS = [
     title: 'Junior Suite with Private Pool',
     tagline: 'More Space. More Water. More Time.',
     size: '27 m²',
-    shortDesc: 'The Junior Suite raises the experience in every direction. Elevated finishes, a private pool, and the kind of space that makes you rearrange your plans and stay closer to the room than you expected. One of the most requested accommodations at Althea.',
+    shortDesc: 'The Junior Suite raises the experience in every direction. Elevated finishes, a private pool, and the kind of space that makes you rearrange your plans and stay closer to the room than you expected. One of the most requested accommodations at Althea, and it\'s easy to understand why.',
     features: ['King size or twin beds', '1 bedroom', '1 living room', 'Private pool', 'Balcony with view', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Soundproofing'],
     view: 'Private pool & views',
     image: `${S}/althea-exclusive-resorts-spa-8.png`,

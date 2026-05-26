@@ -46,7 +46,7 @@ const venues = [
     id: 'pool-bar',
     label: 'Pool Bar',
     title: 'By the Water, All Day',
-    desc: 'Cold drinks, light bites, the sound of water. The pool bar is where the afternoon extends itself. A coffee that becomes a cocktail, a fresh juice that turns into a long conversation. The menu is simple by design: seasonal fruit, light snacks, everything you want when you are horizontal and the sun is doing its work. No rush required. The water will wait.',
+    desc: 'Cold drinks, light bites, the sound of water. The pool bar is where the afternoon extends itself. A coffee that becomes a cocktail, a fresh juice that turns into a long conversation. The menu is simple by design: seasonal fruit, light snacks, everything you want when you are horizontal and the sun is doing its work. No rush required. The water will wait..',
     image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=900&q=80',
     imageAlt: 'Pool bar at Althea Resorts',
     bg: 'bg-[#dde6ea]',

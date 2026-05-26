@@ -5,7 +5,7 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { DirectBookingReasons } from '@/components/sections/DirectBookingReasons'
-import { BOOKING_URL, PHONE, EMAIL, SITE_URL } from '@/lib/constants'
+import { BOOKING_URL, PHONE, EMAIL, INFO_EMAIL, SITE_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
   title: 'Offers & Special Rates',
@@ -44,6 +44,26 @@ export default function OffersPage() {
               A Reason to Book Now<br />
               <em className="italic font-light text-white/70">and Book Direct</em>
             </h1>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Page Intro */}
+      <section className="section-padding bg-white border-b border-[#e8e4dd]">
+        <div className="container-narrow text-center">
+          <ScrollReveal>
+            <GoldLine className="mx-auto mb-8" />
+          </ScrollReveal>
+          <ScrollReveal delay={100}>
+            <p className="text-body-refined text-lg leading-relaxed mb-5">
+              Althea opens its doors with an offer that reflects the way we think about
+              hospitality: straightforward, generous, and without the fine print that makes
+              you read twice. Book directly with us and receive ten percent off your stay.
+              No intermediaries, no platform fees, no complicated conditions.
+            </p>
+            <p className="font-editorial text-xl font-light italic text-[#102027]">
+              Just a better rate for choosing to come to us first.
+            </p>
           </ScrollReveal>
         </div>
       </section>

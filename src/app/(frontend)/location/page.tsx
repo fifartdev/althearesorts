@@ -51,6 +51,12 @@ const sights = [
     desc: 'The medieval city rising above the Peloponnese. A UNESCO World Heritage Site worth a full day.',
     category: 'Day Trip',
   },
+  {
+    name: 'Mycenae',
+    distance: '1 hr by car',
+    desc: 'The citadel of Agamemnon. One of the most significant sites of ancient Greece — the Lion Gate alone justifies the journey.',
+    category: 'Day Trip',
+  },
 ]
 
 export default function LocationPage() {

@@ -5,7 +5,7 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { ContactForm } from '@/components/contact/ContactForm'
-import { PHONE, EMAIL, ADDRESS, BOOKING_URL, COORDINATES, SITE_URL } from '@/lib/constants'
+import { PHONE, EMAIL, INFO_EMAIL, ADDRESS, BOOKING_URL, COORDINATES, SITE_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
   title: 'Contact',
@@ -64,9 +64,12 @@ export default function ContactPage() {
                     <p className="text-sm font-light text-[#6b6b6b] leading-relaxed">{ADDRESS}</p>
                   </div>
                   <div>
-                    <span className="text-label-upper text-[#ad8b27] block mb-2">Reservations</span>
+                    <span className="text-label-upper text-[#ad8b27] block mb-2">Contact</span>
                     <a href={`tel:${PHONE.replace(/\s/g, '')}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200 block mb-1">
                       {PHONE}
+                    </a>
+                    <a href={`mailto:${INFO_EMAIL}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200 block mb-1">
+                      {INFO_EMAIL}
                     </a>
                     <a href={`mailto:${EMAIL}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200">
                       {EMAIL}

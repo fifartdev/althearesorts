@@ -43,8 +43,33 @@ export default function ExperiencesPage() {
           </ScrollReveal>
           <ScrollReveal delay={200}>
             <p className="text-sm font-light text-white/55 leading-relaxed mt-6 max-w-lg">
-              A resort is not only a place to sleep well. Most guests arrive with a plan.
-              Most plans change by the second morning.
+              Most guests arrive with a plan. Most plans change by the second morning.
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Page Intro */}
+      <section className="section-padding bg-white">
+        <div className="container-narrow text-center">
+          <ScrollReveal>
+            <GoldLine className="mx-auto mb-8" />
+          </ScrollReveal>
+          <ScrollReveal delay={100}>
+            <p className="text-body-refined text-lg leading-relaxed mb-5">
+              A resort is not only a place to sleep well. At Althea, the experience extends
+              well beyond the room, beyond the pool, beyond the{' '}
+              <a href="/spa" className="text-[#ad8b27] hover:underline font-light">spa</a>,
+              beyond the view from the terrace. The hills of Corinthia are made for moving
+              through. The sea is five minutes away. The{' '}
+              <a href="/spa" className="text-[#ad8b27] hover:underline font-light">spa</a> is
+              made for stopping completely and letting the body remember what rest actually
+              feels like. And when the occasion calls for something larger — a wedding, a
+              corporate gathering that actually means something — Althea knows how to hold
+              it properly.
+            </p>
+            <p className="text-body-refined text-lg leading-relaxed">
+              Whatever brought you here, there is more waiting than you expected.
             </p>
           </ScrollReveal>
         </div>
@@ -76,18 +101,19 @@ export default function ExperiencesPage() {
               <ScrollReveal delay={200}>
                 <p className="text-body-refined mb-5">
                   The landscape around Althea is not a backdrop. It is part of what you
-                  came for. Hiking trails wind through the Corinthian hills with views that
-                  stop you mid-step. Cycling routes follow the coastline at whatever speed
-                  you choose. Yoga sessions open to the air and the Gulf, the kind where
-                  you actually forget to check the time.
+                  came for. <strong>Hiking</strong> trails wind through the Corinthian hills
+                  with views that stop you mid-step. <strong>Cycling</strong> routes follow
+                  the coastline at whatever speed you choose. <strong>Yoga</strong> sessions
+                  open to the air and the Gulf, the kind where you actually forget to check
+                  the time.
                 </p>
                 <p className="text-body-refined mb-5">
                   The activities at Althea are designed for guests who want to feel the
                   place they are in, not just photograph it from a distance.
                 </p>
-                <p className="text-body-refined">
-                  We are adding more experiences as the resort grows — ask us directly
-                  and we will tell you what is coming.
+                <p className="text-body-refined italic">
+                  We are adding more experiences as the resort grows: ask us directly
+                  and we will tell you what is coming!
                 </p>
               </ScrollReveal>
             </div>
@@ -143,7 +169,8 @@ export default function ExperiencesPage() {
                   The practitioners here work with your body's own rhythm. They are not
                   in a hurry. They do not want you to be either. You arrive carrying the
                   weight of everything that happened before you got here. An hour later,
-                  you have genuinely forgotten what most of it was.
+                  you have genuinely forgotten what most of it was. That is not a promise.
+                  That is just what happens in this room, on this hillside, with these hands.
                 </p>
               </ScrollReveal>
 
@@ -152,15 +179,35 @@ export default function ExperiencesPage() {
                 <div className="border-t border-white/10 pt-8 mb-8">
                   <h3 className="text-label-upper text-[#ad8b27] mb-5">Oceanis: The Philosophy Behind the Product</h3>
                   <p className="text-sm font-light text-white/50 leading-relaxed mb-4">
-                    Oceanis takes its name from the Oceanids — the water nymphs of ancient
-                    Greek mythology. A Greek brand, rooted in Greek myth, made in Greece,
-                    for a property that sits above a Greek gulf. Everything connects.
+                    The choice of Oceanis was a values decision and one that took no deliberation.
                   </p>
-                  <p className="text-sm font-light text-white/50 leading-relaxed">
-                    The formulas are certified biodegradable in twenty-eight days. Packaging
-                    is made from recycled PET and is one hundred percent recyclable. Products
-                    are vegan, cruelty-free, and dermatologically tested. The full Oceanis
-                    range is available in the spa boutique.
+                  <p className="text-sm font-light text-white/50 leading-relaxed mb-4">
+                    Oceanis takes its name from the Oceanids, the water nymphs of ancient Greek
+                    mythology, daughters of Oceanus and Tethys, guides of spring waters toward
+                    the open sea. The name carries its own logic: a Greek brand, rooted in Greek
+                    myth, made in Greece, for a property that sits above a Greek gulf.
+                    Everything connects.
+                  </p>
+                  <p className="text-sm font-light text-white/50 leading-relaxed mb-4">
+                    The formulas are certified biodegradable in twenty-eight days. The packaging
+                    is made from recycled PET and is one hundred percent recyclable. Every
+                    dispenser in the spa and in each room is part of a refill system designed
+                    to eliminate single-use waste at its source rather than manage it afterward.
+                    The products are vegan, cruelty-free, and dermatologically tested. There are
+                    no harmful chemicals in any of them. They are certified, documented, and
+                    verifiable.
+                  </p>
+                  <p className="text-sm font-light text-white/50 leading-relaxed mb-4">
+                    At Althea, sustainability is not a separate initiative with its own page and
+                    its own set of promises. It is a series of quiet decisions made during the
+                    design of the property, in the materials used, in the food sourced, in the
+                    brand chosen to sit on the bathroom shelf. Oceanis is one of those decisions.
+                    A Greek brand that understands what responsible production looks like, chosen
+                    by a Greek resort that feels the same way about its land.
+                  </p>
+                  <p className="text-sm font-light text-white/40 leading-relaxed italic">
+                    The full Oceanis range is available in the spa boutique for guests who want
+                    to continue the experience at home.
                   </p>
                 </div>
               </ScrollReveal>
@@ -214,7 +261,8 @@ export default function ExperiencesPage() {
                 </p>
                 <p className="text-body-refined">
                   There is a particular quality to time by this pool: it moves slower
-                  than it does anywhere else. Bring a book. Leave it closed. Both are fine.
+                  than it does anywhere else, and that is entirely the point.
+                  Bring a book. Leave it closed. Both are fine!
                 </p>
               </ScrollReveal>
             </div>
@@ -277,13 +325,18 @@ export default function ExperiencesPage() {
               </ScrollReveal>
 
               <ScrollReveal delay={220}>
-                <h3 className="text-label-upper text-[#102027] mb-4">Conference Facilities</h3>
+                <h3 className="text-label-upper text-[#102027] mb-2">Conference Facilities</h3>
+                <p className="font-editorial text-lg font-light italic text-[#6b6b6b] mb-6">
+                  A Room That Works as Hard as You Do
+                </p>
                 <p className="text-body-refined mb-8">
                   The conference room seats up to one hundred people in theatre configuration —
                   a serious space for serious gatherings, without the corporate anonymity that
-                  usually comes with it. Fully equipped and adaptable, able to shift from a
-                  large plenary to a more intimate working format depending on what the day
-                  requires.
+                  usually comes with it. The room is fully equipped and adaptable, able to shift
+                  from a large plenary session to a more intimate working format depending on
+                  what the day requires. What sets it apart is everything outside its walls:
+                  the breaks taken by the pool, the lunches that actually bring people together,
+                  the evenings that turn colleagues into people who trust each other.
                 </p>
               </ScrollReveal>
 

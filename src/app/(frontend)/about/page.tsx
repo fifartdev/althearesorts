@@ -114,22 +114,25 @@ export default function AboutPage() {
                   the way a meal arrives when you are hungry and disappears when you are done.
                 </p>
                 <p className="text-body-refined mb-5">
-                  It is the breakfast made from what the local farmers brought in that morning.
-                  It is the spa treatment that uses what this land and this sea have always
-                  produced. It is the staff member who remembers your name on the second day
-                  without being reminded.
+                  It is the <a href="/gastronomy" className="text-[#ad8b27] hover:underline font-light">breakfast</a> made
+                  from what the local farmers brought in that morning. It is the{' '}
+                  <a href="/spa" className="text-[#ad8b27] hover:underline font-light">spa</a> treatment
+                  that uses what this land and this sea have always produced. It is the staff
+                  member who remembers your name on the second day without being reminded.
                 </p>
                 <p className="text-body-refined mb-5">
-                  Althea was designed around these details. Forty-one rooms and suites, each
-                  one positioned to make the most of the Corinthian landscape. A rooftop
+                  Althea was designed around these details. Forty-one{' '}
+                  <a href="/accommodation" className="text-[#ad8b27] hover:underline font-light">rooms and suites</a>,
+                  each one positioned to make the most of the Corinthian landscape. A rooftop
                   restaurant, AITHER, that tells a different Mediterranean story every evening.
                   A spa — the Ocean Spa — built as a modern Asclepeion, where ancient wellness
                   traditions meet contemporary therapies using Oceanis cosmetics, a Greek brand
                   as rooted in this land as we are.
                 </p>
                 <p className="text-body-refined">
-                  A private beach five minutes away. A kitchen that begins every morning
-                  with what is fresh, local, and worth eating.
+                  A private <a href="/location" className="text-[#ad8b27] hover:underline font-light">beach</a> five
+                  minutes away. A kitchen that begins every morning with what is fresh, local,
+                  and worth eating.
                 </p>
               </ScrollReveal>
             </div>
