@@ -20,7 +20,7 @@ const sights = [
     distance: '45 min by car',
     desc: 'One of the most powerful city-states of antiquity. The archaeological site and museum hold their own against anything in Attica.',
     category: 'Archaeological',
-    image: 'https://enjoycorinthia.gr/wp-content/uploads/2021/06/ancient-corinth-2.jpg',
+    image: 'https://images.unsplash.com/photo-1698933464922-cb7af8fe9267?auto=format&fit=crop&w=800&q=80',
   },
   {
     name: 'Acrocorinth',
@@ -150,8 +150,8 @@ export default function LocationPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <ScrollReveal variant="image" className="aspect-[4/3] w-full relative overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"
-                alt="Corinthian Gulf private beach"
+                src="https://images.unsplash.com/photo-1722325110558-63a1a50c2f28?auto=format&fit=crop&w=900&q=80"
+                alt="Private beach on the Corinthian coast"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"

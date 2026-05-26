@@ -11,6 +11,7 @@ export const COORDINATES = { lat: 38.076875, lng: 22.635913 }
 export const SOCIAL = {
   instagram: 'https://instagram.com/althearesorts',
   facebook: 'https://facebook.com/althearesorts',
+  linkedin: 'https://linkedin.com/company/althearesorts',
 }
 
 export const NAV_LINKS = [

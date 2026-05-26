@@ -20,7 +20,7 @@ const posts = [
     title: 'Ancient Corinth: A Morning Away From Everything',
     excerpt: 'One hour to one of the most powerful city-states of antiquity, still quiet enough to feel like a discovery.',
     readTime: '5 min read', href: '/journal/ancient-corinth', date: 'May 2025',
-    image: `${S}/Gallery-FYCW8WR.jpg`, imageAlt: 'Ancient Corinth landscape',
+    image: 'https://images.unsplash.com/photo-1698933464922-cb7af8fe9267?auto=format&fit=crop&w=900&q=80', imageAlt: 'Ancient stone columns at Corinth',
   },
   {
     category: 'Wellness',

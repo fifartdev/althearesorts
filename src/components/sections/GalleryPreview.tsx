@@ -7,7 +7,7 @@ const galleryItems = [
   {
     span: 'col-span-2 row-span-2',
     label: 'Pool & Gulf Views',
-    image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1200&q=80',
+    image: 'https://images.unsplash.com/photo-1563493653502-9e270be23596?auto=format&fit=crop&w=1200&q=80',
   },
   {
     span: 'col-span-1',

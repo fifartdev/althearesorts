@@ -10,8 +10,8 @@ const posts = [
     excerpt: 'One hour to one of the most powerful city-states of antiquity, still quiet enough to feel like a discovery.',
     readTime: '5 min read',
     href: '/journal/ancient-corinth',
-    image: 'https://images.unsplash.com/photo-1555993539-1732b0258235?auto=format&fit=crop&w=800&q=80',
-    imageAlt: 'Ancient Corinth ruins',
+    image: 'https://images.unsplash.com/photo-1698933464922-cb7af8fe9267?auto=format&fit=crop&w=800&q=80',
+    imageAlt: 'Ancient stone columns at Corinth',
   },
   {
     category: 'Wellness',

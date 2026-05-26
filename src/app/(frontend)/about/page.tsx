@@ -178,8 +178,8 @@ export default function AboutPage() {
             <div className="lg:col-span-6 lg:col-start-7">
               <ScrollReveal variant="image" className="aspect-[4/3] w-full relative overflow-hidden">
                 <Image
-                  src="https://enjoycorinthia.gr/wp-content/uploads/2021/06/ancient-corinth-2.jpg"
-                  alt="Temple of Apollo at Ancient Corinth with Acrocorinth in the background"
+                  src="https://images.unsplash.com/photo-1698933464922-cb7af8fe9267?auto=format&fit=crop&w=900&q=80"
+                  alt="Ancient stone pillars at Corinth"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"

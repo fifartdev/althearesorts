@@ -97,6 +97,9 @@ export function Footer() {
               <a href="https://facebook.com/althearesorts" target="_blank" rel="noopener noreferrer" className="text-xs text-white/30 hover:text-[#ad8b27] transition-colors duration-200 uppercase tracking-wider">
                 Facebook
               </a>
+              <a href="https://linkedin.com/company/althearesorts" target="_blank" rel="noopener noreferrer" className="text-xs text-white/30 hover:text-[#ad8b27] transition-colors duration-200 uppercase tracking-wider">
+                LinkedIn
+              </a>
             </div>
           </div>
         </div>

@@ -79,8 +79,8 @@ export function LocationSection() {
           {/* Image */}
           <ScrollReveal variant="image" className="aspect-square lg:aspect-[4/5] w-full relative overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?auto=format&fit=crop&w=900&q=80"
-              alt="Corinthian Gulf coastline"
+              src="https://enjoycorinthia.gr/wp-content/uploads/2021/06/ancient-corinth-2.jpg"
+              alt="Temple of Apollo at Ancient Corinth, Corinthia"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"

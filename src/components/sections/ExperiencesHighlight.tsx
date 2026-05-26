@@ -25,8 +25,8 @@ const experiences = [
     title: 'The Corinthian Landscape',
     desc: 'Hiking trails, cycling routes, yoga sessions open to the Gulf. The landscape is not a backdrop — it is part of what you came for.',
     href: '/experiences#activities',
-    image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&q=80',
-    imageAlt: 'Corinthian landscape and coastline',
+    image: 'https://images.unsplash.com/photo-1717518213008-16af162e8494?auto=format&fit=crop&w=800&q=80',
+    imageAlt: 'Boat traveling through the Corinth Canal',
   },
 ]
 

@@ -234,8 +234,8 @@ export default function ExperiencesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <ScrollReveal variant="image" className="aspect-[4/3] w-full relative overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1694125852939-1267174f2770?auto=format&fit=crop&w=900&q=80"
-                alt="Main pool at Althea Resorts"
+                src="https://images.unsplash.com/photo-1563493653502-9e270be23596?auto=format&fit=crop&w=900&q=80"
+                alt="Pool loungers at Althea Resorts"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
