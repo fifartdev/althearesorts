@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: '**.althearesorts.com' },
       { protocol: 'https', hostname: 'althearesorts.com' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'enjoycorinthia.gr' },
     ],
     formats: ['image/avif', 'image/webp'],
     qualities: [75, 90],

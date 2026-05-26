@@ -20,14 +20,14 @@ const sights = [
     distance: '45 min by car',
     desc: 'One of the most powerful city-states of antiquity. The archaeological site and museum hold their own against anything in Attica.',
     category: 'Archaeological',
-    image: 'https://images.unsplash.com/photo-1603566541830-972ff1b4b2cd?auto=format&fit=crop&w=800&q=80',
+    image: 'https://enjoycorinthia.gr/wp-content/uploads/2021/06/ancient-corinth-2.jpg',
   },
   {
     name: 'Acrocorinth',
     distance: '45 min by car',
     desc: 'The fortified hill rising above the ancient city. A climb that earns its view.',
     category: 'Archaeological',
-    image: 'https://images.unsplash.com/photo-1748560549903-d34da91a2db0?auto=format&fit=crop&w=800&q=80',
+    image: 'https://enjoycorinthia.gr/wp-content/uploads/2021/06/ancient-corinth-72.jpg',
   },
   {
     name: 'Corinth Canal',
