@@ -162,7 +162,7 @@ export async function generateMetadata({ params }) {
 
 1. **OG image** — create `/public/og-default.jpg` at 1200×630px (logo + hero image). Referenced everywhere, file does not exist.
 2. **Favicon** — `/public/favicon.ico` (32×32), `/public/icon.png` (512×512), `/public/apple-touch-icon.png` (180×180)
-3. **Google Tag Manager** — get GTM container ID → add one script to layout.tsx
+3. **Google Analytics** — ✅ added. GA4 property `G-WYCXWW127J` wired via `next/script` `afterInteractive` in `layout.tsx`. Constant `GA_ID` defined at top of file.
 4. **Meta Pixel** — get Pixel ID → add via GTM, add Facebook domain verification meta tag
 5. **Google Search Console** — verify domain, submit sitemap
 6. **Font files** — Canela (commercialtype.com) + Söhne (klim.co.nz) → place in `/public/fonts/`
