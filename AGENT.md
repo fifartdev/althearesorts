@@ -38,6 +38,11 @@ These appear in three places: Header (SVG icons, desktop), Footer copyright bar 
 
 ---
 
+## Analytics
+Google Analytics 4 (`G-WYCXWW127J`) is live in `src/app/(frontend)/layout.tsx` via `next/script strategy="afterInteractive"`. The ID is stored in a `GA_ID` constant at the top of that file — update it there if the property ever changes. Do not add a second analytics script.
+
+---
+
 ## What NOT to change without client approval
 
 - `BOOKING_URL` in constants.ts — the booking engine URL

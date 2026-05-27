@@ -1,4 +1,5 @@
 import React from 'react'
+import Script from 'next/script'
 import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -6,6 +7,8 @@ import { StickyBookingBar, FloatingBookingButton } from '@/components/layout/Boo
 import { CustomCursor } from '@/components/animations/CustomCursor'
 import { hotelSchema, organizationSchema } from '@/lib/seo'
 import './globals.css'
+
+const GA_ID = 'G-WYCXWW127J'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -44,6 +47,17 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
         >
           Skip to main content
         </a>
+
+        {/* Google Analytics */}
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
 
         <CustomCursor />
         <Header />
