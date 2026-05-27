@@ -22,6 +22,7 @@ When the client provides Greek-language corrections to English copy, translate t
 - Client-supplied images (e.g. `/images/oceanisphoto.jpg`) take priority over any stock photo in the same context
 - Accommodation hero must use an actual room photo from the project's `/public/images/` folder, not a generic stock image
 - Gastronomy venue photos must NOT look like identifiable hotels or resorts — use close-ups, atmospheric mood shots, or abstract poolside/food/drink images. Current verified CDN IDs: BAR → `photo-1674654658721-ffc9c08ee1d0`, Pool Bar → `photo-1532347922424-c652d9b7208e`
+- Spa page: `/images/oceanisphoto.jpg` goes in "The Space" intro section (right column). The "Oceanis Philosophy" section uses `photo-1608571423902-eed4a5ad8108` to avoid duplicating the same image on the same page. Do not swap these.
 
 ### Hero backgrounds
 - Interior pages with a full-bleed image hero: dark gradient overlay on top of the photo — do not add a solid bg color

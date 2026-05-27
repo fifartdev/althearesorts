@@ -121,7 +121,7 @@ All content images are temporary placeholders — **will be replaced by Payload 
 - Homepage hero: `Althea-Pool-Infinity-Color.jpg` (2025/11 path)
 - Room images: defined in `ROOMS` array in constants.ts
 - Accommodation hero: `/images/superior%20sea%20view.jpg` (actual room photo, not stock)
-- Oceanis product photo: `/public/images/oceanisphoto.jpg` — client-supplied, used in spa Oceanis Philosophy section and gallery Spa & Wellness category. Replaces the generic white-bottle Unsplash image.
+- Oceanis product photo: `/public/images/oceanisphoto.jpg` — client-supplied. Used in: (1) Spa "The Space" intro section (replaces generic white pump-bottle Unsplash photo); (2) Gallery Spa & Wellness category. The Spa "Oceanis Philosophy" section uses a separate Unsplash image (`photo-1608571423902-eed4a5ad8108`) to avoid repeating the same photo on the same page.
 - BAR venue photo: Unsplash `photo-1674654658721-ffc9c08ee1d0` — man in suit with martini
 - Pool Bar venue photo: Unsplash `photo-1532347922424-c652d9b7208e` — woman sitting poolside feet in water (replaces palm-tree resort stock that looked like a different hotel)
 
