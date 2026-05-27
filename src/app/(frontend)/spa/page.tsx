@@ -109,8 +109,8 @@ export default function SpaPage() {
             </div>
             <ScrollReveal variant="image" delay={100} className="aspect-[4/5] w-full relative overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=900&q=80"
-                alt="Ocean Spa interior — Althea Resorts"
+                src="/images/oceanisphoto.jpg"
+                alt="Oceanis cosmetics — natural Greek skincare products"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -264,8 +264,8 @@ export default function SpaPage() {
             </div>
             <ScrollReveal variant="image" delay={100} className="aspect-[4/5] w-full relative overflow-hidden">
               <Image
-                src="/images/oceanisphoto.jpg"
-                alt="Oceanis cosmetics — natural Greek skincare products"
+                src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=900&q=80"
+                alt="Natural ingredients — Oceanis sustainable cosmetics"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
