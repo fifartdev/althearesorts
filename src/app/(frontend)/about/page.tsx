@@ -20,7 +20,7 @@ export default function AboutPage() {
     <main id="main-content">
       {/* Page Hero */}
       <section
-        className="relative pt-40 pb-24 lg:pt-56 lg:pb-32 bg-[#102027] overflow-hidden"
+        className="relative pt-40 pb-24 lg:pt-56 lg:pb-32 bg-[#35657a] overflow-hidden"
         aria-label="About Us"
       >
         <div className="absolute inset-0 opacity-10">
@@ -171,7 +171,7 @@ export default function AboutPage() {
                   minutes away.
                 </p>
                 <p className="text-sm font-light text-white/60 leading-relaxed">
-                  Everything else can wait.
+                  Everything else can wait..
                 </p>
               </ScrollReveal>
             </div>
@@ -208,7 +208,7 @@ export default function AboutPage() {
             <ScrollReveal delay={200}>
               <p className="text-body-refined text-center mb-6">
                 Greek hospitality is not a concept that needs explaining to a Greek.
-                It is something you grow up understanding — that a guest is to be received
+                It is something you grow up understanding, that a guest is to be received
                 properly, fed well, made comfortable, and sent away with the feeling that
                 they were genuinely wanted. At Althea, we have taken that instinct and built
                 a five-star property around it. The result is a place that feels neither
@@ -219,7 +219,7 @@ export default function AboutPage() {
                 Sixty minutes from Athens. Not sixty minutes and a ferry. Not sixty minutes
                 and a connecting flight. Sixty minutes by car, on a good road, with the Gulf
                 appearing on your left before you have finished your first coffee. That proximity
-                is one of the quiet advantages of Althea — close enough to be spontaneous,
+                is one of the quiet advantages of Althea, close enough to be spontaneous,
                 far enough to feel completely removed from the city you left behind.
               </p>
               <p className="font-editorial text-xl font-light italic text-[#102027] mt-8">

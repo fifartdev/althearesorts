@@ -51,6 +51,7 @@ ALL custom classes MUST be inside `@layer components` or `@layer utilities` in `
 | Soft blue | `#f2f8fb` |
 | Stone border | `#e8e4dd` |
 | Smoke text | `#6b6b6b` |
+| Hero blue (Location & About hero bg) | `#35657a` |
 
 **Fonts:** `--font-canela` (Canela/Cormorant Garamond, editorial serif) · `--font-sohne` (Söhne/DM Sans, UI sans)
 
@@ -90,8 +91,8 @@ src/app/(frontend)/
   robots.ts                 — crawl rules including AI bot blocklist
   sitemap.ts                — all static routes + dynamic room slugs
 src/components/
-  layout/Header.tsx         — fixed, always dark #102027/95, white logo image
-  layout/Footer.tsx         — dark background, white logo image
+  layout/Header.tsx         — fixed, always dark #102027/95, white logo image; desktop social icons (IG/FB/LI) next to Book Now
+  layout/Footer.tsx         — dark background, white logo image; copyright bar: 3-col grid (copyright | centered legal | social icon links)
   layout/BookingCTA.tsx     — StickyBookingBar + FloatingBookingButton
   animations/ScrollReveal.tsx
   animations/CustomCursor.tsx
@@ -119,6 +120,10 @@ All content images are temporary placeholders — **will be replaced by Payload 
 - Fallback: Unsplash URLs with `?auto=format&fit=crop&w=900&q=80`
 - Homepage hero: `Althea-Pool-Infinity-Color.jpg` (2025/11 path)
 - Room images: defined in `ROOMS` array in constants.ts
+- Accommodation hero: `/images/superior%20sea%20view.jpg` (actual room photo, not stock)
+- Oceanis product photo: `/public/images/oceanisphoto.jpg` — client-supplied, used in spa Oceanis Philosophy section and gallery Spa & Wellness category. Replaces the generic white-bottle Unsplash image.
+- BAR venue photo: Unsplash `photo-1674654658721-ffc9c08ee1d0` — man in suit with martini
+- Pool Bar venue photo: Unsplash `photo-1532347922424-c652d9b7208e` — woman sitting poolside feet in water (replaces palm-tree resort stock that looked like a different hotel)
 
 ---
 
@@ -184,3 +189,22 @@ All hardcoded content (text, images, metadata, contact details, room data) is in
 ## Gallery page known issue
 
 `gallery/page.tsx` is a `'use client'` component and cannot export `metadata` in Next.js App Router. Its SEO metadata is invisible to Google. Fix: split into a server `page.tsx` that exports metadata and a `GalleryClient.tsx` for the filter state.
+
+---
+
+## UI/Layout notes
+
+### Header social icons
+Desktop header shows compact SVG icons (Instagram · Facebook · LinkedIn) to the left of the Book Now button. Mobile menu retains text abbreviations (IG / FB). Icons use `text-white/40 hover:text-white`.
+
+### Footer copyright bar
+Three-column grid: left = © copyright text · center = Privacy Policy + Terms links · right = social icon links (SVG, gold on hover). Was previously one right-aligned block — centered legal links to improve social visibility.
+
+### Hero backgrounds — Location & About pages
+Both `/location` and `/about` hero sections use `bg-[#35657a]` (lighter teal-blue) instead of the standard deep `#102027`. All other interior page heroes with an image overlay are unchanged.
+
+### Xylokastro sightseeing card
+The Xylokastro entry in the `sights` array has `objectPosition: 'center bottom'` to prevent the image cropping to sky-only. The Image component applies this via an inline `style` prop when `objectPosition` is present in the sight data.
+
+### Gallery — Spa & Wellness category
+The category exists in the filter UI but had zero items. The Oceanis product photo (`/images/oceanisphoto.jpg`) is now the first entry in this category.

@@ -102,8 +102,8 @@ export default function SpaPage() {
                 <p className="text-body-refined">
                   Every treatment is built around Oceanis cosmetics — a certified Greek
                   brand drawn from the same sea and land that surrounds the property.
-                  The same formulas used in the spa are available in the Oceanis Boutique
-                  to take home.
+                  The same formulas used in the spa are available in the Oceanis Boutique —
+                  the full Oceanis range, for those who want to bring a piece of this place home.
                 </p>
               </ScrollReveal>
             </div>
@@ -264,8 +264,8 @@ export default function SpaPage() {
             </div>
             <ScrollReveal variant="image" delay={100} className="aspect-[4/5] w-full relative overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=900&q=80"
-                alt="Oceanis cosmetics — natural Greek skincare"
+                src="/images/oceanisphoto.jpg"
+                alt="Oceanis cosmetics — natural Greek skincare products"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
