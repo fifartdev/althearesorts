@@ -23,8 +23,8 @@ export default function AccommodationPage() {
         aria-label="Accommodation hero"
       >
         <Image
-          src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=2000&q=80"
-          alt="Althea Resorts — rooms and suites"
+          src="/images/superior%20sea%20view.jpg"
+          alt="Althea Resorts — Superior Sea View room"
           fill
           priority
           className="object-cover"
@@ -61,7 +61,7 @@ export default function AccommodationPage() {
             </p>
             <p className="text-body-refined text-lg leading-relaxed">
               From the hillside of Ano Loutro, the Corinthian Gulf sits at the edge of
-              every view. The sea is always there. The rest is up to you.
+              every view. The sea is always there. The rest is up to you!
             </p>
           </ScrollReveal>
           <ScrollReveal delay={150}>

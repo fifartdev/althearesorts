@@ -70,6 +70,7 @@ export default function ExperiencesPage() {
             </p>
             <p className="text-body-refined text-lg leading-relaxed">
               Whatever brought you here, there is more waiting than you expected.
+              Most guests arrive with a plan. Most plans change by the second morning.
             </p>
           </ScrollReveal>
         </div>

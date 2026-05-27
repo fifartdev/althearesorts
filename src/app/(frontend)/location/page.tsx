@@ -42,6 +42,7 @@ const sights = [
     desc: 'A seafront promenade, good coffee, local fish, and the feeling of a place that has not been arranged for visitors.',
     category: 'Town',
     image: 'https://images.unsplash.com/photo-1710107655752-92edd8d02afb?auto=format&fit=crop&w=800&q=80',
+    objectPosition: 'center bottom',
   },
   {
     name: 'Epidaurus',
@@ -70,7 +71,7 @@ export default function LocationPage() {
   return (
     <main id="main-content">
       {/* Hero */}
-      <section className="relative pt-40 pb-24 lg:pt-56 lg:pb-32 bg-[#102027] overflow-hidden" aria-label="Location">
+      <section className="relative pt-40 pb-24 lg:pt-56 lg:pb-32 bg-[#35657a] overflow-hidden" aria-label="Location">
         <div className="absolute right-0 top-1/2 -translate-y-1/2 font-editorial text-[14vw] font-light text-white/[0.03] leading-none select-none" aria-hidden="true">
           Corinthia
         </div>
@@ -208,7 +209,7 @@ export default function LocationPage() {
           <ScrollReveal delay={150}>
             <p className="text-body-refined max-w-2xl mb-12">
               Corinthia is one of the most historically layered regions in Greece and one
-              of the least overrun by tourism — a place where the ancient world is still
+              of the least overrun by tourism, which makes it a rare thing — a place where the ancient world is still
               legible and still quiet. Althea is a base as much as it is a destination.
               The region around it is worth exploring and we are happy to help you do
               exactly that.
@@ -225,6 +226,7 @@ export default function LocationPage() {
                       alt={sight.name}
                       fill
                       className="object-cover transition-transform duration-700 hover:scale-105"
+                      style={'objectPosition' in sight ? { objectPosition: (sight as typeof sight & { objectPosition: string }).objectPosition } : undefined}
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-[#102027]/20" />

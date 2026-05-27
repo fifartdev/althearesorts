@@ -28,6 +28,7 @@ const galleryItems = [
   { src: `${S}/1.jpg`,                                  caption: 'The Property',            category: 'Views',            wide: false },
   { src: `${S}/2.jpg`,                                  caption: 'Gulf at Dusk',            category: 'Views',            wide: true },
   { src: `${S}/FAQ-CKK5K7K.jpg`,                        caption: 'Althea Resorts',          category: 'Pool & Exterior',  wide: false },
+  { src: '/images/oceanisphoto.jpg',                    caption: 'Oceanis — Spa Products',  category: 'Spa & Wellness',   wide: false },
 ]
 
 export default function GalleryPage() {

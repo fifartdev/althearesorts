@@ -38,8 +38,8 @@ const venues = [
     label: 'Bar',
     title: 'The Bar at Althea',
     desc: 'Good spirits, well-made cocktails, and the kind of quiet that makes a conversation go somewhere. The selection is curated. Wines from Greek vineyards, spirits worth knowing, cocktails built with intention rather than habit. Open from late afternoon into the night, for those who are in no particular hurry and have found a good reason to stay at the table.',
-    image: 'https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=900&q=80',
-    imageAlt: 'Althea bar — curated spirits and cocktails',
+    image: 'https://images.unsplash.com/photo-1674654658721-ffc9c08ee1d0?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'Althea bar — cocktail in hand',
     bg: 'bg-[#f2f8fb]',
   },
   {
@@ -47,8 +47,8 @@ const venues = [
     label: 'Pool Bar',
     title: 'By the Water, All Day',
     desc: 'Cold drinks, light bites, the sound of water. The pool bar is where the afternoon extends itself. A coffee that becomes a cocktail, a fresh juice that turns into a long conversation. The menu is simple by design: seasonal fruit, light snacks, everything you want when you are horizontal and the sun is doing its work. No rush required. The water will wait..',
-    image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=900&q=80',
-    imageAlt: 'Pool bar at Althea Resorts',
+    image: 'https://images.unsplash.com/photo-1532347922424-c652d9b7208e?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'Poolside relaxation at Althea Resorts',
     bg: 'bg-[#dde6ea]',
   },
 ]
