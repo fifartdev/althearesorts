@@ -230,10 +230,10 @@ export interface Room {
    * Feature on homepage
    */
   featured?: boolean | null;
-  heroImage: number | Media;
+  heroImage?: (number | null) | Media;
   gallery?:
     | {
-        image: number | Media;
+        image?: (number | null) | Media;
         caption?: string | null;
         id?: string | null;
       }[]
@@ -584,7 +584,7 @@ export interface Journal {
   category?: ('local-guides' | 'hotel-stories' | 'gastronomy' | 'wellness' | 'events' | 'corinthia') | null;
   publishedAt?: string | null;
   author?: string | null;
-  heroImage: number | Media;
+  heroImage?: (number | null) | Media;
   excerpt: string;
   content?: {
     root: {
