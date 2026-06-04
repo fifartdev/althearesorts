@@ -1,5 +1,6 @@
 import React from 'react'
 import Script from 'next/script'
+import type { Metadata } from 'next'
 import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -7,6 +8,16 @@ import { StickyBookingBar, FloatingBookingButton } from '@/components/layout/Boo
 import { CustomCursor } from '@/components/animations/CustomCursor'
 import { hotelSchema, organizationSchema } from '@/lib/seo'
 import './globals.css'
+
+export const metadata: Metadata = {
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
+      { url: '/icon.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+  },
+}
 
 const GA_ID = 'G-WYCXWW127J'
 
