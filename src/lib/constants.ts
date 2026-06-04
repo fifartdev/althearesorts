@@ -7,7 +7,7 @@ export const PHONE_MOBILE = '+30 211 41 84 108'
 export const EMAIL = 'reservations@althearesorts.com'
 export const INFO_EMAIL = 'info@althearesorts.com'
 export const ADDRESS = 'Ano Loutro, Xylokastro, Corinthia, Greece'
-export const COORDINATES = { lat: 38.076875, lng: 22.635913 }
+export const COORDINATES = { lat: 38.0945616, lng: 22.5454614 }
 export const SOCIAL = {
   instagram: 'https://www.instagram.com/althearesorts',
   facebook: 'https://www.facebook.com/profile.php?id=61589365637032',
