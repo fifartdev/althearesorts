@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git commit -m ' *)",
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/tasssop-macbook-pro/Desktop/althearesorts/public/logos/althea_logo_sqr.png)",
+      "Bash(identify /Users/tasssop-macbook-pro/Desktop/althearesorts/src/app/icon.png /Users/tasssop-macbook-pro/Desktop/althearesorts/src/app/apple-icon.png)",
+      "Bash(sips -g all /Users/tasssop-macbook-pro/Desktop/althearesorts/src/app/icon.png /Users/tasssop-macbook-pro/Desktop/althearesorts/src/app/apple-icon.png)",
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/tasssop-macbook-pro/Desktop/althearesorts/public/logos/icon.png /Users/tasssop-macbook-pro/Desktop/althearesorts/public/logos/apple-icon.png)",
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/tasssop-macbook-pro/Desktop/althearesorts/src/app/icon.png /Users/tasssop-macbook-pro/Desktop/althearesorts/src/app/apple-icon.png)"
+    ]
+  }
+}

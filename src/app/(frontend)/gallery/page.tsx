@@ -10,11 +10,9 @@ const S = 'https://staging.althearesorts.com/wp-content/uploads/2026/02'
 const categories = ['All', 'Rooms & Suites', 'Pool & Exterior', 'Dining', 'Spa & Wellness', 'Views']
 
 const galleryItems = [
-  { src: `${S}/Gallery-MUZ36MM.jpg`,                    caption: 'Pool & Gulf Views',       category: 'Pool & Exterior',  wide: true },
-  { src: `${S}/Gallery-CBESRFQ.jpg`,                    caption: 'Corinthian Horizon',      category: 'Views',            wide: false },
-  { src: `${S}/Gallery-FYCW8WR.jpg`,                    caption: 'Resort Exterior',         category: 'Pool & Exterior',  wide: false },
+  { src: '/images/main-pool.jpg',                        caption: 'Main Pool',               category: 'Pool & Exterior',  wide: true },
   { src: `${S}/Gallery-9VZMNYN.jpg`,                    caption: 'Garden & Terraces',       category: 'Pool & Exterior',  wide: false },
-  { src: `${S}/Gallery-3CH8F86.jpg`,                    caption: 'Evening by the Pool',     category: 'Pool & Exterior',  wide: true },
+
   { src: `${S}/althea-exclusive-resorts-spa-1.png`,     caption: 'Standard Double',         category: 'Rooms & Suites',   wide: false },
   { src: `${S}/althea-exclusive-resorts-spa-2.png`,     caption: 'Room Interior',           category: 'Rooms & Suites',   wide: false },
   { src: `${S}/althea-exclusive-resorts-spa-3.png`,     caption: 'Room Details',            category: 'Rooms & Suites',   wide: false },
@@ -46,7 +44,7 @@ export default function GalleryPage() {
         aria-label="Gallery"
       >
         <Image
-          src="https://staging.althearesorts.com/wp-content/uploads/2026/02/Gallery-MUZ36MM.jpg"
+          src="/images/main-pool.jpg"
           alt="Althea Resorts — gallery"
           fill
           priority
