@@ -40,7 +40,7 @@ export function Hero() {
       {/* Background image */}
       <div className="absolute inset-0">
         <Image
-          src="https://staging.althearesorts.com/wp-content/uploads/2025/11/Althea-Pool-Infinity-Color.jpg"
+          src="/images/new-images/althea-front.jpg"
           alt="Althea Resorts — Corinthian Gulf views"
           fill
           priority

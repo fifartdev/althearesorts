@@ -26,6 +26,34 @@ export const NAV_LINKS = [
   { label: 'Contact', href: '/contact' },
 ]
 
+const BATHROOM_IMAGES = [
+  '/images/new-images/althea-rooms-bathroom1.jpg',
+  '/images/new-images/althea-rooms-bathroom2.jpg',
+  '/images/new-images/althea-rooms-bathroom3.jpg',
+  '/images/new-images/althea-rooms-bathroom4.jpg',
+  '/images/new-images/althea-rooms-bathroom5.jpg',
+]
+
+const DELUXE_DOUBLE_IMAGES = [
+  '/images/new-images/althea-deluxe-double1.jpg',
+  '/images/new-images/althea-deluxe-double2.jpg',
+  '/images/new-images/althea-deluxe-double3.jpg',
+  '/images/new-images/althea-deluxe-double4.jpg',
+  '/images/new-images/althea-deluxe-double5.jpg',
+  '/images/new-images/althea-deluxe-double6.jpg',
+  '/images/new-images/althea-deluxe-double7.jpg',
+  '/images/new-images/althea-deluxe-double8.jpg',
+  '/images/new-images/althea-deluxe-double9.jpg',
+  '/images/new-images/althea-deluxe-double10.jpg',
+  '/images/new-images/althea-deluxe-double11.jpg',
+  '/images/new-images/althea-deluxe-double12.jpg',
+  '/images/new-images/althea-deluxe-double13.jpg',
+  '/images/new-images/althea-deluxe-double14.jpg',
+  '/images/new-images/althea-deluxe-double15.jpg',
+  '/images/new-images/althea-deluxe-double16.jpg',
+  ...BATHROOM_IMAGES,
+]
+
 export const ROOMS = [
   {
     slug: 'standard-double',
@@ -36,6 +64,7 @@ export const ROOMS = [
     features: ['King size or twin beds', 'Balcony', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Garden view',
     image: '/images/standard.jpg',
+    images: BATHROOM_IMAGES,
   },
   {
     slug: 'deluxe-double-mv-pv',
@@ -46,6 +75,7 @@ export const ROOMS = [
     features: ['King size or twin beds', 'Balcony with view', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Mountain or pool view',
     image: '/images/deluxe%20double.jpg',
+    images: DELUXE_DOUBLE_IMAGES,
   },
   {
     slug: 'deluxe-double-private-pool',
@@ -56,6 +86,7 @@ export const ROOMS = [
     features: ['King size or twin beds', 'Sharing pool', 'Balcony', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Sharing pool',
     image: '/images/del.double.jpg',
+    images: DELUXE_DOUBLE_IMAGES,
   },
   {
     slug: 'superior-sea-view',
@@ -66,6 +97,7 @@ export const ROOMS = [
     features: ['King size or twin beds', 'Sea view', 'Terrace or Balcony', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Sea view',
     image: '/images/superior%20sea%20view.jpg',
+    images: BATHROOM_IMAGES,
   },
   {
     slug: 'junior-suite-private-pool',
@@ -76,6 +108,7 @@ export const ROOMS = [
     features: ['King size or twin beds', '1 bedroom', '1 living room', 'Private pool', 'Balcony with view', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Soundproofing'],
     view: 'Private pool & views',
     image: '/images/Junior%20suite%20.jpg',
+    images: BATHROOM_IMAGES,
   },
   {
     slug: 'althea-loft-suite',
@@ -86,6 +119,7 @@ export const ROOMS = [
     features: ['King size or twin beds', '1 bedroom', '1 living room with sofa bed', 'Outdoor Jacuzzi', 'Balcony with view', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Panoramic Gulf views',
     image: '/images/js%20living%20room.jpg',
+    images: BATHROOM_IMAGES,
     featured: true,
   },
 ]

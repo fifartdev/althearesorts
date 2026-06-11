@@ -21,6 +21,7 @@ When the client provides Greek-language corrections to English copy, translate t
 - When searching Unsplash for a replacement image, always verify the CDN URL via WebFetch on the Unsplash photo page before writing it to code — new alphanumeric IDs need confirmation
 - Client-supplied images (e.g. `/images/oceanisphoto.jpg`) take priority over any stock photo in the same context
 - Accommodation hero must use an actual room photo from the project's `/public/images/` folder, not a generic stock image
+- Each room in `ROOMS` (constants.ts) has both `image` (single hero) and `images: string[]` (photo gallery shown on the room detail page). When adding new client room photos, append to `images[]` — do not overwrite `image` unless explicitly instructed
 - Gastronomy venue photos must NOT look like identifiable hotels or resorts — use close-ups, atmospheric mood shots, or abstract poolside/food/drink images. Current verified CDN IDs: BAR → `photo-1674654658721-ffc9c08ee1d0`, Pool Bar → `photo-1532347922424-c652d9b7208e`
 - Spa page: `/images/oceanisphoto.jpg` goes in "The Space" intro section (right column). The "Oceanis Philosophy" section uses `photo-1608571423902-eed4a5ad8108` to avoid duplicating the same image on the same page. Do not swap these.
 
@@ -85,7 +86,8 @@ The `sights` array entry for Xylokastro has `objectPosition: 'center bottom'` to
 | Change nav links | `src/lib/constants.ts` → `NAV_LINKS` |
 | Change booking URL | `src/lib/constants.ts` → `BOOKING_URL` |
 | Change social URLs | `src/lib/constants.ts` → `SOCIAL` + Header.tsx + Footer.tsx |
-| Add/edit a room | `src/lib/constants.ts` → `ROOMS` + `src/app/(frontend)/accommodation/` |
+| Add/edit a room | `src/lib/constants.ts` → `ROOMS` (primary `image` + `images[]` gallery) + `src/app/(frontend)/accommodation/` |
+| Add room gallery photos | `src/lib/constants.ts` → `BATHROOM_IMAGES` / `DELUXE_DOUBLE_IMAGES` or room's `images[]` directly |
 | Add a gallery image | `src/app/(frontend)/gallery/page.tsx` → `galleryItems` array |
 | Add a sightseeing card | `src/app/(frontend)/location/page.tsx` → `sights` array |
 | Change contact info | `src/lib/constants.ts` → `PHONE`, `EMAIL`, `ADDRESS` |

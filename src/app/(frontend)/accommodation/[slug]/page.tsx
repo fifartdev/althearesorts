@@ -153,6 +153,33 @@ export default async function RoomPage({ params }: Props) {
         </div>
       </section>
 
+      {/* Photo Gallery */}
+      {room.images && room.images.length > 0 && (
+        <section className="section-padding bg-cream" aria-label="Room photo gallery">
+          <div className="container-luxury">
+            <ScrollReveal>
+              <SectionLabel className="mb-6">Photo Gallery</SectionLabel>
+            </ScrollReveal>
+            <ScrollReveal delay={80}>
+              <h2 className="text-display-sm text-deep mb-12">The Room in Detail</h2>
+            </ScrollReveal>
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+              {room.images.map((src, i) => (
+                <ScrollReveal key={src} delay={i * 40} className="aspect-4/3 relative overflow-hidden group">
+                  <Image
+                    src={src}
+                    alt={`${room.title} — photo ${i + 1}`}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                  />
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Amenities */}
       <section className="section-padding bg-[#f2f8fb]">
         <div className="container-luxury">

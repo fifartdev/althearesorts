@@ -7,7 +7,7 @@ const galleryItems = [
   {
     span: 'col-span-2 row-span-2',
     label: 'Pool & Gulf Views',
-    image: 'https://images.unsplash.com/photo-1563493653502-9e270be23596?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/new-images/New-Hero.jpg',
   },
   {
     span: 'col-span-1',
@@ -17,17 +17,17 @@ const galleryItems = [
   {
     span: 'col-span-1',
     label: 'Ocean Spa',
-    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80',
+    image: '/images/oceanisphoto.jpg',
   },
   {
     span: 'col-span-1',
-    label: 'AITHER Rooftop',
-    image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=600&q=80',
+    label: 'Main Pool',
+    image: '/images/main-pool.jpg',
   },
   {
     span: 'col-span-1',
     label: 'Corinthian Coast',
-    image: 'https://staging.althearesorts.com/wp-content/uploads/2026/02/Gallery-CBESRFQ.jpg',
+    image: '/images/new-images/althea-side-images2.jpg',
   },
 ]
 

@@ -118,12 +118,24 @@ All content images are temporary placeholders — **will be replaced by Payload 
 
 - Staging site images: `https://staging.althearesorts.com/wp-content/uploads/2026/02/` and `/2025/11/`
 - Fallback: Unsplash URLs with `?auto=format&fit=crop&w=900&q=80`
-- Homepage hero: `Althea-Pool-Infinity-Color.jpg` (2025/11 path)
-- Room images: defined in `ROOMS` array in constants.ts
+- Homepage hero: `/images/new-images/althea-front.jpg` (client-supplied hotel entrance shot)
+- Room images: defined in `ROOMS` array in constants.ts — each room has a primary `image` (hero) and an `images: string[]` gallery array
 - Accommodation hero: `/images/superior%20sea%20view.jpg` (actual room photo, not stock)
 - Oceanis product photo: `/public/images/oceanisphoto.jpg` — client-supplied. Used in: (1) Spa "The Space" intro section (replaces generic white pump-bottle Unsplash photo); (2) Gallery Spa & Wellness category. The Spa "Oceanis Philosophy" section uses a separate Unsplash image (`photo-1608571423902-eed4a5ad8108`) to avoid repeating the same photo on the same page.
 - BAR venue photo: Unsplash `photo-1674654658721-ffc9c08ee1d0` — man in suit with martini
 - Pool Bar venue photo: Unsplash `photo-1532347922424-c652d9b7208e` — woman sitting poolside feet in water (replaces palm-tree resort stock that looked like a different hotel)
+
+### Room gallery images (`/public/images/new-images/`)
+- `althea-deluxe-double1–16.jpg` — assigned to both Deluxe Double room types (`deluxe-double-mv-pv`, `deluxe-double-private-pool`)
+- `althea-rooms-bathroom1–5.jpg` — assigned to ALL six room types
+- Stored in `BATHROOM_IMAGES` and `DELUXE_DOUBLE_IMAGES` constants in `constants.ts`, spread into each room's `images[]`
+- Room detail page (`accommodation/[slug]/page.tsx`) renders a **"Photo Gallery"** grid section when `room.images` is populated (between description and amenities sections)
+
+### Homepage GalleryPreview (`components/sections/GalleryPreview.tsx`)
+- Large left cell (Pool & Gulf Views): `/images/new-images/New-Hero.jpg`
+- Top-right cell 2 (Ocean Spa label): `/images/oceanisphoto.jpg`
+- Bottom-right cell 1 (Main Pool label): `/images/main-pool.jpg`
+- Bottom-right cell 2 (Corinthian Coast label): `/images/new-images/althea-side-images2.jpg`
 
 ---
 
