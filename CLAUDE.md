@@ -220,3 +220,12 @@ The Xylokastro entry in the `sights` array has `objectPosition: 'center bottom'`
 
 ### Gallery — Spa & Wellness category
 The category exists in the filter UI but had zero items. The Oceanis product photo (`/images/oceanisphoto.jpg`) is now the first entry in this category.
+
+### Gallery — client images added (2026-06-11)
+Six client-supplied images added to `galleryItems` in `gallery/page.tsx`:
+- `althea-front.jpg` → "Pool & Exterior" (wide, first item — hotel entrance)
+- `New-Hero.jpg` → "Pool & Exterior" (the resort exterior)
+- `althea-side-images1.jpg` → "Views" (wide)
+- `althea-side-images2.jpg` → "Views"
+- `althea-side-images3.jpg` → "Views"
+- `althea-side-images4.jpg` → "Views"

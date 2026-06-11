@@ -10,8 +10,10 @@ const S = 'https://staging.althearesorts.com/wp-content/uploads/2026/02'
 const categories = ['All', 'Rooms & Suites', 'Pool & Exterior', 'Dining', 'Spa & Wellness', 'Views']
 
 const galleryItems = [
-  { src: '/images/main-pool.jpg',                        caption: 'Main Pool',               category: 'Pool & Exterior',  wide: true },
+  { src: '/images/new-images/althea-front.jpg',         caption: 'Althea Resorts',          category: 'Pool & Exterior',  wide: true },
+  { src: '/images/main-pool.jpg',                        caption: 'Main Pool',               category: 'Pool & Exterior',  wide: false },
   { src: `${S}/Gallery-9VZMNYN.jpg`,                    caption: 'Garden & Terraces',       category: 'Pool & Exterior',  wide: false },
+  { src: '/images/new-images/New-Hero.jpg',             caption: 'The Resort',              category: 'Pool & Exterior',  wide: false },
 
   { src: `${S}/althea-exclusive-resorts-spa-1.png`,     caption: 'Standard Double',         category: 'Rooms & Suites',   wide: false },
   { src: `${S}/althea-exclusive-resorts-spa-2.png`,     caption: 'Room Interior',           category: 'Rooms & Suites',   wide: false },
@@ -23,8 +25,14 @@ const galleryItems = [
   { src: `${S}/althea-exclusive-resorts-spa-9.png`,     caption: 'Loft Suite',              category: 'Rooms & Suites',   wide: true },
   { src: `${S}/althea-exclusive-resorts-spa-10.png`,    caption: 'Suite Living Area',       category: 'Rooms & Suites',   wide: false },
   { src: `${S}/althea-exclusive-resorts-spa-11.png`,    caption: 'Suite Terrace',           category: 'Rooms & Suites',   wide: false },
+
+  { src: '/images/new-images/althea-side-images1.jpg',  caption: 'Corinthian Gulf Views',   category: 'Views',            wide: true },
+  { src: '/images/new-images/althea-side-images2.jpg',  caption: 'Corinthian Coast',        category: 'Views',            wide: false },
+  { src: '/images/new-images/althea-side-images3.jpg',  caption: 'The Surroundings',        category: 'Views',            wide: false },
+  { src: '/images/new-images/althea-side-images4.jpg',  caption: 'Landscape & Nature',      category: 'Views',            wide: false },
   { src: `${S}/1.jpg`,                                  caption: 'The Property',            category: 'Views',            wide: false },
-  { src: `${S}/2.jpg`,                                  caption: 'Gulf at Dusk',            category: 'Views',            wide: true },
+  { src: `${S}/2.jpg`,                                  caption: 'Gulf at Dusk',            category: 'Views',            wide: false },
+
   { src: `${S}/FAQ-CKK5K7K.jpg`,                        caption: 'Althea Resorts',          category: 'Pool & Exterior',  wide: false },
   { src: '/images/oceanisphoto.jpg',                    caption: 'Oceanis — Spa Products',  category: 'Spa & Wellness',   wide: false },
 ]
