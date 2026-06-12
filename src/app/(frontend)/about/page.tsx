@@ -87,7 +87,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <ScrollReveal variant="image" className="aspect-[4/5] w-full relative overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=900&q=80"
+                src="/images/new-images/New-Hero.jpg"
                 alt="Althea Resorts — pool and hillside"
                 fill
                 className="object-cover"
