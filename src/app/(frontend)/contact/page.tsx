@@ -23,7 +23,7 @@ export default function ContactPage() {
         aria-label="Contact"
       >
         <Image
-          src="https://staging.althearesorts.com/wp-content/uploads/2026/02/Gallery-3CH8F86.jpg"
+          src="/images/althea-contact.jpg"
           alt="Althea Resorts — contact us"
           fill
           priority

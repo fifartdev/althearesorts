@@ -17,7 +17,7 @@ const experiences = [
     title: 'AITHER',
     desc: 'The rooftop restaurant with panoramic Gulf views. Each evening, the kitchen works with the Mediterranean as its reference point and Greece as its lens.',
     href: '/gastronomy#aither',
-    image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80',
+    image: '/images/aither.jpg',
     imageAlt: 'AITHER rooftop restaurant',
   },
   {

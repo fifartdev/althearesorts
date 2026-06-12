@@ -7,7 +7,7 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 
 const S = 'https://staging.althearesorts.com/wp-content/uploads/2026/02'
 
-const categories = ['All', 'Rooms & Suites', 'Pool & Exterior', 'Dining', 'Spa & Wellness', 'Views']
+const categories = ['All', 'Rooms & Suites', 'Pool & Exterior', 'Breakfast', 'Spa & Wellness', 'Views']
 
 const galleryItems = [
   { src: '/images/new-images/althea-front.jpg',         caption: 'Althea Resorts',          category: 'Pool & Exterior',  wide: true },
@@ -35,6 +35,30 @@ const galleryItems = [
 
   { src: `${S}/FAQ-CKK5K7K.jpg`,                        caption: 'Althea Resorts',          category: 'Pool & Exterior',  wide: false },
   { src: '/images/oceanisphoto.jpg',                    caption: 'Oceanis — Spa Products',  category: 'Spa & Wellness',   wide: false },
+
+  { src: '/images/breakfast/althea-breakfast-1.jpg',   caption: 'Morning Spread',          category: 'Breakfast',           wide: true },
+  { src: '/images/breakfast/althea-breakfast-2.jpg',   caption: 'Fresh Pastries',          category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-3.jpg',   caption: 'Local Honey & Cheeses',   category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-4.jpg',   caption: 'Seasonal Fruit',          category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-5.jpg',   caption: 'Greek Breakfast',         category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-6.jpg',   caption: 'The Breakfast Table',     category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-7.jpg',   caption: 'Breakfast at Althea',     category: 'Breakfast',           wide: true },
+  { src: '/images/breakfast/althea-breakfast-8.jpg',   caption: 'Morning Ritual',          category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-9.jpg',   caption: 'Fresh from the Kitchen',  category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-10.jpg',  caption: 'Morning Light',           category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-11.jpg',  caption: 'Buffet Selection',        category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-12.jpg',  caption: 'Village Cheeses',         category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-13.jpg',  caption: 'Mediterranean Morning',   category: 'Breakfast',           wide: true },
+  { src: '/images/breakfast/althea-breakfast-14.jpg',  caption: 'Slow Mornings',           category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-15.jpg',  caption: 'Morning Coffee',          category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-16.jpg',  caption: 'Breakfast Spread',        category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-17.jpg',  caption: 'Freshly Baked',           category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-18.jpg',  caption: 'The Morning Table',       category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-19.jpg',  caption: 'Breakfast by the Sea',    category: 'Breakfast',           wide: true },
+  { src: '/images/breakfast/althea-breakfast-20.jpg',  caption: 'Harvest & Honey',         category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-21.jpg',  caption: 'A Greek Morning',         category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-22.jpg',  caption: 'Morning Details',         category: 'Breakfast',           wide: false },
+  { src: '/images/breakfast/althea-breakfast-23.jpg',  caption: 'The Breakfast Hour',      category: 'Breakfast',           wide: false },
 ]
 
 export default function GalleryPage() {
