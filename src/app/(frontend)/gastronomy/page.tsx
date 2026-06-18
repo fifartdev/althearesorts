@@ -20,7 +20,7 @@ const venues = [
     label: 'All Day Dining',
     title: 'Something Good, Any Hour You Want It',
     desc: 'Between meals, Althea keeps the kitchen open. Light plates, honest flavors, ingredients that don\'t need much done to them. Whether you come in from the pool or off the beach, there is always something worth sitting down for. The all-day menu follows the same philosophy as everything else at Althea: good produce, treated with respect, served without pretense.',
-    image: '/images/dining%20pexel%20photo.jpg',
+    image: '/images/restaurant/althea-indoor-outdoor-12.jpg',
     imageAlt: 'All-day dining at Althea',
     bg: 'bg-[#dde6ea]',
   },

@@ -7,7 +7,7 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 
 const S = 'https://staging.althearesorts.com/wp-content/uploads/2026/02'
 
-const categories = ['All', 'Rooms & Suites', 'Pool & Exterior', 'Breakfast', 'Spa & Wellness', 'Views']
+const categories = ['All', 'Rooms & Suites', 'Pool & Exterior', 'Dining', 'Lobby & Reception', 'Breakfast', 'Spa & Wellness', 'Views']
 
 const galleryItems = [
   { src: '/images/new-images/althea-front.jpg',         caption: 'Althea Resorts',          category: 'Pool & Exterior',  wide: true },
@@ -59,6 +59,36 @@ const galleryItems = [
   { src: '/images/breakfast/althea-breakfast-21.jpg',  caption: 'A Greek Morning',         category: 'Breakfast',           wide: false },
   { src: '/images/breakfast/althea-breakfast-22.jpg',  caption: 'Morning Details',         category: 'Breakfast',           wide: false },
   { src: '/images/breakfast/althea-breakfast-23.jpg',  caption: 'The Breakfast Hour',      category: 'Breakfast',           wide: false },
+
+  // Restaurant & Dining
+  { src: '/images/restaurant/althea-indoor-outdoor-9.jpg',   caption: 'Dining at Althea',        category: 'Dining',              wide: true },
+  { src: '/images/restaurant/althea-indoor-outdoor-10.jpg',  caption: 'Restaurant Terrace',      category: 'Dining',              wide: false },
+  { src: '/images/restaurant/althea-indoor-outdoor-11.jpg',  caption: 'Indoor Dining',           category: 'Dining',              wide: false },
+  { src: '/images/restaurant/althea-indoor-outdoor-12.jpg',  caption: 'The Dining Room',         category: 'Dining',              wide: false },
+
+  // Lobby & Reception
+  { src: '/images/reception/althea-indoor-outdoor-1.jpg',    caption: 'Althea Lobby',            category: 'Lobby & Reception',   wide: true },
+  { src: '/images/reception/althea-indoor-outdoor-2.jpg',    caption: 'Reception',               category: 'Lobby & Reception',   wide: false },
+  { src: '/images/reception/althea-indoor-outdoor-3.jpg',    caption: 'Hotel Interior',          category: 'Lobby & Reception',   wide: false },
+  { src: '/images/reception/althea-indoor-outdoor-4.jpg',    caption: 'Lobby Details',           category: 'Lobby & Reception',   wide: false },
+  { src: '/images/reception/althea-indoor-outdoor-5.jpg',    caption: 'The Welcome',             category: 'Lobby & Reception',   wide: false },
+  { src: '/images/reception/althea-indoor-outdoor-6.jpg',    caption: 'Arrival at Althea',       category: 'Lobby & Reception',   wide: true },
+  { src: '/images/reception/althea-indoor-outdoor-7.jpg',    caption: 'Common Areas',            category: 'Lobby & Reception',   wide: false },
+  { src: '/images/reception/althea-indoor-outdoor-8.jpg',    caption: 'Interior Design',         category: 'Lobby & Reception',   wide: false },
+
+  // Outdoor Pool
+  { src: '/images/outdoor-pool/althea-indoor-outdoor-13.jpg', caption: 'Outdoor Pool',           category: 'Pool & Exterior',     wide: true },
+  { src: '/images/outdoor-pool/althea-indoor-outdoor-14.jpg', caption: 'Pool at Sunset',         category: 'Pool & Exterior',     wide: false },
+  { src: '/images/outdoor-pool/althea-indoor-outdoor-15.jpg', caption: 'Pool Terrace',           category: 'Pool & Exterior',     wide: false },
+  { src: '/images/outdoor-pool/althea-indoor-outdoor-16.jpg', caption: 'The Pool',               category: 'Pool & Exterior',     wide: false },
+  { src: '/images/outdoor-pool/althea-indoor-outdoor-17.jpg', caption: 'Poolside',               category: 'Pool & Exterior',     wide: false },
+  { src: '/images/outdoor-pool/althea-indoor-outdoor-18.jpg', caption: 'Summer at the Pool',     category: 'Pool & Exterior',     wide: true },
+  { src: '/images/outdoor-pool/althea-indoor-outdoor-19.jpg', caption: 'Pool Views',             category: 'Pool & Exterior',     wide: false },
+  { src: '/images/outdoor-pool/althea-indoor-outdoor-20.jpg', caption: 'Afternoon Swim',         category: 'Pool & Exterior',     wide: false },
+  { src: '/images/outdoor-pool/althea-indoor-outdoor-21.jpg', caption: 'By the Water',           category: 'Pool & Exterior',     wide: false },
+  { src: '/images/outdoor-pool/althea-indoor-outdoor-22.jpg', caption: 'Pool & Gulf',            category: 'Pool & Exterior',     wide: false },
+  { src: '/images/outdoor-pool/althea-indoor-outdoor-23.jpg', caption: 'Pool Garden',            category: 'Pool & Exterior',     wide: true },
+  { src: '/images/outdoor-pool/althea-indoor-outdoor-24.jpg', caption: 'Outdoor Living',         category: 'Pool & Exterior',     wide: false },
 ]
 
 export default function GalleryPage() {
