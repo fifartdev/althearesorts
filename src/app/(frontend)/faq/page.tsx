@@ -28,7 +28,6 @@ const faqs = [
     items: [
       { q: 'How far is Althea Resorts from Athens?', a: 'Althea Resorts is approximately 60 minutes from Athens by car on the Athens–Corinth motorway. We can assist with private transfer arrangements upon request.' },
       { q: 'Do you offer airport transfers?', a: 'Yes, we can arrange private transfers from Athens International Airport. Please contact us with your travel details and we will organize the rest.' },
-      { q: 'How do guests get to the private beach?', a: 'Our private beach on the Corinthian Gulf is 5 minutes from the resort. A complimentary shuttle service runs throughout the day.' },
     ],
   },
   {

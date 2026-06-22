@@ -128,7 +128,6 @@ export function Hero() {
         <div className="mt-16 pt-6 border-t border-white/10 flex flex-wrap gap-x-12 gap-y-4">
           {[
             { value: '41', label: 'Rooms & Suites' },
-            { value: '5\'', label: 'To Private Beach' },
             { value: '60\'', label: 'From Athens' },
             { value: '5★', label: 'Experience' },
           ].map((stat) => (

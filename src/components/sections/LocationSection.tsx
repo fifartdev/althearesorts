@@ -48,7 +48,6 @@ export function LocationSection() {
               <div className="grid grid-cols-3 gap-6 mb-10">
                 {[
                   { value: "60'", label: 'From Athens by car' },
-                  { value: "5'", label: 'To private beach' },
                   { value: '45\'', label: 'To Ancient Corinth' },
                 ].map((fact) => (
                   <div key={fact.label} className="flex flex-col gap-1 border-l border-white/10 pl-4">

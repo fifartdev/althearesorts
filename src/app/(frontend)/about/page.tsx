@@ -72,7 +72,6 @@ export default function AboutPage() {
                 <StatBar stats={[
                   { value: '41', label: 'Rooms & Suites' },
                   { value: '6', label: 'Room Categories' },
-                  { value: '5\'', label: 'To Private Beach' },
                   { value: '60\'', label: 'From Athens' },
                 ]} />
               </ScrollReveal>
@@ -130,8 +129,7 @@ export default function AboutPage() {
                   as rooted in this land as we are.
                 </p>
                 <p className="text-body-refined">
-                  A private <a href="/location" className="text-[#ad8b27] hover:underline font-light">beach</a> five
-                  minutes away. A kitchen that begins every morning with what is fresh, local,
+                  A kitchen that begins every morning with what is fresh, local,
                   and worth eating.
                 </p>
               </ScrollReveal>

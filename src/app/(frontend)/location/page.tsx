@@ -9,7 +9,7 @@ import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 
 export const metadata = genMeta({
   title: 'Location',
-  description: 'Althea Resorts is located in Ano Loutro, near Xylokastro, Corinthia, Greece. 60 minutes from Athens. Private beach on the Corinthian Gulf. Near Ancient Corinth, the Acrocorinth, and the Corinth Canal.',
+  description: 'Althea Resorts is located in Ano Loutro, near Xylokastro, Corinthia, Greece. 60 minutes from Athens. Near Ancient Corinth, the Acrocorinth, and the Corinth Canal.',
   keywords: ['Althea Resorts location', 'Xylokastro hotel', 'Corinthia Greece', 'near Ancient Corinth', 'hotel near Athens'],
   canonical: `${SITE_URL}/location`,
 })
@@ -129,7 +129,6 @@ export default function LocationPage() {
                 <div className="flex flex-col gap-6">
                   {[
                     { value: "60'", label: 'From Athens by car' },
-                    { value: "5'", label: 'To private beach shuttle' },
                     { value: "10'", label: 'To Xylokastro town' },
                     { value: "45'", label: 'To Ancient Corinth' },
                   ].map((f) => (
@@ -139,52 +138,6 @@ export default function LocationPage() {
                     </div>
                   ))}
                 </div>
-              </ScrollReveal>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Private Beach */}
-      <section className="section-padding bg-[#f2f8fb]">
-        <div className="container-luxury">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <ScrollReveal variant="image" className="aspect-[4/3] w-full relative overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1722325110558-63a1a50c2f28?auto=format&fit=crop&w=900&q=80"
-                alt="Private beach on the Corinthian coast"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </ScrollReveal>
-            <div>
-              <ScrollReveal>
-                <SectionLabel className="mb-6">Beaches</SectionLabel>
-              </ScrollReveal>
-              <ScrollReveal delay={100}>
-                <h2 className="text-display-sm text-[#102027] mb-6">The Sea Is Closer Than You Think</h2>
-              </ScrollReveal>
-              <ScrollReveal delay={150}>
-                <GoldLine className="mb-8" />
-              </ScrollReveal>
-              <ScrollReveal delay={200}>
-                <p className="text-body-refined mb-5">
-                  The private beach of Althea is five minutes from the resort by shuttle — a
-                  quiet stretch of coastline reserved for guests, with comfortable sunbeds and
-                  the kind of privacy that public beaches cannot offer.
-                </p>
-                <p className="text-body-refined mb-5">
-                  The Corinthian Gulf is calm by nature. The water is clean, the temperature
-                  generous from early summer through October, and the experience of swimming
-                  here feels unhurried in a way that the more crowded Aegean beaches rarely do.
-                </p>
-                <p className="text-body-refined">
-                  For those who want to explore further, the coastline of Xylokastro and the
-                  surrounding area offers a series of smaller beaches worth finding — some
-                  with tavernas, some with nothing at all, which is sometimes exactly
-                  what you need.
-                </p>
               </ScrollReveal>
             </div>
           </div>
