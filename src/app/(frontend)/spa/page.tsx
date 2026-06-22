@@ -6,6 +6,7 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { BOOKING_URL, SITE_URL } from '@/lib/constants'
+import { SpaBanner } from '@/components/ui/SpaBanner'
 
 export const metadata = genMeta({
   title: 'Ocean Spa',
@@ -43,6 +44,7 @@ const cabins = [
 export default function SpaPage() {
   return (
     <main id="main-content">
+      <SpaBanner />
       {/* Hero */}
       <section
         className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
