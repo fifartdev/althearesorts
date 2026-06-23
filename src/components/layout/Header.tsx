@@ -161,7 +161,7 @@ export function Header() {
         )}
         aria-hidden={!menuOpen}
       >
-        <div className="flex-1 flex flex-col justify-center container-luxury gap-8 pt-24">
+        <div className="flex-1 overflow-y-auto container-luxury flex flex-col gap-6 pt-28 pb-6">
           {links.map((link, i) => (
             <Link
               key={link.href}
@@ -179,7 +179,7 @@ export function Header() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMenuOpen(false)}
-            className="mt-4 inline-flex items-center gap-2 h-11 px-7 w-fit
+            className="mt-2 inline-flex items-center gap-2 h-11 px-7 w-fit
                        text-xs uppercase tracking-[0.2em]
                        bg-[#ad8b27] text-white border border-[#ad8b27]"
           >

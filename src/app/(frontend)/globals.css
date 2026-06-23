@@ -346,6 +346,13 @@
     transform: translate(-50%, -50%);
     opacity: 0.6;
   }
+
+  @media (hover: none) {
+    .cursor,
+    .cursor-follower {
+      display: none;
+    }
+  }
 }
 
 /* ============================================
