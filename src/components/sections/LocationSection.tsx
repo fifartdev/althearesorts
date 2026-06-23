@@ -3,53 +3,72 @@ import Image from 'next/image'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 
-export function LocationSection() {
+type Locale = 'en' | 'el'
+
+const content = {
+  en: {
+    label: 'Location',
+    headlineLine1: 'Corinthia Has Been',
+    headlineLine2: 'Waiting for You',
+    body1: 'Most people drive through Corinthia on the way to somewhere else. That is their loss and, quietly, your gain.',
+    body2: 'The Corinthian Gulf stretches out in front of you, calm and wide. The light here is different — softer in the morning, golden in the afternoon, and at dusk it does something to the water that is difficult to describe and very easy to remember.',
+    facts: [
+      { value: "60'", label: 'From Athens by car' },
+      { value: "45'", label: 'To Ancient Corinth' },
+    ],
+    cta: 'Discover the Region',
+    ctaHref: '/location',
+    imageLocation: 'Ano Loutro, Corinthia',
+  },
+  el: {
+    label: 'Τοποθεσία',
+    headlineLine1: 'Η Κορινθία',
+    headlineLine2: 'σας περίμενε',
+    body1: 'Οι περισσότεροι περνούν από την Κορινθία για να πάνε αλλού. Αυτή είναι η απώλειά τους — και σιωπηλά, το κέρδος σας.',
+    body2: 'Ο Κορινθιακός Κόλπος ανοίγεται μπροστά σας, ήρεμος και πλατύς. Το φως εδώ είναι διαφορετικό — πιο απαλό το πρωί, χρυσό το απόγευμα, και στο σούρουπο κάνει κάτι στο νερό που δύσκολα περιγράφεται αλλά εύκολα θυμάται.',
+    facts: [
+      { value: "60'", label: 'Από Αθήνα με αυτοκίνητο' },
+      { value: "45'", label: 'Ως την Αρχαία Κόρινθο' },
+    ],
+    cta: 'Ανακαλύψτε την Περιοχή',
+    ctaHref: '/el/location',
+    imageLocation: 'Άνω Λουτρό, Κορινθία',
+  },
+}
+
+export function LocationSection({ locale = 'en' }: { locale?: Locale }) {
+  const c = content[locale]
+
   return (
     <section
       className="relative section-padding overflow-hidden"
       aria-label="Location — Corinthia, Greece"
     >
-      {/* Full background */}
       <div className="absolute inset-0 bg-[#102027]" />
-
-      {/* Decorative large text */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 font-editorial text-[20vw] font-light text-white/[0.03] leading-none select-none pointer-events-none" aria-hidden="true">
         Corinthia
       </div>
 
       <div className="relative z-10 container-luxury">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Text */}
           <div>
             <ScrollReveal>
-              <SectionLabel light className="mb-8">Location</SectionLabel>
+              <SectionLabel light className="mb-8">{c.label}</SectionLabel>
             </ScrollReveal>
             <ScrollReveal delay={100}>
               <h2 className="text-display-md text-white mb-8">
-                Corinthia Has Been<br />
-                <em className="italic font-light text-white/70">Waiting for You</em>
+                {c.headlineLine1}<br />
+                <em className="italic font-light text-white/70">{c.headlineLine2}</em>
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={200}>
-              <p className="text-sm font-light text-white/50 leading-relaxed mb-6">
-                Most people drive through Corinthia on the way to somewhere else.
-                That is their loss and, quietly, your gain.
-              </p>
-              <p className="text-sm font-light text-white/50 leading-relaxed mb-10">
-                The Corinthian Gulf stretches out in front of you, calm and wide.
-                The light here is different — softer in the morning, golden in the afternoon,
-                and at dusk it does something to the water that is difficult to describe
-                and very easy to remember.
-              </p>
+              <p className="text-sm font-light text-white/50 leading-relaxed mb-6">{c.body1}</p>
+              <p className="text-sm font-light text-white/50 leading-relaxed mb-10">{c.body2}</p>
             </ScrollReveal>
 
-            {/* Distance facts */}
             <ScrollReveal delay={250}>
               <div className="grid grid-cols-3 gap-6 mb-10">
-                {[
-                  { value: "60'", label: 'From Athens by car' },
-                  { value: '45\'', label: 'To Ancient Corinth' },
-                ].map((fact) => (
+                {c.facts.map((fact) => (
                   <div key={fact.label} className="flex flex-col gap-1 border-l border-white/10 pl-4">
                     <span className="font-editorial text-3xl font-light text-white">{fact.value}</span>
                     <span className="text-label-upper text-white/40">{fact.label}</span>
@@ -60,14 +79,14 @@ export function LocationSection() {
 
             <ScrollReveal delay={300}>
               <a
-                href="/location"
+                href={c.ctaHref}
                 className="inline-flex items-center gap-3
                            text-xs uppercase tracking-[0.2em] text-white/60
                            border-b border-white/20 pb-1
                            hover:text-white hover:border-white
                            transition-colors duration-300"
               >
-                Discover the Region
+                {c.cta}
                 <svg width="20" height="8" viewBox="0 0 20 8" fill="none" aria-hidden="true">
                   <path d="M0 4h18M14 1l4 3-4 3" stroke="currentColor" strokeWidth="0.75" />
                 </svg>
@@ -75,7 +94,6 @@ export function LocationSection() {
             </ScrollReveal>
           </div>
 
-          {/* Image */}
           <ScrollReveal variant="image" className="aspect-square lg:aspect-[4/5] w-full relative overflow-hidden">
             <Image
               src="https://enjoycorinthia.gr/wp-content/uploads/2021/06/ancient-corinth-2.jpg"
@@ -84,10 +102,9 @@ export function LocationSection() {
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
-            {/* Location pin overlay */}
             <div className="absolute inset-0 bg-[#102027]/20" />
             <div className="absolute bottom-6 left-6">
-              <span className="text-label-upper text-white/70">Ano Loutro, Corinthia</span>
+              <span className="text-label-upper text-white/70">{c.imageLocation}</span>
             </div>
           </ScrollReveal>
         </div>

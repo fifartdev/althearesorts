@@ -3,70 +3,112 @@ import Image from 'next/image'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 
-const experiences = [
-  {
-    label: 'Spa & Wellness',
-    title: 'The Ocean Spa',
-    desc: 'Ancient wellness traditions meet contemporary therapies. Sauna, hammam, ice bath, pool, and two treatment cabins. Using Oceanis cosmetics, a Greek brand drawn from this sea.',
-    href: '/experiences#spa',
-    image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80',
-    imageAlt: 'Ocean Spa — Althea Resorts wellness',
-  },
-  {
-    label: 'Dining',
-    title: 'AITHER',
-    desc: 'The rooftop restaurant with panoramic Gulf views. Each evening, the kitchen works with the Mediterranean as its reference point and Greece as its lens.',
-    href: '/gastronomy#aither',
-    image: '/images/aither.jpg',
-    imageAlt: 'AITHER rooftop restaurant',
-  },
-  {
-    label: 'Activities',
-    title: 'The Corinthian Landscape',
-    desc: 'Hiking trails, cycling routes, yoga sessions open to the Gulf. The landscape is not a backdrop — it is part of what you came for.',
-    href: '/experiences#activities',
-    image: 'https://images.unsplash.com/photo-1717518213008-16af162e8494?auto=format&fit=crop&w=800&q=80',
-    imageAlt: 'Boat traveling through the Corinth Canal',
-  },
-]
+type Locale = 'en' | 'el'
 
-export function ExperiencesHighlight() {
+const content = {
+  en: {
+    label: 'Experiences',
+    headlineLine1: 'This Is What You',
+    headlineLine2: 'Come Back For',
+    subtext: 'Most guests arrive with a plan.\nMost plans change by the second morning.',
+    discoverLabel: 'Discover',
+    experiences: [
+      {
+        label: 'Spa & Wellness',
+        title: 'The Ocean Spa',
+        desc: 'Ancient wellness traditions meet contemporary therapies. Sauna, hammam, ice bath, pool, and two treatment cabins. Using Oceanis cosmetics, a Greek brand drawn from this sea.',
+        href: '/experiences#spa',
+        image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80',
+        imageAlt: 'Ocean Spa — Althea Resorts wellness',
+      },
+      {
+        label: 'Dining',
+        title: 'AITHER',
+        desc: 'The rooftop restaurant with panoramic Gulf views. Each evening, the kitchen works with the Mediterranean as its reference point and Greece as its lens.',
+        href: '/gastronomy#aither',
+        image: '/images/aither.jpg',
+        imageAlt: 'AITHER rooftop restaurant',
+      },
+      {
+        label: 'Activities',
+        title: 'The Corinthian Landscape',
+        desc: 'Hiking trails, cycling routes, yoga sessions open to the Gulf. The landscape is not a backdrop — it is part of what you came for.',
+        href: '/experiences#activities',
+        image: 'https://images.unsplash.com/photo-1717518213008-16af162e8494?auto=format&fit=crop&w=800&q=80',
+        imageAlt: 'Boat traveling through the Corinth Canal',
+      },
+    ],
+  },
+  el: {
+    label: 'Εμπειρίες',
+    headlineLine1: 'Αυτός ο λόγος',
+    headlineLine2: 'που επιστρέφετε',
+    subtext: 'Οι περισσότεροι επισκέπτες φτάνουν με πλάνο.\nΤα πλάνα αλλάζουν συνήθως τη δεύτερη μέρα.',
+    discoverLabel: 'Ανακαλύψτε',
+    experiences: [
+      {
+        label: 'Σπα & Ευεξία',
+        title: 'The Ocean Spa',
+        desc: 'Παραδόσεις ευεξίας συναντούν σύγχρονες θεραπείες. Σάουνα, χαμάμ, λουτρό πάγου, πισίνα και δύο cabins θεραπείας. Με προϊόντα Oceanis, ελληνική μάρκα εμπνευσμένη από αυτή τη θάλασσα.',
+        href: '/el/experiences#spa',
+        image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80',
+        imageAlt: 'Ocean Spa — Althea Resorts',
+      },
+      {
+        label: 'Γαστρονομία',
+        title: 'AITHER',
+        desc: 'Το εστιατόριο ταράτσας με πανοραμική θέα στον Κόλπο. Κάθε βράδυ, η κουζίνα μιλά για τη Μεσόγειο μέσα από ελληνικές πρώτες ύλες.',
+        href: '/el/gastronomy#aither',
+        image: '/images/aither.jpg',
+        imageAlt: 'AITHER — εστιατόριο ταράτσας',
+      },
+      {
+        label: 'Δραστηριότητες',
+        title: 'Το Κορινθιακό Τοπίο',
+        desc: 'Μονοπάτια πεζοπορίας, διαδρομές ποδηλασίας, yoga με θέα στον Κόλπο. Το τοπίο δεν είναι σκηνικό — είναι ο λόγος που ήρθατε.',
+        href: '/el/experiences#activities',
+        image: 'https://images.unsplash.com/photo-1717518213008-16af162e8494?auto=format&fit=crop&w=800&q=80',
+        imageAlt: 'Διώρυγα της Κορίνθου',
+      },
+    ],
+  },
+}
+
+export function ExperiencesHighlight({ locale = 'en' }: { locale?: Locale }) {
+  const c = content[locale]
+
   return (
     <section
       className="section-padding bg-[#102027]"
       aria-label="Experiences at Althea Resorts"
     >
       <div className="container-luxury">
-        {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">
           <div>
             <ScrollReveal>
-              <SectionLabel light className="mb-6">Experiences</SectionLabel>
+              <SectionLabel light className="mb-6">{c.label}</SectionLabel>
             </ScrollReveal>
             <ScrollReveal delay={100}>
               <h2 className="text-display-md text-white">
-                This Is What You<br />
-                <em className="italic font-light text-white/70">Come Back For</em>
+                {c.headlineLine1}<br />
+                <em className="italic font-light text-white/70">{c.headlineLine2}</em>
               </h2>
             </ScrollReveal>
           </div>
           <ScrollReveal delay={200}>
-            <p className="text-sm font-light text-white/50 max-w-xs leading-relaxed">
-              Most guests arrive with a plan.<br />
-              Most plans change by the second morning.
+            <p className="text-sm font-light text-white/50 max-w-xs leading-relaxed whitespace-pre-line">
+              {c.subtext}
             </p>
           </ScrollReveal>
         </div>
 
-        {/* Experience cards */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {experiences.map((exp, i) => (
+          {c.experiences.map((exp, i) => (
             <ScrollReveal key={exp.title} delay={i * 120}>
               <a
                 href={exp.href}
                 className="group block overflow-hidden border border-white/10 hover:border-[#ad8b27]/40 transition-colors duration-500"
               >
-                {/* Image */}
                 <div className="aspect-[4/3] relative overflow-hidden">
                   <Image
                     src={exp.image}
@@ -78,7 +120,6 @@ export function ExperiencesHighlight() {
                   <div className="absolute inset-0 bg-[#102027]/0 group-hover:bg-[#102027]/20 transition-colors duration-500" />
                 </div>
 
-                {/* Content */}
                 <div className="p-6 bg-[#102027]">
                   <span className="text-label-upper text-[#ad8b27] mb-3 block">
                     {exp.label}
@@ -90,7 +131,7 @@ export function ExperiencesHighlight() {
                     {exp.desc}
                   </p>
                   <span className="text-xs uppercase tracking-widest text-white/40 group-hover:text-[#ad8b27] transition-colors duration-300 flex items-center gap-2">
-                    Discover
+                    {c.discoverLabel}
                     <svg width="16" height="6" viewBox="0 0 16 6" fill="none" aria-hidden="true">
                       <path d="M0 3h14M10 1l3 2-3 2" stroke="currentColor" strokeWidth="0.75" />
                     </svg>

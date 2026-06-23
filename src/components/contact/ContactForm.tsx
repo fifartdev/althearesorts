@@ -4,15 +4,54 @@ import React, { useState } from 'react'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
-const FORM_TYPES = [
-  { value: 'reservation', label: 'Reservation Enquiry' },
-  { value: 'wedding', label: 'Wedding Enquiry' },
-  { value: 'corporate', label: 'Corporate Events' },
-  { value: 'restaurant', label: 'Restaurant Reservation' },
-  { value: 'general', label: 'General Enquiry' },
-]
+const content = {
+  en: {
+    heading: 'Send a Message',
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    email: 'Email Address',
+    phone: 'Phone',
+    phoneOptional: '(optional)',
+    subject: 'Subject',
+    message: 'Message',
+    submit: 'Send Message',
+    submitting: 'Sending…',
+    successTitle: 'Message Sent',
+    successBody: 'Thank you for reaching out. Our team will get back to you within 24 hours.',
+    reset: 'Send Another',
+    types: [
+      { value: 'reservation', label: 'Reservation Enquiry' },
+      { value: 'wedding', label: 'Wedding Enquiry' },
+      { value: 'corporate', label: 'Corporate Events' },
+      { value: 'restaurant', label: 'Restaurant Reservation' },
+      { value: 'general', label: 'General Enquiry' },
+    ],
+  },
+  el: {
+    heading: 'Στείλτε Μήνυμα',
+    firstName: 'Όνομα',
+    lastName: 'Επώνυμο',
+    email: 'Διεύθυνση Email',
+    phone: 'Τηλέφωνο',
+    phoneOptional: '(προαιρετικό)',
+    subject: 'Θέμα',
+    message: 'Μήνυμα',
+    submit: 'Αποστολή',
+    submitting: 'Αποστολή…',
+    successTitle: 'Το Μήνυμα Εστάλη',
+    successBody: 'Σας ευχαριστούμε για την επικοινωνία. Η ομάδα μας θα σας απαντήσει εντός 24 ωρών.',
+    reset: 'Νέο Μήνυμα',
+    types: [
+      { value: 'reservation', label: 'Αίτημα Κράτησης' },
+      { value: 'wedding', label: 'Αίτημα Γάμου' },
+      { value: 'corporate', label: 'Εταιρικές Εκδηλώσεις' },
+      { value: 'restaurant', label: 'Κράτηση Εστιατορίου' },
+      { value: 'general', label: 'Γενική Ερώτηση' },
+    ],
+  },
+}
 
-export function ContactForm() {
+export function ContactForm({ locale = 'en' }: { locale?: 'en' | 'el' }) {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
   const [form, setForm] = useState({
@@ -23,6 +62,8 @@ export function ContactForm() {
     formType: 'reservation',
     message: '',
   })
+
+  const c = content[locale]
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
@@ -62,9 +103,9 @@ export function ContactForm() {
   if (status === 'success') {
     return (
       <div className="flex flex-col gap-6 py-10">
-        <h3 className="text-label-upper text-[#102027] mb-2">Message Sent</h3>
+        <h3 className="text-label-upper text-[#102027] mb-2">{c.successTitle}</h3>
         <p className="text-sm font-light text-[#6b6b6b] leading-relaxed max-w-md">
-          Thank you for reaching out. Our team will get back to you within 24 hours.
+          {c.successBody}
         </p>
         <button
           onClick={() => setStatus('idle')}
@@ -74,7 +115,7 @@ export function ContactForm() {
                      hover:bg-[#102027] hover:text-white
                      transition-all duration-500"
         >
-          Send Another
+          {c.reset}
         </button>
       </div>
     )
@@ -82,12 +123,12 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6" aria-label="Contact form" noValidate>
-      <h3 className="text-label-upper text-[#102027] mb-2">Send a Message</h3>
+      <h3 className="text-label-upper text-[#102027] mb-2">{c.heading}</h3>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="flex flex-col gap-2">
           <label htmlFor="firstName" className="text-xs uppercase tracking-wider text-[#6b6b6b]">
-            First Name
+            {c.firstName}
           </label>
           <input
             id="firstName"
@@ -103,7 +144,7 @@ export function ContactForm() {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="lastName" className="text-xs uppercase tracking-wider text-[#6b6b6b]">
-            Last Name
+            {c.lastName}
           </label>
           <input
             id="lastName"
@@ -122,7 +163,7 @@ export function ContactForm() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="flex flex-col gap-2">
           <label htmlFor="email" className="text-xs uppercase tracking-wider text-[#6b6b6b]">
-            Email Address
+            {c.email}
           </label>
           <input
             id="email"
@@ -138,7 +179,8 @@ export function ContactForm() {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="phone" className="text-xs uppercase tracking-wider text-[#6b6b6b]">
-            Phone <span className="normal-case tracking-normal text-[#6b6b6b]/60">(optional)</span>
+            {c.phone}{' '}
+            <span className="normal-case tracking-normal text-[#6b6b6b]/60">{c.phoneOptional}</span>
           </label>
           <input
             id="phone"
@@ -155,7 +197,7 @@ export function ContactForm() {
 
       <div className="flex flex-col gap-2">
         <label htmlFor="formType" className="text-xs uppercase tracking-wider text-[#6b6b6b]">
-          Subject
+          {c.subject}
         </label>
         <select
           id="formType"
@@ -166,7 +208,7 @@ export function ContactForm() {
                      bg-white focus:outline-none focus:border-[#102027]
                      transition-colors duration-200 w-full appearance-none"
         >
-          {FORM_TYPES.map(t => (
+          {c.types.map(t => (
             <option key={t.value} value={t.value}>{t.label}</option>
           ))}
         </select>
@@ -174,7 +216,7 @@ export function ContactForm() {
 
       <div className="flex flex-col gap-2">
         <label htmlFor="message" className="text-xs uppercase tracking-wider text-[#6b6b6b]">
-          Message
+          {c.message}
         </label>
         <textarea
           id="message"
@@ -202,7 +244,7 @@ export function ContactForm() {
                    hover:bg-transparent hover:text-[#102027]
                    transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {status === 'loading' ? 'Sending…' : 'Send Message'}
+        {status === 'loading' ? c.submitting : c.submit}
       </button>
     </form>
   )

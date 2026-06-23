@@ -8,7 +8,7 @@ import { StickyBookingBar, FloatingBookingButton } from '@/components/layout/Boo
 import { CookieConsent } from '@/components/layout/CookieConsent'
 import { CustomCursor } from '@/components/animations/CustomCursor'
 import { hotelSchema, organizationSchema } from '@/lib/seo'
-import './globals.css'
+import '../../(frontend)/globals.css'
 
 export const metadata: Metadata = {
   icons: {
@@ -38,9 +38,9 @@ const dmSans = DM_Sans({
   display: 'swap',
 })
 
-export default function FrontendLayout({ children }: { children: React.ReactNode }) {
+export default function GreekLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`scroll-smooth ${cormorant.variable} ${dmSans.variable}`}>
+    <html lang="el" className={`scroll-smooth ${cormorant.variable} ${dmSans.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -57,7 +57,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50
                      focus:bg-[#102027] focus:text-white focus:px-4 focus:py-2 focus:text-sm"
         >
-          Skip to main content
+          Μετάβαση στο κύριο περιεχόμενο
         </a>
 
         {/* Google Analytics */}
@@ -74,10 +74,10 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
         <CustomCursor />
         <Header />
         {children}
-        <Footer />
-        <StickyBookingBar />
+        <Footer locale="el" />
+        <StickyBookingBar locale="el" />
         <FloatingBookingButton />
-        <CookieConsent />
+        <CookieConsent locale="el" />
       </body>
     </html>
   )

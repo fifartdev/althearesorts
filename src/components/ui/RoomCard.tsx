@@ -5,6 +5,7 @@ import { cn } from '@/lib/cn'
 
 interface RoomCardProps {
   slug: string
+  href?: string
   title: string
   size: string
   shortDesc: string
@@ -12,10 +13,12 @@ interface RoomCardProps {
   image: string
   className?: string
   priority?: boolean
+  locale?: 'en' | 'el'
 }
 
 export function RoomCard({
   slug,
+  href,
   title,
   size,
   shortDesc,
@@ -23,10 +26,11 @@ export function RoomCard({
   image,
   className,
   priority,
+  locale = 'en',
 }: RoomCardProps) {
   return (
     <Link
-      href={`/accommodation/${slug}`}
+      href={href ?? `/accommodation/${slug}`}
       className={cn(
         'group block relative overflow-hidden bg-[#f2f8fb]',
         className
@@ -68,7 +72,7 @@ export function RoomCard({
                        flex items-center gap-2 transition-gap duration-300
                        group-hover:gap-3"
           >
-            Discover
+            {locale === 'el' ? 'Ανακαλύψτε' : 'Discover'}
             <svg width="20" height="8" viewBox="0 0 20 8" fill="none" aria-hidden="true">
               <path d="M0 4h18M14 1l4 3-4 3" stroke="currentColor" strokeWidth="0.75" />
             </svg>

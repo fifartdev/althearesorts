@@ -4,8 +4,24 @@ import React, { useState, useEffect } from 'react'
 import { BOOKING_URL } from '@/lib/constants'
 import { cn } from '@/lib/cn'
 
-export function StickyBookingBar() {
+const barContent = {
+  en: {
+    tagline: 'Reserve your stay — 60 minutes from Athens',
+    offer: '10% off direct bookings',
+    cta: 'Book Now',
+    ariaLabel: 'Quick booking',
+  },
+  el: {
+    tagline: 'Κλείστε τη διαμονή σας — 60 λεπτά από Αθήνα',
+    offer: '10% έκπτωση για απευθείας κρατήσεις',
+    cta: 'Κράτηση',
+    ariaLabel: 'Γρήγορη κράτηση',
+  },
+}
+
+export function StickyBookingBar({ locale = 'en' }: { locale?: 'en' | 'el' }) {
   const [visible, setVisible] = useState(false)
+  const c = barContent[locale]
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.8)
@@ -22,14 +38,14 @@ export function StickyBookingBar() {
         visible ? 'translate-y-0' : 'translate-y-full'
       )}
       role="complementary"
-      aria-label="Quick booking"
+      aria-label={c.ariaLabel}
     >
       <p className="text-xs uppercase tracking-[0.2em] text-white/70 font-light">
-        Reserve your stay — 60 minutes from Athens
+        {c.tagline}
       </p>
       <div className="flex items-center gap-6">
         <span className="text-xs text-[#ad8b27] uppercase tracking-widest font-light">
-          10% off direct bookings
+          {c.offer}
         </span>
         <a
           href={BOOKING_URL}
@@ -41,7 +57,7 @@ export function StickyBookingBar() {
                      hover:bg-transparent hover:text-[#ad8b27]
                      transition-all duration-400"
         >
-          Book Now
+          {c.cta}
         </a>
       </div>
     </div>

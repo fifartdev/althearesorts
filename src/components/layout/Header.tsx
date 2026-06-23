@@ -3,12 +3,22 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/cn'
-import { NAV_LINKS, BOOKING_URL } from '@/lib/constants'
+import { NAV_LINKS, NAV_LINKS_EL, BOOKING_URL } from '@/lib/constants'
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const pathname = usePathname()
+
+  const isGreek = pathname.startsWith('/el')
+  const links = isGreek ? NAV_LINKS_EL : NAV_LINKS
+  const logoHref = isGreek ? '/el' : '/'
+  const bookLabel = isGreek ? 'Κράτηση' : 'Book Now'
+  const switchHref = isGreek
+    ? (pathname === '/el' ? '/' : pathname.replace(/^\/el/, ''))
+    : (pathname === '/' ? '/el' : `/el${pathname}`)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -35,8 +45,8 @@ export function Header() {
         <div className="container-luxury flex items-center justify-between">
           {/* Logo */}
           <Link
-            href="/"
-            aria-label="Althea Resorts — Home"
+            href={logoHref}
+            aria-label={isGreek ? 'Althea Resorts — Αρχική' : 'Althea Resorts — Home'}
           >
             <Image
               src="/logos/althea_logo_white-f.png"
@@ -50,10 +60,10 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav
-            className="hidden lg:flex items-center gap-8"
+            className="hidden lg:flex items-center gap-5"
             aria-label="Primary navigation"
           >
-            {NAV_LINKS.map((link) => (
+            {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -64,7 +74,7 @@ export function Header() {
             ))}
           </nav>
 
-          {/* CTA + Burger */}
+          {/* CTA + Language switcher + Burger */}
           <div className="flex items-center gap-4">
             {/* Social icons — desktop only */}
             <div className="hidden lg:flex items-center gap-3">
@@ -88,6 +98,18 @@ export function Header() {
                 </svg>
               </a>
             </div>
+
+            {/* Language switcher — desktop */}
+            <Link
+              href={switchHref}
+              className="hidden lg:inline-flex items-center h-9 px-3
+                         text-[10px] uppercase tracking-[0.2em] text-white/50
+                         hover:text-white transition-colors duration-300"
+              aria-label={isGreek ? 'Switch to English' : 'Εναλλαγή στα Ελληνικά'}
+            >
+              {isGreek ? 'EN' : 'ΕΛ'}
+            </Link>
+
             <a
               href={BOOKING_URL}
               target="_blank"
@@ -98,14 +120,14 @@ export function Header() {
                 'bg-white/10 text-white border border-white/40 hover:bg-white/20'
               )}
             >
-              Book Now
+              {bookLabel}
             </a>
 
             {/* Mobile burger */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="lg:hidden flex flex-col gap-1.5 p-1 text-white"
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={menuOpen ? (isGreek ? 'Κλείσιμο μενού' : 'Close menu') : (isGreek ? 'Άνοιγμα μενού' : 'Open menu')}
               aria-expanded={menuOpen}
             >
               <span
@@ -140,7 +162,7 @@ export function Header() {
         aria-hidden={!menuOpen}
       >
         <div className="flex-1 flex flex-col justify-center container-luxury gap-8 pt-24">
-          {NAV_LINKS.map((link, i) => (
+          {links.map((link, i) => (
             <Link
               key={link.href}
               href={link.href}
@@ -161,17 +183,26 @@ export function Header() {
                        text-xs uppercase tracking-[0.2em]
                        bg-[#ad8b27] text-white border border-[#ad8b27]"
           >
-            Book Now
+            {bookLabel}
           </a>
         </div>
 
         {/* Mobile menu footer */}
         <div className="container-luxury pb-8 border-t border-white/10 pt-6 flex items-center justify-between">
           <div className="flex flex-col gap-0.5">
-            <span className="text-white/40 text-xs uppercase tracking-widest">Corinthia, Greece</span>
+            <span className="text-white/40 text-xs uppercase tracking-widest">
+              {isGreek ? 'Κορινθία, Ελλάδα' : 'Corinthia, Greece'}
+            </span>
             <span className="text-white/60 text-xs">+30 211 41 84 108</span>
           </div>
           <div className="flex gap-4">
+            <Link
+              href={switchHref}
+              onClick={() => setMenuOpen(false)}
+              className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200"
+            >
+              {isGreek ? 'EN' : 'ΕΛ'}
+            </Link>
             <a href="https://instagram.com/althearesorts" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200">IG</a>
             <a href="https://facebook.com/althearesorts" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200">FB</a>
           </div>

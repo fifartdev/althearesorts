@@ -4,10 +4,46 @@ import React, { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { BOOKING_URL } from '@/lib/constants'
 
-export function Hero() {
+type Locale = 'en' | 'el'
+
+const content = {
+  en: {
+    locationLabel: 'Corinthia, Greece',
+    scrollLabel: 'Scroll',
+    headlineLine1: 'Where the Gulf',
+    headlineLine2: 'Begins to Heal You',
+    tagline: '41 rooms and suites on the hills of Ano Loutro. Sixty minutes from Athens. A world away from everything else.',
+    cta1: 'Reserve a Room',
+    cta2: 'Explore Rooms',
+    cta2Href: '/accommodation',
+    stats: [
+      { value: '41', label: 'Rooms & Suites' },
+      { value: "60'", label: 'From Athens' },
+      { value: '5★', label: 'Experience' },
+    ],
+  },
+  el: {
+    locationLabel: 'Κορινθία, Ελλάδα',
+    scrollLabel: 'Κύλιση',
+    headlineLine1: 'Εκεί που ο Κόλπος',
+    headlineLine2: 'Αρχίζει να σε Θεραπεύει',
+    tagline: '41 δωμάτια και σουίτες στους λόφους του Άνω Λουτρού. Εξήντα λεπτά από Αθήνα. Ένας κόσμος μακριά από όλα τα άλλα.',
+    cta1: 'Κάντε Κράτηση',
+    cta2: 'Εξερευνήστε Δωμάτια',
+    cta2Href: '/el/accommodation',
+    stats: [
+      { value: '41', label: 'Δωμάτια & Σουίτες' },
+      { value: "60'", label: 'Από Αθήνα' },
+      { value: '5★', label: 'Εμπειρία' },
+    ],
+  },
+}
+
+export function Hero({ locale = 'en' }: { locale?: Locale }) {
   const headlineRef = useRef<HTMLHeadingElement>(null)
   const subtitleRef = useRef<HTMLParagraphElement>(null)
   const ctaRef = useRef<HTMLDivElement>(null)
+  const c = content[locale]
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -55,7 +91,7 @@ export function Hero() {
       {/* Scroll indicator */}
       <div className="absolute right-8 bottom-1/3 flex flex-col items-center gap-3 z-10 hidden lg:flex">
         <span className="text-white/40 text-[10px] uppercase tracking-[0.25em]" style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}>
-          Scroll
+          {c.scrollLabel}
         </span>
         <div className="w-px h-16 bg-white/20 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1/2 bg-white/60 animate-scroll-line" />
@@ -69,7 +105,7 @@ export function Hero() {
           <div className="flex items-center gap-3 mb-6">
             <span className="block w-6 h-px bg-[#ad8b27]" />
             <span className="text-label-upper text-white/60">
-              Corinthia, Greece
+              {c.locationLabel}
             </span>
           </div>
 
@@ -79,8 +115,8 @@ export function Hero() {
             className="text-display-xl text-white mb-6"
             style={{ opacity: 0 }}
           >
-            Where the Gulf<br />
-            <em className="not-italic text-white/80">Begins to Heal You</em>
+            {c.headlineLine1}<br />
+            <em className="not-italic text-white/80">{c.headlineLine2}</em>
           </h1>
 
           {/* Tagline */}
@@ -89,8 +125,7 @@ export function Hero() {
             className="text-base font-light text-white/65 leading-relaxed max-w-md mb-10"
             style={{ opacity: 0 }}
           >
-            41 rooms and suites on the hills of Ano Loutro.
-            Sixty minutes from Athens. A world away from everything else.
+            {c.tagline}
           </p>
 
           {/* CTAs */}
@@ -109,28 +144,24 @@ export function Hero() {
                          hover:bg-transparent hover:text-[#ad8b27]
                          transition-all duration-500"
             >
-              Reserve a Room
+              {c.cta1}
             </a>
             <a
-              href="/accommodation"
+              href={c.cta2Href}
               className="h-11 px-8 inline-flex items-center
                          text-xs uppercase tracking-[0.2em]
                          bg-transparent text-white border border-white/40
                          hover:bg-white hover:text-[#102027]
                          transition-all duration-500"
             >
-              Explore Rooms
+              {c.cta2}
             </a>
           </div>
         </div>
 
         {/* Stats row */}
         <div className="mt-16 pt-6 border-t border-white/10 flex flex-wrap gap-x-12 gap-y-4">
-          {[
-            { value: '41', label: 'Rooms & Suites' },
-            { value: '60\'', label: 'From Athens' },
-            { value: '5★', label: 'Experience' },
-          ].map((stat) => (
+          {c.stats.map((stat) => (
             <div key={stat.label} className="flex flex-col gap-0.5">
               <span className="font-editorial text-2xl font-light text-white">{stat.value}</span>
               <span className="text-label-upper text-white/40">{stat.label}</span>

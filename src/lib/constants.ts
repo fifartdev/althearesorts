@@ -26,6 +26,18 @@ export const NAV_LINKS = [
   { label: 'Contact', href: '/contact' },
 ]
 
+export const NAV_LINKS_EL = [
+  { label: 'Σχετικά', href: '/el/about' },
+  { label: 'Διαμονή', href: '/el/accommodation' },
+  { label: 'Εμπειρίες', href: '/el/experiences' },
+  { label: 'Σπα', href: '/el/spa' },
+  { label: 'Γαστρονομία', href: '/el/gastronomy' },
+  { label: 'Γκαλερί', href: '/el/gallery' },
+  { label: 'Τοποθεσία', href: '/el/location' },
+  { label: 'Προσφορές', href: '/el/offers' },
+  { label: 'Επικοινωνία', href: '/el/contact' },
+]
+
 const BATHROOM_IMAGES = [
   '/images/new-images/althea-rooms-bathroom1.jpg',
   '/images/new-images/althea-rooms-bathroom2.jpg',

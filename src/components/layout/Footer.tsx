@@ -1,10 +1,39 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { NAV_LINKS, BOOKING_URL, PHONE, EMAIL, ADDRESS } from '@/lib/constants'
+import { NAV_LINKS, NAV_LINKS_EL, BOOKING_URL, PHONE, EMAIL, ADDRESS } from '@/lib/constants'
 
-export function Footer() {
+type Locale = 'en' | 'el'
+
+const footerContent = {
+  en: {
+    desc: 'A luxury boutique resort on the gentle hillside of Ano Loutro, near Xylokastro, Corinthia. Sixty minutes from Athens. A world away from the rest.',
+    explore: 'Explore',
+    stay: 'Stay',
+    bookNow: 'Book Now →',
+    copyright: (year: number) => `© ${year} Althea Resorts. All rights reserved.`,
+    privacy: 'Privacy Policy',
+    terms: 'Terms',
+    privacyHref: '/privacy-policy',
+    termsHref: '/terms',
+  },
+  el: {
+    desc: 'Ένα πολυτελές boutique resort στον ήπιο λόφο του Άνω Λουτρού, κοντά στο Ξυλόκαστρο, Κορινθία. Εξήντα λεπτά από Αθήνα. Ένας κόσμος μακριά.',
+    explore: 'Εξερευνήστε',
+    stay: 'Διαμονή',
+    bookNow: 'Κράτηση →',
+    copyright: (year: number) => `© ${year} Althea Resorts. Με επιφύλαξη κάθε δικαιώματος.`,
+    privacy: 'Πολιτική Απορρήτου',
+    terms: 'Όροι Χρήσης',
+    privacyHref: '/privacy-policy',
+    termsHref: '/terms',
+  },
+}
+
+export function Footer({ locale = 'en' }: { locale?: Locale }) {
   const year = new Date().getFullYear()
+  const c = footerContent[locale]
+  const links = locale === 'el' ? NAV_LINKS_EL : NAV_LINKS
 
   return (
     <footer className="bg-[#102027] text-white" role="contentinfo">
@@ -23,9 +52,7 @@ export function Footer() {
               />
             </div>
             <p className="text-sm font-light text-white/50 leading-relaxed max-w-xs">
-              A luxury boutique resort on the gentle hillside of Ano Loutro,
-              near Xylokastro, Corinthia. Sixty minutes from Athens.
-              A world away from the rest.
+              {c.desc}
             </p>
             <div className="flex flex-col gap-2 text-sm font-light text-white/50">
               <span>{ADDRESS}</span>
@@ -36,9 +63,9 @@ export function Footer() {
 
           {/* Navigation columns */}
           <div className="lg:col-span-3 lg:col-start-6">
-            <h3 className="text-label-upper text-[#ad8b27] mb-5">Explore</h3>
+            <h3 className="text-label-upper text-[#ad8b27] mb-5">{c.explore}</h3>
             <ul className="flex flex-col gap-3">
-              {NAV_LINKS.slice(0, 5).map((link) => (
+              {links.slice(0, 5).map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -52,9 +79,9 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-3">
-            <h3 className="text-label-upper text-[#ad8b27] mb-5">Stay</h3>
+            <h3 className="text-label-upper text-[#ad8b27] mb-5">{c.stay}</h3>
             <ul className="flex flex-col gap-3">
-              {NAV_LINKS.slice(5).map((link) => (
+              {links.slice(5).map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -71,7 +98,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="text-sm font-light text-[#ad8b27] hover:text-white transition-colors duration-200 uppercase tracking-wider"
                 >
-                  Book Now →
+                  {c.bookNow}
                 </a>
               </li>
             </ul>
@@ -81,14 +108,14 @@ export function Footer() {
         {/* Divider */}
         <div className="border-t border-white/10 pt-8 grid grid-cols-1 sm:grid-cols-3 items-center gap-4">
           <p className="text-xs font-light text-white/30 uppercase tracking-widest">
-            © {year} Althea Resorts. All rights reserved.
+            {c.copyright(year)}
           </p>
           <div className="flex items-center justify-center gap-6">
-            <Link href="/privacy-policy" className="text-xs text-white/30 hover:text-white/60 transition-colors duration-200 uppercase tracking-wider">
-              Privacy Policy
+            <Link href={c.privacyHref} className="text-xs text-white/30 hover:text-white/60 transition-colors duration-200 uppercase tracking-wider">
+              {c.privacy}
             </Link>
-            <Link href="/terms" className="text-xs text-white/30 hover:text-white/60 transition-colors duration-200 uppercase tracking-wider">
-              Terms
+            <Link href={c.termsHref} className="text-xs text-white/30 hover:text-white/60 transition-colors duration-200 uppercase tracking-wider">
+              {c.terms}
             </Link>
           </div>
           <div className="flex items-center sm:justify-end gap-5">
