@@ -190,6 +190,7 @@
     font-weight: 300;
     line-height: 0.95;
     letter-spacing: -0.02em;
+    overflow-wrap: break-word;
   }
 
   .text-display-xl {
@@ -198,6 +199,7 @@
     font-weight: 300;
     line-height: 1.05;
     letter-spacing: -0.02em;
+    overflow-wrap: break-word;
   }
 
   .text-display-lg {
@@ -206,6 +208,7 @@
     font-weight: 300;
     line-height: 1.05;
     letter-spacing: -0.015em;
+    overflow-wrap: break-word;
   }
 
   .text-display-md {
@@ -214,6 +217,7 @@
     font-weight: 300;
     line-height: 1.1;
     letter-spacing: -0.01em;
+    overflow-wrap: break-word;
   }
 
   .text-display-sm {
