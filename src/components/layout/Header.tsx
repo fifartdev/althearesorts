@@ -156,7 +156,7 @@ export function Header() {
       {/* Mobile Menu Overlay */}
       <div
         className={cn(
-          'fixed inset-0 z-40 flex flex-col bg-[#102027] transition-all duration-700',
+          'fixed inset-0 z-50 flex flex-col bg-[#102027] transition-all duration-700',
           menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         )}
         aria-hidden={!menuOpen}
@@ -174,17 +174,26 @@ export function Header() {
             </Link>
           ))}
 
-          <a
-            href={BOOKING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setMenuOpen(false)}
-            className="mt-2 inline-flex items-center gap-2 h-11 px-7 w-fit
-                       text-xs uppercase tracking-[0.2em]
-                       bg-[#ad8b27] text-white border border-[#ad8b27]"
-          >
-            {bookLabel}
-          </a>
+          <div className="flex items-center gap-6 mt-2">
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="inline-flex items-center gap-2 h-11 px-7
+                         text-xs uppercase tracking-[0.2em]
+                         bg-gold text-white border border-gold"
+            >
+              {bookLabel}
+            </a>
+            <Link
+              href={switchHref}
+              onClick={() => setMenuOpen(false)}
+              className="text-white/60 hover:text-white text-xs uppercase tracking-[0.2em] transition-colors duration-200 border border-white/20 h-11 px-5 inline-flex items-center"
+            >
+              {isGreek ? 'EN' : 'ΕΛ'}
+            </Link>
+          </div>
         </div>
 
         {/* Mobile menu footer */}
