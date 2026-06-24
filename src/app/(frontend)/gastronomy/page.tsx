@@ -53,8 +53,27 @@ const venues = [
   },
 ]
 
+const aithirSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  '@id': 'https://althearesorts.com/gastronomy#aither',
+  name: 'AITHER',
+  description: 'Rooftop restaurant at Althea Resorts — Mediterranean cuisine told through a Greek lens, with panoramic views of the Corinthian Gulf.',
+  url: 'https://althearesorts.com/gastronomy',
+  servesCuisine: ['Mediterranean', 'Greek'],
+  priceRange: '€€€',
+  containedInPlace: {
+    '@id': 'https://althearesorts.com/#hotel',
+  },
+}
+
 export default function GastronomyPage() {
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aithirSchema) }}
+      />
     <main id="main-content">
       {/* Hero */}
       <section
@@ -206,5 +225,6 @@ export default function GastronomyPage() {
 
       <FinalBookingCTA />
     </main>
+    </>
   )
 }

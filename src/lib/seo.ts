@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { SITE_NAME, SITE_TAGLINE, SITE_URL, COORDINATES } from './constants'
+import { SITE_NAME, SITE_TAGLINE, SITE_URL, COORDINATES, PHONE, SOCIAL } from './constants'
 
 interface SEOProps {
   title?: string
@@ -8,6 +8,7 @@ interface SEOProps {
   noIndex?: boolean
   canonical?: string
   keywords?: string[]
+  locale?: string
 }
 
 export function generateMetadata({
@@ -17,12 +18,32 @@ export function generateMetadata({
   noIndex,
   canonical,
   keywords,
+  locale,
 }: SEOProps = {}): Metadata {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — ${SITE_TAGLINE}`
   const defaultDesc = `Althea Resorts — A luxury boutique hotel on the hillside of Ano Loutro, near Xylokastro, Corinthia, Greece. 60 minutes from Athens. 41 rooms and suites with views of the Corinthian Gulf.`
   const metaDesc = description || defaultDesc
   const ogImage = image || `${SITE_URL}/og-default.jpg`
   const canonicalUrl = canonical || SITE_URL
+
+  // Auto-derive locale from canonical path if not explicitly provided
+  const canonicalPath = canonicalUrl.replace(SITE_URL, '') || '/'
+  const isGreekPage = canonicalPath.startsWith('/el')
+  const ogLocale = locale ?? (isGreekPage ? 'el_GR' : 'en_GB')
+
+  // Auto-derive hreflang alternates from canonical URL
+  const hreflangAlternates: Record<string, string> = {}
+  if (isGreekPage) {
+    const enPath = canonicalPath === '/el' ? '' : canonicalPath.replace(/^\/el/, '')
+    hreflangAlternates['en'] = `${SITE_URL}${enPath}`
+    hreflangAlternates['el'] = canonicalUrl
+    hreflangAlternates['x-default'] = `${SITE_URL}${enPath}`
+  } else {
+    const elPath = canonicalPath === '/' || canonicalPath === '' ? '/el' : `/el${canonicalPath}`
+    hreflangAlternates['en'] = canonicalUrl
+    hreflangAlternates['el'] = `${SITE_URL}${elPath}`
+    hreflangAlternates['x-default'] = canonicalUrl
+  }
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -35,6 +56,7 @@ export function generateMetadata({
       : { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
     alternates: {
       canonical: canonicalUrl,
+      languages: hreflangAlternates,
     },
     openGraph: {
       type: 'website',
@@ -50,7 +72,7 @@ export function generateMetadata({
           alt: fullTitle,
         },
       ],
-      locale: 'en_GB',
+      locale: ogLocale,
       countryName: 'Greece',
     },
     twitter: {
@@ -62,14 +84,31 @@ export function generateMetadata({
   }
 }
 
+// Helper to build BreadcrumbList schema
+export interface BreadcrumbItem { name: string; href: string }
+
+export function buildBreadcrumb(items: BreadcrumbItem[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: `${SITE_URL}${item.href}`,
+    })),
+  }
+}
+
 export const hotelSchema = {
   '@context': 'https://schema.org',
   '@type': 'LodgingBusiness',
+  '@id': 'https://althearesorts.com/#hotel',
   name: 'Althea Resorts',
   alternateName: 'Althea Exclusive Resorts & Spa',
   description: 'A luxury boutique resort on the hillside of Ano Loutro, near Xylokastro, Corinthia, Greece. 60 minutes from Athens. 41 rooms and suites, Ocean Spa, and rooftop restaurant AITHER.',
   url: SITE_URL,
-  telephone: '+302114184108',
+  telephone: PHONE,
   email: 'reservations@althearesorts.com',
   address: {
     '@type': 'PostalAddress',
@@ -115,13 +154,11 @@ export const hotelSchema = {
   ],
   priceRange: '€€€€',
   image: `${SITE_URL}/og-default.jpg`,
-  sameAs: [
-    'https://instagram.com/althearesorts',
-    'https://facebook.com/althearesorts',
-  ],
+  sameAs: [SOCIAL.instagram, SOCIAL.facebook, SOCIAL.linkedin],
   containsPlace: [
     {
       '@type': 'Restaurant',
+      '@id': 'https://althearesorts.com/gastronomy#aither',
       name: 'AITHER',
       description: 'Rooftop restaurant with panoramic views of the Corinthian Gulf. Mediterranean cuisine told through a Greek lens.',
       servesCuisine: ['Greek', 'Mediterranean'],
@@ -130,6 +167,7 @@ export const hotelSchema = {
     },
     {
       '@type': 'HealthAndBeautyBusiness',
+      '@id': 'https://althearesorts.com/spa#ocean-spa',
       name: 'Ocean Spa',
       description: 'Full-service spa with sauna, hammam, ice bath, dedicated pool, yoga room, gym, and three treatment cabins. Treatments use Oceanis certified Greek cosmetics.',
       url: `${SITE_URL}/spa`,
@@ -140,17 +178,15 @@ export const hotelSchema = {
 export const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': 'https://althearesorts.com/#organization',
   name: 'Althea Resorts',
   url: SITE_URL,
   logo: `${SITE_URL}/logos/althea_logo_white-f.png`,
   contactPoint: {
     '@type': 'ContactPoint',
-    telephone: '+302114184108',
+    telephone: PHONE,
     contactType: 'reservations',
     availableLanguage: ['English', 'Greek', 'French'],
   },
-  sameAs: [
-    'https://instagram.com/althearesorts',
-    'https://facebook.com/althearesorts',
-  ],
+  sameAs: [SOCIAL.instagram, SOCIAL.facebook, SOCIAL.linkedin],
 }

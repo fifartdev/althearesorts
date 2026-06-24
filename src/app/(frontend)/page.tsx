@@ -1,6 +1,5 @@
 import React from 'react'
 import { generateMetadata as genMeta } from '@/lib/seo'
-import { hotelSchema } from '@/lib/seo'
 
 import { Hero } from '@/components/sections/Hero'
 import { BrandIntro } from '@/components/sections/BrandIntro'
@@ -14,17 +13,20 @@ import { JournalPreview } from '@/components/sections/JournalPreview'
 import { DirectBookingReasons } from '@/components/sections/DirectBookingReasons'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 
-export const metadata = genMeta()
+export const metadata = genMeta({
+  keywords: [
+    'luxury hotel Corinthia Greece',
+    'boutique resort Xylokastro',
+    'Althea Resorts',
+    'spa resort near Athens',
+    'hotel Corinthian Gulf',
+    'luxury hotel Greece',
+  ],
+})
 
 export default function HomePage() {
   return (
     <>
-      {/* Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(hotelSchema) }}
-      />
-
       <main id="main-content">
         {/* 1. Cinematic hero */}
         <Hero />

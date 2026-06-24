@@ -36,7 +36,32 @@ export default async function RoomPage({ params }: Props) {
 
   const similarRooms = ROOMS.filter((r) => r.slug !== slug).slice(0, 3)
 
+  const hotelRoomSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HotelRoom',
+    '@id': `${SITE_URL}/accommodation/${room.slug}#room`,
+    name: room.title,
+    description: room.shortDesc,
+    url: `${SITE_URL}/accommodation/${room.slug}`,
+    photo: room.image.startsWith('/') ? `${SITE_URL}${room.image}` : room.image,
+    floorSize: {
+      '@type': 'QuantitativeValue',
+      value: parseInt(room.size),
+      unitCode: 'MTK',
+    },
+    bed: { '@type': 'BedDetails', typeOfBed: 'King or Twin' },
+    occupancy: { '@type': 'QuantitativeValue', maxValue: 2, minValue: 1 },
+    containedInPlace: {
+      '@id': `${SITE_URL}/#hotel`,
+    },
+  }
+
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(hotelRoomSchema) }}
+      />
     <main id="main-content">
       {/* Hero */}
       <section
@@ -225,5 +250,6 @@ export default async function RoomPage({ params }: Props) {
         </div>
       </section>
     </main>
+    </>
   )
 }

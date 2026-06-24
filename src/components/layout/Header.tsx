@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/cn'
-import { NAV_LINKS, NAV_LINKS_EL, BOOKING_URL } from '@/lib/constants'
+import { NAV_LINKS, NAV_LINKS_EL, BOOKING_URL, PHONE, SOCIAL } from '@/lib/constants'
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -202,18 +202,11 @@ export function Header() {
             <span className="text-white/40 text-xs uppercase tracking-widest">
               {isGreek ? 'Κορινθία, Ελλάδα' : 'Corinthia, Greece'}
             </span>
-            <span className="text-white/60 text-xs">+30 211 41 84 108</span>
+            <span className="text-white/60 text-xs">{PHONE}</span>
           </div>
           <div className="flex gap-4">
-            <Link
-              href={switchHref}
-              onClick={() => setMenuOpen(false)}
-              className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200"
-            >
-              {isGreek ? 'EN' : 'ΕΛ'}
-            </Link>
-            <a href="https://instagram.com/althearesorts" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200">IG</a>
-            <a href="https://facebook.com/althearesorts" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200">FB</a>
+            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200">IG</a>
+            <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200">FB</a>
           </div>
         </div>
       </div>

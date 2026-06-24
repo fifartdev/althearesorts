@@ -9,18 +9,19 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: ['/admin/', '/api/'],
       },
-      // Allow major search engine AI crawlers (Gemini, Bing AI)
+      // Allow major search engine crawlers and AI citation crawlers
       { userAgent: 'Google-Extended', allow: '/' },
       { userAgent: 'Bingbot', allow: '/' },
-      // Block AI training scrapers — content is proprietary
-      { userAgent: 'GPTBot', disallow: '/' },
-      { userAgent: 'ChatGPT-User', disallow: '/' },
-      { userAgent: 'CCBot', disallow: '/' },
-      { userAgent: 'anthropic-ai', disallow: '/' },
-      { userAgent: 'Claude-Web', disallow: '/' },
-      { userAgent: 'Omgilibot', disallow: '/' },
       { userAgent: 'FacebookBot', allow: '/' },
       { userAgent: 'Twitterbot', allow: '/' },
+      // Allow real-time AI retrieval crawlers (web search / citation only — not training)
+      { userAgent: 'ChatGPT-User', allow: '/' },
+      { userAgent: 'Claude-Web', allow: '/' },
+      // Block AI training scrapers — content is proprietary
+      { userAgent: 'GPTBot', disallow: '/' },
+      { userAgent: 'anthropic-ai', disallow: '/' },
+      { userAgent: 'CCBot', disallow: '/' },
+      { userAgent: 'Omgilibot', disallow: '/' },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,

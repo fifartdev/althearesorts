@@ -41,8 +41,34 @@ const cabins = [
   },
 ]
 
+const oceanSpaSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HealthAndBeautyBusiness',
+  '@id': 'https://althearesorts.com/spa#ocean-spa',
+  name: 'Ocean Spa at Althea Resorts',
+  description: 'The Ocean Spa — sauna, hammam, ice bath, dedicated spa pool, three treatment cabins, yoga room, fully equipped gym, and Oceanis boutique.',
+  url: 'https://althearesorts.com/spa',
+  containedInPlace: {
+    '@id': 'https://althearesorts.com/#hotel',
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Spa Treatments',
+    itemListElement: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Signature Body Ritual' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Deep Tissue Massage' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Aromatherapy Massage' } },
+    ],
+  },
+}
+
 export default function SpaPage() {
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(oceanSpaSchema) }}
+      />
     <main id="main-content">
       <SpaBanner />
       {/* Hero */}
@@ -279,5 +305,6 @@ export default function SpaPage() {
 
       <FinalBookingCTA />
     </main>
+    </>
   )
 }

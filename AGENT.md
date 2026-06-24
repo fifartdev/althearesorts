@@ -124,8 +124,14 @@ with open('path/to/file.tsx', 'w', encoding='utf-8') as f:
 ### Tailwind canonical class warnings
 The IDE suggests canonical aliases (`text-deep` for `text-[#102027]`, `bg-gold` for `bg-[#ad8b27]`, etc.). These are **warnings only** — the existing codebase uses hex values throughout. Do not refactor unless explicitly asked.
 
-### `gallery/page.tsx` — no metadata export
-Both `(frontend)/gallery/page.tsx` and `(frontend-el)/el/gallery/page.tsx` are `'use client'` and cannot export `metadata`. Known issue — do not attempt to add `export const metadata` to either file; it will break the build.
+### Server/client split — FAQ and Gallery (resolved 2026-06-24)
+Both Gallery and FAQ pages previously had `'use client'` on `page.tsx`, blocking metadata export. This is now fixed. The pattern:
+
+- `page.tsx` — server component: `export const metadata`, JSON-LD schema injection, renders the client component
+- `GalleryClient.tsx` / `FaqClient.tsx` — `'use client'`: all state and interactive logic
+- `faqData.ts` — no directive: data-only file, safe to import from both server and client
+
+**Never add `'use client'` to a `page.tsx`** — it permanently disables `export const metadata`. If a page needs both, apply this split pattern.
 
 ### Xylokastro sightseeing image
 The `sights` array entry for Xylokastro has `objectPosition: 'center bottom'` to avoid showing only sky. The Image component applies it via inline `style`. Any future sight entries that need a custom crop should follow the same pattern.
@@ -145,8 +151,12 @@ The `CustomCursor` component correctly skips JS on touch devices, but the DOM el
 | Change social URLs | `src/lib/constants.ts` → `SOCIAL` + Header.tsx + Footer.tsx |
 | Add/edit a room | `src/lib/constants.ts` → `ROOMS` (primary `image` + `images[]` gallery) + `src/app/(frontend)/accommodation/` |
 | Add room gallery photos | `src/lib/constants.ts` → `BATHROOM_IMAGES` / `DELUXE_DOUBLE_IMAGES` or room's `images[]` directly |
-| Add a gallery image (EN) | `src/app/(frontend)/gallery/page.tsx` → `galleryItems` array |
-| Add a gallery image (EL) | `src/app/(frontend-el)/el/gallery/page.tsx` → `galleryItems` array |
+| Add a gallery image (EN) | `src/app/(frontend)/gallery/GalleryClient.tsx` → `galleryItems` array |
+| Add a gallery image (EL) | `src/app/(frontend-el)/el/gallery/GalleryClient.tsx` → `galleryItems` array |
+| Edit FAQ content (EN) | `src/app/(frontend)/faq/faqData.ts` → `FaqCategory[]` array |
+| Edit FAQ content (EL) | `src/app/(frontend-el)/el/faq/faqData.ts` → Greek `FaqCategory[]` array |
+| Edit privacy policy | `src/app/(frontend)/privacy-policy/page.tsx` |
+| Edit terms | `src/app/(frontend)/terms/page.tsx` |
 | Add a sightseeing card | `src/app/(frontend)/location/page.tsx` → `sights` array |
 | Change contact info | `src/lib/constants.ts` → `PHONE`, `EMAIL`, `ADDRESS` |
 | Change hero colors | Individual `page.tsx` hero section className |

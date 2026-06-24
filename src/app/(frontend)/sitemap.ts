@@ -2,48 +2,42 @@ import type { MetadataRoute } from 'next'
 import { SITE_URL } from '@/lib/constants'
 import { ROOMS } from '@/lib/constants'
 
+type SitemapEntry = MetadataRoute.Sitemap[number]
+
+function pair(enPath: string, elPath: string, changeFreq: SitemapEntry['changeFrequency'], priority: number): SitemapEntry[] {
+  const alternates = {
+    languages: {
+      en: `${SITE_URL}${enPath}`,
+      el: `${SITE_URL}${elPath}`,
+    },
+  }
+  return [
+    { url: `${SITE_URL}${enPath}`, lastModified: new Date(), changeFrequency: changeFreq, priority, alternates },
+    { url: `${SITE_URL}${elPath}`, lastModified: new Date(), changeFrequency: changeFreq, priority: priority - 0.05, alternates },
+  ]
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPages = [
-    { url: SITE_URL, changeFrequency: 'weekly' as const, priority: 1 },
-    { url: `${SITE_URL}/accommodation`, changeFrequency: 'weekly' as const, priority: 0.9 },
-    { url: `${SITE_URL}/experiences`, changeFrequency: 'monthly' as const, priority: 0.8 },
-    { url: `${SITE_URL}/spa`, changeFrequency: 'monthly' as const, priority: 0.8 },
-    { url: `${SITE_URL}/gastronomy`, changeFrequency: 'monthly' as const, priority: 0.8 },
-    { url: `${SITE_URL}/gallery`, changeFrequency: 'monthly' as const, priority: 0.7 },
-    { url: `${SITE_URL}/about`, changeFrequency: 'monthly' as const, priority: 0.7 },
-    { url: `${SITE_URL}/location`, changeFrequency: 'monthly' as const, priority: 0.7 },
-    { url: `${SITE_URL}/offers`, changeFrequency: 'weekly' as const, priority: 0.8 },
-    { url: `${SITE_URL}/contact`, changeFrequency: 'monthly' as const, priority: 0.6 },
-    { url: `${SITE_URL}/journal`, changeFrequency: 'weekly' as const, priority: 0.7 },
-    { url: `${SITE_URL}/faq`, changeFrequency: 'monthly' as const, priority: 0.6 },
+  const staticEntries: MetadataRoute.Sitemap = [
+    ...pair('', '/el', 'weekly', 1),
+    ...pair('/accommodation', '/el/accommodation', 'weekly', 0.9),
+    ...pair('/experiences', '/el/experiences', 'monthly', 0.8),
+    ...pair('/spa', '/el/spa', 'monthly', 0.8),
+    ...pair('/gastronomy', '/el/gastronomy', 'monthly', 0.8),
+    ...pair('/gallery', '/el/gallery', 'monthly', 0.7),
+    ...pair('/about', '/el/about', 'monthly', 0.7),
+    ...pair('/location', '/el/location', 'monthly', 0.7),
+    ...pair('/offers', '/el/offers', 'weekly', 0.8),
+    ...pair('/contact', '/el/contact', 'monthly', 0.6),
+    ...pair('/journal', '/el/journal', 'weekly', 0.7),
+    ...pair('/faq', '/el/faq', 'monthly', 0.6),
+    { url: `${SITE_URL}/privacy-policy`, lastModified: new Date(), changeFrequency: 'yearly' as const, priority: 0.3 },
+    { url: `${SITE_URL}/terms`, lastModified: new Date(), changeFrequency: 'yearly' as const, priority: 0.3 },
   ]
 
-  const roomPages = ROOMS.map((room) => ({
-    url: `${SITE_URL}/accommodation/${room.slug}`,
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  }))
+  const roomEntries: MetadataRoute.Sitemap = ROOMS.flatMap((room) =>
+    pair(`/accommodation/${room.slug}`, `/el/accommodation/${room.slug}`, 'monthly', 0.8)
+  )
 
-  const greekPages = [
-    { url: `${SITE_URL}/el`, changeFrequency: 'weekly' as const, priority: 0.9 },
-    { url: `${SITE_URL}/el/accommodation`, changeFrequency: 'weekly' as const, priority: 0.85 },
-    { url: `${SITE_URL}/el/experiences`, changeFrequency: 'monthly' as const, priority: 0.75 },
-    { url: `${SITE_URL}/el/spa`, changeFrequency: 'monthly' as const, priority: 0.75 },
-    { url: `${SITE_URL}/el/gastronomy`, changeFrequency: 'monthly' as const, priority: 0.75 },
-    { url: `${SITE_URL}/el/gallery`, changeFrequency: 'monthly' as const, priority: 0.65 },
-    { url: `${SITE_URL}/el/about`, changeFrequency: 'monthly' as const, priority: 0.65 },
-    { url: `${SITE_URL}/el/location`, changeFrequency: 'monthly' as const, priority: 0.65 },
-    { url: `${SITE_URL}/el/offers`, changeFrequency: 'weekly' as const, priority: 0.75 },
-    { url: `${SITE_URL}/el/contact`, changeFrequency: 'monthly' as const, priority: 0.55 },
-    { url: `${SITE_URL}/el/journal`, changeFrequency: 'weekly' as const, priority: 0.65 },
-    { url: `${SITE_URL}/el/faq`, changeFrequency: 'monthly' as const, priority: 0.55 },
-  ]
-
-  const greekRoomPages = ROOMS.map((room) => ({
-    url: `${SITE_URL}/el/accommodation/${room.slug}`,
-    changeFrequency: 'monthly' as const,
-    priority: 0.75,
-  }))
-
-  return [...staticPages, ...roomPages, ...greekPages, ...greekRoomPages]
+  return [...staticEntries, ...roomEntries]
 }

@@ -5,12 +5,13 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
-import { ROOMS, BOOKING_URL } from '@/lib/constants'
+import { ROOMS, BOOKING_URL, SITE_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
   title: 'Rooms & Suites',
   description: '41 rooms and suites across six categories at Althea Resorts, Corinthia. From Standard Doubles to the signature Loft Suite with Outdoor Jacuzzi.',
   keywords: ['Althea Resorts rooms', 'luxury suites Corinthia', 'private pool suite Greece', 'loft suite jacuzzi Greece'],
+  canonical: `${SITE_URL}/accommodation`,
 })
 
 export default function AccommodationPage() {

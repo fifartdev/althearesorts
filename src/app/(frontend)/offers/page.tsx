@@ -14,8 +14,30 @@ export const metadata = genMeta({
   canonical: `${SITE_URL}/offers`,
 })
 
+const offerSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Offer',
+  name: '10% Direct Booking Discount',
+  description: '10% discount on all room rates when booking directly via the Althea Resorts website, phone, or email. Best rate guaranteed.',
+  url: `${SITE_URL}/offers`,
+  priceSpecification: {
+    '@type': 'PriceSpecification',
+    priceCurrency: 'EUR',
+  },
+  validThrough: '2026-06-30',
+  seller: {
+    '@id': `${SITE_URL}/#hotel`,
+  },
+  eligibleCustomerType: 'http://purl.org/goodrelations/v1#EndUser',
+}
+
 export default function OffersPage() {
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(offerSchema) }}
+      />
     <main id="main-content">
       {/* Hero */}
       <section
@@ -196,5 +218,6 @@ export default function OffersPage() {
 
       <DirectBookingReasons />
     </main>
+    </>
   )
 }

@@ -72,13 +72,15 @@ ALL custom classes MUST be inside `@layer components` or `@layer utilities` in `
 | `/experiences` | `experiences/page.tsx` | Activities, Spa teaser, Pool, Conference, Weddings |
 | `/spa` | `spa/page.tsx` | Dedicated Ocean Spa page — full facilities, 3 cabins, Oceanis philosophy |
 | `/gastronomy` | `gastronomy/page.tsx` | 5 venues rendered from data array |
-| `/gallery` | `gallery/page.tsx` | Client component with category filter + masonry grid — **cannot export metadata** (known issue) |
+| `/gallery` | `gallery/page.tsx` + `GalleryClient.tsx` | Server wrapper exports metadata; client component holds `galleryItems`, category filter, masonry grid |
 | `/about` | `about/page.tsx` | |
 | `/location` | `location/page.tsx` | No map (map is on contact page) |
-| `/offers` | `offers/page.tsx` | 10% direct booking offer + DirectBookingReasons accordion |
+| `/offers` | `offers/page.tsx` | 10% direct booking offer + DirectBookingReasons accordion; Offer schema |
 | `/contact` | `contact/page.tsx` | Contact form + Google Maps embed (grayscale) |
 | `/journal` | `journal/page.tsx` | Static posts — will be CMS-driven |
-| `/faq` | `faq/page.tsx` | Static FAQ — will be CMS-driven |
+| `/faq` | `faq/page.tsx` + `FaqClient.tsx` + `faqData.ts` | Server wrapper exports metadata + FAQPage schema; client accordion; 14 Q&As in 5 categories |
+| `/privacy-policy` | `privacy-policy/page.tsx` | GDPR-compliant template — requires legal review before publishing |
+| `/terms` | `terms/page.tsx` | Terms & Conditions template — requires legal review before publishing |
 
 ### Greek (`src/app/(frontend-el)/el/`)
 
@@ -106,14 +108,30 @@ All Greek pages mirror their English counterparts at `/el/*`. The route group `(
 
 ```
 src/lib/constants.ts        — ROOMS[], NAV_LINKS, NAV_LINKS_EL, BOOKING_URL, PHONE, EMAIL, ADDRESS, COORDINATES, SITE_URL, SOCIAL
-src/lib/seo.ts              — generateMetadata(), hotelSchema, organizationSchema
+src/lib/seo.ts              — generateMetadata(), buildBreadcrumb(), hotelSchema, organizationSchema
 src/app/(frontend)/
-  layout.tsx                — fonts, JSON-LD schemas, GA4, skip-to-content (English)
+  layout.tsx                — fonts, JSON-LD schemas (hotelSchema + organizationSchema), GA4, skip-to-content (English)
   globals.css               — Tailwind v4 design system, all custom classes in @layer
-  robots.ts                 — crawl rules including AI bot blocklist
-  sitemap.ts                — all static routes (EN + EL) + dynamic room slugs
+  robots.ts                 — AI training bots blocked; real-time retrieval crawlers (ChatGPT-User, Claude-Web) allowed
+  sitemap.ts                — 38 URLs: all static EN/EL pairs + 6 room pairs + legal pages; alternates.languages on every pair
+  faq/page.tsx              — server wrapper: metadata + FAQPage schema (14 Q&As)
+  faq/FaqClient.tsx         — 'use client' accordion component
+  faq/faqData.ts            — typed FaqCategory[] data (no 'use client' — importable by server + client)
+  gallery/page.tsx          — server wrapper: metadata only
+  gallery/GalleryClient.tsx — 'use client': galleryItems array, category filter, masonry grid
+  accommodation/[slug]/page.tsx — HotelRoom schema per room
+  gastronomy/page.tsx       — Restaurant schema (AITHER)
+  spa/page.tsx              — HealthAndBeautyBusiness schema (Ocean Spa)
+  offers/page.tsx           — Offer schema (10% direct booking)
+  privacy-policy/page.tsx   — GDPR privacy policy template
+  terms/page.tsx            — Terms & Conditions template
 src/app/(frontend-el)/
   el/layout.tsx             — same as frontend layout but lang="el", locale="el" props
+  el/faq/page.tsx           — server wrapper: metadata + FAQPage schema in Greek
+  el/faq/FaqClient.tsx      — Greek 'use client' accordion
+  el/faq/faqData.ts         — Greek typed FaqCategory[] data
+  el/gallery/page.tsx       — server wrapper: metadata only
+  el/gallery/GalleryClient.tsx — Greek 'use client': galleryItems with Greek captions/categories
 src/components/
   layout/Header.tsx         — fixed, always dark; detects isGreek from pathname; switchHref toggles EN↔EL
   layout/Footer.tsx         — locale prop ("en"|"el"), dark background, white logo image
@@ -221,11 +239,25 @@ export async function generateMetadata({ params }) {
 }
 ```
 
-**robots.ts** — AI training bots blocked (GPTBot, ChatGPT-User, CCBot, anthropic-ai, Claude-Web). Social crawlers allowed (FacebookBot, Twitterbot).
+**robots.ts** — Option D-A selective policy: AI training bots blocked (GPTBot, anthropic-ai, CCBot, Omgilibot); real-time retrieval crawlers allowed (ChatGPT-User, Claude-Web); Bingbot, Google-Extended, social crawlers (FacebookBot, Twitterbot) allowed.
 
-**hotelSchema** — `LodgingBusiness` with correct coordinates from `COORDINATES`, check-in/out times, languages, amenities, nested Restaurant (AITHER) and HealthAndBeautyBusiness (Ocean Spa).
+**hotelSchema** — `LodgingBusiness` with `@id: https://althearesorts.com/#hotel`, `sameAs` (Instagram, Facebook, LinkedIn), coordinates, check-in/out, languages, amenities, nested Restaurant (AITHER) and HealthAndBeautyBusiness (Ocean Spa) each with their own `@id`. Injected on every page via `layout.tsx`.
 
-**sitemap.ts** — includes all static routes for both EN and EL locales + dynamic room slugs.
+**organizationSchema** — `Organization` with `@id: https://althearesorts.com/#organization`, `sameAs`, `logo`, `contactPoint`. Injected sitewide via `layout.tsx`.
+
+**Hreflang** — auto-derived in `generateMetadata()` from the canonical URL path. Pages with canonical starting `/el` get `el`/`en`/`x-default`; all others get `en`/`el`/`x-default`. No per-page manual maintenance needed.
+
+**Schema types live (2026-06-24):**
+- `LodgingBusiness` + `Organization` — all pages (layout)
+- `HotelRoom` — each of 6 `/accommodation/[slug]` pages
+- `Restaurant` — `/gastronomy` (AITHER)
+- `HealthAndBeautyBusiness` — `/spa` (Ocean Spa)
+- `FAQPage` — `/faq` and `/el/faq` (14 Q&As each)
+- `Offer` — `/offers` (10% direct booking, validThrough: 2026-06-30 — update on renewal)
+
+**buildBreadcrumb()** helper exists in `seo.ts` but is not yet deployed on any page. Use it when adding BreadcrumbList schema to interior pages.
+
+**sitemap.ts** — 38 URLs: 12 static EN/EL pairs + 6 room EN/EL pairs + privacy-policy + terms. Every paired entry carries `alternates.languages: { en, el }` for Google's hreflang discovery. `lastModified: new Date()` on all entries.
 
 ---
 
@@ -258,9 +290,15 @@ All hardcoded content (text, images, metadata, contact details, room data) is in
 
 ---
 
-## Gallery page known issue
+## Server/client split pattern — FAQ and Gallery
 
-`gallery/page.tsx` AND `el/gallery/page.tsx` are both `'use client'` components and cannot export `metadata`. SEO for both gallery pages is currently invisible to Google. Fix: split each into a server `page.tsx` that exports metadata and a `GalleryClient.tsx` for the filter state.
+Both the FAQ and Gallery pages require `useState` (client) but also need `export const metadata` (server). The pattern used:
+
+- `page.tsx` — server component only: exports `metadata`, injects JSON-LD schema, renders the client component
+- `FaqClient.tsx` / `GalleryClient.tsx` — `'use client'`: all interactive logic, data arrays, UI
+- `faqData.ts` — no directive: typed data file, importable by both server (`page.tsx` for schema) and client (`FaqClient.tsx` for UI)
+
+Apply this same pattern to any future page that needs both metadata and interactivity. **Do not** add `'use client'` to a `page.tsx` — it permanently disables metadata export and makes the page invisible to search engines.
 
 ---
 
@@ -282,7 +320,7 @@ The Xylokastro entry in the `sights` array has `objectPosition: 'center bottom'`
 The category exists in the filter UI but had zero items. The Oceanis product photo (`/images/oceanisphoto.jpg`) is now the first entry in this category.
 
 ### Gallery — client images added (2026-06-11)
-Six client-supplied images added to `galleryItems` in `gallery/page.tsx`:
+Six client-supplied images added to `galleryItems` in `gallery/GalleryClient.tsx` (was `gallery/page.tsx` before the server/client split):
 - `althea-front.jpg` → "Pool & Exterior" (wide, first item — hotel entrance)
 - `New-Hero.jpg` → "Pool & Exterior" (the resort exterior)
 - `althea-side-images1.jpg` → "Views" (wide)
