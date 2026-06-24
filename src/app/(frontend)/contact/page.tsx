@@ -9,7 +9,7 @@ import { PHONE, EMAIL, INFO_EMAIL, ADDRESS, BOOKING_URL, COORDINATES, SITE_URL }
 
 export const metadata = genMeta({
   title: 'Contact',
-  description: 'Contact Althea Resorts. Located in Ano Loutro, Xylokastro, Corinthia, Greece. Phone: +30 211 41 84 108. Email: reservations@althearesorts.com.',
+  description: 'Contact Althea Resorts. Located in Ano Loutro, Xylokastro, Corinthia, Greece. Phone: +30 27430 24063. Email: reservations@althearesorts.com.',
   keywords: ['contact Althea Resorts', 'hotel phone number Corinthia', 'reservations Greece'],
   canonical: `${SITE_URL}/contact`,
 })

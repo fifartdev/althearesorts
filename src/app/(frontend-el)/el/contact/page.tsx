@@ -9,7 +9,7 @@ import { PHONE, EMAIL, INFO_EMAIL, ADDRESS, BOOKING_URL, COORDINATES, SITE_URL }
 
 export const metadata = genMeta({
   title: 'Επικοινωνία',
-  description: 'Επικοινωνήστε με την Althea Resorts. Άνω Λουτρό, Ξυλόκαστρο, Κορινθία, Ελλάδα. Τηλ: +30 211 41 84 108. Email: reservations@althearesorts.com.',
+  description: 'Επικοινωνήστε με την Althea Resorts. Άνω Λουτρό, Ξυλόκαστρο, Κορινθία, Ελλάδα. Τηλ: +30 27430 24063. Email: reservations@althearesorts.com.',
   keywords: ['επικοινωνία Althea Resorts', 'τηλέφωνο ξενοδοχείο Κορινθία', 'κρατήσεις Ελλάδα'],
   canonical: `${SITE_URL}/el/contact`,
 })
