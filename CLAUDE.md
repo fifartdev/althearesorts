@@ -112,8 +112,9 @@ src/lib/seo.ts              — generateMetadata(), buildBreadcrumb(), hotelSche
 src/app/(frontend)/
   layout.tsx                — fonts, JSON-LD schemas (hotelSchema + organizationSchema), GA4, skip-to-content (English)
   globals.css               — Tailwind v4 design system, all custom classes in @layer
-  robots.ts                 — AI training bots blocked; real-time retrieval crawlers (ChatGPT-User, Claude-Web) allowed
-  sitemap.ts                — 38 URLs: all static EN/EL pairs + 6 room pairs + legal pages; alternates.languages on every pair
+src/app/robots.ts           — MUST be at app/ root (not inside route group) to serve /robots.txt; AI training bots blocked; retrieval crawlers allowed
+src/app/sitemap.ts          — MUST be at app/ root (not inside route group) to serve /sitemap.xml; 38 URLs with alternates.languages
+public/llms.txt             — LLMs.txt standard: structured site summary for AI model discoverability
   faq/page.tsx              — server wrapper: metadata + FAQPage schema (14 Q&As)
   faq/FaqClient.tsx         — 'use client' accordion component
   faq/faqData.ts            — typed FaqCategory[] data (no 'use client' — importable by server + client)

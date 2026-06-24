@@ -165,4 +165,5 @@ The `CustomCursor` component correctly skips JS on touch devices, but the DOM el
 | Edit cookie banner | `src/components/layout/CookieConsent.tsx` |
 | Edit mobile menu z-index | `src/components/layout/Header.tsx` overlay div (keep at `z-45`) |
 | Edit display text overflow | `src/app/(frontend)/globals.css` → `.text-display-*` classes |
-| Add sitemap route | `src/app/(frontend)/sitemap.ts` |
+| Add sitemap route | `src/app/sitemap.ts` — must stay at app/ root, never inside a route group |
+| Edit robots.txt rules | `src/app/robots.ts` — must stay at app/ root, never inside a route group |

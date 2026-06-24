@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { SITE_URL } from '@/lib/constants'
-import { ROOMS } from '@/lib/constants'
+import { SITE_URL, ROOMS } from '@/lib/constants'
 
 type SitemapEntry = MetadataRoute.Sitemap[number]
 
