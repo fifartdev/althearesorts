@@ -88,12 +88,15 @@ const galleryItems = [
   { src: '/images/outdoor-pool/althea-indoor-outdoor-24.jpg', caption: 'Εξωτερική Διαβίωση',       category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
 ]
 
-export function GalleryClient() {
+type GalleryItem = { src: string; caption: string; category: string; wide: boolean }
+
+export function GalleryClient({ cmsItems }: { cmsItems?: GalleryItem[] }) {
+  const items = cmsItems ?? galleryItems
   const [activeCategory, setActiveCategory] = useState('Όλες')
 
   const filtered = activeCategory === 'Όλες'
-    ? galleryItems
-    : galleryItems.filter((item) => item.category === activeCategory)
+    ? items
+    : items.filter((item) => item.category === activeCategory)
 
   return (
     <main id="main-content">

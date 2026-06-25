@@ -6,6 +6,7 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { DirectBookingReasons } from '@/components/sections/DirectBookingReasons'
 import { BOOKING_URL, PHONE, EMAIL, SITE_URL } from '@/lib/constants'
+import { getContactInfo } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Προσφορές & Ειδικές Τιμές',
@@ -14,7 +15,10 @@ export const metadata = genMeta({
   canonical: `${SITE_URL}/el/offers`,
 })
 
-export default function GreekOffersPage() {
+export default async function GreekOffersPage() {
+  const contactInfo = await getContactInfo()
+  const phone = (contactInfo as any)?.phone || PHONE
+  const email = (contactInfo as any)?.email || EMAIL
   return (
     <main id="main-content">
       {/* Hero */}
@@ -138,20 +142,20 @@ export default function GreekOffersPage() {
                     Online Κράτηση
                   </a>
                   <a
-                    href={`tel:${PHONE.replace(/\s/g, '')}`}
+                    href={`tel:${phone.replace(/\s/g, '')}`}
                     className="h-11 px-7 inline-flex items-center justify-center
                                text-xs uppercase tracking-[0.2em]
                                bg-transparent text-[#102027] border border-[#102027]
                                hover:bg-[#102027] hover:text-white
                                transition-all duration-500"
                   >
-                    {PHONE}
+                    {phone}
                   </a>
                 </div>
                 <p className="mt-4 text-sm font-light text-[#6b6b6b]">
                   Ή γράψτε μας στο{' '}
-                  <a href={`mailto:${EMAIL}`} className="text-[#ad8b27] hover:underline">
-                    {EMAIL}
+                  <a href={`mailto:${email}`} className="text-[#ad8b27] hover:underline">
+                    {email}
                   </a>
                 </p>
               </ScrollReveal>

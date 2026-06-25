@@ -34,6 +34,7 @@ export const Dining: CollectionConfig = {
       ],
     },
     { name: 'heroImage', type: 'upload', relationTo: 'media' },
+    { name: 'imageUrl', type: 'text', admin: { description: 'Fallback image URL — used when heroImage is not uploaded yet' } },
     {
       name: 'gallery',
       type: 'array',

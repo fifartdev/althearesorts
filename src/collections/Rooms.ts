@@ -58,6 +58,11 @@ export const Rooms: CollectionConfig = {
               relationTo: 'media',
             },
             {
+              name: 'imageUrl',
+              type: 'text',
+              admin: { description: 'Fallback image URL — used when heroImage is not uploaded yet' },
+            },
+            {
               name: 'gallery',
               type: 'array',
               fields: [

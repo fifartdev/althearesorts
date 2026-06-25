@@ -6,6 +6,7 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { ROOMS, BOOKING_URL, SITE_URL } from '@/lib/constants'
+import { getRooms } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Δωμάτια & Σουίτες — 41 Δωμάτια στην Κορινθία',
@@ -52,7 +53,43 @@ const greekRoomData: Record<string, { view: string; tagline?: string; shortDesc:
   },
 }
 
-export default function GreekAccommodationPage() {
+export default async function GreekAccommodationPage() {
+  const docs = await getRooms('el')
+
+  // Use CMS images/slugs/sizes; overlay Greek text from greekRoomData if available
+  const rooms = docs.length > 0
+    ? docs.map((r: any) => {
+        const slug: string = r.slug ?? ''
+        const gr = greekRoomData[slug]
+        const cmsImage = (typeof r.heroImage === 'object' ? r.heroImage?.url : r.heroImage) || r.imageUrl || ''
+        const fallbackRoom = ROOMS.find((fr) => fr.slug === slug)
+        return {
+          slug,
+          title: r.title ?? fallbackRoom?.title ?? '',
+          view: gr?.view ?? r.viewType ?? fallbackRoom?.view ?? '',
+          tagline: gr?.tagline ?? r.tagline ?? fallbackRoom?.tagline,
+          size: r.size ?? fallbackRoom?.size ?? '',
+          shortDesc: gr?.shortDesc ?? r.shortDescription ?? fallbackRoom?.shortDesc ?? '',
+          image: cmsImage || fallbackRoom?.image || '',
+          features: gr?.features ?? ((r.highlights ?? []).map((h: any) => h.text ?? '').filter(Boolean)) ?? fallbackRoom?.features ?? [],
+          featured: r.featured ?? false,
+        }
+      })
+    : ROOMS.map((room) => {
+        const gr = greekRoomData[room.slug]
+        return {
+          slug: room.slug,
+          title: room.title,
+          view: gr?.view ?? room.view,
+          tagline: gr?.tagline ?? room.tagline,
+          size: room.size,
+          shortDesc: gr?.shortDesc ?? room.shortDesc,
+          image: room.image,
+          features: gr?.features ?? room.features,
+          featured: room.featured,
+        }
+      })
+
   return (
     <main id="main-content">
 
@@ -124,23 +161,22 @@ export default function GreekAccommodationPage() {
       </section>
 
       {/* Room sections */}
-      {ROOMS.map((room, i) => {
+      {rooms.map((room, i) => {
         const isEven = i % 2 === 0
         const isFeatured = room.featured === true
-        const gr = greekRoomData[room.slug]
 
         return (
           <section
             key={room.slug}
             id={room.slug}
-            className={`${isFeatured ? 'bg-[#102027]' : i % 2 === 0 ? 'bg-white' : 'bg-[#f2f8fb]'} overflow-hidden`}
-            aria-label={gr ? gr.view : room.title}
+            className={`${isFeatured ? 'bg-deep' : i % 2 === 0 ? 'bg-white' : 'bg-soft'} overflow-hidden`}
+            aria-label={room.view}
           >
             <div className="container-luxury py-0">
               <div className={`grid grid-cols-1 lg:grid-cols-2 ${isEven ? '' : 'lg:[direction:rtl]'}`}>
 
                 {/* Image */}
-                <ScrollReveal variant="image" className="aspect-[4/3] lg:aspect-auto lg:min-h-[600px] relative overflow-hidden">
+                <ScrollReveal variant="image" className="aspect-[4/3] lg:aspect-auto lg:min-h-150 relative overflow-hidden">
                   <Image
                     src={room.image}
                     alt={room.title}
@@ -150,36 +186,36 @@ export default function GreekAccommodationPage() {
                     priority={i === 0}
                   />
                   {isFeatured && (
-                    <div className="absolute top-6 left-6 bg-[#ad8b27] px-4 py-1.5">
+                    <div className="absolute top-6 left-6 bg-gold px-4 py-1.5">
                       <span className="text-label-upper text-white">Signature Suite</span>
                     </div>
                   )}
                 </ScrollReveal>
 
                 {/* Content */}
-                <div className={`flex flex-col justify-center px-8 py-16 lg:px-16 lg:py-20 [direction:ltr] ${isFeatured ? 'bg-[#102027]' : ''}`}>
+                <div className={`flex flex-col justify-center px-8 py-16 lg:px-16 lg:py-20 [direction:ltr] ${isFeatured ? 'bg-deep' : ''}`}>
                   <ScrollReveal>
-                    <span className="text-label-upper text-[#ad8b27] mb-6 block">{gr ? gr.view : room.view}</span>
+                    <span className="text-label-upper text-gold mb-6 block">{room.view}</span>
                   </ScrollReveal>
                   <ScrollReveal delay={80}>
-                    <h2 className={`text-display-sm mb-3 ${isFeatured ? 'text-white' : 'text-[#102027]'}`}>
+                    <h2 className={`text-display-sm mb-3 ${isFeatured ? 'text-white' : 'text-deep'}`}>
                       {room.title}
                     </h2>
                   </ScrollReveal>
-                  {gr?.tagline && (
+                  {room.tagline && (
                     <ScrollReveal delay={100}>
-                      <p className={`font-editorial text-lg font-light italic mb-4 ${isFeatured ? 'text-white/70' : 'text-[#6b6b6b]'}`}>
-                        {gr.tagline}
+                      <p className={`font-editorial text-lg font-light italic mb-4 ${isFeatured ? 'text-white/70' : 'text-smoke'}`}>
+                        {room.tagline}
                       </p>
                     </ScrollReveal>
                   )}
                   <ScrollReveal delay={120}>
                     <div className="flex items-center gap-4 mb-6">
-                      <span className={`text-sm font-light ${isFeatured ? 'text-white/50' : 'text-[#6b6b6b]'}`}>
+                      <span className={`text-sm font-light ${isFeatured ? 'text-white/50' : 'text-smoke'}`}>
                         {room.size}
                       </span>
-                      <span className={`w-px h-4 ${isFeatured ? 'bg-white/20' : 'bg-[#e8e4dd]'}`} />
-                      <span className={`text-sm font-light ${isFeatured ? 'text-white/50' : 'text-[#6b6b6b]'}`}>
+                      <span className={`w-px h-4 ${isFeatured ? 'bg-white/20' : 'bg-stone'}`} />
+                      <span className={`text-sm font-light ${isFeatured ? 'text-white/50' : 'text-smoke'}`}>
                         Διαμόρφωση King ή Twin
                       </span>
                     </div>
@@ -188,18 +224,18 @@ export default function GreekAccommodationPage() {
                     <GoldLine className="mb-6" />
                   </ScrollReveal>
                   <ScrollReveal delay={180}>
-                    <p className={`text-sm font-light leading-relaxed mb-8 ${isFeatured ? 'text-white/60' : 'text-[#6b6b6b]'}`}>
-                      {gr ? gr.shortDesc : room.shortDesc}
+                    <p className={`text-sm font-light leading-relaxed mb-8 ${isFeatured ? 'text-white/60' : 'text-smoke'}`}>
+                      {room.shortDesc}
                     </p>
                   </ScrollReveal>
 
                   {/* Features */}
                   <ScrollReveal delay={210}>
                     <ul className="grid grid-cols-2 gap-x-6 gap-y-2.5 mb-10">
-                      {(gr ? gr.features : room.features).slice(0, 6).map((f) => (
+                      {room.features.slice(0, 6).map((f: string) => (
                         <li key={f} className="flex items-center gap-2.5">
-                          <span className="w-1 h-1 rounded-full bg-[#ad8b27] shrink-0" aria-hidden="true" />
-                          <span className={`text-xs font-light ${isFeatured ? 'text-white/50' : 'text-[#6b6b6b]'}`}>
+                          <span className="w-1 h-1 rounded-full bg-gold shrink-0" aria-hidden="true" />
+                          <span className={`text-xs font-light ${isFeatured ? 'text-white/50' : 'text-smoke'}`}>
                             {f}
                           </span>
                         </li>
@@ -216,8 +252,8 @@ export default function GreekAccommodationPage() {
                         rel="noopener noreferrer"
                         className="h-11 px-7 inline-flex items-center
                                    text-xs uppercase tracking-[0.2em]
-                                   bg-[#ad8b27] text-white border border-[#ad8b27]
-                                   hover:bg-transparent hover:text-[#ad8b27]
+                                   bg-gold text-white border border-gold
+                                   hover:bg-transparent hover:text-gold
                                    transition-all duration-500"
                       >
                         Κράτηση
@@ -228,8 +264,8 @@ export default function GreekAccommodationPage() {
                                    text-xs uppercase tracking-[0.2em]
                                    bg-transparent border transition-all duration-500
                                    ${isFeatured
-                                     ? 'text-white border-white/30 hover:bg-white hover:text-[#102027]'
-                                     : 'text-[#102027] border-[#102027]/30 hover:bg-[#102027] hover:text-white'
+                                     ? 'text-white border-white/30 hover:bg-white hover:text-deep'
+                                     : 'text-deep border-deep/30 hover:bg-deep hover:text-white'
                                    }`}
                       >
                         Διαβάστε περισσότερα

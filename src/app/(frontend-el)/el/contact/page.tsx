@@ -6,6 +6,7 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { ContactForm } from '@/components/contact/ContactForm'
 import { PHONE, EMAIL, INFO_EMAIL, ADDRESS, BOOKING_URL, COORDINATES, SITE_URL } from '@/lib/constants'
+import { getContactInfo } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Επικοινωνία',
@@ -14,7 +15,16 @@ export const metadata = genMeta({
   canonical: `${SITE_URL}/el/contact`,
 })
 
-export default function GreekContactPage() {
+export default async function GreekContactPage() {
+  const contactInfo = await getContactInfo()
+  const phone = (contactInfo as any)?.phone || PHONE
+  const email = (contactInfo as any)?.email || EMAIL
+  const infoEmail = (contactInfo as any)?.infoEmail || INFO_EMAIL
+  const address = (contactInfo as any)?.address || ADDRESS
+  const coords = {
+    lat: (contactInfo as any)?.coordinates?.lat ?? COORDINATES.lat,
+    lng: (contactInfo as any)?.coordinates?.lng ?? COORDINATES.lng,
+  }
   return (
     <main id="main-content">
       {/* Hero */}
@@ -61,18 +71,18 @@ export default function GreekContactPage() {
                 <div className="flex flex-col gap-8">
                   <div>
                     <span className="text-label-upper text-[#ad8b27] block mb-2">Διεύθυνση</span>
-                    <p className="text-sm font-light text-[#6b6b6b] leading-relaxed">{ADDRESS}</p>
+                    <p className="text-sm font-light text-[#6b6b6b] leading-relaxed">{address}</p>
                   </div>
                   <div>
                     <span className="text-label-upper text-[#ad8b27] block mb-2">Επικοινωνία</span>
-                    <a href={`tel:${PHONE.replace(/\s/g, '')}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200 block mb-1">
-                      {PHONE}
+                    <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200 block mb-1">
+                      {phone}
                     </a>
-                    <a href={`mailto:${INFO_EMAIL}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200 block mb-1">
-                      {INFO_EMAIL}
+                    <a href={`mailto:${infoEmail}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200 block mb-1">
+                      {infoEmail}
                     </a>
-                    <a href={`mailto:${EMAIL}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200">
-                      {EMAIL}
+                    <a href={`mailto:${email}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200">
+                      {email}
                     </a>
                   </div>
                   <div>
@@ -115,7 +125,7 @@ export default function GreekContactPage() {
       {/* Map */}
       <section className="relative h-[500px] overflow-hidden" aria-label="Χάρτης — Τοποθεσία Althea Resorts">
         <iframe
-          src={`https://maps.google.com/maps?q=${COORDINATES.lat},${COORDINATES.lng}&z=15&output=embed`}
+          src={`https://maps.google.com/maps?q=${coords.lat},${coords.lng}&z=15&output=embed`}
           width="100%"
           height="100%"
           style={{ border: 0 }}
@@ -132,7 +142,7 @@ export default function GreekContactPage() {
             <p className="text-sm font-light text-white/70">Άνω Λουτρό, Ξυλόκαστρο, Κορινθία, Ελλάδα</p>
           </div>
           <a
-            href={`https://www.google.com/maps/dir/?api=1&destination=${COORDINATES.lat},${COORDINATES.lng}`}
+            href={`https://www.google.com/maps/dir/?api=1&destination=${coords.lat},${coords.lng}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-white/50 hover:text-[#ad8b27] transition-colors duration-300 shrink-0"

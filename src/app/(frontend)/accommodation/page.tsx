@@ -25,7 +25,7 @@ export default async function AccommodationPage() {
         tagline: r.tagline ?? undefined,
         size: r.size ?? '',
         shortDesc: r.shortDescription ?? '',
-        image: typeof r.heroImage === 'object' ? (r.heroImage?.url ?? '') : (r.heroImage ?? ''),
+        image: (typeof r.heroImage === 'object' ? r.heroImage?.url : r.heroImage) || r.imageUrl || '',
         features: (r.highlights ?? []).map((h: any) => h.text ?? '').filter(Boolean),
         featured: r.featured ?? false,
       }))

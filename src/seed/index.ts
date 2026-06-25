@@ -967,6 +967,58 @@ async function seedGlobals(payload: Payload) {
 }
 
 // ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// Image URLs — patch existing records with fallback image URLs
+// ---------------------------------------------------------------------------
+
+async function seedImageUrls(payload: Payload) {
+  const S = 'https://staging.althearesorts.com/wp-content/uploads/2026/02'
+
+  const roomImages: Record<string, string> = {
+    'standard-double':           '/images/standard.jpg',
+    'deluxe-double-mv-pv':       '/images/deluxe%20double.jpg',
+    'deluxe-double-private-pool':'/images/del.double.jpg',
+    'superior-sea-view':         '/images/superior%20sea%20view.jpg',
+    'junior-suite-private-pool': '/images/Junior%20suite%20.jpg',
+    'althea-loft-suite':         '/images/js%20living%20room.jpg',
+  }
+  for (const [slug, imageUrl] of Object.entries(roomImages)) {
+    const res = await payload.find({ collection: 'rooms', where: { slug: { equals: slug } }, limit: 1 }).catch(() => null)
+    if (res?.docs[0]) await payload.update({ collection: 'rooms', id: res.docs[0].id, data: { imageUrl } }).catch(() => null)
+  }
+  console.log('    + Room imageUrls patched')
+
+  const diningImages: Record<string, string> = {
+    'aither':         '/images/restaurant/althea-indoor-outdoor-9.jpg',
+    'all-day-dining': '/images/restaurant/althea-indoor-outdoor-12.jpg',
+    'breakfast':      '/images/breakfast/althea-breakfast-18.jpg',
+    'bar':            'https://images.unsplash.com/photo-1674654658721-ffc9c08ee1d0?auto=format&fit=crop&w=900&q=80',
+    'pool-bar':       'https://images.unsplash.com/photo-1532347922424-c652d9b7208e?auto=format&fit=crop&w=900&q=80',
+  }
+  for (const [slug, imageUrl] of Object.entries(diningImages)) {
+    const res = await payload.find({ collection: 'dining', where: { slug: { equals: slug } }, limit: 1 }).catch(() => null)
+    if (res?.docs[0]) await payload.update({ collection: 'dining', id: res.docs[0].id, data: { imageUrl } }).catch(() => null)
+  }
+  console.log('    + Dining imageUrls patched')
+
+  const journalImages: Record<string, string> = {
+    'ancient-corinth':  'https://images.unsplash.com/photo-1698933464922-cb7af8fe9267?auto=format&fit=crop&w=900&q=80',
+    'oceanis-philosophy':'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=800&q=80',
+    'fishermen-harvest': 'https://images.unsplash.com/photo-1534482421-64566f976cfa?auto=format&fit=crop&w=800&q=80',
+    'corinth-canal':    `${S}/Gallery-9VZMNYN.jpg`,
+    'althos-meaning':   `${S}/2.jpg`,
+    'pool-afternoon':   `${S}/Gallery-MUZ36MM.jpg`,
+  }
+  for (const [slug, imageUrl] of Object.entries(journalImages)) {
+    const res = await payload.find({ collection: 'journal', where: { slug: { equals: slug } }, limit: 1 }).catch(() => null)
+    if (res?.docs[0]) await payload.update({ collection: 'journal', id: res.docs[0].id, data: { imageUrl } }).catch(() => null)
+  }
+  console.log('    + Journal imageUrls patched')
+
+  console.log('  ✓ Image URLs seeded')
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
@@ -985,6 +1037,7 @@ async function seed() {
   await seedLocations(payload)
   await seedExperiences(payload)
   await seedGallery(payload)
+  await seedImageUrls(payload)
 
   console.log('\n✅ All done.\n')
   process.exit(0)

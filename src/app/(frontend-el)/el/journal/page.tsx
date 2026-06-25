@@ -2,6 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { generateMetadata as genMeta } from '@/lib/seo'
 import { SITE_URL } from '@/lib/constants'
+import { getJournalPosts } from '@/lib/cms'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 
@@ -59,7 +60,32 @@ const posts = [
   },
 ]
 
-export default function GreekJournalPage() {
+const CATEGORY_LABELS: Record<string, string> = {
+  'local-guides':   'Τοπικοί Οδηγοί',
+  'hotel-stories':  'Ιστορίες Ξενοδοχείου',
+  gastronomy:       'Γαστρονομία',
+  wellness:         'Ευεξία',
+  events:           'Εκδηλώσεις',
+  corinthia:        'Κορινθία',
+}
+
+export default async function GreekJournalPage() {
+  const docs = await getJournalPosts('el', 20)
+  const cmsPosts = docs.length > 0
+    ? docs.map((p: any) => ({
+        category: CATEGORY_LABELS[p.category] ?? p.category ?? '',
+        title: p.title ?? '',
+        excerpt: p.excerpt ?? '',
+        readTime: p.readingTime ? `${p.readingTime} λεπτά ανάγνωση` : '',
+        href: `/el/journal/${p.slug}`,
+        date: p.publishedAt
+          ? new Date(p.publishedAt).toLocaleDateString('el-GR', { month: 'long', year: 'numeric' })
+          : '',
+        image: (typeof p.heroImage === 'object' ? p.heroImage?.url : p.heroImage) || p.imageUrl || '',
+        imageAlt: p.title ?? 'Althea Resorts ημερολόγιο',
+      }))
+    : null
+  const activePosts = cmsPosts ?? posts
   return (
     <main id="main-content">
       {/* Header */}
@@ -78,11 +104,11 @@ export default function GreekJournalPage() {
       <section className="pb-16 bg-white">
         <div className="container-luxury">
           <ScrollReveal>
-            <a href={posts[0].href} className="group grid grid-cols-1 lg:grid-cols-2 gap-8 border border-[#e8e4dd] overflow-hidden">
+            <a href={activePosts[0].href} className="group grid grid-cols-1 lg:grid-cols-2 gap-8 border border-[#e8e4dd] overflow-hidden">
               <div className="aspect-[16/9] lg:aspect-auto relative min-h-[280px]">
                 <Image
-                  src={posts[0].image}
-                  alt={posts[0].imageAlt}
+                  src={activePosts[0].image}
+                  alt={activePosts[0].imageAlt}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 50vw"
@@ -90,15 +116,15 @@ export default function GreekJournalPage() {
                 <div className="absolute inset-0 bg-[#102027]/0 group-hover:bg-[#102027]/10 transition-colors duration-500" />
               </div>
               <div className="p-8 lg:p-12 flex flex-col justify-center">
-                <span className="text-label-upper text-[#ad8b27] block mb-4">{posts[0].category}</span>
+                <span className="text-label-upper text-[#ad8b27] block mb-4">{activePosts[0].category}</span>
                 <h2 className="font-editorial text-3xl font-light text-[#102027] leading-snug mb-4 group-hover:text-[#ad8b27]/80 transition-colors duration-300">
-                  {posts[0].title}
+                  {activePosts[0].title}
                 </h2>
-                <p className="text-body-refined mb-6">{posts[0].excerpt}</p>
+                <p className="text-body-refined mb-6">{activePosts[0].excerpt}</p>
                 <div className="flex items-center gap-4 text-xs text-[#a0a0a0] uppercase tracking-wider">
-                  <span>{posts[0].date}</span>
+                  <span>{activePosts[0].date}</span>
                   <span>·</span>
-                  <span>{posts[0].readTime}</span>
+                  <span>{activePosts[0].readTime}</span>
                 </div>
               </div>
             </a>
@@ -110,7 +136,7 @@ export default function GreekJournalPage() {
       <section className="section-padding bg-[#faf8f4]">
         <div className="container-luxury">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts.slice(1).map((post, i) => (
+            {activePosts.slice(1).map((post, i) => (
               <ScrollReveal key={post.title} delay={i * 60}>
                 <a href={post.href} className="group block">
                   <div className="aspect-[16/10] overflow-hidden mb-5 relative">

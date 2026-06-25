@@ -76,7 +76,7 @@ export default async function GastronomyPage() {
         label: d.name ?? '',
         title: d.tagline ?? d.name ?? '',
         desc: d.description ?? d.shortDescription ?? '',
-        image: typeof d.heroImage === 'object' ? (d.heroImage?.url ?? '') : (d.heroImage ?? ''),
+        image: (typeof d.heroImage === 'object' ? d.heroImage?.url : d.heroImage) || d.imageUrl || '',
         imageAlt: d.name ?? '',
         bg: 'bg-[#f7f4ef]',
       })).filter((v: any) => v.image)

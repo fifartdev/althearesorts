@@ -6,6 +6,7 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { PHONE, SITE_URL } from '@/lib/constants'
+import { getDining } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Γαστρονομία — AITHER Εστιατόριο Ταράτσας',
@@ -53,7 +54,19 @@ const venues = [
   },
 ]
 
-export default function GreekGastronomyPage() {
+export default async function GreekGastronomyPage() {
+  const docs = await getDining('el')
+  const cmsVenues = docs.length > 0
+    ? docs.map((d: any) => ({
+        id: d.slug ?? d.id,
+        label: d.name ?? '',
+        title: d.tagline ?? d.name ?? '',
+        desc: d.shortDescription ?? '',
+        image: (typeof d.heroImage === 'object' ? d.heroImage?.url : d.heroImage) || d.imageUrl || '',
+        imageAlt: d.name ?? '',
+        bg: 'bg-[#f7f4ef]',
+      })).filter((v: any) => v.image)
+    : null
   return (
     <main id="main-content">
       {/* Hero */}
@@ -163,7 +176,7 @@ export default function GreekGastronomyPage() {
       </section>
 
       {/* Other venues */}
-      {venues.map((venue, i) => (
+      {(cmsVenues ?? venues).map((venue, i) => (
         <section
           key={venue.id}
           id={venue.id}

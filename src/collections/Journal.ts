@@ -45,6 +45,7 @@ export const Journal: CollectionConfig = {
       defaultValue: 'Althea Resorts',
     },
     { name: 'heroImage', type: 'upload', relationTo: 'media' },
+    { name: 'imageUrl', type: 'text', admin: { description: 'Fallback image URL — used when heroImage is not uploaded yet' } },
     { name: 'excerpt', type: 'textarea', required: true, localized: true },
     { name: 'content', type: 'richText', localized: true },
     {

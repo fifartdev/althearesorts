@@ -82,7 +82,7 @@ export default async function JournalPage() {
         date: p.publishedAt
           ? new Date(p.publishedAt).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
           : '',
-        image: typeof p.heroImage === 'object' ? (p.heroImage?.url ?? '') : (p.heroImage ?? ''),
+        image: (typeof p.heroImage === 'object' ? p.heroImage?.url : p.heroImage) || p.imageUrl || '',
         imageAlt: p.title ?? 'Althea Resorts journal',
       }))
     : staticPosts

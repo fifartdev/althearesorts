@@ -5,7 +5,7 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { PHONE, EMAIL, BOOKING_URL } from '@/lib/constants'
-import { faqs } from './faqData'
+import { faqs as staticFaqs, type FaqCategory } from './faqData'
 
 function FAQItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false)
@@ -28,9 +28,10 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   )
 }
 
-export function FaqClient() {
+export function FaqClient({ categories }: { categories?: FaqCategory[] }) {
+  const faqs = categories && categories.length > 0 ? categories : staticFaqs
   const [activeCategory, setActiveCategory] = useState(faqs[0].category)
-  const active = faqs.find((f) => f.category === activeCategory)!
+  const active = faqs.find((f) => f.category === activeCategory) ?? faqs[0]
 
   return (
     <main id="main-content">

@@ -237,6 +237,10 @@ export interface Room {
    */
   featured?: boolean | null;
   heroImage?: (number | null) | Media;
+  /**
+   * Fallback image URL — used when heroImage is not uploaded yet
+   */
+  imageUrl?: string | null;
   gallery?:
     | {
         image?: (number | null) | Media;
@@ -481,6 +485,10 @@ export interface Dining {
   slug: string;
   venue?: ('aither' | 'breakfast' | 'all-day' | 'bar' | 'pool-bar') | null;
   heroImage?: (number | null) | Media;
+  /**
+   * Fallback image URL — used when heroImage is not uploaded yet
+   */
+  imageUrl?: string | null;
   gallery?:
     | {
         image: number | Media;
@@ -595,6 +603,10 @@ export interface Journal {
   publishedAt?: string | null;
   author?: string | null;
   heroImage?: (number | null) | Media;
+  /**
+   * Fallback image URL — used when heroImage is not uploaded yet
+   */
+  imageUrl?: string | null;
   excerpt: string;
   content?: {
     root: {
@@ -1289,6 +1301,7 @@ export interface RoomsSelect<T extends boolean = true> {
   category?: T;
   featured?: T;
   heroImage?: T;
+  imageUrl?: T;
   gallery?:
     | T
     | {
@@ -1417,6 +1430,7 @@ export interface DiningSelect<T extends boolean = true> {
   slug?: T;
   venue?: T;
   heroImage?: T;
+  imageUrl?: T;
   gallery?:
     | T
     | {
@@ -1483,6 +1497,7 @@ export interface JournalSelect<T extends boolean = true> {
   publishedAt?: T;
   author?: T;
   heroImage?: T;
+  imageUrl?: T;
   excerpt?: T;
   content?: T;
   featured?: T;
