@@ -108,7 +108,7 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'el' | 'fr') | ('en' | 'el' | 'fr')[];
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'el') | ('en' | 'el')[];
   globals: {
     'site-settings': SiteSetting;
     header: Header;
@@ -127,7 +127,7 @@ export interface Config {
     'seo-settings': SeoSettingsSelect<false> | SeoSettingsSelect<true>;
     'geo-settings': GeoSettingsSelect<false> | GeoSettingsSelect<true>;
   };
-  locale: 'en' | 'el' | 'fr';
+  locale: 'en' | 'el';
   widgets: {
     collections: CollectionsWidget;
   };

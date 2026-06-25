@@ -2,7 +2,7 @@ import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-type Locale = 'en' | 'el' | 'fr'
+type Locale = 'en' | 'el'
 
 // ---------------------------------------------------------------------------
 // Globals
