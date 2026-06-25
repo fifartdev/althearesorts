@@ -1,54 +1,159 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import fs from 'fs'
 import path from 'path'
 import { NextRequest, NextResponse } from 'next/server'
 
-// Vercel max duration — set to 300s in vercel.json if needed
 export const maxDuration = 300
 
-// Map from CMS slug → local image path for hero images
-const ROOM_HEROES: Record<string, string> = {
-  'standard-double':            'images/standard.jpg',
-  'deluxe-double-mv-pv':        'images/deluxe double.jpg',
-  'deluxe-double-private-pool': 'images/del.double.jpg',
-  'superior-sea-view':          'images/superior sea view.jpg',
-  'junior-suite-private-pool':  'images/Junior suite .jpg',
-  'althea-loft-suite':          'images/js living room.jpg',
+// All local image paths (relative to /public, no leading slash).
+// Fetched via HTTP from the same deployment — Vercel functions can't read public/ via fs.
+const LOCAL_IMAGES: string[] = [
+  // Rooms
+  'images/standard.jpg',
+  'images/deluxe double.jpg',
+  'images/del.double.jpg',
+  'images/superior sea view.jpg',
+  'images/Junior suite .jpg',
+  'images/js living room.jpg',
+  'images/Superior sv.jpg',
+  'images/stand.double.jpg',
+  'images/standard...jpg',
+  'images/js living r.jpg',
+  'images/js living r...jpg',
+  'images/js..jpg',
+  'images/deluxe double...jpg',
+  'images/bath.jpg',
+  // Dining
+  'images/aither.jpg',
+  'images/restaurant/althea-indoor-outdoor-9.jpg',
+  'images/restaurant/althea-indoor-outdoor-10.jpg',
+  'images/restaurant/althea-indoor-outdoor-11.jpg',
+  'images/restaurant/althea-indoor-outdoor-12.jpg',
+  'images/breakfast.jpg',
+  'images/breakfast/althea-breakfast-1.jpg',
+  'images/breakfast/althea-breakfast-2.jpg',
+  'images/breakfast/althea-breakfast-3.jpg',
+  'images/breakfast/althea-breakfast-4.jpg',
+  'images/breakfast/althea-breakfast-5.jpg',
+  'images/breakfast/althea-breakfast-6.jpg',
+  'images/breakfast/althea-breakfast-7.jpg',
+  'images/breakfast/althea-breakfast-8.jpg',
+  'images/breakfast/althea-breakfast-9.jpg',
+  'images/breakfast/althea-breakfast-10.jpg',
+  'images/breakfast/althea-breakfast-11.jpg',
+  'images/breakfast/althea-breakfast-12.jpg',
+  'images/breakfast/althea-breakfast-13.jpg',
+  'images/breakfast/althea-breakfast-14.jpg',
+  'images/breakfast/althea-breakfast-15.jpg',
+  'images/breakfast/althea-breakfast-16.jpg',
+  'images/breakfast/althea-breakfast-17.jpg',
+  'images/breakfast/althea-breakfast-18.jpg',
+  'images/breakfast/althea-breakfast-19.jpg',
+  'images/breakfast/althea-breakfast-20.jpg',
+  'images/breakfast/althea-breakfast-21.jpg',
+  'images/breakfast/althea-breakfast-22.jpg',
+  'images/breakfast/althea-breakfast-23.jpg',
+  // New images
+  'images/new-images/althea-front.jpg',
+  'images/new-images/New-Hero.jpg',
+  'images/new-images/althea-side-images1.jpg',
+  'images/new-images/althea-side-images2.jpg',
+  'images/new-images/althea-side-images3.jpg',
+  'images/new-images/althea-side-images4.jpg',
+  'images/new-images/althea-deluxe-double1.jpg',
+  'images/new-images/althea-deluxe-double2.jpg',
+  'images/new-images/althea-deluxe-double3.jpg',
+  'images/new-images/althea-deluxe-double4.jpg',
+  'images/new-images/althea-deluxe-double5.jpg',
+  'images/new-images/althea-deluxe-double6.jpg',
+  'images/new-images/althea-deluxe-double7.jpg',
+  'images/new-images/althea-deluxe-double8.jpg',
+  'images/new-images/althea-deluxe-double9.jpg',
+  'images/new-images/althea-deluxe-double10.jpg',
+  'images/new-images/althea-deluxe-double11.jpg',
+  'images/new-images/althea-deluxe-double12.jpg',
+  'images/new-images/althea-deluxe-double13.jpg',
+  'images/new-images/althea-deluxe-double14.jpg',
+  'images/new-images/althea-deluxe-double15.jpg',
+  'images/new-images/althea-deluxe-double16.jpg',
+  'images/new-images/althea-rooms-bathroom1.jpg',
+  'images/new-images/althea-rooms-bathroom2.jpg',
+  'images/new-images/althea-rooms-bathroom3.jpg',
+  'images/new-images/althea-rooms-bathroom4.jpg',
+  'images/new-images/althea-rooms-bathroom5.jpg',
+  // Spa
+  'images/oceanisphoto.jpg',
+  // Outdoor pool
+  'images/outdoor-pool/althea-indoor-outdoor-13.jpg',
+  'images/outdoor-pool/althea-indoor-outdoor-14.jpg',
+  'images/outdoor-pool/althea-indoor-outdoor-15.jpg',
+  'images/outdoor-pool/althea-indoor-outdoor-16.jpg',
+  'images/outdoor-pool/althea-indoor-outdoor-17.jpg',
+  'images/outdoor-pool/althea-indoor-outdoor-18.jpg',
+  'images/outdoor-pool/althea-indoor-outdoor-19.jpg',
+  'images/outdoor-pool/althea-indoor-outdoor-20.jpg',
+  'images/outdoor-pool/althea-indoor-outdoor-21.jpg',
+  'images/outdoor-pool/althea-indoor-outdoor-22.jpg',
+  'images/outdoor-pool/althea-indoor-outdoor-23.jpg',
+  'images/outdoor-pool/althea-indoor-outdoor-24.jpg',
+  // Reception / interior
+  'images/reception/althea-indoor-outdoor-1.jpg',
+  'images/reception/althea-indoor-outdoor-2.jpg',
+  'images/reception/althea-indoor-outdoor-3.jpg',
+  'images/reception/althea-indoor-outdoor-4.jpg',
+  'images/reception/althea-indoor-outdoor-5.jpg',
+  'images/reception/althea-indoor-outdoor-6.jpg',
+  'images/reception/althea-indoor-outdoor-7.jpg',
+  'images/reception/althea-indoor-outdoor-8.jpg',
+  // Misc
+  'images/main-pool.jpg',
+  'images/althea-contact.jpg',
+  'images/activities pexel photo.jpg',
+  'images/conference pexel photo.jpg',
+  'images/dining pexel photo.jpg',
+  'images/restaurant pexel photo.jpg',
+]
+
+// External images (Unsplash) — already a full URL
+const EXTERNAL_IMAGES: { url: string; filename: string; alt: string }[] = [
+  {
+    url: 'https://images.unsplash.com/photo-1674654658721-ffc9c08ee1d0?auto=format&fit=crop&w=1200&q=85',
+    filename: 'bar-cocktail.jpg',
+    alt: 'bar cocktail',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1532347922424-c652d9b7208e?auto=format&fit=crop&w=1200&q=85',
+    filename: 'pool-bar-poolside.jpg',
+    alt: 'pool bar poolside',
+  },
+]
+
+// Map CMS slug → uploaded filename, for linking heroImage after upload
+const ROOM_HERO_MAP: Record<string, string> = {
+  'standard-double':            'standard.jpg',
+  'deluxe-double-mv-pv':        'deluxe double.jpg',
+  'deluxe-double-private-pool': 'del.double.jpg',
+  'superior-sea-view':          'superior sea view.jpg',
+  'junior-suite-private-pool':  'Junior suite .jpg',
+  'althea-loft-suite':          'js living room.jpg',
 }
 
-const DINING_HEROES: Record<string, string | { url: string; filename: string }> = {
-  'aither':         'images/aither.jpg',
-  'all-day-dining': 'images/restaurant/althea-indoor-outdoor-12.jpg',
-  'breakfast':      'images/breakfast/althea-breakfast-18.jpg',
-  'bar':            { url: 'https://images.unsplash.com/photo-1674654658721-ffc9c08ee1d0?auto=format&fit=crop&w=1200&q=85', filename: 'bar-cocktail.jpg' },
-  'pool-bar':       { url: 'https://images.unsplash.com/photo-1532347922424-c652d9b7208e?auto=format&fit=crop&w=1200&q=85', filename: 'pool-bar-poolside.jpg' },
+const DINING_HERO_MAP: Record<string, string> = {
+  'aither':         'aither.jpg',
+  'all-day-dining': 'althea-indoor-outdoor-12.jpg',
+  'breakfast':      'althea-breakfast-18.jpg',
+  'bar':            'bar-cocktail.jpg',
+  'pool-bar':       'pool-bar-poolside.jpg',
 }
 
-// Walk a directory recursively and return all file paths
-function walkDir(dir: string, base: string, results: string[] = []): string[] {
-  const entries = fs.readdirSync(dir)
-  for (const entry of entries) {
-    const full = path.join(dir, entry)
-    const stat = fs.statSync(full)
-    if (stat.isDirectory()) {
-      walkDir(full, base, results)
-    } else if (/\.(jpe?g|png|webp|gif)$/i.test(entry)) {
-      results.push(path.relative(base, full))
-    }
-  }
-  return results
-}
-
-function slugFromPath(p: string): string {
-  return path.basename(p, path.extname(p))
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
+function altFromFilename(filename: string): string {
+  return path.basename(filename, path.extname(filename))
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
 }
 
 export async function GET(request: NextRequest) {
-  // Protect with PAYLOAD_SECRET
   const { searchParams } = new URL(request.url)
   const secret = searchParams.get('secret')
   if (!secret || secret !== process.env.PAYLOAD_SECRET) {
@@ -56,24 +161,25 @@ export async function GET(request: NextRequest) {
   }
 
   const payload = await getPayload({ config })
-  const publicDir = path.join(process.cwd(), 'public')
-  const imagesDir = path.join(publicDir, 'images')
 
-  const report: { uploaded: string[]; skipped: string[]; errors: string[]; linked: string[] } = {
-    uploaded: [],
-    skipped: [],
-    errors: [],
-    linked: [],
-  }
+  // Determine base URL for fetching static assets
+  const host =
+    process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : process.env.NEXT_PUBLIC_SITE_URL || 'https://althearesorts.com'
 
-  // ─── 1. Upload all local images ───────────────────────────────────────────
+  const report: {
+    uploaded: string[]
+    skipped: string[]
+    errors: string[]
+    linked: string[]
+  } = { uploaded: [], skipped: [], errors: [], linked: [] }
 
-  const localPaths = walkDir(imagesDir, publicDir)
+  // ─── 1. Upload local images via HTTP fetch ────────────────────────────────
 
-  for (const relativePath of localPaths) {
-    const filename = path.basename(relativePath)
+  for (const localPath of LOCAL_IMAGES) {
+    const filename = path.basename(localPath)
     try {
-      // Check duplicate
       const existing = await payload.find({
         collection: 'media',
         where: { filename: { equals: filename } },
@@ -84,30 +190,30 @@ export async function GET(request: NextRequest) {
         continue
       }
 
-      const fullPath = path.join(publicDir, relativePath)
-      const data = fs.readFileSync(fullPath)
-      const ext = path.extname(filename).toLowerCase()
-      const mimetype = ext === '.png' ? 'image/png' : ext === '.webp' ? 'image/webp' : 'image/jpeg'
-      const alt = slugFromPath(relativePath).replace(/-/g, ' ')
+      const url = `${host}/${localPath}`
+      const res = await fetch(url)
+      if (!res.ok) {
+        report.errors.push(`${filename}: HTTP ${res.status} from ${url}`)
+        continue
+      }
+      const buffer = Buffer.from(await res.arrayBuffer())
+      const ct = res.headers.get('content-type') || 'image/jpeg'
+      const mimetype = ct.split(';')[0].trim()
 
       await payload.create({
         collection: 'media',
-        data: { alt },
-        file: { data, mimetype, name: filename, size: data.length },
+        data: { alt: altFromFilename(filename) },
+        file: { data: buffer, mimetype, name: filename, size: buffer.length },
       })
       report.uploaded.push(filename)
     } catch (err: any) {
-      report.errors.push(`${filename}: ${err?.message ?? err}`)
+      report.errors.push(`${filename}: ${err?.message ?? String(err)}`)
     }
   }
 
-  // ─── 2. Upload external images (Unsplash bar / pool-bar) ─────────────────
+  // ─── 2. Upload external Unsplash images ───────────────────────────────────
 
-  const externalEntries = Object.entries(DINING_HEROES).filter(
-    ([, v]) => typeof v === 'object',
-  ) as [string, { url: string; filename: string }][]
-
-  for (const [, { url, filename }] of externalEntries) {
+  for (const { url, filename, alt } of EXTERNAL_IMAGES) {
     try {
       const existing = await payload.find({
         collection: 'media',
@@ -120,10 +226,12 @@ export async function GET(request: NextRequest) {
       }
 
       const res = await fetch(url)
-      if (!res.ok) throw new Error(`fetch ${url} → ${res.status}`)
+      if (!res.ok) {
+        report.errors.push(`${filename}: HTTP ${res.status}`)
+        continue
+      }
       const buffer = Buffer.from(await res.arrayBuffer())
-      const mimetype = res.headers.get('content-type') || 'image/jpeg'
-      const alt = slugFromPath(filename).replace(/-/g, ' ')
+      const mimetype = (res.headers.get('content-type') || 'image/jpeg').split(';')[0].trim()
 
       await payload.create({
         collection: 'media',
@@ -132,88 +240,83 @@ export async function GET(request: NextRequest) {
       })
       report.uploaded.push(filename)
     } catch (err: any) {
-      report.errors.push(`${filename}: ${err?.message ?? err}`)
+      report.errors.push(`${filename}: ${err?.message ?? String(err)}`)
     }
   }
 
-  // ─── 3. Link room heroImages ──────────────────────────────────────────────
+  // ─── 3. Link heroImage on rooms ───────────────────────────────────────────
 
-  for (const [slug, localPath] of Object.entries(ROOM_HEROES)) {
+  for (const [slug, filename] of Object.entries(ROOM_HERO_MAP)) {
     try {
-      const filename = path.basename(localPath)
       const mediaResult = await payload.find({
         collection: 'media',
         where: { filename: { equals: filename } },
         limit: 1,
       })
-      if (mediaResult.docs.length === 0) {
-        report.errors.push(`link rooms/${slug}: media not found for ${filename}`)
+      if (!mediaResult.docs.length) {
+        report.errors.push(`link rooms/${slug}: no media found for ${filename}`)
         continue
       }
-      const mediaId = mediaResult.docs[0].id
 
       const roomResult = await payload.find({
         collection: 'rooms',
         where: { slug: { equals: slug } },
         limit: 1,
       })
-      if (roomResult.docs.length === 0) {
+      if (!roomResult.docs.length) {
         report.errors.push(`link rooms/${slug}: room doc not found`)
         continue
       }
-      const roomId = roomResult.docs[0].id
 
       await payload.update({
         collection: 'rooms',
-        id: roomId,
-        data: { heroImage: mediaId },
+        id: roomResult.docs[0].id,
+        data: { heroImage: mediaResult.docs[0].id },
       })
       report.linked.push(`rooms/${slug} → ${filename}`)
     } catch (err: any) {
-      report.errors.push(`link rooms/${slug}: ${err?.message ?? err}`)
+      report.errors.push(`link rooms/${slug}: ${err?.message ?? String(err)}`)
     }
   }
 
-  // ─── 4. Link dining heroImages ────────────────────────────────────────────
+  // ─── 4. Link heroImage on dining ──────────────────────────────────────────
 
-  for (const [slug, hero] of Object.entries(DINING_HEROES)) {
+  for (const [slug, filename] of Object.entries(DINING_HERO_MAP)) {
     try {
-      const filename = typeof hero === 'string' ? path.basename(hero) : hero.filename
       const mediaResult = await payload.find({
         collection: 'media',
         where: { filename: { equals: filename } },
         limit: 1,
       })
-      if (mediaResult.docs.length === 0) {
-        report.errors.push(`link dining/${slug}: media not found for ${filename}`)
+      if (!mediaResult.docs.length) {
+        report.errors.push(`link dining/${slug}: no media found for ${filename}`)
         continue
       }
-      const mediaId = mediaResult.docs[0].id
 
       const diningResult = await payload.find({
         collection: 'dining',
         where: { slug: { equals: slug } },
         limit: 1,
       })
-      if (diningResult.docs.length === 0) {
+      if (!diningResult.docs.length) {
         report.errors.push(`link dining/${slug}: dining doc not found`)
         continue
       }
-      const diningId = diningResult.docs[0].id
 
       await payload.update({
         collection: 'dining',
-        id: diningId,
-        data: { heroImage: mediaId },
+        id: diningResult.docs[0].id,
+        data: { heroImage: mediaResult.docs[0].id },
       })
       report.linked.push(`dining/${slug} → ${filename}`)
     } catch (err: any) {
-      report.errors.push(`link dining/${slug}: ${err?.message ?? err}`)
+      report.errors.push(`link dining/${slug}: ${err?.message ?? String(err)}`)
     }
   }
 
   return NextResponse.json({
     message: 'Media seed complete',
+    host,
     summary: {
       uploaded: report.uploaded.length,
       skipped: report.skipped.length,
