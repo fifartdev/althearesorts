@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-export default function ManageLoginPage() {
+function LoginContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const locale = searchParams.get('locale') === 'el' ? 'el' : 'en'
@@ -160,5 +160,17 @@ export default function ManageLoginPage() {
         </p>
       </div>
     </div>
+  )
+}
+
+export default function ManageLoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-8 h-8 border-2 border-gold/30 border-t-gold rounded-full animate-spin" />
+      </div>
+    }>
+      <LoginContent />
+    </Suspense>
   )
 }
