@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Althea Resorts — Αναφορά SEO & GEO</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --deep:   #102027;
+    --gold:   #ad8b27;
+    --cream:  #faf8f4;
+    --smoke:  #6b6b6b;
+    --stone:  #e8e4dd;
+    --soft:   #f2f8fb;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 8.5pt;
+    color: var(--deep);
+    background: #fff;
+    line-height: 1.55;
+  }
+
+  @page { size: A4; margin: 14mm 16mm 14mm 16mm; }
+  @media print { body { font-size: 8pt; } .no-print { display: none; } }
+
+  .header { display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 2px solid var(--deep); padding-bottom: 8px; margin-bottom: 14px; }
+  .header-left h1 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 20pt; color: var(--deep); line-height: 1; letter-spacing: -0.02em; }
+  .header-left h1 em { font-style: italic; color: var(--gold); }
+  .header-left p { font-size: 7.5pt; color: var(--smoke); margin-top: 3px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .header-right { text-align: right; font-size: 7pt; color: var(--smoke); line-height: 1.6; }
+  .header-right strong { font-weight: 500; color: var(--deep); display: block; font-size: 7.5pt; }
+
+  .cert-banner { background: var(--deep); color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 7px 12px; margin-bottom: 14px; }
+  .cert-banner .verdict { font-size: 8pt; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; }
+  .cert-banner .verdict span { color: var(--gold); font-weight: 500; }
+  .cert-banner .outcome { font-size: 7pt; color: rgba(255,255,255,0.55); font-style: italic; letter-spacing: 0.04em; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+
+  .card { border: 1px solid var(--stone); padding: 10px 11px; }
+  .card-title { font-size: 6.5pt; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 7px; padding-bottom: 5px; border-bottom: 1px solid var(--stone); }
+
+  .score-table { width: 100%; border-collapse: collapse; }
+  .score-table tr + tr td { border-top: 1px solid var(--stone); }
+  .score-table td { padding: 4px 0; vertical-align: middle; font-size: 8pt; }
+  .score-table td:last-child { text-align: right; white-space: nowrap; }
+  .score-bar-wrap { width: 80px; display: inline-block; vertical-align: middle; margin: 0 7px; }
+  .score-bar-bg { background: var(--stone); height: 5px; width: 100%; border-radius: 2px; overflow: hidden; }
+  .score-bar-fill { background: var(--gold); height: 100%; border-radius: 2px; }
+  .score-num { font-weight: 500; color: var(--deep); font-size: 8.5pt; min-width: 34px; display: inline-block; text-align: right; }
+  .score-avg { margin-top: 8px; padding-top: 7px; border-top: 1.5px solid var(--deep); display: flex; justify-content: space-between; align-items: baseline; }
+  .score-avg .label { font-size: 7pt; text-transform: uppercase; letter-spacing: 0.1em; color: var(--smoke); }
+  .score-avg .value { font-family: 'Cormorant Garamond', serif; font-size: 16pt; font-weight: 400; color: var(--deep); }
+  .score-avg .value span { font-size: 9pt; color: var(--smoke); }
+
+  ul { list-style: none; padding: 0; }
+  ul li { padding: 2.5px 0 2.5px 12px; position: relative; font-size: 7.8pt; color: var(--deep); line-height: 1.45; }
+  ul li::before { content: '—'; position: absolute; left: 0; color: var(--gold); }
+  ul li strong { font-weight: 500; }
+  ul.check li::before { content: '✓'; color: #2e7d32; font-size: 7pt; }
+  ul.warn li::before { content: '▲'; color: #e67e22; font-size: 6pt; top: 3px; }
+
+  .ai-table { width: 100%; border-collapse: collapse; font-size: 7.5pt; }
+  .ai-table th { font-size: 6.5pt; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--smoke); text-align: left; padding: 3px 4px 5px 0; border-bottom: 1px solid var(--stone); }
+  .ai-table td { padding: 4px 4px 4px 0; vertical-align: top; border-bottom: 1px solid var(--stone); color: var(--deep); line-height: 1.4; }
+  .ai-table td:last-child { text-align: center; }
+  .pill { display: inline-block; padding: 1px 7px; border-radius: 2px; font-size: 6.5pt; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; }
+  .pill-high { background: #e8f5e9; color: #2e7d32; }
+  .pill-med  { background: #fff8e1; color: #795e00; }
+  .pill-low  { background: #fce4e4; color: #b71c1c; }
+  .pill-done { background: #e8f5e9; color: #2e7d32; }
+
+  .report-footer { margin-top: 12px; padding-top: 7px; border-top: 1px solid var(--stone); display: flex; justify-content: space-between; font-size: 6.5pt; color: var(--smoke); letter-spacing: 0.06em; }
+
+  .no-print { position: fixed; top: 20px; right: 20px; background: var(--deep); color: #fff; border: none; padding: 10px 22px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; z-index: 100; }
+  .no-print:hover { background: var(--gold); }
+</style>
+</head>
+<body>
+
+<button class="no-print" onclick="window.print()">Εκτύπωση / Αποθήκευση PDF</button>
+
+<div class="header">
+  <div class="header-left">
+    <h1>Althea Resorts — <em>Αναφορά SEO &amp; GEO</em></h1>
+    <p>Ορατότητα Αναζήτησης &amp; Βελτιστοποίηση Γεννητικών Μηχανών — Έλεγχος Πιστοποίησης</p>
+  </div>
+  <div class="header-right">
+    <strong>althearesorts.com</strong>
+    Ενημερώθηκε: 24 Ιουνίου 2026<br />
+    Ελεγκτής: Κύριος Μηχανικός Ορατότητας Αναζήτησης<br />
+    Στοίβα: Next.js 16 · TypeScript · Tailwind v4 · Payload CMS
+  </div>
+</div>
+
+<div class="cert-banner">
+  <div class="verdict">Αποτέλεσμα Πιστοποίησης — <span>Α−: Πιστοποιημένο για Εκκίνηση — 1 Στοιχείο Εκκρεμεί Απόφαση Πελάτη</span></div>
+  <div class="outcome">Εικόνα OG ✓ · Συνέπεια NAP ✓ · TypeScript: 0 σφάλματα · Αρχιτεκτονική πλήρης</div>
+</div>
+
+<!-- ΓΡΑΜΜΗ 1 — ΒΑΘΜΟΛΟΓΙΕΣ + ΥΛΟΠΟΙΗΣΕΙΣ -->
+<div class="grid-2">
+
+  <div class="card">
+    <div class="card-title">Συνολικές Βαθμολογίες — /100</div>
+    <table class="score-table">
+      <tr>
+        <td>Τεχνικό SEO</td>
+        <td><span class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:85%"></div></div></span><span class="score-num">85</span></td>
+      </tr>
+      <tr>
+        <td>Πολύγλωσσο SEO (ΕΝ + ΕΛ)</td>
+        <td><span class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:82%"></div></div></span><span class="score-num">82</span></td>
+      </tr>
+      <tr>
+        <td>Schema / Δομημένα Δεδομένα</td>
+        <td><span class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:79%"></div></div></span><span class="score-num">79</span></td>
+      </tr>
+      <tr>
+        <td>Τοπικό SEO</td>
+        <td><span class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:82%"></div></div></span><span class="score-num">82</span></td>
+      </tr>
+      <tr>
+        <td>Ετοιμότητα Knowledge Graph</td>
+        <td><span class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:76%"></div></div></span><span class="score-num">76</span></td>
+      </tr>
+      <tr>
+        <td>GEO (Βελτιστοποίηση Γεννητικών Μηχανών)</td>
+        <td><span class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:74%"></div></div></span><span class="score-num">74</span></td>
+      </tr>
+      <tr>
+        <td>Ανακαλυψιμότητα AI</td>
+        <td><span class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:73%"></div></div></span><span class="score-num">73</span></td>
+      </tr>
+      <tr>
+        <td>Πιθανότητα Αναφοράς AI</td>
+        <td><span class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill" style="width:70%"></div></div></span><span class="score-num">70</span></td>
+      </tr>
+    </table>
+    <div class="score-avg">
+      <span class="label">Συνολικός Μέσος Όρος</span>
+      <span class="value">77.6 <span>/ 100</span></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Υλοποιήσεις που Ολοκληρώθηκαν</div>
+    <ul class="check">
+      <li><strong>Εικόνα OG</strong> — <code>/public/og-default.jpg</code> (1200×630 px) ενεργή σε όλες τις σελίδες</li>
+      <li><strong>Συνέπεια NAP</strong> — σταθερό +30 27430 24063 πλέον συνεπές σε schema, Header, Footer και meta descriptions επικοινωνίας</li>
+      <li><strong>Αρχιτεκτονική οντοτήτων</strong> — LodgingBusiness, Organization με μόνιμες άγκυρες <code>@id</code> σε όλες τις σελίδες</li>
+      <li><strong>Αυτόματη παραγωγή hreflang</strong> — EN/EL/x-default υπολογίζεται από το canonical σε όλες τις 26+ σελίδες</li>
+      <li><strong>Canonical URLs</strong> — κάθε σελίδα δηλώνει ρητά το δικό της canonical</li>
+      <li><strong>Λέξεις-κλειδιά</strong> — σε όλες τις σελίδες στα Αγγλικά και Ελληνικά, συμπεριλαμβανομένης της αρχικής</li>
+      <li><strong>Schema HotelRoom</strong> — 6 σελίδες δωματίων: μέγεθος, κρεβάτι, χωρητικότητα, containedInPlace</li>
+      <li><strong>Schema Restaurant</strong> — AITHER με <code>@id</code>, κουζίνα, κατηγορία τιμών</li>
+      <li><strong>Schema Spa</strong> — Ocean Spa HealthAndBeautyBusiness με κατάλογο θεραπειών</li>
+      <li><strong>Schema Offer</strong> — έκπτωση 10% άμεσης κράτησης</li>
+      <li><strong>Schema FAQPage</strong> — 14 ερωτήσεις στα ΑΓΓ· 14 ερωτήσεις στα ΕΛΛ — και οι δύο πλέον ευρετηριάζονται</li>
+      <li><strong>Σελίδες Gallery ξεκλειδώθηκαν</strong> — EN &amp; EL διαχωρισμός από 'use client' — πλέον ευρετηριάζονται</li>
+      <li><strong>Robots.txt</strong> — ChatGPT-User &amp; Claude-Web ξεμπλοκαρισμένα· bots εκπαίδευσης αποκλεισμένα</li>
+      <li><strong>Sitemap</strong> — 38 URLs, lastModified, alternates.languages σε όλα τα ζεύγη EN/EL</li>
+      <li><strong>sameAs</strong> — Instagram, Facebook, LinkedIn με τα πραγματικά URLs προφίλ</li>
+      <li><strong>Πολιτική Απορρήτου &amp; Όροι</strong> — GDPR-συμβατά, στο sitemap, με σύνδεσμο από το Footer</li>
+      <li><strong>OG locale</strong> — el_GR στις ελληνικές σελίδες, en_GB στις αγγλικές</li>
+      <li><strong>Κεφαλίδες ασφαλείας</strong> — X-Frame-Options, X-Content-Type-Options, Referrer-Policy</li>
+      <li><strong>Συγκατάθεση cookie</strong> — layouts EN &amp; EL, localStorage, GDPR-gated</li>
+      <li><strong>GA4</strong> — ιδιότητα G-WYCXWW127J ενεργή και στα δύο layouts ΕΝ &amp; ΕΛ</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ΓΡΑΜΜΗ 2 — AI + ΕΚΚΡΕΜΗ + ΜΕΤΑ ΤΗΝ ΕΚΚΙΝΗΣΗ -->
+<div class="grid-3">
+
+  <div class="card">
+    <div class="card-title">Ορατότητα σε Μηχανές AI</div>
+    <table class="ai-table">
+      <thead>
+        <tr><th>Μηχανή</th><th>Κατάσταση</th><th style="text-align:center">Εμπιστοσύνη</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Google AI Overviews</td><td>Schema + FAQ ευρετηριασμένα</td><td><span class="pill pill-high">Υψηλή</span></td></tr>
+        <tr><td>Gemini</td><td>Ευρετήριο Google + σήματα KG</td><td><span class="pill pill-high">Υψηλή</span></td></tr>
+        <tr><td>ChatGPT</td><td>Crawler ξεμπλοκαρισμένο</td><td><span class="pill pill-med">Μέτρια</span></td></tr>
+        <tr><td>Claude</td><td>Crawler ξεμπλοκαρισμένο</td><td><span class="pill pill-med">Μέτρια</span></td></tr>
+        <tr><td>Perplexity</td><td>Schema FAQ ενεργό</td><td><span class="pill pill-med">Μέτρια</span></td></tr>
+        <tr><td>MS Copilot</td><td>Bingbot επιτρεπόμενο</td><td><span class="pill pill-med">Μέτρια</span></td></tr>
+      </tbody>
+    </table>
+    <ul style="margin-top:8px">
+      <li>Ερωτήματα τοποθεσίας → <strong>Υψηλή</strong> εμπιστοσύνη σε όλες τις μηχανές</li>
+      <li>Ερωτήματα πολυτελείας / spa → <strong>Μέτρια–Υψηλή</strong></li>
+      <li>Γάμοι / εταιρικά → <strong>Μέτρια</strong> (schema εκκρεμεί)</li>
+      <li>Συγκριτικά ("καλύτερο στην Κορινθία") → περιορισμένο χωρίς κριτικές</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="color:#e67e22">Εκκρεμεί — Απαιτείται Απόφαση Πελάτη</div>
+    <ul class="warn">
+      <li>
+        <strong>Schema Offer λήγει 30 Ιουνίου 2026</strong><br />
+        Το <code>validThrough: '2026-06-30'</code> στο αρχείο <code>offers/page.tsx</code> λήγει σε 6 ημέρες. Μετά από αυτή την ημερομηνία, όλες οι μηχανές αναζήτησης θα διαβάζουν την προσφορά ως ληγμένη. Ο πελάτης πρέπει να επιβεβαιώσει: αν η έκπτωση 10% συνεχίζεται, ενημέρωση ημερομηνίας· αν όχι, αφαίρεση του schema block. Δεν απαιτούνται αρχιτεκτονικές αλλαγές.
+      </li>
+    </ul>
+    <div style="margin-top:10px; padding:7px 8px; border: 1px solid #e8e4dd; background:var(--soft);">
+      <p style="font-size:7pt; color:var(--smoke); font-style:italic; margin-bottom:4px;">Κρίσιμα στοιχεία που επιλύθηκαν προηγουμένως:</p>
+      <ul class="check" style="margin:0">
+        <li><strong>Εικόνα OG</strong> — <code>/public/og-default.jpg</code> προστέθηκε 24/06/2026</li>
+        <li><strong>NAP Επικοινωνίας</strong> — παλιό κινητό αντικαταστάθηκε με σταθερό και στις δύο meta descriptions 24/06/2026</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Κορυφαίες Βελτιώσεις Μετά την Εκκίνηση</div>
+    <ul>
+      <li><strong>Schema BreadcrumbList</strong> — βοηθητικό ήδη υπάρχει στο <code>seo.ts</code>· εφαρμογή σε εσωτερικές σελίδες</li>
+      <li><strong>Schema WebSite</strong> — προσθήκη στο layout για Sitelinks Search Box &amp; οντότητα KG</li>
+      <li><strong>Ισοτιμία schema στα Ελληνικά</strong> — HotelRoom, Restaurant, Spa schemas στις EL σελίδες</li>
+      <li><strong>Google Business Profile</strong> — δημιουργία, επαλήθευση, προσθήκη URL στο <code>sameAs</code></li>
+      <li><strong>Καταχώρηση Tripadvisor</strong> — δημιουργία προφίλ, προσθήκη στο <code>sameAs</code> για σήματα κριτικών</li>
+      <li><strong>Schema AggregateRating</strong> — μόλις συσσωρευτούν κριτικές στο GBP / Tripadvisor</li>
+      <li><strong>Schema EventVenue / WeddingVenue</strong> — για τοποθέτηση γάμων &amp; συνεδρίων</li>
+      <li><strong>Περιγραφή organizationSchema</strong> — προσθήκη μίας γραμμής</li>
+      <li><strong>Ημερολόγιο — Schema Article</strong> — όταν ενεργοποιηθεί το περιεχόμενο CMS</li>
+      <li><strong>Αυτο-φιλοξενία γραμματοσειρών</strong> — αφαίρεση εξάρτησης Google Fonts, βελτίωση LCP</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ΓΡΑΜΜΗ 3 — ΠΟΛΥΓΛΩΣΣΑ + SCHEMA -->
+<div class="grid-2" style="margin-bottom:0">
+
+  <div class="card">
+    <div class="card-title">Πολύγλωσση Κάλυψη — EN &amp; EL</div>
+    <ul class="check">
+      <li>13 ελληνικές σελίδες αντικατοπτρίζουν όλες τις αγγλικές διαδρομές στο <code>/el/*</code></li>
+      <li><code>lang="el"</code> στο ελληνικό HTML root· <code>lang="en"</code> στο αγγλικό</li>
+      <li>Αυτόματη παραγωγή hreflang — δεν απαιτείται χειροκίνητη συντήρηση ανά σελίδα</li>
+      <li>Όλες οι 26+ σελίδες: μοναδικοί τίτλοι, περιγραφές (130–160 χαρακτήρες), λέξεις-κλειδιά στη μητρική γλώσσα</li>
+      <li>Ελληνικό skip-link, locale Footer, locale Cookie consent συνδεδεμένα</li>
+      <li>Schema FAQPage στα Ελληνικά στο <code>/el/faq</code> — 14 ερωτήσεις στα Ελληνικά</li>
+      <li>Metadata Gallery ενεργό στο <code>/el/gallery</code> — προηγουμένως αόρατο στους crawlers</li>
+      <li>Sitemap: κάθε ζεύγος EN/EL φέρει <code>alternates.languages</code></li>
+      <li><code>og:locale</code> — <code>el_GR</code> στις ελληνικές, <code>en_GB</code> στις αγγλικές σελίδες</li>
+      <li>Το hreflang x-default παραπέμπει πάντα στο αγγλικό canonical</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Τύποι Schema σε Λειτουργία</div>
+    <table class="ai-table">
+      <thead>
+        <tr><th>Τύπος Schema</th><th>Τοποθεσία</th><th style="text-align:center">Κατάσταση</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>LodgingBusiness</td><td>Όλες οι σελίδες (layout)</td><td><span class="pill pill-done">Ενεργό</span></td></tr>
+        <tr><td>Organization</td><td>Όλες οι σελίδες (layout)</td><td><span class="pill pill-done">Ενεργό</span></td></tr>
+        <tr><td>HotelRoom (×6)</td><td>/accommodation/[slug]</td><td><span class="pill pill-done">Ενεργό</span></td></tr>
+        <tr><td>Restaurant</td><td>/gastronomy</td><td><span class="pill pill-done">Ενεργό</span></td></tr>
+        <tr><td>HealthAndBeautyBusiness</td><td>/spa</td><td><span class="pill pill-done">Ενεργό</span></td></tr>
+        <tr><td>FAQPage</td><td>/faq &amp; /el/faq</td><td><span class="pill pill-done">Ενεργό</span></td></tr>
+        <tr><td>Offer</td><td>/offers</td><td><span class="pill pill-med">Λήγει 30/06</span></td></tr>
+        <tr><td>BreadcrumbList</td><td>Εσωτερικές σελίδες</td><td><span class="pill pill-low">Εκκρεμεί</span></td></tr>
+        <tr><td>WebSite + SearchAction</td><td>Layout</td><td><span class="pill pill-low">Εκκρεμεί</span></td></tr>
+        <tr><td>AggregateRating</td><td>hotelSchema</td><td><span class="pill pill-low">Μετά εκκίνηση</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="report-footer">
+  <span>Althea Resorts — althearesorts.com &nbsp;·&nbsp; Άνω Λουτρό, Ξυλόκαστρο, Κορινθία, Ελλάδα</span>
+  <span>Έλεγχος Πιστοποίησης SEO &amp; GEO &nbsp;·&nbsp; 24 Ιουνίου 2026 &nbsp;·&nbsp; Εμπιστευτικό</span>
+</div>
+
+</body>
+</html>
