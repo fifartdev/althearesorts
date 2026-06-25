@@ -781,6 +781,192 @@ async function seedExperiences(payload: Payload) {
 }
 
 // ---------------------------------------------------------------------------
+// Gallery
+// ---------------------------------------------------------------------------
+
+async function seedGallery(payload: Payload) {
+  if (!await isEmpty(payload, 'gallery')) { console.log('  ✓ Gallery already seeded'); return }
+
+  const S = 'https://staging.althearesorts.com/wp-content/uploads/2026/02'
+
+  const items = [
+    // Pool & Exterior
+    { imageUrl: '/images/new-images/althea-front.jpg',          caption: 'Althea Resorts',          category: 'exterior', featured: true,  wide: true,  order: 1 },
+    { imageUrl: '/images/main-pool.jpg',                         caption: 'Main Pool',               category: 'pool',     featured: true,  wide: false, order: 2 },
+    { imageUrl: `${S}/Gallery-9VZMNYN.jpg`,                     caption: 'Garden & Terraces',       category: 'exterior', featured: false, wide: false, order: 3 },
+    { imageUrl: '/images/new-images/New-Hero.jpg',              caption: 'The Resort',              category: 'exterior', featured: true,  wide: false, order: 4 },
+    { imageUrl: `${S}/FAQ-CKK5K7K.jpg`,                         caption: 'Althea Resorts',          category: 'exterior', featured: false, wide: false, order: 5 },
+    // Rooms & Suites
+    { imageUrl: `${S}/althea-exclusive-resorts-spa-1.png`,      caption: 'Standard Double',         category: 'rooms',    featured: false, wide: false, order: 10 },
+    { imageUrl: `${S}/althea-exclusive-resorts-spa-2.png`,      caption: 'Room Interior',           category: 'rooms',    featured: false, wide: false, order: 11 },
+    { imageUrl: `${S}/althea-exclusive-resorts-spa-3.png`,      caption: 'Room Details',            category: 'rooms',    featured: false, wide: false, order: 12 },
+    { imageUrl: `${S}/althea-exclusive-resorts-spa-4.png`,      caption: 'Deluxe Double',           category: 'rooms',    featured: false, wide: true,  order: 13 },
+    { imageUrl: `${S}/althea-exclusive-resorts-spa-5.png`,      caption: 'Deluxe with Pool',        category: 'rooms',    featured: false, wide: false, order: 14 },
+    { imageUrl: `${S}/althea-exclusive-resorts-spa-6.png`,      caption: 'Superior Sea View',       category: 'rooms',    featured: true,  wide: false, order: 15 },
+    { imageUrl: `${S}/althea-exclusive-resorts-spa-8.png`,      caption: 'Junior Suite',            category: 'rooms',    featured: false, wide: false, order: 16 },
+    { imageUrl: `${S}/althea-exclusive-resorts-spa-9.png`,      caption: 'Loft Suite',              category: 'rooms',    featured: true,  wide: true,  order: 17 },
+    { imageUrl: `${S}/althea-exclusive-resorts-spa-10.png`,     caption: 'Suite Living Area',       category: 'rooms',    featured: false, wide: false, order: 18 },
+    { imageUrl: `${S}/althea-exclusive-resorts-spa-11.png`,     caption: 'Suite Terrace',           category: 'rooms',    featured: false, wide: false, order: 19 },
+    // Views
+    { imageUrl: '/images/new-images/althea-side-images1.jpg',   caption: 'Corinthian Gulf Views',   category: 'exterior', featured: false, wide: true,  order: 20 },
+    { imageUrl: '/images/new-images/althea-side-images2.jpg',   caption: 'Corinthian Coast',        category: 'exterior', featured: false, wide: false, order: 21 },
+    { imageUrl: '/images/new-images/althea-side-images3.jpg',   caption: 'The Surroundings',        category: 'exterior', featured: false, wide: false, order: 22 },
+    { imageUrl: '/images/new-images/althea-side-images4.jpg',   caption: 'Landscape & Nature',      category: 'exterior', featured: false, wide: false, order: 23 },
+    { imageUrl: `${S}/1.jpg`,                                   caption: 'The Property',            category: 'exterior', featured: false, wide: false, order: 24 },
+    { imageUrl: `${S}/2.jpg`,                                   caption: 'Gulf at Dusk',            category: 'exterior', featured: false, wide: false, order: 25 },
+    // Spa
+    { imageUrl: '/images/oceanisphoto.jpg',                     caption: 'Oceanis — Spa Products',  category: 'spa',      featured: true,  wide: false, order: 30 },
+    // Outdoor pool
+    { imageUrl: '/images/outdoor-pool/althea-indoor-outdoor-13.jpg', caption: 'Outdoor Pool',      category: 'pool',     featured: true,  wide: true,  order: 40 },
+    { imageUrl: '/images/outdoor-pool/althea-indoor-outdoor-14.jpg', caption: 'Pool at Sunset',    category: 'pool',     featured: false, wide: false, order: 41 },
+    { imageUrl: '/images/outdoor-pool/althea-indoor-outdoor-15.jpg', caption: 'Pool Terrace',      category: 'pool',     featured: false, wide: false, order: 42 },
+    { imageUrl: '/images/outdoor-pool/althea-indoor-outdoor-16.jpg', caption: 'The Pool',          category: 'pool',     featured: false, wide: false, order: 43 },
+    { imageUrl: '/images/outdoor-pool/althea-indoor-outdoor-17.jpg', caption: 'Poolside',          category: 'pool',     featured: false, wide: false, order: 44 },
+    { imageUrl: '/images/outdoor-pool/althea-indoor-outdoor-18.jpg', caption: 'Summer at the Pool',category: 'pool',     featured: false, wide: true,  order: 45 },
+    { imageUrl: '/images/outdoor-pool/althea-indoor-outdoor-19.jpg', caption: 'Pool Views',        category: 'pool',     featured: false, wide: false, order: 46 },
+    { imageUrl: '/images/outdoor-pool/althea-indoor-outdoor-20.jpg', caption: 'Afternoon Swim',    category: 'pool',     featured: false, wide: false, order: 47 },
+    { imageUrl: '/images/outdoor-pool/althea-indoor-outdoor-21.jpg', caption: 'By the Water',      category: 'pool',     featured: false, wide: false, order: 48 },
+    { imageUrl: '/images/outdoor-pool/althea-indoor-outdoor-22.jpg', caption: 'Pool & Gulf',       category: 'pool',     featured: false, wide: false, order: 49 },
+    { imageUrl: '/images/outdoor-pool/althea-indoor-outdoor-23.jpg', caption: 'Pool Garden',       category: 'pool',     featured: false, wide: true,  order: 50 },
+    { imageUrl: '/images/outdoor-pool/althea-indoor-outdoor-24.jpg', caption: 'Outdoor Living',    category: 'pool',     featured: false, wide: false, order: 51 },
+    // Lobby & Reception
+    { imageUrl: '/images/reception/althea-indoor-outdoor-1.jpg',  caption: 'Althea Lobby',         category: 'exterior', featured: false, wide: true,  order: 60 },
+    { imageUrl: '/images/reception/althea-indoor-outdoor-2.jpg',  caption: 'Reception',            category: 'exterior', featured: false, wide: false, order: 61 },
+    { imageUrl: '/images/reception/althea-indoor-outdoor-3.jpg',  caption: 'Hotel Interior',       category: 'exterior', featured: false, wide: false, order: 62 },
+    { imageUrl: '/images/reception/althea-indoor-outdoor-4.jpg',  caption: 'Lobby Details',        category: 'exterior', featured: false, wide: false, order: 63 },
+    { imageUrl: '/images/reception/althea-indoor-outdoor-5.jpg',  caption: 'The Welcome',          category: 'exterior', featured: false, wide: false, order: 64 },
+    { imageUrl: '/images/reception/althea-indoor-outdoor-6.jpg',  caption: 'Arrival at Althea',    category: 'exterior', featured: false, wide: true,  order: 65 },
+    { imageUrl: '/images/reception/althea-indoor-outdoor-7.jpg',  caption: 'Common Areas',         category: 'exterior', featured: false, wide: false, order: 66 },
+    { imageUrl: '/images/reception/althea-indoor-outdoor-8.jpg',  caption: 'Interior Design',      category: 'exterior', featured: false, wide: false, order: 67 },
+    // Dining
+    { imageUrl: '/images/restaurant/althea-indoor-outdoor-9.jpg',   caption: 'Dining at Althea',   category: 'dining',   featured: true,  wide: true,  order: 70 },
+    { imageUrl: '/images/restaurant/althea-indoor-outdoor-10.jpg',  caption: 'Restaurant Terrace', category: 'dining',   featured: false, wide: false, order: 71 },
+    { imageUrl: '/images/restaurant/althea-indoor-outdoor-11.jpg',  caption: 'Indoor Dining',      category: 'dining',   featured: false, wide: false, order: 72 },
+    { imageUrl: '/images/restaurant/althea-indoor-outdoor-12.jpg',  caption: 'The Dining Room',    category: 'dining',   featured: false, wide: false, order: 73 },
+    // Breakfast
+    { imageUrl: '/images/breakfast/althea-breakfast-1.jpg',   caption: 'Morning Spread',           category: 'dining',   featured: false, wide: true,  order: 80 },
+    { imageUrl: '/images/breakfast/althea-breakfast-2.jpg',   caption: 'Fresh Pastries',           category: 'dining',   featured: false, wide: false, order: 81 },
+    { imageUrl: '/images/breakfast/althea-breakfast-3.jpg',   caption: 'Local Honey & Cheeses',    category: 'dining',   featured: false, wide: false, order: 82 },
+    { imageUrl: '/images/breakfast/althea-breakfast-4.jpg',   caption: 'Seasonal Fruit',           category: 'dining',   featured: false, wide: false, order: 83 },
+    { imageUrl: '/images/breakfast/althea-breakfast-5.jpg',   caption: 'Greek Breakfast',          category: 'dining',   featured: false, wide: false, order: 84 },
+    { imageUrl: '/images/breakfast/althea-breakfast-6.jpg',   caption: 'The Breakfast Table',      category: 'dining',   featured: false, wide: false, order: 85 },
+    { imageUrl: '/images/breakfast/althea-breakfast-7.jpg',   caption: 'Breakfast at Althea',      category: 'dining',   featured: false, wide: true,  order: 86 },
+    { imageUrl: '/images/breakfast/althea-breakfast-8.jpg',   caption: 'Morning Ritual',           category: 'dining',   featured: false, wide: false, order: 87 },
+    { imageUrl: '/images/breakfast/althea-breakfast-9.jpg',   caption: 'Fresh from the Kitchen',   category: 'dining',   featured: false, wide: false, order: 88 },
+    { imageUrl: '/images/breakfast/althea-breakfast-10.jpg',  caption: 'Morning Light',            category: 'dining',   featured: false, wide: false, order: 89 },
+    { imageUrl: '/images/breakfast/althea-breakfast-19.jpg',  caption: 'Breakfast by the Sea',     category: 'dining',   featured: false, wide: true,  order: 90 },
+    { imageUrl: '/images/breakfast/althea-breakfast-20.jpg',  caption: 'Harvest & Honey',          category: 'dining',   featured: false, wide: false, order: 91 },
+    { imageUrl: '/images/breakfast/althea-breakfast-13.jpg',  caption: 'Mediterranean Morning',    category: 'dining',   featured: false, wide: true,  order: 92 },
+  ]
+
+  for (const item of items) {
+    await (payload.create as Function)({
+      collection: 'gallery',
+      data: {
+        imageUrl: item.imageUrl,
+        caption: item.caption,
+        category: item.category,
+        featured: item.featured,
+        order: item.order,
+      },
+    })
+  }
+  console.log(`  ✓ Gallery seeded (${items.length} items)`)
+}
+
+// ---------------------------------------------------------------------------
+// Globals
+// ---------------------------------------------------------------------------
+
+async function seedGlobals(payload: Payload) {
+  console.log('  Seeding globals…')
+
+  await payload.updateGlobal({
+    slug: 'contact-info',
+    data: {
+      address: 'Ano Loutro, Xylokastro, Corinthia, Greece',
+      phone: '+30 27430 24063',
+      email: 'reservations@althearesorts.com',
+      reservationsEmail: 'reservations@althearesorts.com',
+      coordinates: { lat: 38.0945616, lng: 22.5454614 },
+      directions: '60 minutes from Athens by car. Follow the Athens–Corinth motorway toward the Peloponnese, exit at Xylokastro.',
+    },
+  })
+  console.log('    + ContactInfo')
+
+  await payload.updateGlobal({
+    slug: 'booking-settings',
+    data: {
+      bookingEngineUrl: 'https://althearesort.reserve-online.net',
+      stickyBarEnabled: true,
+      floatingCTAEnabled: true,
+      stickyBarText: 'Reserve your stay — 60 minutes from Athens',
+      directBookingDiscount: 10,
+      openingOfferEndDate: '2026-06-30T23:59:59.000Z',
+    },
+  })
+  console.log('    + BookingSettings')
+
+  await payload.updateGlobal({
+    slug: 'site-settings',
+    data: {
+      siteName: 'Althea Resorts',
+      tagline: 'Redefining Hospitality With Timeless Elegance',
+      maintenanceMode: false,
+      cookieConsentEnabled: true,
+    },
+  })
+  console.log('    + SiteSettings')
+
+  await payload.updateGlobal({
+    slug: 'seo-settings',
+    data: {
+      defaultTitle: 'Althea Resorts',
+      titleSuffix: '| Althea Resorts',
+      defaultDescription: 'Luxury boutique resort in Ano Loutro, Xylokastro, Corinthia. 41 rooms and suites, Ocean Spa, rooftop restaurant AITHER. 60 minutes from Athens.',
+      siteUrl: 'https://althearesorts.com',
+      hreflangEnabled: true,
+      defaultLocale: 'en',
+      googleAnalyticsId: 'G-WYCXWW127J',
+      schemaEnabled: true,
+      llmsEnabled: true,
+    },
+  })
+  console.log('    + SEOSettings')
+
+  await payload.updateGlobal({
+    slug: 'geo-settings',
+    data: {
+      legalName: 'Althea Resorts',
+      streetAddress: 'Ano Loutro',
+      addressLocality: 'Xylokastro',
+      addressRegion: 'Corinthia',
+      postalCode: '20400',
+      addressCountry: 'GR',
+      coordinates: { latitude: 38.0945616, longitude: 22.5454614 },
+      googleMapsUrl: 'https://maps.google.com/?q=38.0945616,22.5454614',
+      telephone: '+30 27430 24063',
+      email: 'reservations@althearesorts.com',
+      reservationsEmail: 'reservations@althearesorts.com',
+      url: 'https://althearesorts.com',
+      bookingUrl: 'https://althearesort.reserve-online.net',
+      reception247: true,
+      checkinTime: '15:00',
+      checkoutTime: '11:00',
+      starRating: 5,
+      numberOfRooms: 41,
+      priceRange: '€€€€',
+      instagram: 'https://www.instagram.com/althearesorts',
+      facebook: 'https://www.facebook.com/profile.php?id=61589365637032',
+      linkedin: 'https://www.linkedin.com/company/althearesorts',
+    },
+  })
+  console.log('    + GeoSettings')
+
+  console.log('  ✓ Globals seeded')
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
@@ -789,6 +975,7 @@ async function seed() {
 
   const payload = await getPayload({ config })
 
+  await seedGlobals(payload)
   await seedRooms(payload)
   await seedDining(payload)
   await seedOffers(payload)
@@ -797,6 +984,7 @@ async function seed() {
   await seedTestimonials(payload)
   await seedLocations(payload)
   await seedExperiences(payload)
+  await seedGallery(payload)
 
   console.log('\n✅ All done.\n')
   process.exit(0)

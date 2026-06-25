@@ -82,9 +82,6 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
-    // PAYLOAD_DB_PUSH=true → auto-create tables without migrations (branch/preview only)
-    // Remove before merging to main; use `payload migrate` for production
-    push: process.env.PAYLOAD_DB_PUSH === 'true',
   }),
   sharp,
   plugins: [

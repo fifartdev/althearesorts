@@ -15,7 +15,8 @@ export const Gallery: CollectionConfig = {
     delete: isSuperAdmin,
   },
   fields: [
-    { name: 'image', type: 'upload', relationTo: 'media', required: true },
+    { name: 'image', type: 'upload', relationTo: 'media', required: false },
+    { name: 'imageUrl', type: 'text', admin: { description: 'External or local image URL — used when not uploading via media library' } },
     { name: 'caption', type: 'text', localized: true },
     {
       name: 'category',

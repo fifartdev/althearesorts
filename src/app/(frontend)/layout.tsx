@@ -8,6 +8,7 @@ import { StickyBookingBar, FloatingBookingButton } from '@/components/layout/Boo
 import { CookieConsent } from '@/components/layout/CookieConsent'
 import { CustomCursor } from '@/components/animations/CustomCursor'
 import { hotelSchema, organizationSchema } from '@/lib/seo'
+import { getContactInfo, getBookingSettings } from '@/lib/cms'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -38,7 +39,17 @@ const dmSans = DM_Sans({
   display: 'swap',
 })
 
-export default function FrontendLayout({ children }: { children: React.ReactNode }) {
+export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
+  const [contactInfo, bookingSettings] = await Promise.all([
+    getContactInfo(),
+    getBookingSettings(),
+  ])
+
+  const bookingUrl = (bookingSettings as any)?.bookingEngineUrl || undefined
+  const phone = (contactInfo as any)?.phone || undefined
+  const address = (contactInfo as any)?.address || undefined
+  const email = (contactInfo as any)?.email || undefined
+
   return (
     <html lang="en" className={`scroll-smooth ${cormorant.variable} ${dmSans.variable}`}>
       <head>

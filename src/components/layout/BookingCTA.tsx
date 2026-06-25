@@ -19,9 +19,10 @@ const barContent = {
   },
 }
 
-export function StickyBookingBar({ locale = 'en' }: { locale?: 'en' | 'el' }) {
+export function StickyBookingBar({ locale = 'en', bookingUrl }: { locale?: 'en' | 'el'; bookingUrl?: string }) {
   const [visible, setVisible] = useState(false)
   const c = barContent[locale]
+  const _bookingUrl = bookingUrl || BOOKING_URL
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.8)
@@ -44,17 +45,17 @@ export function StickyBookingBar({ locale = 'en' }: { locale?: 'en' | 'el' }) {
         {c.tagline}
       </p>
       <div className="flex items-center gap-6">
-        <span className="text-xs text-[#ad8b27] uppercase tracking-widest font-light">
+        <span className="text-xs text-gold uppercase tracking-widest font-light">
           {c.offer}
         </span>
         <a
-          href={BOOKING_URL}
+          href={_bookingUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="h-9 px-6 inline-flex items-center
                      text-[10px] uppercase tracking-[0.2em]
-                     bg-[#ad8b27] text-white border border-[#ad8b27]
-                     hover:bg-transparent hover:text-[#ad8b27]
+                     bg-gold text-white border border-gold
+                     hover:bg-transparent hover:text-gold
                      transition-all duration-400"
         >
           {c.cta}
@@ -64,8 +65,9 @@ export function StickyBookingBar({ locale = 'en' }: { locale?: 'en' | 'el' }) {
   )
 }
 
-export function FloatingBookingButton() {
+export function FloatingBookingButton({ bookingUrl }: { bookingUrl?: string } = {}) {
   const [visible, setVisible] = useState(false)
+  const _bookingUrl = bookingUrl || BOOKING_URL
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 400)
@@ -75,14 +77,14 @@ export function FloatingBookingButton() {
 
   return (
     <a
-      href={BOOKING_URL}
+      href={_bookingUrl}
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
         'fixed bottom-6 right-6 z-40 lg:hidden',
         'h-12 px-5 inline-flex items-center gap-2',
         'text-[10px] uppercase tracking-[0.2em]',
-        'bg-[#ad8b27] text-white shadow-lg shadow-[#ad8b27]/30',
+        'bg-gold text-white shadow-lg shadow-gold/30',
         'transition-all duration-500',
         visible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'
       )}

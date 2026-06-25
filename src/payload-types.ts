@@ -536,7 +536,11 @@ export interface Dining {
  */
 export interface Gallery {
   id: number;
-  image: number | Media;
+  image?: (number | null) | Media;
+  /**
+   * External or local image URL — used when not uploading via media library
+   */
+  imageUrl?: string | null;
   caption?: string | null;
   category?: ('rooms' | 'dining' | 'spa' | 'exterior' | 'pool' | 'events') | null;
   /**
@@ -1458,6 +1462,7 @@ export interface DiningSelect<T extends boolean = true> {
  */
 export interface GallerySelect<T extends boolean = true> {
   image?: T;
+  imageUrl?: T;
   caption?: T;
   category?: T;
   featured?: T;

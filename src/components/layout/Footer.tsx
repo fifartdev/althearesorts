@@ -30,10 +30,24 @@ const footerContent = {
   },
 }
 
-export function Footer({ locale = 'en' }: { locale?: Locale }) {
+interface FooterProps {
+  locale?: Locale
+  phone?: string
+  email?: string
+  address?: string
+  bookingUrl?: string
+  social?: { instagram?: string; facebook?: string; linkedin?: string }
+}
+
+export function Footer({ locale = 'en', phone, email, address, bookingUrl, social }: FooterProps = {}) {
   const year = new Date().getFullYear()
   const c = footerContent[locale]
   const links = locale === 'el' ? NAV_LINKS_EL : NAV_LINKS
+  const _phone = phone || PHONE
+  const _email = email || EMAIL
+  const _address = address || ADDRESS
+  const _bookingUrl = bookingUrl || BOOKING_URL
+  const _social = social || { instagram: 'https://www.instagram.com/althearesorts', facebook: 'https://www.facebook.com/profile.php?id=61589365637032', linkedin: 'https://www.linkedin.com/company/althearesorts' }
 
   return (
     <footer className="bg-[#102027] text-white" role="contentinfo">
@@ -55,9 +69,9 @@ export function Footer({ locale = 'en' }: { locale?: Locale }) {
               {c.desc}
             </p>
             <div className="flex flex-col gap-2 text-sm font-light text-white/50">
-              <span>{ADDRESS}</span>
-              <a href={`tel:${PHONE.replace(/\s/g, '')}`} className="hover:text-[#ad8b27] transition-colors duration-200">{PHONE}</a>
-              <a href={`mailto:${EMAIL}`} className="hover:text-[#ad8b27] transition-colors duration-200">{EMAIL}</a>
+              <span>{_address}</span>
+              <a href={`tel:${_phone.replace(/\s/g, '')}`} className="hover:text-gold transition-colors duration-200">{_phone}</a>
+              <a href={`mailto:${_email}`} className="hover:text-gold transition-colors duration-200">{_email}</a>
             </div>
           </div>
 
@@ -93,7 +107,7 @@ export function Footer({ locale = 'en' }: { locale?: Locale }) {
               ))}
               <li>
                 <a
-                  href={BOOKING_URL}
+                  href={_bookingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm font-light text-[#ad8b27] hover:text-white transition-colors duration-200 uppercase tracking-wider"
@@ -119,19 +133,19 @@ export function Footer({ locale = 'en' }: { locale?: Locale }) {
             </Link>
           </div>
           <div className="flex items-center sm:justify-end gap-5">
-            <a href="https://www.instagram.com/althearesorts" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/30 hover:text-[#ad8b27] transition-colors duration-200">
+            <a href={_social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/30 hover:text-gold transition-colors duration-200">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                 <circle cx="12" cy="12" r="4"/>
                 <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
               </svg>
             </a>
-            <a href="https://www.facebook.com/profile.php?id=61589365637032" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-white/30 hover:text-[#ad8b27] transition-colors duration-200">
+            <a href={_social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-white/30 hover:text-gold transition-colors duration-200">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
               </svg>
             </a>
-            <a href="https://www.linkedin.com/company/althearesorts" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-white/30 hover:text-[#ad8b27] transition-colors duration-200">
+            <a href={_social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-white/30 hover:text-gold transition-colors duration-200">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
                 <rect x="2" y="9" width="4" height="12"/>
