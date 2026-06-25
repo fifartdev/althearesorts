@@ -128,22 +128,23 @@ const EXTERNAL_IMAGES: { url: string; filename: string; alt: string }[] = [
   },
 ]
 
-// Map CMS slug → uploaded filename, for linking heroImage after upload
+// Map English title → uploaded filename, for linking heroImage after upload
+// Using title-based lookup so slug mismatches don't matter
 const ROOM_HERO_MAP: Record<string, string> = {
-  'standard-double':            'standard.jpg',
-  'deluxe-double-mv-pv':        'deluxe double.jpg',
-  'deluxe-double-private-pool': 'del.double.jpg',
-  'superior-sea-view':          'superior sea view.jpg',
-  'junior-suite-private-pool':  'Junior suite .jpg',
-  'althea-loft-suite':          'js living room.jpg',
+  'Standard Double':                    'standard.jpg',
+  'Deluxe Double M.V / P.V.':           'deluxe double.jpg',
+  'Deluxe Double Private Pool':         'del.double.jpg',
+  'Superior Sea View Room':             'superior sea view.jpg',
+  'Junior Suite Private Pool':          'Junior suite .jpg',
+  'Althea Loft Suite Outdoor Jacuzzi':  'js living room.jpg',
 }
 
 const DINING_HERO_MAP: Record<string, string> = {
-  'aither':         'aither.jpg',
-  'all-day-dining': 'althea-indoor-outdoor-12.jpg',
-  'breakfast':      'althea-breakfast-18.jpg',
-  'bar':            'bar-cocktail.jpg',
-  'pool-bar':       'pool-bar-poolside.jpg',
+  'AITHER':         'aither.jpg',
+  'All Day Dining': 'althea-indoor-outdoor-12.jpg',
+  'Breakfast':      'althea-breakfast-18.jpg',
+  'Bar':            'bar-cocktail.jpg',
+  'Pool Bar':       'pool-bar-poolside.jpg',
 }
 
 function altFromFilename(filename: string): string {
@@ -244,9 +245,9 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // ─── 3. Link heroImage on rooms ───────────────────────────────────────────
+  // ─── 3. Link heroImage on rooms (matched by English title) ──────────────────
 
-  for (const [slug, filename] of Object.entries(ROOM_HERO_MAP)) {
+  for (const [title, filename] of Object.entries(ROOM_HERO_MAP)) {
     try {
       const mediaResult = await payload.find({
         collection: 'media',
@@ -254,17 +255,17 @@ export async function GET(request: NextRequest) {
         limit: 1,
       })
       if (!mediaResult.docs.length) {
-        report.errors.push(`link rooms/${slug}: no media found for ${filename}`)
+        report.errors.push(`link room "${title}": no media for ${filename}`)
         continue
       }
 
       const roomResult = await payload.find({
         collection: 'rooms',
-        where: { slug: { equals: slug } },
+        where: { title: { equals: title } },
         limit: 1,
       })
       if (!roomResult.docs.length) {
-        report.errors.push(`link rooms/${slug}: room doc not found`)
+        report.errors.push(`link room "${title}": room doc not found`)
         continue
       }
 
@@ -273,15 +274,15 @@ export async function GET(request: NextRequest) {
         id: roomResult.docs[0].id,
         data: { heroImage: mediaResult.docs[0].id },
       })
-      report.linked.push(`rooms/${slug} → ${filename}`)
+      report.linked.push(`room "${title}" → ${filename}`)
     } catch (err: any) {
-      report.errors.push(`link rooms/${slug}: ${err?.message ?? String(err)}`)
+      report.errors.push(`link room "${title}": ${err?.message ?? String(err)}`)
     }
   }
 
-  // ─── 4. Link heroImage on dining ──────────────────────────────────────────
+  // ─── 4. Link heroImage on dining (matched by English name) ──────────────────
 
-  for (const [slug, filename] of Object.entries(DINING_HERO_MAP)) {
+  for (const [name, filename] of Object.entries(DINING_HERO_MAP)) {
     try {
       const mediaResult = await payload.find({
         collection: 'media',
@@ -289,17 +290,17 @@ export async function GET(request: NextRequest) {
         limit: 1,
       })
       if (!mediaResult.docs.length) {
-        report.errors.push(`link dining/${slug}: no media found for ${filename}`)
+        report.errors.push(`link dining "${name}": no media for ${filename}`)
         continue
       }
 
       const diningResult = await payload.find({
         collection: 'dining',
-        where: { slug: { equals: slug } },
+        where: { name: { equals: name } },
         limit: 1,
       })
       if (!diningResult.docs.length) {
-        report.errors.push(`link dining/${slug}: dining doc not found`)
+        report.errors.push(`link dining "${name}": doc not found`)
         continue
       }
 
@@ -308,9 +309,9 @@ export async function GET(request: NextRequest) {
         id: diningResult.docs[0].id,
         data: { heroImage: mediaResult.docs[0].id },
       })
-      report.linked.push(`dining/${slug} → ${filename}`)
+      report.linked.push(`dining "${name}" → ${filename}`)
     } catch (err: any) {
-      report.errors.push(`link dining/${slug}: ${err?.message ?? String(err)}`)
+      report.errors.push(`link dining "${name}": ${err?.message ?? String(err)}`)
     }
   }
 
