@@ -1,7 +1,8 @@
 import { generateMetadata as genMeta } from '@/lib/seo'
 import { SITE_URL } from '@/lib/constants'
+import { getFAQs } from '@/lib/cms'
 import { FaqClient } from './FaqClient'
-import { faqs } from './faqData'
+import { faqs as staticFaqs, type FaqCategory } from './faqData'
 
 export const metadata = genMeta({
   title: 'Frequently Asked Questions',
@@ -10,29 +11,50 @@ export const metadata = genMeta({
   canonical: `${SITE_URL}/faq`,
 })
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.flatMap((category) =>
-    category.items.map((item) => ({
-      '@type': 'Question',
-      name: item.q,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.a,
-      },
-    }))
-  ),
+const CATEGORY_LABELS: Record<string, string> = {
+  rooms: 'Rooms & Rates',
+  checkin: 'Check-in & Check-out',
+  dining: 'Dining',
+  spa: 'Spa & Wellness',
+  family: 'Pets & Children',
+  location: 'Getting Here',
+  reservations: 'Reservations',
+  general: 'General',
 }
 
-export default function FAQPage() {
+export default async function FAQPage() {
+  const docs = await getFAQs('en')
+
+  const categories: FaqCategory[] = docs.length > 0
+    ? Object.entries(
+        docs.reduce((acc: Record<string, { q: string; a: string }[]>, item: any) => {
+          const cat = CATEGORY_LABELS[item.category] ?? item.category ?? 'General'
+          if (!acc[cat]) acc[cat] = []
+          acc[cat].push({ q: item.question ?? '', a: item.answer ?? '' })
+          return acc
+        }, {})
+      ).map(([category, items]) => ({ category, items }))
+    : staticFaqs
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: categories.flatMap((cat) =>
+      cat.items.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      }))
+    ),
+  }
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <FaqClient />
+      <FaqClient categories={categories} />
     </>
   )
 }

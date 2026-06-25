@@ -6,6 +6,7 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { ROOMS, BOOKING_URL, SITE_URL } from '@/lib/constants'
+import { getRooms } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Rooms & Suites',
@@ -14,7 +15,22 @@ export const metadata = genMeta({
   canonical: `${SITE_URL}/accommodation`,
 })
 
-export default function AccommodationPage() {
+export default async function AccommodationPage() {
+  const docs = await getRooms('en')
+  const rooms = docs.length > 0
+    ? docs.map((r: any) => ({
+        slug: r.slug ?? '',
+        title: r.title ?? '',
+        view: r.viewType ?? '',
+        tagline: r.tagline ?? undefined,
+        size: r.size ?? '',
+        shortDesc: r.shortDescription ?? '',
+        image: typeof r.heroImage === 'object' ? (r.heroImage?.url ?? '') : (r.heroImage ?? ''),
+        features: (r.highlights ?? []).map((h: any) => h.text ?? '').filter(Boolean),
+        featured: r.featured ?? false,
+      }))
+    : ROOMS
+
   return (
     <main id="main-content">
 
@@ -84,7 +100,7 @@ export default function AccommodationPage() {
       </section>
 
       {/* ── Room sections ── */}
-      {ROOMS.map((room, i) => {
+      {rooms.map((room, i) => {
         const isEven = i % 2 === 0
         const isFeatured = room.featured === true
 
@@ -155,7 +171,7 @@ export default function AccommodationPage() {
                   {/* Features */}
                   <ScrollReveal delay={210}>
                     <ul className="grid grid-cols-2 gap-x-6 gap-y-2.5 mb-10">
-                      {room.features.slice(0, 6).map((f) => (
+                      {room.features.slice(0, 6).map((f: string) => (
                         <li key={f} className="flex items-center gap-2.5">
                           <span className="w-1 h-1 rounded-full bg-[#ad8b27] shrink-0" aria-hidden="true" />
                           <span className={`text-xs font-light ${isFeatured ? 'text-white/50' : 'text-[#6b6b6b]'}`}>

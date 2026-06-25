@@ -8,6 +8,7 @@ import { StickyBookingBar, FloatingBookingButton } from '@/components/layout/Boo
 import { CookieConsent } from '@/components/layout/CookieConsent'
 import { CustomCursor } from '@/components/animations/CustomCursor'
 import { hotelSchema, organizationSchema } from '@/lib/seo'
+import { getContactInfo, getBookingSettings } from '@/lib/cms'
 import '../../(frontend)/globals.css'
 
 export const metadata: Metadata = {
@@ -38,7 +39,17 @@ const dmSans = DM_Sans({
   display: 'swap',
 })
 
-export default function GreekLayout({ children }: { children: React.ReactNode }) {
+export default async function GreekLayout({ children }: { children: React.ReactNode }) {
+  const [contactInfo, bookingSettings] = await Promise.all([
+    getContactInfo(),
+    getBookingSettings(),
+  ])
+
+  const bookingUrl = (bookingSettings as any)?.bookingEngineUrl || undefined
+  const phone = (contactInfo as any)?.phone || undefined
+  const address = (contactInfo as any)?.address || undefined
+  const email = (contactInfo as any)?.email || undefined
+
   return (
     <html lang="el" className={`scroll-smooth ${cormorant.variable} ${dmSans.variable}`}>
       <head>
@@ -72,11 +83,11 @@ export default function GreekLayout({ children }: { children: React.ReactNode })
         </Script>
 
         <CustomCursor />
-        <Header />
+        <Header bookingUrl={bookingUrl} phone={phone} />
         {children}
-        <Footer locale="el" />
-        <StickyBookingBar locale="el" />
-        <FloatingBookingButton />
+        <Footer locale="el" phone={phone} email={email} address={address} bookingUrl={bookingUrl} />
+        <StickyBookingBar locale="el" bookingUrl={bookingUrl} />
+        <FloatingBookingButton bookingUrl={bookingUrl} />
         <CookieConsent locale="el" />
       </body>
     </html>

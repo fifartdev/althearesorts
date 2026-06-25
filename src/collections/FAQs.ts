@@ -16,7 +16,7 @@ export const FAQs: CollectionConfig = {
   },
   fields: [
     { name: 'question', type: 'text', required: true, localized: true },
-    { name: 'answer', type: 'richText', required: true, localized: true },
+    { name: 'answer', type: 'textarea', required: true, localized: true },
     {
       name: 'category',
       type: 'select',

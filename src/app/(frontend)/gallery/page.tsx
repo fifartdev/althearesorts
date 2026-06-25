@@ -1,5 +1,6 @@
 import { generateMetadata as genMeta } from '@/lib/seo'
 import { SITE_URL } from '@/lib/constants'
+import { getGalleryItems } from '@/lib/cms'
 import { GalleryClient } from './GalleryClient'
 
 export const metadata = genMeta({
@@ -9,6 +10,14 @@ export const metadata = genMeta({
   canonical: `${SITE_URL}/gallery`,
 })
 
-export default function GalleryPage() {
-  return <GalleryClient />
+export default async function GalleryPage() {
+  const docs = await getGalleryItems('en')
+  const cmsItems = docs.map((item: any) => ({
+    src: item.imageUrl || (typeof item.image === 'object' ? item.image?.url : null) || '',
+    caption: item.caption || '',
+    category: item.category || 'All',
+    wide: item.wide ?? false,
+  })).filter((item: any) => item.src)
+
+  return <GalleryClient cmsItems={cmsItems.length > 0 ? cmsItems : undefined} />
 }

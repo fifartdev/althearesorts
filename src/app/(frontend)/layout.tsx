@@ -83,11 +83,11 @@ export default async function FrontendLayout({ children }: { children: React.Rea
         </Script>
 
         <CustomCursor />
-        <Header />
+        <Header bookingUrl={bookingUrl} phone={phone} />
         {children}
-        <Footer />
-        <StickyBookingBar />
-        <FloatingBookingButton />
+        <Footer phone={phone} email={email} address={address} bookingUrl={bookingUrl} />
+        <StickyBookingBar bookingUrl={bookingUrl} />
+        <FloatingBookingButton bookingUrl={bookingUrl} />
         <CookieConsent />
       </body>
     </html>
