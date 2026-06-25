@@ -1,9 +1,9 @@
 {
   "functions": {
-    "src/app/(payload)/api/seed-media/route.ts": {
+    "src/app/internal/seed-media/route.ts": {
       "maxDuration": 300
     },
-    "src/app/(payload)/api/seed-greek/route.ts": {
+    "src/app/internal/seed-greek/route.ts": {
       "maxDuration": 300
     }
   }
