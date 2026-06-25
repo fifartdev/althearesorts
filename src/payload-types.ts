@@ -116,6 +116,7 @@ export interface Config {
     'booking-settings': BookingSetting;
     'contact-info': ContactInfo;
     'seo-settings': SeoSetting;
+    'geo-settings': GeoSetting;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
@@ -124,6 +125,7 @@ export interface Config {
     'booking-settings': BookingSettingsSelect<false> | BookingSettingsSelect<true>;
     'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
     'seo-settings': SeoSettingsSelect<false> | SeoSettingsSelect<true>;
+    'geo-settings': GeoSettingsSelect<false> | GeoSettingsSelect<true>;
   };
   locale: 'en' | 'el' | 'fr';
   widgets: {
@@ -164,9 +166,13 @@ export interface User {
   firstName?: string | null;
   lastName?: string | null;
   /**
-   * Super Admin has full system access. Admin manages content and settings.
+   * Super Admin: full system access. Admin: content & settings. Client: simplified panel access.
    */
-  role: 'superadmin' | 'admin';
+  role: 'superadmin' | 'admin' | 'client';
+  /**
+   * Preferred language for the client panel.
+   */
+  preferredLocale?: ('en' | 'el') | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -683,6 +689,8 @@ export interface Location {
   createdAt: string;
 }
 /**
+ * Flexible CMS pages. Build any page by adding, removing, and reordering section blocks.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
@@ -694,16 +702,41 @@ export interface Page {
    */
   slug: string;
   hero?: {
-    style?: ('cinematic' | 'minimal' | 'text') | null;
+    style?: ('cinematic' | 'minimal' | 'color' | 'text') | null;
+    /**
+     * Small eyebrow label above the headline.
+     */
     label?: string | null;
     headline?: string | null;
+    subheadline?: string | null;
     intro?: string | null;
     image?: (number | null) | Media;
+    /**
+     * Dark overlay opacity over hero image (0–100).
+     */
+    overlayOpacity?: number | null;
+    /**
+     * Hex background color for Color Background style.
+     */
+    backgroundColor?: string | null;
+    ctaLabel?: string | null;
+    ctaUrl?: string | null;
+    secondaryCtaLabel?: string | null;
+    secondaryCtaUrl?: string | null;
   };
+  /**
+   * Add, reorder, enable/disable, and remove sections to build the page layout.
+   */
   layout?:
     | (
         | {
+            enabled?: boolean | null;
+            /**
+             * Eyebrow label.
+             */
+            label?: string | null;
             heading?: string | null;
+            subheading?: string | null;
             content?: {
               root: {
                 type: string;
@@ -719,26 +752,333 @@ export interface Page {
               };
               [k: string]: unknown;
             } | null;
+            alignment?: ('left' | 'center' | 'right') | null;
+            width?: ('full' | 'content' | 'narrow') | null;
+            background?: ('white' | 'cream' | 'dark' | 'gold') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'content-block';
           }
         | {
+            enabled?: boolean | null;
+            label?: string | null;
+            heading?: string | null;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (number | null) | Media;
+            imagePosition?: ('right' | 'left') | null;
+            ctaLabel?: string | null;
+            ctaUrl?: string | null;
+            background?: ('white' | 'cream' | 'dark') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'content-image-block';
+          }
+        | {
+            enabled?: boolean | null;
             image: number | Media;
             caption?: string | null;
             size?: ('full' | 'content' | 'small') | null;
+            aspectRatio?: ('landscape' | 'portrait' | 'square' | 'cinema') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'image-block';
           }
         | {
+            enabled?: boolean | null;
+            heading?: string | null;
+            intro?: string | null;
+            images?:
+              | {
+                  image: number | Media;
+                  caption?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            columns?: ('2' | '3' | '4') | null;
+            ctaLabel?: string | null;
+            ctaUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'gallery-block';
+          }
+        | {
+            enabled?: boolean | null;
+            label?: string | null;
+            heading?: string | null;
+            intro?: string | null;
+            displayMode?: ('grid' | 'list' | 'featured') | null;
+            /**
+             * Select rooms to display. Leave empty to show all published rooms.
+             */
+            rooms?: (number | Room)[] | null;
+            maxItems?: number | null;
+            ctaLabel?: string | null;
+            ctaUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'rooms-showcase-block';
+          }
+        | {
+            enabled?: boolean | null;
+            label?: string | null;
+            heading?: string | null;
+            intro?: string | null;
+            /**
+             * Select specific experiences. Leave empty to show all.
+             */
+            experiences?: (number | Experience)[] | null;
+            filterByCategory?: ('all' | 'activities' | 'spa' | 'pool' | 'events' | 'corporate') | null;
+            ctaLabel?: string | null;
+            ctaUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'experiences-block';
+          }
+        | {
+            enabled?: boolean | null;
+            label?: string | null;
+            heading?: string | null;
+            intro?: string | null;
+            /**
+             * Select specific venues. Leave empty to show all published venues.
+             */
+            venues?: (number | Dining)[] | null;
+            displayMode?: ('list' | 'grid' | 'featured') | null;
+            ctaLabel?: string | null;
+            ctaUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'dining-block';
+          }
+        | {
+            enabled?: boolean | null;
+            label?: string | null;
+            heading?: string | null;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (number | null) | Media;
+            features?:
+              | {
+                  /**
+                   * Icon identifier (optional).
+                   */
+                  icon?: string | null;
+                  label: string;
+                  value?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            ctaLabel?: string | null;
+            ctaUrl?: string | null;
+            background?: ('dark' | 'cream' | 'white') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'spa-highlight-block';
+          }
+        | {
+            enabled?: boolean | null;
+            heading?: string | null;
+            /**
+             * Select specific testimonials. Leave empty to show all featured ones.
+             */
+            testimonials?: (number | Testimonial)[] | null;
+            displayMode?: ('carousel' | 'grid' | 'single') | null;
+            background?: ('cream' | 'white' | 'dark') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonials-block';
+          }
+        | {
+            enabled?: boolean | null;
+            heading?: string | null;
+            stats?:
+              | {
+                  /**
+                   * e.g. "41", "5★", "60 min"
+                   */
+                  value: string;
+                  label: string;
+                  sublabel?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            background?: ('dark' | 'gold' | 'cream') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'stats-block';
+          }
+        | {
+            enabled?: boolean | null;
+            eyebrow?: string | null;
             heading?: string | null;
             subtext?: string | null;
+            /**
+             * Optional background image.
+             */
+            image?: (number | null) | Media;
             buttonLabel?: string | null;
             buttonUrl?: string | null;
+            secondaryButtonLabel?: string | null;
+            secondaryButtonUrl?: string | null;
+            style?: ('dark' | 'gold' | 'minimal') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'cta-block';
+          }
+        | {
+            enabled?: boolean | null;
+            heading?: string | null;
+            intro?: string | null;
+            /**
+             * Select specific FAQs. Leave empty to load all from the FAQ collection.
+             */
+            faqs?: (number | Faq)[] | null;
+            filterByCategory?:
+              | ('all' | 'rooms' | 'checkin' | 'dining' | 'spa' | 'location' | 'reservations' | 'general')
+              | null;
+            ctaLabel?: string | null;
+            ctaUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq-block';
+          }
+        | {
+            enabled?: boolean | null;
+            heading?: string | null;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            showMap?: boolean | null;
+            /**
+             * Nearby sights and places to show in a grid.
+             */
+            nearbyPlaces?: (number | Location)[] | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'location-block';
+          }
+        | {
+            enabled?: boolean | null;
+            heading?: string | null;
+            intro?: string | null;
+            /**
+             * Select specific posts. Leave empty to show the latest featured posts.
+             */
+            posts?: (number | Journal)[] | null;
+            maxItems?: number | null;
+            ctaLabel?: string | null;
+            ctaUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'journal-block';
+          }
+        | {
+            enabled?: boolean | null;
+            heading?: string | null;
+            intro?: string | null;
+            /**
+             * Leave empty to display all active offers.
+             */
+            offers?: (number | Offer)[] | null;
+            ctaLabel?: string | null;
+            ctaUrl?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'offers-block';
+          }
+        | {
+            enabled?: boolean | null;
+            label?: string | null;
+            heading?: string | null;
+            intro?: string | null;
+            cards?:
+              | {
+                  /**
+                   * Icon name or SVG identifier.
+                   */
+                  icon?: string | null;
+                  image?: (number | null) | Media;
+                  heading: string;
+                  body?: string | null;
+                  ctaLabel?: string | null;
+                  ctaUrl?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            columns?: ('2' | '3' | '4') | null;
+            cardStyle?: ('image' | 'icon' | 'text') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'feature-cards-block';
+          }
+        | {
+            enabled?: boolean | null;
+            heading?: string | null;
+            videoType?: ('youtube' | 'vimeo' | 'upload') | null;
+            /**
+             * YouTube or Vimeo URL.
+             */
+            videoUrl?: string | null;
+            videoFile?: (number | null) | Media;
+            /**
+             * Thumbnail shown before video plays.
+             */
+            posterImage?: (number | null) | Media;
+            caption?: string | null;
+            size?: ('full' | 'content') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'video-block';
+          }
+        | {
+            enabled?: boolean | null;
+            size?: ('sm' | 'md' | 'lg' | 'xl') | null;
+            /**
+             * Show a horizontal rule.
+             */
+            showDivider?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'spacer-block';
           }
       )[]
     | null;
@@ -913,6 +1253,7 @@ export interface UsersSelect<T extends boolean = true> {
   firstName?: T;
   lastName?: T;
   role?: T;
+  preferredLocale?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1214,8 +1555,15 @@ export interface PagesSelect<T extends boolean = true> {
         style?: T;
         label?: T;
         headline?: T;
+        subheadline?: T;
         intro?: T;
         image?: T;
+        overlayOpacity?: T;
+        backgroundColor?: T;
+        ctaLabel?: T;
+        ctaUrl?: T;
+        secondaryCtaLabel?: T;
+        secondaryCtaUrl?: T;
       };
   layout?:
     | T
@@ -1223,27 +1571,263 @@ export interface PagesSelect<T extends boolean = true> {
         'content-block'?:
           | T
           | {
+              enabled?: T;
+              label?: T;
               heading?: T;
+              subheading?: T;
               content?: T;
+              alignment?: T;
+              width?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'content-image-block'?:
+          | T
+          | {
+              enabled?: T;
+              label?: T;
+              heading?: T;
+              body?: T;
+              image?: T;
+              imagePosition?: T;
+              ctaLabel?: T;
+              ctaUrl?: T;
+              background?: T;
               id?: T;
               blockName?: T;
             };
         'image-block'?:
           | T
           | {
+              enabled?: T;
               image?: T;
               caption?: T;
               size?: T;
+              aspectRatio?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'gallery-block'?:
+          | T
+          | {
+              enabled?: T;
+              heading?: T;
+              intro?: T;
+              images?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              columns?: T;
+              ctaLabel?: T;
+              ctaUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'rooms-showcase-block'?:
+          | T
+          | {
+              enabled?: T;
+              label?: T;
+              heading?: T;
+              intro?: T;
+              displayMode?: T;
+              rooms?: T;
+              maxItems?: T;
+              ctaLabel?: T;
+              ctaUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'experiences-block'?:
+          | T
+          | {
+              enabled?: T;
+              label?: T;
+              heading?: T;
+              intro?: T;
+              experiences?: T;
+              filterByCategory?: T;
+              ctaLabel?: T;
+              ctaUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'dining-block'?:
+          | T
+          | {
+              enabled?: T;
+              label?: T;
+              heading?: T;
+              intro?: T;
+              venues?: T;
+              displayMode?: T;
+              ctaLabel?: T;
+              ctaUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'spa-highlight-block'?:
+          | T
+          | {
+              enabled?: T;
+              label?: T;
+              heading?: T;
+              body?: T;
+              image?: T;
+              features?:
+                | T
+                | {
+                    icon?: T;
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              ctaLabel?: T;
+              ctaUrl?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'testimonials-block'?:
+          | T
+          | {
+              enabled?: T;
+              heading?: T;
+              testimonials?: T;
+              displayMode?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'stats-block'?:
+          | T
+          | {
+              enabled?: T;
+              heading?: T;
+              stats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    sublabel?: T;
+                    id?: T;
+                  };
+              background?: T;
               id?: T;
               blockName?: T;
             };
         'cta-block'?:
           | T
           | {
+              enabled?: T;
+              eyebrow?: T;
               heading?: T;
               subtext?: T;
+              image?: T;
               buttonLabel?: T;
               buttonUrl?: T;
+              secondaryButtonLabel?: T;
+              secondaryButtonUrl?: T;
+              style?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'faq-block'?:
+          | T
+          | {
+              enabled?: T;
+              heading?: T;
+              intro?: T;
+              faqs?: T;
+              filterByCategory?: T;
+              ctaLabel?: T;
+              ctaUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'location-block'?:
+          | T
+          | {
+              enabled?: T;
+              heading?: T;
+              body?: T;
+              showMap?: T;
+              nearbyPlaces?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'journal-block'?:
+          | T
+          | {
+              enabled?: T;
+              heading?: T;
+              intro?: T;
+              posts?: T;
+              maxItems?: T;
+              ctaLabel?: T;
+              ctaUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'offers-block'?:
+          | T
+          | {
+              enabled?: T;
+              heading?: T;
+              intro?: T;
+              offers?: T;
+              ctaLabel?: T;
+              ctaUrl?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'feature-cards-block'?:
+          | T
+          | {
+              enabled?: T;
+              label?: T;
+              heading?: T;
+              intro?: T;
+              cards?:
+                | T
+                | {
+                    icon?: T;
+                    image?: T;
+                    heading?: T;
+                    body?: T;
+                    ctaLabel?: T;
+                    ctaUrl?: T;
+                    id?: T;
+                  };
+              columns?: T;
+              cardStyle?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'video-block'?:
+          | T
+          | {
+              enabled?: T;
+              heading?: T;
+              videoType?: T;
+              videoUrl?: T;
+              videoFile?: T;
+              posterImage?: T;
+              caption?: T;
+              size?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'spacer-block'?:
+          | T
+          | {
+              enabled?: T;
+              size?: T;
+              showDivider?: T;
               id?: T;
               blockName?: T;
             };
@@ -1318,6 +1902,8 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Top-level site configuration — branding, identity, social links, and site-wide toggles.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
@@ -1325,18 +1911,77 @@ export interface SiteSetting {
   id: number;
   siteName: string;
   tagline?: string | null;
+  /**
+   * Primary logo (dark/standard version).
+   */
   logo?: (number | null) | Media;
   /**
-   * Light version of the logo (for dark backgrounds)
+   * White / reversed logo for dark backgrounds.
    */
   logoLight?: (number | null) | Media;
+  /**
+   * Favicon (32×32 px ICO or PNG).
+   */
   favicon?: (number | null) | Media;
+  /**
+   * Apple touch icon (180×180 px PNG). Shown when users add site to home screen.
+   */
+  appleTouchIcon?: (number | null) | Media;
+  /**
+   * Default social share image (1200×630 px). Used when pages have no specific image.
+   */
+  defaultOGImage?: (number | null) | Media;
+  instagram?: string | null;
+  facebook?: string | null;
+  linkedin?: string | null;
+  /**
+   * X (Twitter) profile URL (optional).
+   */
+  twitter?: string | null;
+  /**
+   * YouTube channel URL (optional).
+   */
+  youtube?: string | null;
+  /**
+   * TripAdvisor listing URL.
+   */
+  tripadvisor?: string | null;
+  /**
+   * Put the site in maintenance mode. All visitors see a maintenance page.
+   */
   maintenanceMode?: boolean | null;
-  announcementBanner?: {
-    enabled?: boolean | null;
-    message?: string | null;
-    ctaLabel?: string | null;
-    ctaUrl?: string | null;
+  /**
+   * Message shown during maintenance mode.
+   */
+  maintenanceMessage?: string | null;
+  /**
+   * Show the GDPR cookie consent banner.
+   */
+  cookieConsentEnabled?: boolean | null;
+  cookieConsentMessage?: string | null;
+  announcementBannerEnabled?: boolean | null;
+  /**
+   * Short message. Keep under 120 characters.
+   */
+  announcementMessage?: string | null;
+  announcementCtaLabel?: string | null;
+  announcementCtaUrl?: string | null;
+  announcementStyle?: ('gold' | 'dark' | 'info') | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    /**
+     * Comma-separated keywords.
+     */
+    keywords?: string | null;
+    /**
+     * Prevent search engines from indexing this page.
+     */
+    noIndex?: boolean | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1449,20 +2094,358 @@ export interface ContactInfo {
   createdAt?: string | null;
 }
 /**
+ * Global SEO, GEO, and metadata defaults. These values apply site-wide unless overridden per page.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "seo-settings".
  */
 export interface SeoSetting {
   id: number;
+  /**
+   * Used as <title> on pages without their own title.
+   */
   defaultTitle?: string | null;
+  /**
+   * Appended to every page title. e.g. "Spa | Althea Resorts"
+   */
   titleSuffix?: string | null;
+  /**
+   * 120–160 characters. Used when no page description is set.
+   */
   defaultDescription?: string | null;
+  /**
+   * Default Open Graph image (1200×630px). Used for social sharing when no page image exists.
+   */
   defaultOGImage?: (number | null) | Media;
-  googleVerification?: string | null;
-  bingVerification?: string | null;
-  googleAnalyticsId?: string | null;
-  googleTagManagerId?: string | null;
+  /**
+   * Comma-separated fallback keywords.
+   */
+  defaultKeywords?: string | null;
+  twitterCardType?: ('summary_large_image' | 'summary') | null;
+  /**
+   * e.g. @althearesorts (optional)
+   */
+  twitterHandle?: string | null;
+  /**
+   * The canonical base URL of the site. No trailing slash.
+   */
+  siteUrl: string;
+  /**
+   * Automatically inject hreflang alternate links on all pages.
+   */
+  hreflangEnabled?: boolean | null;
+  /**
+   * Used as x-default for hreflang.
+   */
+  defaultLocale?: ('en' | 'el' | 'fr') | null;
+  /**
+   * Additional locales to include in hreflang. Auto-includes en and el.
+   */
+  additionalLocales?:
+    | {
+        /**
+         * BCP 47 locale code, e.g. fr, de, it
+         */
+        code: string;
+        /**
+         * URL prefix, e.g. /fr
+         */
+        urlPrefix: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Full content of the robots.txt file. Changes here will override the auto-generated file.
+   */
   robotsTxt?: string | null;
+  /**
+   * Block all search engines site-wide. Use only for staging environments.
+   */
+  noIndexSitewide?: boolean | null;
+  sitemapEnabled?: boolean | null;
+  sitemapChangeFreq?: ('always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never') | null;
+  /**
+   * Google Analytics 4 Measurement ID (e.g. G-XXXXXXXXXX).
+   */
+  googleAnalyticsId?: string | null;
+  /**
+   * Google Tag Manager container ID (e.g. GTM-XXXXXX).
+   */
+  googleTagManagerId?: string | null;
+  /**
+   * Meta (Facebook) Pixel ID.
+   */
+  metaPixelId?: string | null;
+  /**
+   * Google Search Console verification meta content value.
+   */
+  googleVerification?: string | null;
+  /**
+   * Bing Webmaster Tools verification meta content value.
+   */
+  bingVerification?: string | null;
+  /**
+   * Facebook domain verification meta content value.
+   */
+  facebookDomainVerification?: string | null;
+  /**
+   * Legal business name as it appears on Google.
+   */
+  businessName?: string | null;
+  businessAlternateName?: string | null;
+  businessType?: ('LodgingBusiness' | 'Hotel' | 'Resort' | 'BedAndBreakfast') | null;
+  priceRange?: ('€' | '€€' | '€€€' | '€€€€') | null;
+  /**
+   * Official star rating (1–5).
+   */
+  starRating?: number | null;
+  numberOfRooms?: number | null;
+  /**
+   * Format: HH:MM (24-hour). e.g. 15:00
+   */
+  checkinTime?: string | null;
+  /**
+   * Format: HH:MM (24-hour). e.g. 11:00
+   */
+  checkoutTime?: string | null;
+  currenciesAccepted?: string | null;
+  paymentAccepted?: string | null;
+  /**
+   * Languages spoken by staff.
+   */
+  availableLanguages?:
+    | {
+        language: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Hotel amenities listed in structured data. Name only — value is always true.
+   */
+  amenityFeatures?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Enable sitewide JSON-LD structured data.
+   */
+  schemaEnabled?: boolean | null;
+  /**
+   * Social and directory profile URLs for sameAs in schema.org.
+   */
+  sameAsProfiles?:
+    | {
+        platform?: ('instagram' | 'facebook' | 'linkedin' | 'tripadvisor' | 'booking' | 'google' | 'other') | null;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Optional: paste a valid JSON-LD snippet to MERGE with the auto-generated LodgingBusiness schema. Advanced use only.
+   */
+  hotelSchemaCustomJson?: string | null;
+  /**
+   * Inject BreadcrumbList schema on inner pages.
+   */
+  breadcrumbEnabled?: boolean | null;
+  /**
+   * Allow AI retrieval crawlers (ChatGPT-User, Claude-Web) to index the site.
+   */
+  llmsEnabled?: boolean | null;
+  /**
+   * Content of /llms.txt — a structured summary of the site for AI models. Use concise, factual language. See llmstxt.org.
+   */
+  llmsTxt?: string | null;
+  /**
+   * A single-paragraph entity description of the hotel. Written to appear in AI-generated answers and knowledge panels. Be factual, specific, and include key differentiators.
+   */
+  entityDescription?: string | null;
+  /**
+   * Block AI training crawlers (GPTBot, anthropic-ai, CCBot) via robots.txt.
+   */
+  aiTrainingOptOut?: boolean | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    /**
+     * Comma-separated keywords.
+     */
+    keywords?: string | null;
+    /**
+     * Prevent search engines from indexing this page.
+     */
+    noIndex?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Controls the LodgingBusiness schema.org markup, local business signals, and GEO visibility fields. Changes here affect how the property appears in Google Knowledge Panels, Maps, and AI-generated answers.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "geo-settings".
+ */
+export interface GeoSetting {
+  id: number;
+  /**
+   * Legal entity name registered with the business.
+   */
+  legalName: string;
+  /**
+   * Trading / brand name shown to customers.
+   */
+  brandName?: string | null;
+  alternateName?: string | null;
+  /**
+   * Used in schema.org description and GEO entity summaries.
+   */
+  description?: string | null;
+  /**
+   * Square logo (min 512×512px) for structured data and Google Knowledge Panel.
+   */
+  logoImage?: (number | null) | Media;
+  /**
+   * Primary property photo for structured data (1200×630px recommended).
+   */
+  heroImage?: (number | null) | Media;
+  streetAddress?: string | null;
+  addressLocality?: string | null;
+  addressRegion?: string | null;
+  postalCode?: string | null;
+  /**
+   * ISO 3166-1 alpha-2 country code.
+   */
+  addressCountry?: string | null;
+  coordinates?: {
+    /**
+     * Decimal degrees. Verify against Google Maps pin.
+     */
+    latitude?: number | null;
+    longitude?: number | null;
+  };
+  /**
+   * Full Google Maps URL to the business listing (optional override).
+   */
+  googleMapsUrl?: string | null;
+  /**
+   * Google Place ID for linking to the Google Business Profile. Find at: developers.google.com/maps/documentation/places/web-service/place-id
+   */
+  googlePlaceId?: string | null;
+  /**
+   * Primary telephone in E.164 or international format.
+   */
+  telephone?: string | null;
+  mobilePhone?: string | null;
+  email?: string | null;
+  reservationsEmail?: string | null;
+  infoEmail?: string | null;
+  /**
+   * Fax number (if applicable).
+   */
+  fax?: string | null;
+  url?: string | null;
+  bookingUrl?: string | null;
+  /**
+   * Check if reception is open 24/7. This overrides the schedule below.
+   */
+  reception247?: boolean | null;
+  /**
+   * Opening hours per day/service. Only used when reception247 is off.
+   */
+  openingHoursSpec?:
+    | {
+        dayOfWeek: ('Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday')[];
+        /**
+         * HH:MM format, e.g. 09:00
+         */
+        opens: string;
+        /**
+         * HH:MM format, e.g. 22:00
+         */
+        closes: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Guest check-in time. HH:MM format.
+   */
+  checkinTime?: string | null;
+  /**
+   * Guest check-out time. HH:MM format.
+   */
+  checkoutTime?: string | null;
+  /**
+   * Optional note about seasonal closures or special hours. Displayed in footer/contact.
+   */
+  seasonalNote?: string | null;
+  starRating?: number | null;
+  numberOfRooms?: number | null;
+  priceRange?: ('€' | '€€' | '€€€' | '€€€€') | null;
+  currenciesAccepted?: string | null;
+  paymentAccepted?: string | null;
+  availableLanguages?:
+    | {
+        language: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Hotel amenities to include in LodgingBusiness schema.
+   */
+  amenityFeatures?:
+    | {
+        name: string;
+        value?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Each entry becomes a containsPlace entity in the LodgingBusiness schema.
+   */
+  nestedPlaces?:
+    | {
+        schemaType:
+          | 'Restaurant'
+          | 'Bar'
+          | 'HealthAndBeautyBusiness'
+          | 'SwimmingPool'
+          | 'ConferenceRoom'
+          | 'SportsActivityLocation';
+        /**
+         * Schema @id (e.g. https://althearesorts.com/gastronomy#aither)
+         */
+        id?: string | null;
+        name: string;
+        description?: string | null;
+        /**
+         * Comma-separated cuisines for Restaurant type. e.g. Greek, Mediterranean
+         */
+        servesCuisine?: string | null;
+        priceRange?: string | null;
+        url?: string | null;
+      }[]
+    | null;
+  instagram?: string | null;
+  facebook?: string | null;
+  linkedin?: string | null;
+  /**
+   * TripAdvisor listing URL.
+   */
+  tripadvisor?: string | null;
+  /**
+   * Booking.com property listing URL.
+   */
+  bookingcom?: string | null;
+  /**
+   * Google Business Profile URL.
+   */
+  googleBusinessProfile?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1476,14 +2459,31 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   logo?: T;
   logoLight?: T;
   favicon?: T;
+  appleTouchIcon?: T;
+  defaultOGImage?: T;
+  instagram?: T;
+  facebook?: T;
+  linkedin?: T;
+  twitter?: T;
+  youtube?: T;
+  tripadvisor?: T;
   maintenanceMode?: T;
-  announcementBanner?:
+  maintenanceMessage?: T;
+  cookieConsentEnabled?: T;
+  cookieConsentMessage?: T;
+  announcementBannerEnabled?: T;
+  announcementMessage?: T;
+  announcementCtaLabel?: T;
+  announcementCtaUrl?: T;
+  announcementStyle?: T;
+  meta?:
     | T
     | {
-        enabled?: T;
-        message?: T;
-        ctaLabel?: T;
-        ctaUrl?: T;
+        title?: T;
+        description?: T;
+        image?: T;
+        keywords?: T;
+        noIndex?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1597,11 +2597,157 @@ export interface SeoSettingsSelect<T extends boolean = true> {
   titleSuffix?: T;
   defaultDescription?: T;
   defaultOGImage?: T;
-  googleVerification?: T;
-  bingVerification?: T;
+  defaultKeywords?: T;
+  twitterCardType?: T;
+  twitterHandle?: T;
+  siteUrl?: T;
+  hreflangEnabled?: T;
+  defaultLocale?: T;
+  additionalLocales?:
+    | T
+    | {
+        code?: T;
+        urlPrefix?: T;
+        id?: T;
+      };
+  robotsTxt?: T;
+  noIndexSitewide?: T;
+  sitemapEnabled?: T;
+  sitemapChangeFreq?: T;
   googleAnalyticsId?: T;
   googleTagManagerId?: T;
-  robotsTxt?: T;
+  metaPixelId?: T;
+  googleVerification?: T;
+  bingVerification?: T;
+  facebookDomainVerification?: T;
+  businessName?: T;
+  businessAlternateName?: T;
+  businessType?: T;
+  priceRange?: T;
+  starRating?: T;
+  numberOfRooms?: T;
+  checkinTime?: T;
+  checkoutTime?: T;
+  currenciesAccepted?: T;
+  paymentAccepted?: T;
+  availableLanguages?:
+    | T
+    | {
+        language?: T;
+        id?: T;
+      };
+  amenityFeatures?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  schemaEnabled?: T;
+  sameAsProfiles?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  hotelSchemaCustomJson?: T;
+  breadcrumbEnabled?: T;
+  llmsEnabled?: T;
+  llmsTxt?: T;
+  entityDescription?: T;
+  aiTrainingOptOut?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        keywords?: T;
+        noIndex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "geo-settings_select".
+ */
+export interface GeoSettingsSelect<T extends boolean = true> {
+  legalName?: T;
+  brandName?: T;
+  alternateName?: T;
+  description?: T;
+  logoImage?: T;
+  heroImage?: T;
+  streetAddress?: T;
+  addressLocality?: T;
+  addressRegion?: T;
+  postalCode?: T;
+  addressCountry?: T;
+  coordinates?:
+    | T
+    | {
+        latitude?: T;
+        longitude?: T;
+      };
+  googleMapsUrl?: T;
+  googlePlaceId?: T;
+  telephone?: T;
+  mobilePhone?: T;
+  email?: T;
+  reservationsEmail?: T;
+  infoEmail?: T;
+  fax?: T;
+  url?: T;
+  bookingUrl?: T;
+  reception247?: T;
+  openingHoursSpec?:
+    | T
+    | {
+        dayOfWeek?: T;
+        opens?: T;
+        closes?: T;
+        id?: T;
+      };
+  checkinTime?: T;
+  checkoutTime?: T;
+  seasonalNote?: T;
+  starRating?: T;
+  numberOfRooms?: T;
+  priceRange?: T;
+  currenciesAccepted?: T;
+  paymentAccepted?: T;
+  availableLanguages?:
+    | T
+    | {
+        language?: T;
+        id?: T;
+      };
+  amenityFeatures?:
+    | T
+    | {
+        name?: T;
+        value?: T;
+        id?: T;
+      };
+  nestedPlaces?:
+    | T
+    | {
+        schemaType?: T;
+        id?: T;
+        name?: T;
+        description?: T;
+        servesCuisine?: T;
+        priceRange?: T;
+        url?: T;
+      };
+  instagram?: T;
+  facebook?: T;
+  linkedin?: T;
+  tripadvisor?: T;
+  bookingcom?: T;
+  googleBusinessProfile?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
