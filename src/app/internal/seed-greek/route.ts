@@ -238,6 +238,12 @@ const EXPERIENCE_TRANSLATIONS: Record<string, Record<string, unknown>> = {
       `Μονοπάτια πεζοπορίας διασχίζουν τους λόφους της Κορινθίας. Θαλάσσια σπορ, καγιάκ και εκδρομές με ιστιοφόρο. Ξεναγήσεις στην Αρχαία Κόρινθο, την Ακροκόρινθο και τη Διώρυγα.`,
     ),
     ctaLabel: 'Σχεδιάστε τη Διαμονή σας',
+    highlights: [
+      { label: 'Θαλάσσια Σπορ', value: 'Καγιάκ, ιστιοσανίδα και εκδρομές με ιστιοφόρο' },
+      { label: 'Πεζοπορία & Ποδηλασία', value: 'Μονοπάτια στους λόφους της Κορινθίας' },
+      { label: 'Πολιτιστικές Εκδρομές', value: 'Αρχαία Κόρινθος, Ακροκόρινθος, Διώρυγα Κορίνθου' },
+      { label: 'Ξεναγήσεις', value: 'Οργανωμένες εκδρομές από το resort' },
+    ],
   },
   'Weddings': {
     title: 'Γάμοι',
@@ -247,6 +253,12 @@ const EXPERIENCE_TRANSLATIONS: Record<string, Record<string, unknown>> = {
       `Η Althea Resorts προσφέρει ένα οικείο πλαίσιο για γάμους — ένα κατάλυμα κλιμακωμένο για ιδιωτικότητα παρά για όγκο, με θέα στον Κορινθιακό Κόλπο.`,
     ),
     ctaLabel: 'Πληροφορίες για Γάμο',
+    highlights: [
+      { label: 'Χώρος Τελετής', value: 'Βεράντα με θέα στον Κορινθιακό Κόλπο' },
+      { label: 'Catering', value: 'Κουζίνα AITHER για γαμήλια δεξίωση' },
+      { label: 'Διαμονή Επί Τόπου', value: '41 δωμάτια και σουίτες για τους καλεσμένους' },
+      { label: 'Συντονισμός Εκδήλωσης', value: 'Αποκλειστική εξυπηρέτηση για την ημέρα σας' },
+    ],
   },
   'Corporate Events': {
     title: 'Εταιρικές Εκδηλώσεις',
@@ -294,7 +306,9 @@ async function seedRooms(payload: P) {
     const correctTitle = ROOM_TITLE_REPAIR[cat]
     if (correctTitle && doc.title !== correctTitle) {
       try {
-        await (payload.update as Function)({ collection: 'rooms', id: doc.id, data: { title: correctTitle } })
+        // db.updateOne bypasses full-document validation — title is not localized
+        // so no locale param needed; avoids amenity label validation errors
+        await (payload.db as any).updateOne({ collection: 'rooms', id: doc.id, data: { title: correctTitle } })
         updated.push(`room title repaired: "${cat}" → "${correctTitle}"`)
       } catch (e: any) { errors.push(`repair title "${cat}": ${e?.message}`) }
     }
