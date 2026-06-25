@@ -2,10 +2,12 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { en } from '@payloadcms/translations/languages/en'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { el } from './i18n/el'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -33,6 +35,11 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  i18n: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    supportedLanguages: { en, el } as any,
+    fallbackLanguage: 'en',
+  },
   admin: {
     user: Users.slug,
     meta: {
