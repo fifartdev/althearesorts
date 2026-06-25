@@ -128,15 +128,15 @@ const EXTERNAL_IMAGES: { url: string; filename: string; alt: string }[] = [
   },
 ]
 
-// Map English title → uploaded filename, for linking heroImage after upload
-// Using title-based lookup so slug mismatches don't matter
+// Map room category value → hero filename.
+// Category is a fixed enum (non-localized) — safe even if titles were corrupted by a previous seed.
 const ROOM_HERO_MAP: Record<string, string> = {
-  'Standard Double':                    'standard.jpg',
-  'Deluxe Double M.V / P.V.':           'deluxe double.jpg',
-  'Deluxe Double with Private Pool':    'del.double.jpg',
-  'Superior Sea View Room':             'superior sea view.jpg',
-  'Junior Suite with Private Pool':     'js living r.jpg',
-  'Althea Loft Suite Outdoor Jacuzzi':  'js living room.jpg',
+  'standard-double':    'standard.jpg',
+  'deluxe-double-mv-pv': 'deluxe double.jpg',
+  'deluxe-private-pool': 'del.double.jpg',
+  'superior-sea-view':  'superior sea view.jpg',
+  'junior-suite':       'js living r.jpg',
+  'loft-suite':         'js living room.jpg',
 }
 
 const DINING_HERO_MAP: Record<string, string> = {
@@ -245,9 +245,9 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // ─── 3. Link heroImage on rooms (matched by English title) ──────────────────
+  // ─── 3. Link heroImage on rooms (matched by category — immune to title corruption) ───
 
-  for (const [title, filename] of Object.entries(ROOM_HERO_MAP)) {
+  for (const [cat, filename] of Object.entries(ROOM_HERO_MAP)) {
     try {
       const mediaResult = await payload.find({
         collection: 'media',
@@ -255,17 +255,17 @@ export async function GET(request: NextRequest) {
         limit: 1,
       })
       if (!mediaResult.docs.length) {
-        report.errors.push(`link room "${title}": no media for ${filename}`)
+        report.errors.push(`link room "${cat}": no media for ${filename}`)
         continue
       }
 
       const roomResult = await payload.find({
         collection: 'rooms',
-        where: { title: { equals: title } },
+        where: { category: { equals: cat } },
         limit: 1,
       })
       if (!roomResult.docs.length) {
-        report.errors.push(`link room "${title}": room doc not found`)
+        report.errors.push(`link room "${cat}": room doc not found`)
         continue
       }
 
@@ -276,9 +276,9 @@ export async function GET(request: NextRequest) {
         id: roomResult.docs[0].id,
         data: { heroImage: mediaResult.docs[0].id },
       })
-      report.linked.push(`room "${title}" → ${filename}`)
+      report.linked.push(`room cat "${cat}" → ${filename}`)
     } catch (err: any) {
-      report.errors.push(`link room "${title}": ${err?.message ?? String(err)}`)
+      report.errors.push(`link room "${cat}": ${err?.message ?? String(err)}`)
     }
   }
 
