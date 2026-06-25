@@ -133,9 +133,9 @@ const EXTERNAL_IMAGES: { url: string; filename: string; alt: string }[] = [
 const ROOM_HERO_MAP: Record<string, string> = {
   'Standard Double':                    'standard.jpg',
   'Deluxe Double M.V / P.V.':           'deluxe double.jpg',
-  'Deluxe Double Private Pool':         'del.double.jpg',
+  'Deluxe Double with Private Pool':    'del.double.jpg',
   'Superior Sea View Room':             'superior sea view.jpg',
-  'Junior Suite Private Pool':          'Junior suite .jpg',
+  'Junior Suite with Private Pool':     'js living r.jpg',
   'Althea Loft Suite Outdoor Jacuzzi':  'js living room.jpg',
 }
 
@@ -269,7 +269,9 @@ export async function GET(request: NextRequest) {
         continue
       }
 
-      await payload.update({
+      // Use db.updateOne to bypass full-document validation (some rooms have
+      // required localized sub-fields that trigger validation on payload.update)
+      await (payload.db as any).updateOne({
         collection: 'rooms',
         id: roomResult.docs[0].id,
         data: { heroImage: mediaResult.docs[0].id },

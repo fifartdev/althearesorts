@@ -51,7 +51,7 @@ const ROOM_TRANSLATIONS: Record<string, Record<string, unknown>> = {
       { label: 'Επίπεδη τηλεόραση' }, { label: 'Minibar' }, { label: 'Ηχομόνωση' },
     ],
   },
-  'Deluxe Double Private Pool': {
+  'Deluxe Double with Private Pool': {
     title: 'Deluxe Διπλό με Ιδιωτική Πισίνα',
     tagline: 'Το Δικό σας Νερό, οι Δικές σας Ώρες',
     viewType: 'Ιδιωτική πισίνα',
@@ -83,7 +83,7 @@ const ROOM_TRANSLATIONS: Record<string, Record<string, unknown>> = {
       { label: 'Επίπεδη τηλεόραση' }, { label: 'Minibar' }, { label: 'Ηχομόνωση' },
     ],
   },
-  'Junior Suite Private Pool': {
+  'Junior Suite with Private Pool': {
     title: 'Junior Suite με Ιδιωτική Πισίνα',
     tagline: 'Περισσότερος Χώρος. Περισσότερο Νερό. Περισσότερος Χρόνος.',
     viewType: 'Ιδιωτική πισίνα & θέα',
@@ -192,7 +192,7 @@ const JOURNAL_TRANSLATIONS: Record<string, Record<string, unknown>> = {
       `Το όνομα προέρχεται από τον Ωκεανό — τον αρχαίο Τιτάνα που, στην ελληνική κοσμογονία, ήταν ο μεγάλος ποταμός που περιέβαλλε τον κόσμο.`,
     ),
   },
-  "What the Fishermen Bring": {
+  'What the Fishermen Bring In': {
     title: 'Αυτό που Φέρνουν οι Ψαράδες',
     excerpt: 'Πώς ένα εστιατόριο ταράτσας στην Κορινθία ξεκινά τη βραδινή του ιστορία — στο λιμάνι, πριν ανατείλει ο ήλιος.',
     content: richText(
@@ -216,7 +216,7 @@ const JOURNAL_TRANSLATIONS: Record<string, Record<string, unknown>> = {
       `Αλθός — θεραπεία — ήταν αρκετά συγκεκριμένο για να έχει νόημα και αρκετά ανοιχτό για να μην γίνεται δεσμευτικό. Δεν σημαίνει ιατρικό. Σημαίνει αποκαταστατικό.`,
     ),
   },
-  'In Defence of Doing Nothing by a Pool': {
+  'The Case for Doing Nothing by a Pool': {
     title: `Υπέρ του «Να Μην Κάνεις Τίποτα» Δίπλα σε Μια Πισίνα`,
     excerpt: 'Μια υπεράσπιση του απογεύματος χωρίς πρόγραμμα, χωρίς δρομολόγιο και χωρίς ιδιαίτερο λόγο για κίνηση.',
     content: richText(
@@ -311,7 +311,9 @@ async function seedDining(payload: P) {
     const t = DINING_TRANSLATIONS[key]
     if (!t) { notFound.push(`dining: "${key}"`); continue }
     try {
-      await (payload.update as Function)({ collection: 'dining', id: doc.id, locale: 'el', data: t })
+      // Pass existing English slug to prevent the beforeValidate hook from
+      // re-generating an empty slug from the Greek name field
+      await (payload.update as Function)({ collection: 'dining', id: doc.id, locale: 'el', data: { ...t, slug: doc.slug } })
       updated.push(`dining: "${key}"`)
     } catch (e: any) { errors.push(`dining "${key}": ${e?.message}`) }
   }
@@ -335,7 +337,9 @@ async function seedExperiences(payload: P) {
     const t = EXPERIENCE_TRANSLATIONS[doc.title]
     if (!t) { notFound.push(`experience: "${doc.title}"`); continue }
     try {
-      await (payload.update as Function)({ collection: 'experiences', id: doc.id, locale: 'el', data: t })
+      // Pass existing English slug to prevent the beforeValidate hook from
+      // re-generating an empty slug from the Greek title field
+      await (payload.update as Function)({ collection: 'experiences', id: doc.id, locale: 'el', data: { ...t, slug: doc.slug } })
       updated.push(`experience: "${doc.title}"`)
     } catch (e: any) { errors.push(`experience "${doc.title}": ${e?.message}`) }
   }
