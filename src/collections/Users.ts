@@ -33,17 +33,31 @@ export const Users: CollectionConfig = {
       name: 'role',
       type: 'select',
       required: true,
-      defaultValue: 'admin',
+      defaultValue: 'client',
       options: [
         { label: 'Super Admin', value: 'superadmin' },
         { label: 'Admin', value: 'admin' },
+        { label: 'Client', value: 'client' },
       ],
       access: {
         update: ({ req }) => (req.user as any)?.role === 'superadmin',
       },
       admin: {
         position: 'sidebar',
-        description: 'Super Admin has full system access. Admin manages content and settings.',
+        description: 'Super Admin: full system access. Admin: content & settings. Client: simplified panel access.',
+      },
+    },
+    {
+      name: 'preferredLocale',
+      type: 'select',
+      options: [
+        { label: 'English', value: 'en' },
+        { label: 'Ελληνικά', value: 'el' },
+      ],
+      defaultValue: 'en',
+      admin: {
+        position: 'sidebar',
+        description: 'Preferred language for the client panel.',
       },
     },
   ],

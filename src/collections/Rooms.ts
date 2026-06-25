@@ -7,7 +7,7 @@ export const Rooms: CollectionConfig = {
   slug: 'rooms',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'size', 'status', 'updatedAt'],
+    defaultColumns: ['title', 'category', 'size', '_status', 'updatedAt'],
     group: 'Accommodation',
   },
   access: {

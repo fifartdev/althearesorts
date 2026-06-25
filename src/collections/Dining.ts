@@ -7,7 +7,7 @@ export const Dining: CollectionConfig = {
   slug: 'dining',
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'venue', 'status', 'updatedAt'],
+    defaultColumns: ['name', 'venue', '_status', 'updatedAt'],
     group: 'Content',
   },
   access: {

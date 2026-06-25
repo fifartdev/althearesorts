@@ -27,6 +27,7 @@ import { Footer } from './globals/Footer'
 import { BookingSettings } from './globals/BookingSettings'
 import { ContactInfo } from './globals/ContactInfo'
 import { SEOSettings } from './globals/SEOSettings'
+import { GeoSettings } from './globals/GeoSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -70,6 +71,7 @@ export default buildConfig({
     BookingSettings,
     ContactInfo,
     SEOSettings,
+    GeoSettings,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
@@ -89,6 +91,7 @@ export default buildConfig({
     }),
     seoPlugin({
       collections: ['rooms', 'offers', 'experiences', 'dining', 'journal', 'pages'],
+      globals: ['site-settings', 'seo-settings'],
       uploadsCollection: 'media',
       tabbedUI: true,
       generateTitle: ({ doc }) =>

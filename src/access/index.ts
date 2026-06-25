@@ -16,3 +16,13 @@ export const isAdminOrSelf: Access = ({ req, id }) => {
   if (id && String((req.user as any)?.id) === String(id)) return true
   return false
 }
+
+export const isClient: Access = ({ req }) => {
+  const role = (req.user as any)?.role
+  return role === 'client' || role === 'admin' || role === 'superadmin'
+}
+
+export const isAdminOrClient: Access = ({ req }) => {
+  const role = (req.user as any)?.role
+  return role === 'admin' || role === 'superadmin' || role === 'client'
+}

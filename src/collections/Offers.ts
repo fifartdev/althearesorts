@@ -7,7 +7,7 @@ export const Offers: CollectionConfig = {
   slug: 'offers',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'validUntil', 'status', 'updatedAt'],
+    defaultColumns: ['title', 'validUntil', '_status', 'updatedAt'],
     group: 'Content',
   },
   access: {

@@ -7,7 +7,7 @@ export const Experiences: CollectionConfig = {
   slug: 'experiences',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'status', 'updatedAt'],
+    defaultColumns: ['title', 'category', '_status', 'updatedAt'],
     group: 'Content',
   },
   access: {

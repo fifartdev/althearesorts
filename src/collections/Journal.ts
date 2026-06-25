@@ -7,7 +7,7 @@ export const Journal: CollectionConfig = {
   slug: 'journal',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'publishedAt', 'status', 'updatedAt'],
+    defaultColumns: ['title', 'category', 'publishedAt', '_status', 'updatedAt'],
     group: 'Content',
   },
   access: {
