@@ -376,15 +376,248 @@ async function seedOffers(payload: P) {
   }
 }
 
+// ─── Greek meta (seoPlugin fields) ───────────────────────────────────────────
+
+const ROOM_META_EL: Record<string, { title: string; description: string; keywords: string }> = {
+  'standard-double': {
+    title: 'Standard Double Δωμάτιο — Θέα Βουνό & Κήπο | Althea Resorts',
+    description: 'Άνετο διπλό δωμάτιο με ιδιωτικό μπαλκόνι και θέα βουνό ή κήπο στην Althea Resorts, Ξυλόκαστρο, Κορινθία. 60 λεπτά από Αθήνα.',
+    keywords: 'ξενοδοχείο Ξυλόκαστρο, δωμάτιο Κορινθία, διαμονή Κορινθιακός, Althea Resorts',
+  },
+  'deluxe-double-mv-pv': {
+    title: 'Deluxe Διπλό Δωμάτιο — Θέα Βουνού ή Κόλπου | Althea Resorts',
+    description: 'Ευρύχωρο Deluxe Double 27 τ.μ. με ιδιωτικό μπαλκόνι και θέα βουνού ή Κορινθιακού Κόλπου στην Althea Resorts, Ξυλόκαστρο.',
+    keywords: 'deluxe δωμάτιο Κορινθία, ξενοδοχείο θέα κόλπος, Althea Resorts διαμονή, πολυτελές δωμάτιο Ξυλόκαστρο',
+  },
+  'deluxe-private-pool': {
+    title: 'Deluxe Δωμάτιο με Ιδιωτική Πισίνα | Althea Resorts',
+    description: 'Πολυτελές διπλό δωμάτιο με ιδιωτική πισίνα στην Althea Resorts, Ξυλόκαστρο. Αποκλειστική εμπειρία resort, 60 λεπτά από Αθήνα.',
+    keywords: 'δωμάτιο ιδιωτική πισίνα Ελλάδα, ξενοδοχείο Κορινθία, Althea Resorts πισίνα, πολυτελής διαμονή Ξυλόκαστρο',
+  },
+  'superior-sea-view': {
+    title: 'Superior Sea View Δωμάτιο — Κορινθιακός Κόλπος | Althea Resorts',
+    description: 'Superior δωμάτιο 27 τ.μ. με πανοραμική θέα στον Κορινθιακό Κόλπο και ιδιωτική βεράντα στην Althea Resorts, Ξυλόκαστρο.',
+    keywords: 'δωμάτιο θέα θάλασσα Κορινθία, ξενοδοχείο Κορινθιακός Κόλπος, superior δωμάτιο Ξυλόκαστρο, Althea Resorts',
+  },
+  'junior-suite': {
+    title: 'Junior Suite με Ιδιωτική Πισίνα | Althea Resorts',
+    description: 'Πολυτελής Junior Suite με ιδιωτική πισίνα, θέα Κορινθιακού Κόλπου και χωριστό καθιστικό στην Althea Resorts, Ξυλόκαστρο.',
+    keywords: 'junior suite ιδιωτική πισίνα Ελλάδα, σουίτα Κορινθία, πολυτελής σουίτα Ξυλόκαστρο, Althea Resorts',
+  },
+  'loft-suite': {
+    title: 'Althea Loft Suite — Υπαίθριο Jacuzzi & Θέα Κόλπου | Althea Resorts',
+    description: 'Signature loft σουίτα 45 τ.μ. με πανοραμική θέα Κορινθιακού Κόλπου, ιδιωτική ταράτσα και υπαίθριο jacuzzi στην Althea Resorts, Ξυλόκαστρο.',
+    keywords: 'loft σουίτα jacuzzi Ελλάδα, καλύτερο δωμάτιο Κορινθία, πολυτελής σουίτα Ξυλόκαστρο, Althea Resorts',
+  },
+}
+
+const DINING_META_EL: Record<string, { title: string; description: string; keywords: string }> = {
+  'AITHER': {
+    title: 'AITHER Εστιατόριο Ταράτσας — Μεσογειακή Κουζίνα | Althea Resorts',
+    description: 'Το signature εστιατόριο ταράτσας της Althea Resorts στο Ξυλόκαστρο. Σύγχρονη μεσογειακή κουζίνα με πανοραμική θέα στον Κορινθιακό Κόλπο.',
+    keywords: 'εστιατόριο ταράτσα Ξυλόκαστρο, εστιατόριο Κορινθία, AITHER εστιατόριο, Althea Resorts φαγητό',
+  },
+  'All Day Dining': {
+    title: 'All Day Dining — Ελαφριά Μεσογειακά Πιάτα | Althea Resorts',
+    description: 'Ελαφριά εποχιακά πιάτα και φρέσκες μεσογειακές γεύσεις καθ\'όλη τη διάρκεια της ημέρας στην Althea Resorts, Ξυλόκαστρο.',
+    keywords: 'all day dining Ξυλόκαστρο, μεσημεριανό Κορινθία, εστιατόριο ξενοδοχείο Ελλάδα, Althea Resorts',
+  },
+  'Breakfast': {
+    title: 'Ελληνικό Πρωινό στην Althea Resorts | Ξυλόκαστρο, Κορινθία',
+    description: 'Ξεκινήστε τη μέρα με ελληνικό πρωινό στην Althea Resorts: τοπικό μέλι, φρέσκο ψωμί, τυριά περιοχής, εποχιακά φρούτα. Καθημερινά 07:30–11:00.',
+    keywords: 'πρωινό ξενοδοχείο Ξυλόκαστρο, ελληνικό πρωινό Κορινθία, Althea Resorts πρωινό',
+  },
+  'Bar': {
+    title: 'Bar Althea Resorts — Κοκτέιλ & Ελληνικά Αποστάγματα',
+    description: 'Επιλεγμένα κοκτέιλ, εκλεκτά ελληνικά αποστάγματα και premium κρασιά στο bar της Althea Resorts. Ήσυχο τέλος για μια χαλαρή βραδιά.',
+    keywords: 'bar ξενοδοχείο Ξυλόκαστρο, κοκτέιλ Κορινθία, ελληνικά αποστάγματα, Althea Resorts bar',
+  },
+  'Pool Bar': {
+    title: 'Bar Πισίνας Althea Resorts — Ποτά δίπλα στην Infinity Πισίνα',
+    description: 'Φρέσκα κοκτέιλ, χυμοί και ελαφριά σνακ δίπλα στην infinity πισίνα της Althea Resorts, Ξυλόκαστρο. Ανοιχτό καθημερινά κατά τις ώρες της πισίνας.',
+    keywords: 'pool bar Ελλάδα, infinity πισίνα Κορινθία, ποτά πισίνα Ξυλόκαστρο, Althea Resorts πισίνα',
+  },
+}
+
+const EXPERIENCE_META_EL: Record<string, { title: string; description: string; keywords: string }> = {
+  'Ocean Spa': {
+    title: 'Ocean Spa — Πολυτελής Ευεξία στο Ξυλόκαστρο | Althea Resorts',
+    description: 'Ocean Spa στην Althea Resorts: 3 θάλαμοι θεραπείας, ατμόλουτρο και καλλυντικά Oceanis πιστοποιημένα βιοδιασπώμενα. Ευεξία στον Κορινθιακό.',
+    keywords: 'spa Ξυλόκαστρο, Ocean Spa Κορινθία, ευεξία ξενοδοχείο Ελλάδα, Althea Resorts spa',
+  },
+  'Activities': {
+    title: 'Δραστηριότητες & Εκδρομές στην Κορινθία | Althea Resorts',
+    description: 'Πεζοπορία, θαλάσσια σπορ, καγιάκ και πολιτιστικές εκδρομές από Althea Resorts, Ξυλόκαστρο. Εξερευνήστε Αρχαία Κόρινθο και Διώρυγα.',
+    keywords: 'δραστηριότητες Κορινθία, εκδρομές Ξυλόκαστρο, θαλάσσια σπορ Κορινθιακός, Althea Resorts',
+  },
+  'Weddings': {
+    title: 'Γάμοι στην Κορινθία — Πολυτελής Χώρος | Althea Resorts',
+    description: 'Οικείος χώρος γάμου με θέα στον Κορινθιακό Κόλπο, Althea Resorts, Ξυλόκαστρο. Εξατομικευμένες τελετές και δεξιώσεις, 60 λεπτά από Αθήνα.',
+    keywords: 'γάμος Κορινθία Ελλάδα, χώρος γάμου Ξυλόκαστρο, πολυτελής γάμος κοντά Αθήνα, Althea Resorts γάμοι',
+  },
+  'Corporate Events': {
+    title: 'Εταιρικές Εκδηλώσεις & Συνέδρια στην Κορινθία | Althea Resorts',
+    description: 'Πλήρως εξοπλισμένες αίθουσες συνεδρίων με φυσικό φωτισμό, catering AITHER και διαμονή επί τόπου στην Althea Resorts, Ξυλόκαστρο.',
+    keywords: 'συνέδριο ξενοδοχείο Κορινθία, εταιρική εκδήλωση Ξυλόκαστρο, αίθουσα συνεδριάσεων Ελλάδα, Althea Resorts',
+  },
+}
+
+const JOURNAL_META_EL: Record<string, { title: string; description: string; keywords: string }> = {
+  'Ancient Corinth: A Morning Away From Everything': {
+    title: 'Αρχαία Κόρινθος: Μια Ημερήσια Εκδρομή από Althea Resorts',
+    description: 'Επισκεφθείτε την Αρχαία Κόρινθο από Althea Resorts Ξυλόκαστρο — 45 λεπτά. Ναός Απόλλωνα, Ακροκόρινθος, αρχαιολογικό μουσείο.',
+    keywords: 'Αρχαία Κόρινθος εκδρομή, αξιοθέατα Κορινθία, Ακροκόρινθος επίσκεψη, ταξίδι από Ξυλόκαστρο',
+  },
+  'The Philosophy Behind Oceanis': {
+    title: 'Η Φιλοσοφία των Oceanis Καλλυντικών | Althea Resorts',
+    description: 'Γιατί η Althea Resorts επέλεξε Oceanis: ελληνική μάρκα βιοδιασπώμενων, vegan καλλυντικών spa. Χρησιμοποιείται στο Ocean Spa.',
+    keywords: 'Oceanis καλλυντικά, vegan προϊόντα spa Ελλάδα, βιοδιασπώμενα ξενοδοχείο, Ocean Spa Althea',
+  },
+  'What the Fishermen Bring In': {
+    title: 'Αυτό που Φέρνουν οι Ψαράδες — Κουζίνα AITHER',
+    description: 'Πώς το AITHER προμηθεύεται φρέσκο ψάρι από ψαράδες του Κορινθιακού Κόλπου και ακολουθεί την εποχή στο μενού του.',
+    keywords: 'AITHER εστιατόριο φρέσκο ψάρι, Κορινθιακός Κόλπος θαλασσινά, μεσογειακό μενού Ξυλόκαστρο',
+  },
+  'The Corinth Canal: Closer Than You Think': {
+    title: 'Η Διώρυγα της Κορίνθου: 40 Λεπτά από Althea Resorts',
+    description: 'Οδηγός για επίσκεψη στη Διώρυγα της Κορίνθου από Ξυλόκαστρο — ένα από τα μεγάλα επιτεύγματα μηχανικής του 19ου αιώνα.',
+    keywords: 'Διώρυγα Κορίνθου επίσκεψη, ημερήσια εκδρομή Ξυλόκαστρο, αξιοθέατα Κορινθία, κοντά Αθήνα',
+  },
+  'On Althos: The Word Behind the Name': {
+    title: 'Ο Αλθός: Η Αρχαία Λέξη Πίσω από Althea Resorts',
+    description: 'Η αρχαία ελληνική λέξη ἄλθος σημαίνει θεραπεία. Πώς αυτή η λέξη έγινε η φιλοσοφία και η ταυτότητα της Althea Resorts στην Κορινθία.',
+    keywords: 'Althea Resorts ιστορία, αλθός ετυμολογία, ξενοδοχείο φιλοσοφία Ελλάδα, boutique resort Κορινθία',
+  },
+  'The Case for Doing Nothing by a Pool': {
+    title: 'Υπέρ του «Να Μην Κάνεις Τίποτα» Δίπλα σε Πισίνα | Althea Resorts',
+    description: 'Μια υπεράσπιση αργών απογευμάτων δίπλα στην πισίνα και της ευχαρίστησης που φέρνει μια καλά επιλεγμένη διακοπή στην Κορινθία.',
+    keywords: 'χαλάρωση διακοπές Ελλάδα, infinity πισίνα ξενοδοχείο Κορινθία, αργές διακοπές Ξυλόκαστρο, Althea Resorts',
+  },
+}
+
+async function seedRoomMetaEL(payload: P) {
+  const res = await (payload.find as Function)({ collection: 'rooms', limit: 50 })
+  for (const doc of res.docs) {
+    const cat = doc.category as string
+    const m = ROOM_META_EL[cat]
+    if (!m) { notFound.push(`room meta el "${cat}"`); continue }
+    try {
+      await (payload.update as Function)({ collection: 'rooms', id: doc.id, locale: 'el', data: { meta: { title: m.title, description: m.description, keywords: m.keywords } } })
+      updated.push(`room meta el: "${cat}"`)
+    } catch (e: any) { errors.push(`room meta el "${cat}": ${e?.message}`) }
+  }
+}
+
+async function seedDiningMetaEL(payload: P) {
+  const res = await (payload.find as Function)({ collection: 'dining', limit: 20, locale: 'en' })
+  for (const doc of res.docs) {
+    const key = doc.name as string
+    const m = DINING_META_EL[key]
+    if (!m) { notFound.push(`dining meta el "${key}"`); continue }
+    try {
+      await (payload.update as Function)({ collection: 'dining', id: doc.id, locale: 'el', data: { meta: { title: m.title, description: m.description, keywords: m.keywords } } })
+      updated.push(`dining meta el: "${key}"`)
+    } catch (e: any) { errors.push(`dining meta el "${key}": ${e?.message}`) }
+  }
+}
+
+async function seedExperienceMetaEL(payload: P) {
+  const res = await (payload.find as Function)({ collection: 'experiences', limit: 20, locale: 'en' })
+  for (const doc of res.docs) {
+    const key = doc.title as string
+    const m = EXPERIENCE_META_EL[key]
+    if (!m) { notFound.push(`experience meta el "${key}"`); continue }
+    try {
+      await (payload.update as Function)({ collection: 'experiences', id: doc.id, locale: 'el', data: { meta: { title: m.title, description: m.description, keywords: m.keywords } } })
+      updated.push(`experience meta el: "${key}"`)
+    } catch (e: any) { errors.push(`experience meta el "${key}": ${e?.message}`) }
+  }
+}
+
+async function seedJournalMetaEL(payload: P) {
+  const res = await (payload.find as Function)({ collection: 'journal', limit: 20, locale: 'en' })
+  for (const doc of res.docs) {
+    const key = doc.title as string
+    const m = JOURNAL_META_EL[key]
+    if (!m) { notFound.push(`journal meta el "${key}"`); continue }
+    try {
+      await (payload.update as Function)({ collection: 'journal', id: doc.id, locale: 'el', data: { meta: { title: m.title, description: m.description, keywords: m.keywords } } })
+      updated.push(`journal meta el: "${key}"`)
+    } catch (e: any) { errors.push(`journal meta el "${key}": ${e?.message}`) }
+  }
+}
+
+async function seedOfferMetaEL(payload: P) {
+  const res = await (payload.find as Function)({ collection: 'offers', limit: 10, locale: 'en' })
+  for (const doc of res.docs) {
+    try {
+      await (payload.update as Function)({
+        collection: 'offers', id: doc.id, locale: 'el',
+        data: {
+          meta: {
+            title: '10% Έκπτωση για Άμεσες Κρατήσεις | Althea Resorts',
+            description: 'Κλείστε απευθείας στην Althea Resorts και εξοικονομήστε 10%. Εγγυημένη καλύτερη τιμή στο επίσημο site. Ισχύει έως Ιούνιο 2026.',
+            keywords: 'άμεση κράτηση έκπτωση ξενοδοχείο, καλύτερη τιμή Althea Resorts, προσφορά ξενοδοχείο Κορινθία',
+          },
+        },
+      })
+      updated.push(`offer meta el: "${doc.title}"`)
+    } catch (e: any) { errors.push(`offer meta el: ${e?.message}`) }
+  }
+}
+
 async function seedGlobals(payload: P) {
+  // Site settings
   try {
     await (payload.updateGlobal as Function)({ slug: 'site-settings', locale: 'el', data: { tagline: 'Επαναπροσδιορίζοντας τη Φιλοξενία με Διαχρονική Κομψότητα' } })
-    updated.push('global: site-settings')
+    updated.push('global: site-settings (el)')
   } catch (e: any) { errors.push(`global site-settings: ${e?.message}`) }
+
+  // Booking settings
   try {
     await (payload.updateGlobal as Function)({ slug: 'booking-settings', locale: 'el', data: { stickyBarText: 'Κλείστε τη διαμονή σας — 60 λεπτά από Αθήνα' } })
-    updated.push('global: booking-settings')
+    updated.push('global: booking-settings (el)')
   } catch (e: any) { errors.push(`global booking-settings: ${e?.message}`) }
+
+  // SEO settings — localized fields in Greek
+  try {
+    await (payload.updateGlobal as Function)({
+      slug: 'seo-settings',
+      locale: 'el',
+      data: {
+        defaultTitle: 'Althea Resorts — 5 Αστέρων Boutique Ξενοδοχείο στην Κορινθία, Ελλάδα',
+        titleSuffix: '| Althea Resorts',
+        defaultDescription: 'Πολυτελές boutique resort 5 αστέρων στο Άνω Λουτρό, Ξυλόκαστρο, Κορινθία. 41 δωμάτια και σουίτες με θέα Κορινθιακού Κόλπου, Ocean Spa, εστιατόριο AITHER. 60 λεπτά από Αθήνα.',
+        defaultKeywords: 'πολυτελές ξενοδοχείο Ελλάδα, boutique resort Κορινθία, ξενοδοχείο Ξυλόκαστρο, Althea Resorts, 5 αστέρων ξενοδοχείο Πελοπόννησος',
+        entityDescription: 'Η Althea Resorts είναι ένα πολυτελές boutique ξενοδοχείο 5 αστέρων στο Άνω Λουτρό, Ξυλόκαστρο, Κορινθία, Ελλάδα, στη βόρεια ακτή της Πελοποννήσου. Διαθέτει 41 δωμάτια και σουίτες με θέα στον Κορινθιακό Κόλπο, το Ocean Spa με πιστοποιημένα βιοδιασπώμενα καλλυντικά Oceanis, το signature εστιατόριο ταράτσας AITHER, infinity πισίνα, αίθουσες συνεδρίων και σέρβις μεταφοράς στην ιδιωτική παραλία. Βρίσκεται 60 λεπτά από την Αθήνα με αυτοκίνητο.',
+      },
+    })
+    updated.push('global: seo-settings (el)')
+  } catch (e: any) { errors.push(`global seo-settings el: ${e?.message}`) }
+
+  // GEO settings — localized fields in Greek
+  try {
+    await (payload.updateGlobal as Function)({
+      slug: 'geo-settings',
+      locale: 'el',
+      data: {
+        brandName: 'Althea Resorts',
+        description: 'Πολυτελές boutique resort στους λόφους του Άνω Λουτρού, κοντά στο Ξυλόκαστρο, Κορινθία, Ελλάδα. 60 λεπτά από Αθήνα. 41 δωμάτια και σουίτες, Ocean Spa, εστιατόριο AITHER, infinity πισίνα, αίθουσες συνεδρίων και σέρβις παραλίας.',
+        seasonalNote: 'Ανοιχτά όλο το χρόνο. Πισίνα και σέρβις παραλίας διαθέσιμα Μάιο–Οκτώβριο.',
+      },
+    })
+    updated.push('global: geo-settings (el)')
+  } catch (e: any) { errors.push(`global geo-settings el: ${e?.message}`) }
+
+  // Contact info — directions in Greek
+  try {
+    await (payload.updateGlobal as Function)({
+      slug: 'contact-info',
+      locale: 'el',
+      data: { directions: '60 λεπτά από Αθήνα με αυτοκίνητο. Ακολουθήστε τον αυτοκινητόδρομο Αθηνών–Κορίνθου προς Πελοπόννησο, έξοδος Ξυλόκαστρο. Ακολουθήστε τις πινακίδες προς Άνω Λουτρό.' },
+    })
+    updated.push('global: contact-info (el)')
+  } catch (e: any) { errors.push(`global contact-info el: ${e?.message}`) }
 }
 
 // ─── Main ──────────────────────────────────────────────────────────────────────
@@ -401,6 +634,11 @@ export async function GET(request: NextRequest) {
   await seedExperiences(payload)
   await seedFAQs(payload)
   await seedOffers(payload)
+  await seedRoomMetaEL(payload)
+  await seedDiningMetaEL(payload)
+  await seedExperienceMetaEL(payload)
+  await seedJournalMetaEL(payload)
+  await seedOfferMetaEL(payload)
   await seedGlobals(payload)
   return NextResponse.json({
     message: 'Greek locale seed complete',
