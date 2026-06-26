@@ -80,8 +80,11 @@ const content = {
   },
 }
 
-export function JournalPreview({ locale = 'en' }: { locale?: Locale }) {
+type PostItem = { category: string; title: string; excerpt: string; readTime: string; href: string; image: string; imageAlt: string }
+
+export function JournalPreview({ locale = 'en', posts }: { locale?: Locale; posts?: PostItem[] }) {
   const c = content[locale]
+  const activePosts = posts && posts.length > 0 ? posts.slice(0, 3) : c.posts
 
   return (
     <section className="section-padding bg-white" aria-label="Journal — Althea Stories">
@@ -114,7 +117,7 @@ export function JournalPreview({ locale = 'en' }: { locale?: Locale }) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {c.posts.map((post, i) => (
+          {activePosts.map((post, i) => (
             <ScrollReveal key={post.title} delay={i * 100}>
               <a href={post.href} className="group block">
                 <div className="aspect-[16/10] overflow-hidden mb-5 relative">

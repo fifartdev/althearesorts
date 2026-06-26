@@ -1,5 +1,6 @@
 import React from 'react'
 import { generateMetadata as genMeta } from '@/lib/seo'
+import { getRooms, getJournalPosts } from '@/lib/cms'
 
 import { Hero } from '@/components/sections/Hero'
 import { BrandIntro } from '@/components/sections/BrandIntro'
@@ -24,7 +25,32 @@ export const metadata = genMeta({
   ],
 })
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [roomDocs, journalDocs] = await Promise.all([getRooms('en'), getJournalPosts('en', 3)])
+
+  const cmsRooms = roomDocs.length > 0
+    ? roomDocs.slice(3, 6).map((r: any) => ({
+        slug: r.slug ?? '',
+        title: r.title ?? '',
+        size: r.size ?? '',
+        shortDesc: r.shortDescription ?? '',
+        view: r.viewType ?? '',
+        image: (typeof r.heroImage === 'object' ? r.heroImage?.url : r.heroImage) || r.imageUrl || '',
+      })).filter((r: any) => r.image)
+    : undefined
+
+  const cmsPosts = journalDocs.length > 0
+    ? journalDocs.map((p: any) => ({
+        category: p.category ?? '',
+        title: p.title ?? '',
+        excerpt: p.excerpt ?? '',
+        readTime: p.readingTime ? `${p.readingTime} min read` : '',
+        href: `/journal/${p.slug}`,
+        image: (typeof p.heroImage === 'object' ? p.heroImage?.url : p.heroImage) || p.imageUrl || '',
+        imageAlt: p.title ?? '',
+      })).filter((p: any) => p.image)
+    : undefined
+
   return (
     <>
       <main id="main-content">
@@ -35,7 +61,7 @@ export default function HomePage() {
         <BrandIntro />
 
         {/* 3. Rooms showcase */}
-        <RoomsShowcase />
+        <RoomsShowcase rooms={cmsRooms} />
 
         {/* 4. Experience highlights */}
         <ExperiencesHighlight />
@@ -53,7 +79,7 @@ export default function HomePage() {
         <LocationSection />
 
         {/* 9. Journal preview */}
-        <JournalPreview />
+        <JournalPreview posts={cmsPosts} />
 
         {/* 10. Direct booking reasons */}
         <DirectBookingReasons />

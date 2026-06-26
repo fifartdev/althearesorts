@@ -43,8 +43,15 @@ const greekRoomData: Record<string, { title: string; shortDesc: string; view: st
   },
 }
 
-export function RoomsShowcase({ locale = 'en' }: { locale?: Locale }) {
-  const featuredRooms = ROOMS.slice(3)
+type RoomItem = { slug: string; title: string; size: string; shortDesc: string; view: string; image: string }
+
+export function RoomsShowcase({ locale = 'en', rooms }: { locale?: Locale; rooms?: RoomItem[] }) {
+  const staticFeatured = ROOMS.slice(3)
+  // CMS rooms (already localized) take precedence; fall back to last 3 static rooms
+  const featuredRooms: RoomItem[] = rooms && rooms.length > 0 ? rooms.slice(0, 3) : staticFeatured.map((r) => {
+    const gr = locale === 'el' ? greekRoomData[r.slug] : null
+    return { slug: r.slug, title: gr?.title ?? r.title, size: r.size, shortDesc: gr?.shortDesc ?? r.shortDesc, view: gr?.view ?? r.view, image: r.image }
+  })
   const c = content[locale]
 
   return (
@@ -70,24 +77,21 @@ export function RoomsShowcase({ locale = 'en' }: { locale?: Locale }) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-          {featuredRooms.map((room, i) => {
-            const gr = locale === 'el' ? greekRoomData[room.slug] : null
-            return (
-              <ScrollReveal key={room.slug} delay={i * 100}>
-                <RoomCard
-                  slug={room.slug}
-                  href={locale === 'el' ? `/el/accommodation/${room.slug}` : undefined}
-                  title={gr?.title ?? room.title}
-                  size={room.size}
-                  shortDesc={gr?.shortDesc ?? room.shortDesc}
-                  view={gr?.view ?? room.view}
-                  image={room.image}
-                  priority={i === 0}
-                  locale={locale}
-                />
-              </ScrollReveal>
-            )
-          })}
+          {featuredRooms.map((room, i) => (
+            <ScrollReveal key={room.slug} delay={i * 100}>
+              <RoomCard
+                slug={room.slug}
+                href={locale === 'el' ? `/el/accommodation/${room.slug}` : undefined}
+                title={room.title}
+                size={room.size}
+                shortDesc={room.shortDesc}
+                view={room.view}
+                image={room.image}
+                priority={i === 0}
+                locale={locale}
+              />
+            </ScrollReveal>
+          ))}
         </div>
 
         <ScrollReveal className="flex justify-center mt-12">
