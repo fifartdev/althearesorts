@@ -126,6 +126,87 @@ const JOURNAL_META: Record<string, { title: string; description: string; keyword
   },
 }
 
+// ─── Required localized arrays (English) ─────────────────────────────────────
+// amenities.label, highlights.label/value, conditions.condition are all
+// required+localized. If the Greek seed corrupted or replaced these arrays,
+// updating with locale:'en' will fail validation unless we re-supply them.
+// Include them alongside meta in every room/experience/offer update.
+
+const ROOM_AMENITIES_EN: Record<string, { label: string }[]> = {
+  'standard-double': [
+    { label: 'King size bed or two singles' }, { label: 'Private balcony' },
+    { label: 'Private bathroom' }, { label: 'Oceanis toiletries' },
+    { label: 'Free WiFi' }, { label: 'Air conditioning' },
+    { label: 'Flat-screen TV' }, { label: 'Minibar' }, { label: 'Soundproofing' },
+  ],
+  'deluxe-double-mv-pv': [
+    { label: 'King size bed or two singles' }, { label: 'Balcony with mountain or pool view' },
+    { label: 'Private bathroom' }, { label: 'Oceanis toiletries' },
+    { label: 'Free WiFi' }, { label: 'Air conditioning' },
+    { label: 'Flat-screen TV' }, { label: 'Minibar' }, { label: 'Soundproofing' },
+  ],
+  'deluxe-private-pool': [
+    { label: 'King size bed or two singles' }, { label: 'Private pool' },
+    { label: 'Balcony' }, { label: 'Private bathroom' }, { label: 'Oceanis toiletries' },
+    { label: 'Free WiFi' }, { label: 'Air conditioning' },
+    { label: 'Flat-screen TV' }, { label: 'Minibar' }, { label: 'Soundproofing' },
+  ],
+  'superior-sea-view': [
+    { label: 'King size bed or two singles' }, { label: 'Sea-view veranda' },
+    { label: 'Private bathroom' }, { label: 'Oceanis toiletries' },
+    { label: 'Free WiFi' }, { label: 'Air conditioning' },
+    { label: 'Flat-screen TV' }, { label: 'Minibar' }, { label: 'Soundproofing' },
+  ],
+  'junior-suite': [
+    { label: 'King size bed or two singles' }, { label: 'Separate living area' },
+    { label: 'Private pool' }, { label: 'Balcony with view' },
+    { label: 'Private bathroom' }, { label: 'Oceanis toiletries' },
+    { label: 'Free WiFi' }, { label: 'Air conditioning' },
+    { label: 'Flat-screen TV' }, { label: 'Soundproofing' },
+  ],
+  'loft-suite': [
+    { label: 'King size bed (upper level)' }, { label: 'Sofa bed in living area' },
+    { label: 'Private outdoor jacuzzi' }, { label: 'Panoramic balcony' },
+    { label: 'Private bathroom' }, { label: 'Oceanis toiletries' },
+    { label: 'Free WiFi' }, { label: 'Air conditioning' },
+    { label: 'Flat-screen TV' }, { label: 'Minibar' }, { label: 'Soundproofing' },
+  ],
+}
+
+const EXPERIENCE_HIGHLIGHTS_EN: Record<string, { label: string; value: string }[]> = {
+  'Ocean Spa': [
+    { label: '3 Treatment Cabins', value: 'Fully private, equipped treatment rooms' },
+    { label: 'Steam Room', value: 'Hammam-style steam bath' },
+    { label: 'Oceanis Products', value: 'Certified biodegradable, vegan cosmetics' },
+    { label: 'Couples Treatments', value: 'Side-by-side bookings available' },
+  ],
+  'Activities': [
+    { label: 'Water Sports', value: 'Kayaking, windsurfing, and sailing excursions' },
+    { label: 'Hiking & Cycling', value: 'Guided trails through the Corinthian hills' },
+    { label: 'Cultural Excursions', value: 'Ancient Corinth, Acrocorinth, Corinth Canal' },
+    { label: 'Guided Tours', value: 'Organised excursions arranged from the resort' },
+  ],
+  'Weddings': [
+    { label: 'Ceremony Venue', value: 'Gulf-view terrace for ceremonies and receptions' },
+    { label: 'AITHER Catering', value: 'Custom menus by the resort kitchen' },
+    { label: 'On-site Accommodation', value: '41 rooms and suites for guests' },
+    { label: 'Event Coordinator', value: 'Dedicated planning from enquiry to day-of' },
+  ],
+  'Corporate Events': [
+    { label: 'Conference Rooms', value: 'Fully equipped with AV technology and natural light' },
+    { label: 'Dedicated Coordinator', value: 'Event planning from enquiry to day-of' },
+    { label: 'AITHER Catering', value: 'Mediterranean menus by the resort kitchen' },
+    { label: 'On-site Accommodation', value: '41 rooms and suites for delegates' },
+  ],
+}
+
+const OFFER_CONDITIONS_EN = [
+  { condition: 'Valid for direct bookings only' },
+  { condition: 'Subject to availability' },
+  { condition: 'Cannot be combined with other offers' },
+  { condition: 'Valid through 30 June 2026' },
+]
+
 // ─── Globals ──────────────────────────────────────────────────────────────────
 
 type P = Awaited<ReturnType<typeof getPayload>>
@@ -139,8 +220,12 @@ async function seedRoomMeta(payload: P) {
     const cat = doc.category as string
     const m = ROOM_META[cat]
     if (!m) { notFound.push(`room meta "${cat}"`); continue }
+    const amenities = ROOM_AMENITIES_EN[cat] ?? []
     try {
-      await (payload.update as Function)({ collection: 'rooms', id: doc.id, locale: 'en', data: { meta: { title: m.title, description: m.description, keywords: m.keywords } } })
+      await (payload.update as Function)({
+        collection: 'rooms', id: doc.id, locale: 'en',
+        data: { meta: { title: m.title, description: m.description, keywords: m.keywords }, amenities },
+      })
       updated.push(`room meta en: "${cat}"`)
     } catch (e: any) { errors.push(`room meta "${cat}": ${e?.message}`) }
   }
@@ -165,8 +250,12 @@ async function seedExperienceMeta(payload: P) {
     const key = doc.title as string
     const m = EXPERIENCE_META[key]
     if (!m) { notFound.push(`experience meta "${key}"`); continue }
+    const highlights = EXPERIENCE_HIGHLIGHTS_EN[key] ?? []
     try {
-      await (payload.update as Function)({ collection: 'experiences', id: doc.id, locale: 'en', data: { meta: { title: m.title, description: m.description, keywords: m.keywords } } })
+      await (payload.update as Function)({
+        collection: 'experiences', id: doc.id, locale: 'en',
+        data: { meta: { title: m.title, description: m.description, keywords: m.keywords }, ...(highlights.length ? { highlights } : {}) },
+      })
       updated.push(`experience meta en: "${key}"`)
     } catch (e: any) { errors.push(`experience meta "${key}": ${e?.message}`) }
   }
@@ -197,6 +286,7 @@ async function seedOfferMeta(payload: P) {
             description: 'Book directly at Althea Resorts and save 10%. Best rate guaranteed on our official website. Offer valid through June 2026 — no code required.',
             keywords: 'direct booking discount hotel Greece, best rate guarantee Althea Resorts, hotel deal Corinthia',
           },
+          conditions: OFFER_CONDITIONS_EN,
         },
       })
       updated.push(`offer meta en: "${doc.title}"`)
