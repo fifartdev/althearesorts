@@ -5,10 +5,7 @@ import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { StickyBookingBar, FloatingBookingButton } from '@/components/layout/BookingCTA'
-import dynamic from 'next/dynamic'
-
-const CookieConsent = dynamic(() => import('@/components/layout/CookieConsent').then(m => ({ default: m.CookieConsent })), { ssr: false })
-const CustomCursor = dynamic(() => import('@/components/animations/CustomCursor').then(m => ({ default: m.CustomCursor })), { ssr: false })
+import { ClientShells } from '@/components/layout/ClientShells'
 import { hotelSchema, organizationSchema } from '@/lib/seo'
 import { MetaPixel } from '@/components/analytics/MetaPixel'
 import '../../(frontend)/globals.css'
@@ -75,13 +72,13 @@ export default function GreekLayout({ children }: { children: React.ReactNode })
         </Script>
 
         <MetaPixel />
-        <CustomCursor />
+
         <Header />
         {children}
         <Footer locale="el" />
         <StickyBookingBar locale="el" />
         <FloatingBookingButton />
-        <CookieConsent locale="el" />
+        <ClientShells locale="el" />
       </body>
     </html>
   )
