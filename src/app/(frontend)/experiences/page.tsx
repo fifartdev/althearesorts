@@ -6,6 +6,7 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { BOOKING_URL, SITE_URL } from '@/lib/constants'
+import { getExperiences } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Experiences',
@@ -14,7 +15,20 @@ export const metadata = genMeta({
   canonical: `${SITE_URL}/experiences`,
 })
 
-export default function ExperiencesPage() {
+function paras(text: string, cls = 'text-body-refined mb-5') {
+  return text.split('\n\n').map((p, i) => <p key={i} className={cls}>{p.trim()}</p>)
+}
+
+export default async function ExperiencesPage() {
+  const docs = await getExperiences('en')
+  const byCategory: Record<string, any> = {}
+  for (const doc of docs) { if (doc.category) byCategory[doc.category as string] = doc }
+
+  const img = (cat: string, fallback: string) =>
+    (typeof byCategory[cat]?.heroImage === 'object'
+      ? byCategory[cat]?.heroImage?.url
+      : byCategory[cat]?.heroImage) || fallback
+
   return (
     <main id="main-content">
       {/* Hero */}
@@ -82,7 +96,7 @@ export default function ExperiencesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <ScrollReveal variant="image" className="aspect-[4/5] w-full relative overflow-hidden">
               <Image
-                src="/images/activities%20pexel%20photo.jpg"
+                src={img('activities', '/images/activities%20pexel%20photo.jpg')}
                 alt="Hiking and activities in Corinthia"
                 fill
                 className="object-cover"
@@ -100,22 +114,27 @@ export default function ExperiencesPage() {
                 <GoldLine className="mb-8" />
               </ScrollReveal>
               <ScrollReveal delay={200}>
-                <p className="text-body-refined mb-5">
-                  The landscape around Althea is not a backdrop. It is part of what you
-                  came for. <strong>Hiking</strong> trails wind through the Corinthian hills
-                  with views that stop you mid-step. <strong>Cycling</strong> routes follow
-                  the coastline at whatever speed you choose. <strong>Yoga</strong> sessions
-                  open to the air and the Gulf, the kind where you actually forget to check
-                  the time.
-                </p>
-                <p className="text-body-refined mb-5">
-                  The activities at Althea are designed for guests who want to feel the
-                  place they are in, not just photograph it from a distance.
-                </p>
-                <p className="text-body-refined italic">
-                  We are adding more experiences as the resort grows: ask us directly
-                  and we will tell you what is coming!
-                </p>
+                {byCategory['activities']?.shortDescription
+                  ? paras(byCategory['activities'].shortDescription)
+                  : <>
+                      <p className="text-body-refined mb-5">
+                        The landscape around Althea is not a backdrop. It is part of what you
+                        came for. <strong>Hiking</strong> trails wind through the Corinthian hills
+                        with views that stop you mid-step. <strong>Cycling</strong> routes follow
+                        the coastline at whatever speed you choose. <strong>Yoga</strong> sessions
+                        open to the air and the Gulf, the kind where you actually forget to check
+                        the time.
+                      </p>
+                      <p className="text-body-refined mb-5">
+                        The activities at Althea are designed for guests who want to feel the
+                        place they are in, not just photograph it from a distance.
+                      </p>
+                      <p className="text-body-refined italic">
+                        We are adding more experiences as the resort grows: ask us directly
+                        and we will tell you what is coming!
+                      </p>
+                    </>
+                }
               </ScrollReveal>
             </div>
           </div>
@@ -128,7 +147,7 @@ export default function ExperiencesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <ScrollReveal variant="image" className="aspect-[4/5] w-full relative overflow-hidden lg:sticky lg:top-32">
               <Image
-                src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=80"
+                src={img('spa', 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=80')}
                 alt="Ocean Spa — Althea Resorts"
                 fill
                 className="object-cover"
@@ -146,33 +165,38 @@ export default function ExperiencesPage() {
                 <GoldLine className="mb-8" />
               </ScrollReveal>
               <ScrollReveal delay={200}>
-                <p className="text-sm font-light text-white/60 leading-relaxed mb-5">
-                  The Ocean Spa at Althea is not an add-on to the resort experience.
-                  It is one of the main reasons to come. The treatments are built around
-                  Oceanis cosmetics — a Greek brand drawn from the same sea and land that
-                  surrounds the property — and each therapy is chosen for what it actually
-                  does, not for how it sounds on a menu.
-                </p>
-                <p className="text-sm font-light text-white/60 leading-relaxed mb-5">
-                  The facilities were designed with the same intention as everything else
-                  at Althea: nothing excessive, nothing missing. A sauna and a hammam with
-                  steam room for heat and release. An ice bath for those who know what
-                  follows the cold. A dedicated pool, a relaxation area where time genuinely
-                  stops, and a yoga room open to movement and stillness in equal measure.
-                  A fully equipped gym for those who need to keep the body honest.
-                </p>
-                <p className="text-sm font-light text-white/60 leading-relaxed mb-5">
-                  Two single treatment cabins and one double cabin for couples or those who
-                  simply want more space around them. Changing rooms, private facilities,
-                  and a cosmetics boutique carrying the full Oceanis range.
-                </p>
-                <p className="text-sm font-light text-white/60 leading-relaxed mb-8">
-                  The practitioners here work with your body's own rhythm. They are not
-                  in a hurry. They do not want you to be either. You arrive carrying the
-                  weight of everything that happened before you got here. An hour later,
-                  you have genuinely forgotten what most of it was. That is not a promise.
-                  That is just what happens in this room, on this hillside, with these hands.
-                </p>
+                {byCategory['spa']?.shortDescription
+                  ? paras(byCategory['spa'].shortDescription, 'text-sm font-light text-white/60 leading-relaxed mb-5')
+                  : <>
+                      <p className="text-sm font-light text-white/60 leading-relaxed mb-5">
+                        The Ocean Spa at Althea is not an add-on to the resort experience.
+                        It is one of the main reasons to come. The treatments are built around
+                        Oceanis cosmetics — a Greek brand drawn from the same sea and land that
+                        surrounds the property — and each therapy is chosen for what it actually
+                        does, not for how it sounds on a menu.
+                      </p>
+                      <p className="text-sm font-light text-white/60 leading-relaxed mb-5">
+                        The facilities were designed with the same intention as everything else
+                        at Althea: nothing excessive, nothing missing. A sauna and a hammam with
+                        steam room for heat and release. An ice bath for those who know what
+                        follows the cold. A dedicated pool, a relaxation area where time genuinely
+                        stops, and a yoga room open to movement and stillness in equal measure.
+                        A fully equipped gym for those who need to keep the body honest.
+                      </p>
+                      <p className="text-sm font-light text-white/60 leading-relaxed mb-5">
+                        Two single treatment cabins and one double cabin for couples or those who
+                        simply want more space around them. Changing rooms, private facilities,
+                        and a cosmetics boutique carrying the full Oceanis range.
+                      </p>
+                      <p className="text-sm font-light text-white/60 leading-relaxed mb-8">
+                        The practitioners here work with your body's own rhythm. They are not
+                        in a hurry. They do not want you to be either. You arrive carrying the
+                        weight of everything that happened before you got here. An hour later,
+                        you have genuinely forgotten what most of it was. That is not a promise.
+                        That is just what happens in this room, on this hillside, with these hands.
+                      </p>
+                    </>
+                }
               </ScrollReveal>
 
               {/* Oceanis philosophy */}
@@ -305,24 +329,29 @@ export default function ExperiencesPage() {
                 <GoldLine className="mb-8" />
               </ScrollReveal>
               <ScrollReveal delay={200}>
-                <p className="text-body-refined mb-5">
-                  The best corporate gatherings happen when the environment does some of
-                  the work. When people are removed from the familiar offices and the usual
-                  rooms, something shifts. Conversations become more direct. Ideas arrive
-                  more easily. The tension that builds in ordinary conference settings simply
-                  does not follow you here.
-                </p>
-                <p className="text-body-refined mb-5">
-                  At Althea, the spaces are flexible and well-equipped, but it is the
-                  setting that makes the real difference: the hills, the sea, the meals
-                  together, the evenings that extend naturally into something that feels
-                  less like a work trip and more like a reason to trust the people you
-                  work with.
-                </p>
-                <p className="text-body-refined mb-10">
-                  Teams leave Althea with decisions made and energy restored.
-                  That combination is rarer than it should be.
-                </p>
+                {byCategory['corporate']?.shortDescription
+                  ? paras(byCategory['corporate'].shortDescription, 'text-body-refined mb-5 last:mb-10')
+                  : <>
+                      <p className="text-body-refined mb-5">
+                        The best corporate gatherings happen when the environment does some of
+                        the work. When people are removed from the familiar offices and the usual
+                        rooms, something shifts. Conversations become more direct. Ideas arrive
+                        more easily. The tension that builds in ordinary conference settings simply
+                        does not follow you here.
+                      </p>
+                      <p className="text-body-refined mb-5">
+                        At Althea, the spaces are flexible and well-equipped, but it is the
+                        setting that makes the real difference: the hills, the sea, the meals
+                        together, the evenings that extend naturally into something that feels
+                        less like a work trip and more like a reason to trust the people you
+                        work with.
+                      </p>
+                      <p className="text-body-refined mb-10">
+                        Teams leave Althea with decisions made and energy restored.
+                        That combination is rarer than it should be.
+                      </p>
+                    </>
+                }
               </ScrollReveal>
 
               <ScrollReveal delay={220}>
@@ -434,24 +463,29 @@ export default function ExperiencesPage() {
                 <GoldLine className="mb-8" />
               </ScrollReveal>
               <ScrollReveal delay={200}>
-                <p className="text-body-refined mb-5">
-                  There are wedding venues, and then there are places where a wedding
-                  actually belongs. Althea is the second kind. The hills of Corinthia,
-                  the light over the Gulf at that particular hour of the evening, the air
-                  that carries something warm and unhurried — no decorator can manufacture
-                  any of it.
-                </p>
-                <p className="text-body-refined mb-5">
-                  What we bring to every wedding at Althea is something quieter but more
-                  important than aesthetics: the understanding that this day matters to
-                  the people living it, not just to the photographs. Our team works closely
-                  with every couple from the first conversation to the last dance, making
-                  sure that the details hold and the day unfolds the way it was meant to.
-                </p>
-                <p className="text-body-refined mb-10">
-                  Corinthia has been a place of gathering and celebration for thousands
-                  of years. Your wedding fits naturally into that history.
-                </p>
+                {byCategory['events']?.shortDescription
+                  ? paras(byCategory['events'].shortDescription, 'text-body-refined mb-5 last:mb-10')
+                  : <>
+                      <p className="text-body-refined mb-5">
+                        There are wedding venues, and then there are places where a wedding
+                        actually belongs. Althea is the second kind. The hills of Corinthia,
+                        the light over the Gulf at that particular hour of the evening, the air
+                        that carries something warm and unhurried — no decorator can manufacture
+                        any of it.
+                      </p>
+                      <p className="text-body-refined mb-5">
+                        What we bring to every wedding at Althea is something quieter but more
+                        important than aesthetics: the understanding that this day matters to
+                        the people living it, not just to the photographs. Our team works closely
+                        with every couple from the first conversation to the last dance, making
+                        sure that the details hold and the day unfolds the way it was meant to.
+                      </p>
+                      <p className="text-body-refined mb-10">
+                        Corinthia has been a place of gathering and celebration for thousands
+                        of years. Your wedding fits naturally into that history.
+                      </p>
+                    </>
+                }
               </ScrollReveal>
               <ScrollReveal delay={250}>
                 <a

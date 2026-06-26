@@ -6,6 +6,7 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { SITE_URL } from '@/lib/constants'
+import { getExperiences } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Εμπειρίες — Spa, Δραστηριότητες, Γάμοι & Εκδηλώσεις',
@@ -14,7 +15,20 @@ export const metadata = genMeta({
   canonical: `${SITE_URL}/el/experiences`,
 })
 
-export default function GreekExperiencesPage() {
+function paras(text: string, cls = 'text-body-refined mb-5') {
+  return text.split('\n\n').map((p, i) => <p key={i} className={cls}>{p.trim()}</p>)
+}
+
+export default async function GreekExperiencesPage() {
+  const docs = await getExperiences('el')
+  const byCategory: Record<string, any> = {}
+  for (const doc of docs) { if (doc.category) byCategory[doc.category as string] = doc }
+
+  const img = (cat: string, fallback: string) =>
+    (typeof byCategory[cat]?.heroImage === 'object'
+      ? byCategory[cat]?.heroImage?.url
+      : byCategory[cat]?.heroImage) || fallback
+
   return (
     <main id="main-content">
       {/* Hero */}
@@ -84,7 +98,7 @@ export default function GreekExperiencesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <ScrollReveal variant="image" className="aspect-[4/5] w-full relative overflow-hidden">
               <Image
-                src="/images/activities%20pexel%20photo.jpg"
+                src={img('activities', '/images/activities%20pexel%20photo.jpg')}
                 alt="Πεζοπορία και δραστηριότητες στην Κορινθία"
                 fill
                 className="object-cover"
@@ -102,17 +116,17 @@ export default function GreekExperiencesPage() {
                 <GoldLine className="mb-8" />
               </ScrollReveal>
               <ScrollReveal delay={200}>
-                <p className="text-body-refined">
-                  Το τοπίο γύρω από το Althea δεν είναι ένα απλό φόντο. Είναι μέρος της εμπειρίας που
-                  ήρθατε να ζήσετε. Μονοπάτια πεζοπορίας ελίσσονται μέσα από τους κορινθιακούς
-                  λόφους, προσφέροντας θέα που σε αναγκάζει να σταματήσεις σε κάθε βήμα. Ποδηλατικές
-                  διαδρομές ακολουθούν την ακτογραμμή με όποια ταχύτητα επιλέξετε. Συνεδρίες γιόγκα
-                  στο ύπαιθρο, με φόντο τον κόλπο, από εκείνες που σε κάνουν να ξεχνάς να κοιτάξεις το
-                  ρολόι. Οι δραστηριότητες στο Althea είναι σχεδιασμένες για επισκέπτες που θέλουν να
-                  βιώσουν το μέρος στο οποίο βρίσκονται, και όχι απλώς να το φωτογραφίσουν από
-                  απόσταση. Καθώς το resort αναπτύσσεται, προσθέτουμε συνεχώς νέες εμπειρίες: ρωτήστε
-                  μας απευθείας και θα σας ενημερώσουμε για όλα όσα έρχονται!
-                </p>
+                {byCategory['activities']?.shortDescription
+                  ? paras(byCategory['activities'].shortDescription)
+                  : <p className="text-body-refined">
+                      Το τοπίο γύρω από το Althea δεν είναι ένα απλό φόντο. Είναι μέρος της εμπειρίας που
+                      ήρθατε να ζήσετε. Μονοπάτια πεζοπορίας ελίσσονται μέσα από τους κορινθιακούς
+                      λόφους, προσφέροντας θέα που σε αναγκάζει να σταματήσεις σε κάθε βήμα. Ποδηλατικές
+                      διαδρομές ακολουθούν την ακτογραμμή με όποια ταχύτητα επιλέξετε. Συνεδρίες γιόγκα
+                      στο ύπαιθρο, με φόντο τον κόλπο, από εκείνες που σε κάνουν να ξεχνάς να κοιτάξεις το
+                      ρολόι.
+                    </p>
+                }
               </ScrollReveal>
             </div>
           </div>
@@ -125,7 +139,7 @@ export default function GreekExperiencesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <ScrollReveal variant="image" className="aspect-[4/5] w-full relative overflow-hidden lg:sticky lg:top-32">
               <Image
-                src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=80"
+                src={img('spa', 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=80')}
                 alt="Ocean Spa — Althea Resorts"
                 fill
                 className="object-cover"
@@ -143,32 +157,21 @@ export default function GreekExperiencesPage() {
                 <GoldLine className="mb-8" />
               </ScrollReveal>
               <ScrollReveal delay={200}>
-                <p className="text-sm font-light text-white/60 leading-relaxed mb-5">
-                  Το Ocean Spa στο Althea δεν είναι μια απλή προσθήκη στις παροχές του resort. Είναι ένας
-                  από τους βασικότερους λόγους για να μας επισκεφθείτε. Οι θεραπείες βασίζονται στα
-                  καλλυντικά Oceanis, ένα ελληνικό brand που αντλεί τη δύναμή του από την ίδια θάλασσα
-                  και τη γη που περιβάλλει το κατάλυμα, και κάθε θεραπεία επιλέγεται για τα πραγματικά
-                  της οφέλη και όχι για το πώς ακούγεται σε έναν κατάλογο.
-                </p>
-                <p className="text-sm font-light text-white/60 leading-relaxed mb-5">
-                  Οι εγκαταστάσεις σχεδιάστηκαν με την ίδια φιλοσοφία όπως καθετί στο Althea: τίποτα
-                  περιττό, τίποτα λιγότερο από το τέλειο. Σάουνα και χαμάμ με steam room για θερμότητα και
-                  αποτοξίνωση. Ice bath για όσους γνωρίζουν τα οφέλη της κρυοθεραπείας. Μια ειδικά
-                  διαμορφωμένη πισίνα, ένας χώρος χαλάρωσης όπου ο χρόνος κυριολεκτικά σταματά, και
-                  μια αίθουσα γιόγκα ανοιχτή στην κίνηση και τη γαλήνη σε ίση μοίρα. Ένα πλήρως
-                  εξοπλισμένο γυμναστήριο για όσους θέλουν να κρατήσουν το σώμα τους σε φόρμα. Δύο
-                  μονές καμπίνες θεραπείας και μία διπλή καμπίνα για ζευγάρια ή για όσους επιζητούν
-                  περισσότερη άνεση χώρου. Αποδυτήρια, ιδιωτικοί χώροι και μια boutique καλλυντικών με
-                  ολόκληρη τη σειρά Oceanis, για όσους θέλουν να πάρουν ένα κομμάτι αυτής της εμπειρίας
-                  μαζί τους στο σπίτι.
-                </p>
-                <p className="text-sm font-light text-white/60 leading-relaxed mb-8">
-                  Οι θεραπευτές μας ακολουθούν τους δικούς σας σωματικούς ρυθμούς. Δεν βιάζονται. Και
-                  δεν θέλουν να βιάζεστε ούτε εσείς. Φτάνετε κουβαλώντας το βάρος της καθημερινότητας
-                  που προηγήθηκε. Μία ώρα μετά, έχετε ειλικρινά ξεχάσει το μεγαλύτερο μέρος της. Δεν
-                  είναι μια απλή υπόσχεση. Είναι αυτό που συμβαίνει σε αυτόν τον χώρο, σε αυτή την
-                  πλαγιά, από αυτά τα χέρια.
-                </p>
+                {byCategory['spa']?.shortDescription
+                  ? paras(byCategory['spa'].shortDescription, 'text-sm font-light text-white/60 leading-relaxed mb-5')
+                  : <>
+                      <p className="text-sm font-light text-white/60 leading-relaxed mb-5">
+                        Το Ocean Spa στο Althea δεν είναι μια απλή προσθήκη στις παροχές του resort. Είναι ένας
+                        από τους βασικότερους λόγους για να μας επισκεφθείτε. Οι θεραπείες βασίζονται στα
+                        καλλυντικά Oceanis, ένα ελληνικό brand που αντλεί τη δύναμή του από την ίδια θάλασσα
+                        και τη γη που περιβάλλει το κατάλυμα.
+                      </p>
+                      <p className="text-sm font-light text-white/60 leading-relaxed mb-8">
+                        Οι θεραπευτές μας ακολουθούν τους δικούς σας σωματικούς ρυθμούς. Δεν βιάζονται. Και
+                        δεν θέλουν να βιάζεστε ούτε εσείς.
+                      </p>
+                    </>
+                }
               </ScrollReveal>
 
               {/* Oceanis philosophy */}
@@ -293,18 +296,15 @@ export default function GreekExperiencesPage() {
                 <GoldLine className="mb-8" />
               </ScrollReveal>
               <ScrollReveal delay={200}>
-                <p className="text-body-refined mb-10">
-                  Οι καλύτερες εταιρικές συναντήσεις πραγματοποιούνται όταν το ίδιο το περιβάλλον βοηθά
-                  στη δουλειά. Όταν οι άνθρωποι απομακρύνονται από τα γνώριμα γραφεία και τις
-                  συνηθισμένες αίθουσες, κάτι αλλάζει. Οι συζητήσεις γίνονται πιο άμεσες. Οι ιδέες έρχονται
-                  πιο εύκολα. Η ένταση που δημιουργείται στα κλασικά συνεδριακά περιβάλλοντα απλώς
-                  δεν σας ακολουθεί εδώ. Στο Althea, οι χώροι είναι ευέλικτοι και άρτια εξοπλισμένοι, αλλά
-                  είναι το περιβάλλον που κάνει την πραγματική διαφορά: οι λόφοι, η θάλασσα, τα κοινά
-                  γεύματα, τα βράδια που εξελίσσονται φυσικά σε κάτι που μοιάζει λιγότερο με
-                  επαγγελματικό ταξίδι και περισσότερο με αφορμή για να εμπιστευτείς τους ανθρώπους με
-                  τους οποίους συνεργάζεσαι. Οι ομάδες φεύγουν από το Althea με αποφάσεις που έχουν
-                  παρθεί και με ανανεωμένη ενέργεια.
-                </p>
+                {byCategory['corporate']?.shortDescription
+                  ? paras(byCategory['corporate'].shortDescription, 'text-body-refined mb-5 last:mb-10')
+                  : <p className="text-body-refined mb-10">
+                      Οι καλύτερες εταιρικές συναντήσεις πραγματοποιούνται όταν το ίδιο το περιβάλλον βοηθά
+                      στη δουλειά. Όταν οι άνθρωποι απομακρύνονται από τα γνώριμα γραφεία και τις
+                      συνηθισμένες αίθουσες, κάτι αλλάζει. Οι ομάδες φεύγουν από το Althea με αποφάσεις
+                      που έχουν παρθεί και με ανανεωμένη ενέργεια.
+                    </p>
+                }
               </ScrollReveal>
 
               <ScrollReveal delay={220}>
@@ -412,17 +412,15 @@ export default function GreekExperiencesPage() {
                 <GoldLine className="mb-8" />
               </ScrollReveal>
               <ScrollReveal delay={200}>
-                <p className="text-body-refined mb-10">
-                  Οι λόφοι της Κορινθίας, το φως πάνω από τον κόλπο εκείνη την ιδιαίτερη ώρα του
-                  δειλινού, ο αέρας που φέρνει κάτι ζεστό και χαλαρό: κανένας διακοσμητής δεν μπορεί να
-                  τα δημιουργήσει αυτά. Αυτό που προσφέρουμε σε κάθε γάμο στο Althea είναι κάτι πιο
-                  αθόρυβο αλλά πιο σημαντικό από την αισθητική: την κατανόηση ότι αυτή η μέρα έχει
-                  σημασία για τους ανθρώπους που τη ζουν, όχι μόνο για τις φωτογραφίες. Η ομάδα μας
-                  συνεργάζεται στενά με κάθε ζευγάρι, από την πρώτη συζήτηση μέχρι τον τελευταίο χορό,
-                  διασφαλίζοντας ότι οι λεπτομέρειες θα τηρηθούν και η ημέρα θα κυλήσει όπως ακριβώς
-                  την ονειρευτήκατε. Η Κορινθία αποτελεί τόπο συναντήσεων και γιορτής εδώ και χιλιάδες
-                  χρόνια. Ο γάμος σας εντάσσεται φυσικά σε αυτή την ιστορία.
-                </p>
+                {byCategory['events']?.shortDescription
+                  ? paras(byCategory['events'].shortDescription, 'text-body-refined mb-5 last:mb-10')
+                  : <p className="text-body-refined mb-10">
+                      Οι λόφοι της Κορινθίας, το φως πάνω από τον κόλπο εκείνη την ιδιαίτερη ώρα του
+                      δειλινού, ο αέρας που φέρνει κάτι ζεστό και χαλαρό: κανένας διακοσμητής δεν μπορεί
+                      να τα δημιουργήσει αυτά. Η Κορινθία αποτελεί τόπο συναντήσεων και γιορτής εδώ και
+                      χιλιάδες χρόνια. Ο γάμος σας εντάσσεται φυσικά σε αυτή την ιστορία.
+                    </p>
+                }
               </ScrollReveal>
               <ScrollReveal delay={250}>
                 <a

@@ -103,6 +103,14 @@ export async function getLocations(locale: Locale = 'en') {
   return result?.docs ?? []
 }
 
+export async function getExperiences(locale: Locale = 'en') {
+  const payload = await getPayload({ config })
+  const result = await payload
+    .find({ collection: 'experiences', locale, limit: 20, sort: 'order' })
+    .catch(() => null)
+  return result?.docs ?? []
+}
+
 export async function getTestimonials(locale: Locale = 'en') {
   const payload = await getPayload({ config })
   const result = await payload

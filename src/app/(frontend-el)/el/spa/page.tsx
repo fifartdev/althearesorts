@@ -7,6 +7,7 @@ import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { BOOKING_URL, SITE_URL } from '@/lib/constants'
 import { SpaBanner } from '@/components/ui/SpaBanner'
+import { getExperiences } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Ocean Spa — Ευεξία & Θεραπείες',
@@ -41,7 +42,10 @@ const cabins = [
   },
 ]
 
-export default function GreekSpaPage() {
+export default async function GreekSpaPage() {
+  const docs = await getExperiences('el')
+  const spaDoc = docs.find((d: any) => d.category === 'spa') as any | undefined
+  const spaIntro: string | undefined = spaDoc?.shortDescription || undefined
   return (
     <main id="main-content">
       <SpaBanner locale="el" />
@@ -89,23 +93,28 @@ export default function GreekSpaPage() {
                 <GoldLine className="mb-8" />
               </ScrollReveal>
               <ScrollReveal delay={200}>
-                <p className="text-body-refined mb-5">
-                  Το Ocean Spa στο Althea σχεδιάστηκε ως αυτοτελής προορισμός, όχι ως εγκατάσταση
-                  που σημειώνεται σε μια λίστα. Καταλαμβάνει το δικό του τμήμα του καταλύματος —
-                  ήσυχο, αδιατάρακτο, χτισμένο γύρω από την ιδέα ότι το σώμα γνωρίζει τι χρειάζεται
-                  όταν επιτέλους του δώσετε τις συνθήκες.
-                </p>
-                <p className="text-body-refined mb-5">
-                  Φτάνετε κουβαλώντας το βάρος όλων όσα συνέβησαν πριν έρθετε. Μία ώρα αργότερα,
-                  έχετε ξεχάσει πραγματικά τα περισσότερα. Αυτό δεν είναι υπόσχεση. Αυτό συμβαίνει
-                  απλώς σε αυτό το δωμάτιο, σε αυτόν τον λόφο, με αυτά τα χέρια.
-                </p>
-                <p className="text-body-refined">
-                  Κάθε θεραπεία χτίζεται γύρω από τα καλλυντικά Oceanis — μια πιστοποιημένη
-                  ελληνική μάρκα από την ίδια θάλασσα και γη που περιβάλλει το κατάλυμα. Οι ίδιες
-                  φόρμουλες διατίθενται στο Boutique Oceanis — για όσους θέλουν να πάρουν ένα
-                  κομμάτι αυτού του τόπου μαζί τους.
-                </p>
+                {spaIntro
+                  ? spaIntro.split('\n\n').map((p: string, i: number) => (
+                      <p key={i} className="text-body-refined mb-5">{p.trim()}</p>
+                    ))
+                  : <>
+                      <p className="text-body-refined mb-5">
+                        Το Ocean Spa στο Althea σχεδιάστηκε ως αυτοτελής προορισμός, όχι ως εγκατάσταση
+                        που σημειώνεται σε μια λίστα. Καταλαμβάνει το δικό του τμήμα του καταλύματος —
+                        ήσυχο, αδιατάρακτο, χτισμένο γύρω από την ιδέα ότι το σώμα γνωρίζει τι χρειάζεται
+                        όταν επιτέλους του δώσετε τις συνθήκες.
+                      </p>
+                      <p className="text-body-refined mb-5">
+                        Φτάνετε κουβαλώντας το βάρος όλων όσα συνέβησαν πριν έρθετε. Μία ώρα αργότερα,
+                        έχετε ξεχάσει πραγματικά τα περισσότερα. Αυτό δεν είναι υπόσχεση. Αυτό συμβαίνει
+                        απλώς σε αυτό το δωμάτιο, σε αυτόν τον λόφο, με αυτά τα χέρια.
+                      </p>
+                      <p className="text-body-refined">
+                        Κάθε θεραπεία χτίζεται γύρω από τα καλλυντικά Oceanis — μια πιστοποιημένη
+                        ελληνική μάρκα από την ίδια θάλασσα και γη που περιβάλλει το κατάλυμα.
+                      </p>
+                    </>
+                }
               </ScrollReveal>
             </div>
             <ScrollReveal variant="image" delay={100} className="aspect-[4/5] w-full relative overflow-hidden">

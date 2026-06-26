@@ -7,6 +7,7 @@ import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { BOOKING_URL, SITE_URL } from '@/lib/constants'
 import { SpaBanner } from '@/components/ui/SpaBanner'
+import { getExperiences } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Ocean Spa',
@@ -62,7 +63,11 @@ const oceanSpaSchema = {
   },
 }
 
-export default function SpaPage() {
+export default async function SpaPage() {
+  const docs = await getExperiences('en')
+  const spaDoc = docs.find((d: any) => d.category === 'spa') as any | undefined
+  const spaIntro: string | undefined = spaDoc?.shortDescription || undefined
+
   return (
     <>
       <script
@@ -115,24 +120,31 @@ export default function SpaPage() {
                 <GoldLine className="mb-8" />
               </ScrollReveal>
               <ScrollReveal delay={200}>
-                <p className="text-body-refined mb-5">
-                  The Ocean Spa at Althea was designed as a destination in itself, not
-                  a facility ticked off a checklist. It occupies its own wing of the
-                  property — quiet, unhurried, built around the idea that the body
-                  knows what it needs when you finally give it the conditions.
-                </p>
-                <p className="text-body-refined mb-5">
-                  You arrive carrying the weight of everything that happened before you
-                  got here. An hour later, you have genuinely forgotten what most of it
-                  was. That is not a promise. That is just what happens in this room,
-                  on this hillside, with these hands.
-                </p>
-                <p className="text-body-refined">
-                  Every treatment is built around Oceanis cosmetics — a certified Greek
-                  brand drawn from the same sea and land that surrounds the property.
-                  The same formulas used in the spa are available in the Oceanis Boutique —
-                  the full Oceanis range, for those who want to bring a piece of this place home.
-                </p>
+                {spaIntro
+                  ? spaIntro.split('\n\n').map((p: string, i: number) => (
+                      <p key={i} className="text-body-refined mb-5">{p.trim()}</p>
+                    ))
+                  : <>
+                      <p className="text-body-refined mb-5">
+                        The Ocean Spa at Althea was designed as a destination in itself, not
+                        a facility ticked off a checklist. It occupies its own wing of the
+                        property — quiet, unhurried, built around the idea that the body
+                        knows what it needs when you finally give it the conditions.
+                      </p>
+                      <p className="text-body-refined mb-5">
+                        You arrive carrying the weight of everything that happened before you
+                        got here. An hour later, you have genuinely forgotten what most of it
+                        was. That is not a promise. That is just what happens in this room,
+                        on this hillside, with these hands.
+                      </p>
+                      <p className="text-body-refined">
+                        Every treatment is built around Oceanis cosmetics — a certified Greek
+                        brand drawn from the same sea and land that surrounds the property.
+                        The same formulas used in the spa are available in the Oceanis Boutique —
+                        the full Oceanis range, for those who want to bring a piece of this place home.
+                      </p>
+                    </>
+                }
               </ScrollReveal>
             </div>
             <ScrollReveal variant="image" delay={100} className="aspect-[4/5] w-full relative overflow-hidden">
