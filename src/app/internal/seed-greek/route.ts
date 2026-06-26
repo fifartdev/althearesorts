@@ -306,9 +306,11 @@ const FAQ_TRANSLATIONS: Record<string, { question: string; answer: string }> = {
 // ─── Seed functions ────────────────────────────────────────────────────────────
 
 type P = Awaited<ReturnType<typeof getPayload>>
-const updated: string[] = []
-const notFound: string[] = []
-const errors: string[] = []
+// Arrays declared inside GET — not module-level — so warm Vercel instances
+// don't accumulate results across requests.
+let updated: string[] = []
+let notFound: string[] = []
+let errors: string[] = []
 
 async function seedRooms(payload: P) {
   const res = await (payload.find as Function)({ collection: 'rooms', limit: 50 })
@@ -547,7 +549,8 @@ async function seedDiningMetaEL(payload: P) {
     const m = DINING_META_EL[key]
     if (!m) { notFound.push(`dining meta el "${key}"`); continue }
     try {
-      await (payload.update as Function)({ collection: 'dining', id: doc.id, locale: 'el', data: { meta: { title: m.title, description: m.description, keywords: m.keywords } } })
+      // slug passed to prevent hook from regenerating from Greek name → empty string
+      await (payload.update as Function)({ collection: 'dining', id: doc.id, locale: 'el', data: { meta: { title: m.title, description: m.description, keywords: m.keywords }, slug: doc.slug } })
       updated.push(`dining meta el: "${key}"`)
     } catch (e: any) { errors.push(`dining meta el "${key}": ${e?.message}`) }
   }
@@ -560,7 +563,8 @@ async function seedExperienceMetaEL(payload: P) {
     const m = EXPERIENCE_META_EL[key]
     if (!m) { notFound.push(`experience meta el "${key}"`); continue }
     try {
-      await (payload.update as Function)({ collection: 'experiences', id: doc.id, locale: 'el', data: { meta: { title: m.title, description: m.description, keywords: m.keywords } } })
+      // slug passed to prevent hook from regenerating from Greek title → empty string
+      await (payload.update as Function)({ collection: 'experiences', id: doc.id, locale: 'el', data: { meta: { title: m.title, description: m.description, keywords: m.keywords }, slug: doc.slug } })
       updated.push(`experience meta el: "${key}"`)
     } catch (e: any) { errors.push(`experience meta el "${key}": ${e?.message}`) }
   }
@@ -659,6 +663,7 @@ export async function GET(request: NextRequest) {
   if (searchParams.get('secret') !== process.env.PAYLOAD_SECRET) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
+  updated = []; notFound = []; errors = []
   const payload = await getPayload({ config })
   await seedRooms(payload)
   await seedDining(payload)

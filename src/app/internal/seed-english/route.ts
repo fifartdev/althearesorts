@@ -210,9 +210,9 @@ const OFFER_CONDITIONS_EN = [
 // ─── Globals ──────────────────────────────────────────────────────────────────
 
 type P = Awaited<ReturnType<typeof getPayload>>
-const updated: string[] = []
-const notFound: string[] = []
-const errors: string[] = []
+let updated: string[] = []
+let notFound: string[] = []
+let errors: string[] = []
 
 async function seedRoomMeta(payload: P) {
   const res = await (payload.find as Function)({ collection: 'rooms', limit: 50, locale: 'en' })
@@ -484,6 +484,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  updated = []; notFound = []; errors = []
   const payload = await getPayload({ config })
 
   await seedRoomMeta(payload)
