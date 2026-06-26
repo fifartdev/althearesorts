@@ -5,8 +5,8 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
-import { ROOMS, BOOKING_URL, SITE_URL } from '@/lib/constants'
-import { getRooms } from '@/lib/cms'
+import { SITE_URL } from '@/lib/seo'
+import { getRooms, getBookingSettings } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Δωμάτια & Σουίτες — 41 Δωμάτια στην Κορινθία',
@@ -54,48 +54,37 @@ const greekRoomData: Record<string, { view: string; tagline?: string; shortDesc:
 }
 
 export default async function GreekAccommodationPage() {
-  const docs = await getRooms('el')
+  const [docs, bookingSettings] = await Promise.all([
+    getRooms('el'),
+    getBookingSettings(),
+  ])
+  const bookingUrl: string | undefined = (bookingSettings as any)?.bookingEngineUrl || undefined
 
-  // Use CMS images/slugs/sizes; overlay Greek text from greekRoomData if available
   const rooms = docs.length > 0
     ? docs.map((r: any) => {
         const slug: string = r.slug ?? ''
         const gr = greekRoomData[slug]
         const cmsImage = (typeof r.heroImage === 'object' ? r.heroImage?.url : r.heroImage) || r.imageUrl || ''
-        const fallbackRoom = ROOMS.find((fr) => fr.slug === slug)
         return {
           slug,
-          title: r.title ?? fallbackRoom?.title ?? '',
-          view: gr?.view ?? r.viewType ?? fallbackRoom?.view ?? '',
-          tagline: gr?.tagline ?? r.tagline ?? fallbackRoom?.tagline,
-          size: r.size ?? fallbackRoom?.size ?? '',
-          shortDesc: gr?.shortDesc ?? r.shortDescription ?? fallbackRoom?.shortDesc ?? '',
-          image: cmsImage || fallbackRoom?.image || '',
-          features: gr?.features ?? ((r.highlights ?? []).map((h: any) => h.text ?? '').filter(Boolean)) ?? fallbackRoom?.features ?? [],
+          title: r.title ?? '',
+          view: gr?.view ?? r.viewType ?? '',
+          tagline: gr?.tagline ?? r.tagline,
+          size: r.size ?? '',
+          shortDesc: gr?.shortDesc ?? r.shortDescription ?? '',
+          image: cmsImage,
+          features: gr?.features ?? ((r.highlights ?? []).map((h: any) => h.text ?? '').filter(Boolean)),
           featured: r.featured ?? false,
         }
       })
-    : ROOMS.map((room) => {
-        const gr = greekRoomData[room.slug]
-        return {
-          slug: room.slug,
-          title: room.title,
-          view: gr?.view ?? room.view,
-          tagline: gr?.tagline ?? room.tagline,
-          size: room.size,
-          shortDesc: gr?.shortDesc ?? room.shortDesc,
-          image: room.image,
-          features: gr?.features ?? room.features,
-          featured: room.featured,
-        }
-      })
+    : []
 
   return (
     <main id="main-content">
 
       {/* Hero */}
       <section
-        className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
+        className="relative h-[70vh] min-h-130 flex items-end overflow-hidden"
         aria-label="Δωμάτια"
       >
         <Image
@@ -106,7 +95,7 @@ export default async function GreekAccommodationPage() {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#102027]/90 via-[#102027]/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-deep/90 via-deep/30 to-transparent" />
         <div className="relative z-10 container-luxury pb-16 lg:pb-24 w-full">
           <ScrollReveal>
             <SectionLabel light className="mb-5">Διαμονή</SectionLabel>
@@ -143,7 +132,7 @@ export default async function GreekAccommodationPage() {
             </p>
           </ScrollReveal>
           <ScrollReveal delay={150}>
-            <div className="flex flex-wrap justify-center gap-x-12 gap-y-4 mt-12 pt-10 border-t border-[#e8e4dd]">
+            <div className="flex flex-wrap justify-center gap-x-12 gap-y-4 mt-12 pt-10 border-t border-stone">
               {[
                 { value: '41', label: 'Δωμάτια & Σουίτες' },
                 { value: '6',  label: 'Κατηγορίες' },
@@ -151,8 +140,8 @@ export default async function GreekAccommodationPage() {
                 { value: '5★', label: 'Εμπειρία' },
               ].map((s) => (
                 <div key={s.label} className="flex flex-col items-center gap-1">
-                  <span className="font-editorial text-3xl font-light text-[#102027]">{s.value}</span>
-                  <span className="text-label-upper text-[#6b6b6b]">{s.label}</span>
+                  <span className="font-editorial text-3xl font-light text-deep">{s.value}</span>
+                  <span className="text-label-upper text-smoke">{s.label}</span>
                 </div>
               ))}
             </div>
@@ -176,7 +165,7 @@ export default async function GreekAccommodationPage() {
               <div className={`grid grid-cols-1 lg:grid-cols-2 ${isEven ? '' : 'lg:[direction:rtl]'}`}>
 
                 {/* Image */}
-                <ScrollReveal variant="image" className="aspect-[4/3] lg:aspect-auto lg:min-h-150 relative overflow-hidden">
+                <ScrollReveal variant="image" className="aspect-4/3 lg:aspect-auto lg:min-h-150 relative overflow-hidden">
                   <Image
                     src={room.image}
                     alt={room.title}
@@ -247,7 +236,7 @@ export default async function GreekAccommodationPage() {
                   <ScrollReveal delay={250}>
                     <div className="flex flex-wrap gap-4">
                       <a
-                        href={BOOKING_URL}
+                        href={bookingUrl || '#'}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="h-11 px-7 inline-flex items-center
@@ -280,18 +269,18 @@ export default async function GreekAccommodationPage() {
       })}
 
       {/* All rooms include */}
-      <section className="section-padding bg-[#faf8f4]" aria-label="Παροχές σε όλα τα δωμάτια">
+      <section className="section-padding bg-cream" aria-label="Παροχές σε όλα τα δωμάτια">
         <div className="container-luxury">
           <div className="text-center mb-14">
             <ScrollReveal>
               <SectionLabel className="mb-5 justify-center">Σε Κάθε Δωμάτιο</SectionLabel>
             </ScrollReveal>
             <ScrollReveal delay={100}>
-              <h2 className="text-display-sm text-[#102027]">Όλα τα Δωμάτια Περιλαμβάνουν</h2>
+              <h2 className="text-display-sm text-deep">Όλα τα Δωμάτια Περιλαμβάνουν</h2>
             </ScrollReveal>
           </div>
           <ScrollReveal delay={150}>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px bg-[#e8e4dd]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px bg-stone">
               {[
                 'Δωρεάν Wi-Fi',
                 'Κλιματισμός',
@@ -308,10 +297,10 @@ export default async function GreekAccommodationPage() {
               ].map((amenity) => (
                 <div
                   key={amenity}
-                  className="flex flex-col items-center text-center gap-3 p-6 bg-[#faf8f4]"
+                  className="flex flex-col items-center text-center gap-3 p-6 bg-cream"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#ad8b27]" aria-hidden="true" />
-                  <span className="text-xs uppercase tracking-wider text-[#102027] font-light leading-tight">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold" aria-hidden="true" />
+                  <span className="text-xs uppercase tracking-wider text-deep font-light leading-tight">
                     {amenity}
                   </span>
                 </div>

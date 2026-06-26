@@ -1,34 +1,33 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { BOOKING_URL } from '@/lib/constants'
 import { cn } from '@/lib/cn'
 
-const barContent = {
-  en: {
-    tagline: 'Reserve your stay — 60 minutes from Athens',
-    offer: '10% off direct bookings',
-    cta: 'Book Now',
-    ariaLabel: 'Quick booking',
-  },
-  el: {
-    tagline: 'Κλείστε τη διαμονή σας — 60 λεπτά από Αθήνα',
-    offer: '10% έκπτωση για απευθείας κρατήσεις',
-    cta: 'Κράτηση',
-    ariaLabel: 'Γρήγορη κράτηση',
-  },
-}
-
-export function StickyBookingBar({ locale = 'en', bookingUrl }: { locale?: 'en' | 'el'; bookingUrl?: string }) {
+export function StickyBookingBar({
+  locale = 'en',
+  bookingUrl,
+  stickyBarText,
+  offerText,
+  ctaLabel,
+}: {
+  locale?: 'en' | 'el'
+  bookingUrl?: string
+  stickyBarText?: string
+  offerText?: string
+  ctaLabel?: string
+}) {
   const [visible, setVisible] = useState(false)
-  const c = barContent[locale]
-  const _bookingUrl = bookingUrl || BOOKING_URL
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.8)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  if (!bookingUrl) return null
+
+  const label = ctaLabel || (locale === 'el' ? 'Κράτηση' : 'Book Now')
+  const ariaLabel = locale === 'el' ? 'Γρήγορη κράτηση' : 'Quick booking'
 
   return (
     <div
@@ -39,17 +38,21 @@ export function StickyBookingBar({ locale = 'en', bookingUrl }: { locale?: 'en' 
         visible ? 'translate-y-0' : 'translate-y-full'
       )}
       role="complementary"
-      aria-label={c.ariaLabel}
+      aria-label={ariaLabel}
     >
-      <p className="text-xs uppercase tracking-[0.2em] text-white/70 font-light">
-        {c.tagline}
-      </p>
-      <div className="flex items-center gap-6">
-        <span className="text-xs text-gold uppercase tracking-widest font-light">
-          {c.offer}
-        </span>
+      {stickyBarText && (
+        <p className="text-xs uppercase tracking-[0.2em] text-white/70 font-light">
+          {stickyBarText}
+        </p>
+      )}
+      <div className={cn('flex items-center gap-6', !stickyBarText && 'ml-auto')}>
+        {offerText && (
+          <span className="text-xs text-gold uppercase tracking-widest font-light">
+            {offerText}
+          </span>
+        )}
         <a
-          href={_bookingUrl}
+          href={bookingUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="h-9 px-6 inline-flex items-center
@@ -58,16 +61,21 @@ export function StickyBookingBar({ locale = 'en', bookingUrl }: { locale?: 'en' 
                      hover:bg-transparent hover:text-gold
                      transition-all duration-400"
         >
-          {c.cta}
+          {label}
         </a>
       </div>
     </div>
   )
 }
 
-export function FloatingBookingButton({ bookingUrl }: { bookingUrl?: string } = {}) {
+export function FloatingBookingButton({
+  bookingUrl,
+  label,
+}: {
+  bookingUrl?: string
+  label?: string
+} = {}) {
   const [visible, setVisible] = useState(false)
-  const _bookingUrl = bookingUrl || BOOKING_URL
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 400)
@@ -75,9 +83,11 @@ export function FloatingBookingButton({ bookingUrl }: { bookingUrl?: string } = 
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  if (!bookingUrl) return null
+
   return (
     <a
-      href={_bookingUrl}
+      href={bookingUrl}
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
@@ -90,7 +100,7 @@ export function FloatingBookingButton({ bookingUrl }: { bookingUrl?: string } = 
       )}
       aria-label="Book your stay at Althea Resorts"
     >
-      Book Now
+      {label || 'Book Now'}
     </a>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { generateMetadata as genMeta } from '@/lib/seo'
-import { SITE_URL } from '@/lib/constants'
+import { SITE_URL } from '@/lib/seo'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
@@ -72,7 +72,7 @@ export default function LocationPage() {
     <main id="main-content">
       {/* Hero */}
       <section className="relative pt-40 pb-24 lg:pt-56 lg:pb-32 bg-[#35657a] overflow-hidden" aria-label="Location">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 font-editorial text-[14vw] font-light text-white/[0.03] leading-none select-none" aria-hidden="true">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 font-editorial text-[14vw] font-light text-white/3 leading-none select-none" aria-hidden="true">
           Corinthia
         </div>
         <div className="relative z-10 container-luxury">
@@ -95,12 +95,12 @@ export default function LocationPage() {
       </section>
 
       {/* Intro */}
-      <section className="section-padding bg-[#faf8f4]">
+      <section className="section-padding bg-cream">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-7">
               <ScrollReveal>
-                <p className="font-editorial text-2xl font-light text-[#102027] leading-relaxed mb-8">
+                <p className="font-editorial text-2xl font-light text-deep leading-relaxed mb-8">
                   The Corinthian Gulf stretches out in front of you, calm and wide,
                   with the mountains of central Greece on the opposite shore.
                 </p>
@@ -132,9 +132,9 @@ export default function LocationPage() {
                     { value: "10'", label: 'To Xylokastro town' },
                     { value: "45'", label: 'To Ancient Corinth' },
                   ].map((f) => (
-                    <div key={f.label} className="flex gap-4 border-l-2 border-[#ad8b27] pl-4">
-                      <span className="font-editorial text-3xl font-light text-[#102027] leading-none">{f.value}</span>
-                      <span className="text-xs uppercase tracking-wider text-[#6b6b6b] font-light self-end pb-0.5">{f.label}</span>
+                    <div key={f.label} className="flex gap-4 border-l-2 border-gold pl-4">
+                      <span className="font-editorial text-3xl font-light text-deep leading-none">{f.value}</span>
+                      <span className="text-xs uppercase tracking-wider text-smoke font-light self-end pb-0.5">{f.label}</span>
                     </div>
                   ))}
                 </div>
@@ -153,7 +153,7 @@ export default function LocationPage() {
                 <SectionLabel className="mb-4">Sightseeing</SectionLabel>
               </ScrollReveal>
               <ScrollReveal delay={100}>
-                <h2 className="text-display-sm text-[#102027]">
+                <h2 className="text-display-sm text-deep">
                   A Region With More History<br />Than It Gets Credit For
                 </h2>
               </ScrollReveal>
@@ -172,8 +172,8 @@ export default function LocationPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {sights.map((sight, i) => (
               <ScrollReveal key={sight.name} delay={i * 60}>
-                <div className="border border-[#e8e4dd] h-full flex flex-col overflow-hidden">
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="border border-stone h-full flex flex-col overflow-hidden">
+                  <div className="relative aspect-4/3 overflow-hidden">
                     <Image
                       src={sight.image}
                       alt={sight.name}
@@ -182,19 +182,19 @@ export default function LocationPage() {
                       style={'objectPosition' in sight ? { objectPosition: (sight as typeof sight & { objectPosition: string }).objectPosition } : undefined}
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-[#102027]/20" />
+                    <div className="absolute inset-0 bg-deep/20" />
                     <div className="absolute top-4 left-4">
-                      <span className="text-[10px] uppercase tracking-[0.18em] text-white bg-[#102027]/60 backdrop-blur-sm px-2.5 py-1">
+                      <span className="text-[10px] uppercase tracking-[0.18em] text-white bg-deep/60 backdrop-blur-sm px-2.5 py-1">
                         {sight.category}
                       </span>
                     </div>
                   </div>
                   <div className="p-6 flex flex-col gap-2 flex-1">
                     <div className="flex items-start justify-between gap-3">
-                      <h3 className="font-editorial text-xl font-light text-[#102027]">{sight.name}</h3>
+                      <h3 className="font-editorial text-xl font-light text-deep">{sight.name}</h3>
                       <span className="text-xs font-light text-[#a0a0a0] uppercase tracking-wider shrink-0 mt-1">{sight.distance}</span>
                     </div>
-                    <p className="text-sm font-light text-[#6b6b6b] leading-relaxed">{sight.desc}</p>
+                    <p className="text-sm font-light text-smoke leading-relaxed">{sight.desc}</p>
                   </div>
                 </div>
               </ScrollReveal>

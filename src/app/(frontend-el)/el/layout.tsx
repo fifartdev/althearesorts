@@ -7,8 +7,16 @@ import { Footer } from '@/components/layout/Footer'
 import { StickyBookingBar, FloatingBookingButton } from '@/components/layout/BookingCTA'
 import { CookieConsent } from '@/components/layout/CookieConsent'
 import { CustomCursor } from '@/components/animations/CustomCursor'
-import { hotelSchema, organizationSchema } from '@/lib/seo'
-import { getContactInfo, getBookingSettings } from '@/lib/cms'
+import { buildHotelSchema, buildOrganizationSchema } from '@/lib/seo'
+import {
+  getContactInfo,
+  getBookingSettings,
+  getSiteSettings,
+  getGeoSettings,
+  getSEOSettings,
+  getHeaderGlobal,
+  getFooterGlobal,
+} from '@/lib/cms'
 import '../../(frontend)/globals.css'
 
 export const metadata: Metadata = {
@@ -20,8 +28,6 @@ export const metadata: Metadata = {
     apple: { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
   },
 }
-
-const GA_ID = 'G-WYCXWW127J'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin', 'latin-ext'],
@@ -40,15 +46,52 @@ const dmSans = DM_Sans({
 })
 
 export default async function GreekLayout({ children }: { children: React.ReactNode }) {
-  const [contactInfo, bookingSettings] = await Promise.all([
-    getContactInfo(),
-    getBookingSettings(),
-  ])
+  const [contactInfo, bookingSettings, siteSettings, geoSettings, seoSettings, headerGlobal, footerGlobal] =
+    await Promise.all([
+      getContactInfo(),
+      getBookingSettings(),
+      getSiteSettings(),
+      getGeoSettings('el'),
+      getSEOSettings('el'),
+      getHeaderGlobal('el'),
+      getFooterGlobal('el'),
+    ])
 
   const bookingUrl = (bookingSettings as any)?.bookingEngineUrl || undefined
   const phone = (contactInfo as any)?.phone || undefined
   const address = (contactInfo as any)?.address || undefined
   const email = (contactInfo as any)?.email || undefined
+  const gaId: string | undefined = (seoSettings as any)?.googleAnalyticsId || undefined
+
+  // Build nav links from Payload Header global (Greek locale), prefix with /el
+  const rawNav = (headerGlobal as any)?.navItems ?? []
+  const navLinks = rawNav.map((item: any) => {
+    const base = item.type === 'external' ? (item.url ?? '#') : (item.internalUrl ?? '#')
+    const href = item.type === 'external' ? base : (base === '/' ? '/el' : `/el${base}`)
+    return { label: item.label ?? '', href }
+  }).filter((l: any) => l.label && l.href !== '#')
+
+  const ctaLabel: string | undefined = (headerGlobal as any)?.ctaLabel || undefined
+
+  const social = {
+    instagram: (siteSettings as any)?.instagram || (geoSettings as any)?.instagram || undefined,
+    facebook: (siteSettings as any)?.facebook || (geoSettings as any)?.facebook || undefined,
+    linkedin: (siteSettings as any)?.linkedin || (geoSettings as any)?.linkedin || undefined,
+  }
+
+  const hotelSchema = buildHotelSchema(geoSettings, siteSettings)
+  const organizationSchema = buildOrganizationSchema(geoSettings, siteSettings)
+
+  const footerColumns = (footerGlobal as any)?.columns ?? []
+  const footerLegalLinks = (footerGlobal as any)?.legalLinks ?? []
+  const footerCopyright: string | undefined = (footerGlobal as any)?.copyrightText || undefined
+  const footerSocial = {
+    instagram: (footerGlobal as any)?.social?.instagram || social.instagram,
+    facebook: (footerGlobal as any)?.social?.facebook || social.facebook,
+    linkedin: social.linkedin,
+  }
+
+  const stickyBarText: string | undefined = (bookingSettings as any)?.stickyBarText || undefined
 
   return (
     <html lang="el" className={`scroll-smooth ${cormorant.variable} ${dmSans.variable}`}>
@@ -66,27 +109,46 @@ export default async function GreekLayout({ children }: { children: React.ReactN
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50
-                     focus:bg-[#102027] focus:text-white focus:px-4 focus:py-2 focus:text-sm"
+                     focus:bg-deep focus:text-white focus:px-4 focus:py-2 focus:text-sm"
         >
           Μετάβαση στο κύριο περιεχόμενο
         </a>
 
-        {/* Google Analytics */}
-        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_ID}');
-          `}
+        {gaId && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`}
+            </Script>
+          </>
+        )}
+
+        <Script id="meta-pixel" strategy="afterInteractive">
+          {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','955309630869188');fbq('track','PageView');`}
         </Script>
 
         <CustomCursor />
-        <Header bookingUrl={bookingUrl} phone={phone} />
+        <Header
+          bookingUrl={bookingUrl}
+          phone={phone}
+          social={social}
+          navLinks={navLinks}
+          ctaLabel={ctaLabel}
+          locale="el"
+        />
         {children}
-        <Footer locale="el" phone={phone} email={email} address={address} bookingUrl={bookingUrl} />
-        <StickyBookingBar locale="el" bookingUrl={bookingUrl} />
+        <Footer
+          locale="el"
+          phone={phone}
+          email={email}
+          address={address}
+          bookingUrl={bookingUrl}
+          social={footerSocial}
+          columns={footerColumns}
+          legalLinks={footerLegalLinks}
+          copyrightText={footerCopyright}
+        />
+        <StickyBookingBar locale="el" bookingUrl={bookingUrl} stickyBarText={stickyBarText} />
         <FloatingBookingButton bookingUrl={bookingUrl} />
         <CookieConsent locale="el" />
       </body>

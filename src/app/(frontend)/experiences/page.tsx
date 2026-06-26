@@ -33,7 +33,7 @@ export default async function ExperiencesPage() {
     <main id="main-content">
       {/* Hero */}
       <section
-        className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
+        className="relative h-[70vh] min-h-130 flex items-end overflow-hidden"
         aria-label="Experiences"
       >
         <Image
@@ -44,7 +44,7 @@ export default async function ExperiencesPage() {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#102027]/90 via-[#102027]/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-deep/90 via-deep/30 to-transparent" />
         <div className="relative z-10 container-luxury pb-16 lg:pb-24 w-full">
           <ScrollReveal>
             <SectionLabel light className="mb-5">Experiences</SectionLabel>
@@ -73,10 +73,10 @@ export default async function ExperiencesPage() {
             <p className="text-body-refined text-lg leading-relaxed mb-5">
               A resort is not only a place to sleep well. At Althea, the experience extends
               well beyond the room, beyond the pool, beyond the{' '}
-              <a href="/spa" className="text-[#ad8b27] hover:underline font-light">spa</a>,
+              <a href="/spa" className="text-gold hover:underline font-light">spa</a>,
               beyond the view from the terrace. The hills of Corinthia are made for moving
               through. The sea is five minutes away. The{' '}
-              <a href="/spa" className="text-[#ad8b27] hover:underline font-light">spa</a> is
+              <a href="/spa" className="text-gold hover:underline font-light">spa</a> is
               made for stopping completely and letting the body remember what rest actually
               feels like. And when the occasion calls for something larger — a wedding, a
               corporate gathering that actually means something — Althea knows how to hold
@@ -94,7 +94,7 @@ export default async function ExperiencesPage() {
       <section id="activities" className="section-padding bg-white">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <ScrollReveal variant="image" className="aspect-[4/5] w-full relative overflow-hidden">
+            <ScrollReveal variant="image" className="aspect-4/5 w-full relative overflow-hidden">
               <Image
                 src={img('activities', '/images/activities%20pexel%20photo.jpg')}
                 alt="Hiking and activities in Corinthia"
@@ -108,7 +108,7 @@ export default async function ExperiencesPage() {
                 <SectionLabel className="mb-6">Activities</SectionLabel>
               </ScrollReveal>
               <ScrollReveal delay={100}>
-                <h2 className="text-display-sm text-[#102027] mb-6">Move at Your Own Pace</h2>
+                <h2 className="text-display-sm text-deep mb-6">Move at Your Own Pace</h2>
               </ScrollReveal>
               <ScrollReveal delay={150}>
                 <GoldLine className="mb-8" />
@@ -142,10 +142,10 @@ export default async function ExperiencesPage() {
       </section>
 
       {/* Spa */}
-      <section id="spa" className="section-padding bg-[#102027]">
+      <section id="spa" className="section-padding bg-deep">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-            <ScrollReveal variant="image" className="aspect-[4/5] w-full relative overflow-hidden lg:sticky lg:top-32">
+            <ScrollReveal variant="image" className="aspect-4/5 w-full relative overflow-hidden lg:sticky lg:top-32">
               <Image
                 src={img('spa', 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=80')}
                 alt="Ocean Spa — Althea Resorts"
@@ -202,7 +202,7 @@ export default async function ExperiencesPage() {
               {/* Oceanis philosophy */}
               <ScrollReveal delay={250}>
                 <div className="border-t border-white/10 pt-8 mb-8">
-                  <h3 className="text-label-upper text-[#ad8b27] mb-5">Oceanis: The Philosophy Behind the Product</h3>
+                  <h3 className="text-label-upper text-gold mb-5">Oceanis: The Philosophy Behind the Product</h3>
                   <p className="text-sm font-light text-white/50 leading-relaxed mb-4">
                     The choice of Oceanis was a values decision and one that took no deliberation.
                   </p>
@@ -240,7 +240,7 @@ export default async function ExperiencesPage() {
               <ScrollReveal delay={300}>
                 <a
                   href="/spa"
-                  className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-white border-b border-white/30 pb-1 hover:text-[#ad8b27] hover:border-[#ad8b27] transition-colors duration-300"
+                  className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-white border-b border-white/30 pb-1 hover:text-gold hover:border-gold transition-colors duration-300"
                 >
                   Discover the Full Ocean Spa
                   <svg width="16" height="6" viewBox="0 0 16 6" fill="none" aria-hidden="true">
@@ -254,10 +254,10 @@ export default async function ExperiencesPage() {
       </section>
 
       {/* Pool */}
-      <section id="pool" className="section-padding bg-[#f2f8fb]">
+      <section id="pool" className="section-padding bg-soft">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <ScrollReveal variant="image" className="aspect-[4/3] w-full relative overflow-hidden">
+            <ScrollReveal variant="image" className="aspect-4/3 w-full relative overflow-hidden">
               <Image
                 src="/images/main-pool.jpg"
                 alt="Main pool at Althea Resorts"
@@ -271,7 +271,7 @@ export default async function ExperiencesPage() {
                 <SectionLabel className="mb-6">Swimming Pool</SectionLabel>
               </ScrollReveal>
               <ScrollReveal delay={100}>
-                <h2 className="text-display-sm text-[#102027] mb-6">The Center of the Day</h2>
+                <h2 className="text-display-sm text-deep mb-6">The Center of the Day</h2>
               </ScrollReveal>
               <ScrollReveal delay={150}>
                 <GoldLine className="mb-8" />
@@ -302,7 +302,7 @@ export default async function ExperiencesPage() {
             <SectionLabel className="mb-6 justify-center">Events</SectionLabel>
           </ScrollReveal>
           <ScrollReveal delay={100}>
-            <h2 className="text-display-sm text-[#102027] mb-6">
+            <h2 className="text-display-sm text-deep mb-6">
               The Occasion Deserves<br />More Than a Venue
             </h2>
           </ScrollReveal>
@@ -321,7 +321,7 @@ export default async function ExperiencesPage() {
                 <SectionLabel className="mb-6">Corporate Events</SectionLabel>
               </ScrollReveal>
               <ScrollReveal delay={100}>
-                <h2 className="text-display-sm text-[#102027] mb-6">
+                <h2 className="text-display-sm text-deep mb-6">
                   Meetings That Leave a Mark
                 </h2>
               </ScrollReveal>
@@ -355,8 +355,8 @@ export default async function ExperiencesPage() {
               </ScrollReveal>
 
               <ScrollReveal delay={220}>
-                <h3 className="text-label-upper text-[#102027] mb-2">Conference Facilities</h3>
-                <p className="font-editorial text-lg font-light italic text-[#6b6b6b] mb-6">
+                <h3 className="text-label-upper text-deep mb-2">Conference Facilities</h3>
+                <p className="font-editorial text-lg font-light italic text-smoke mb-6">
                   A Room That Works as Hard as You Do
                 </p>
                 <p className="text-body-refined mb-8">
@@ -372,7 +372,7 @@ export default async function ExperiencesPage() {
 
               {/* Configurations */}
               <ScrollReveal delay={250}>
-                <h3 className="text-label-upper text-[#102027] mb-5">Room Configurations</h3>
+                <h3 className="text-label-upper text-deep mb-5">Room Configurations</h3>
                 <div className="grid grid-cols-2 gap-3 mb-10">
                   {[
                     { layout: 'Theatre',   capacity: '100 guests' },
@@ -380,9 +380,9 @@ export default async function ExperiencesPage() {
                     { layout: 'U-Shape',   capacity: '40 guests' },
                     { layout: 'Boardroom', capacity: '30 guests' },
                   ].map((c) => (
-                    <div key={c.layout} className="border border-[#e8e4dd] p-4">
-                      <span className="text-xs uppercase tracking-[0.18em] text-[#ad8b27] block mb-1">{c.layout}</span>
-                      <span className="font-editorial text-2xl font-light text-[#102027]">{c.capacity}</span>
+                    <div key={c.layout} className="border border-stone p-4">
+                      <span className="text-xs uppercase tracking-[0.18em] text-gold block mb-1">{c.layout}</span>
+                      <span className="font-editorial text-2xl font-light text-deep">{c.capacity}</span>
                     </div>
                   ))}
                 </div>
@@ -390,7 +390,7 @@ export default async function ExperiencesPage() {
 
               {/* Equipment */}
               <ScrollReveal delay={300}>
-                <h3 className="text-label-upper text-[#102027] mb-5">Equipment & Services</h3>
+                <h3 className="text-label-upper text-deep mb-5">Equipment & Services</h3>
                 <div className="flex flex-col gap-2 mb-10">
                   {[
                     'High-definition projector & screens',
@@ -402,8 +402,8 @@ export default async function ExperiencesPage() {
                     'AV technical support',
                     'Accommodation packages for delegates',
                   ].map((item) => (
-                    <div key={item} className="flex items-center gap-3 text-sm font-light text-[#6b6b6b]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#ad8b27] shrink-0" />
+                    <div key={item} className="flex items-center gap-3 text-sm font-light text-smoke">
+                      <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
                       {item}
                     </div>
                   ))}
@@ -415,8 +415,8 @@ export default async function ExperiencesPage() {
                   href={`mailto:reservations@althearesorts.com?subject=Corporate Event Enquiry`}
                   className="inline-flex items-center gap-2 h-11 px-7
                              text-xs uppercase tracking-[0.2em]
-                             bg-[#102027] text-white border border-[#102027]
-                             hover:bg-transparent hover:text-[#102027]
+                             bg-deep text-white border border-deep
+                             hover:bg-transparent hover:text-deep
                              transition-all duration-500"
                 >
                   Enquire About Corporate Events
@@ -424,7 +424,7 @@ export default async function ExperiencesPage() {
               </ScrollReveal>
             </div>
 
-            <ScrollReveal variant="image" delay={100} className="aspect-[4/5] w-full relative overflow-hidden">
+            <ScrollReveal variant="image" delay={100} className="aspect-4/5 w-full relative overflow-hidden">
               <Image
                 src="/images/conference%20pexel%20photo.jpg"
                 alt="Conference facilities — Althea Resorts"
@@ -438,10 +438,10 @@ export default async function ExperiencesPage() {
       </section>
 
       {/* Weddings */}
-      <section id="weddings" className="section-padding bg-[#faf8f4]">
+      <section id="weddings" className="section-padding bg-cream">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <ScrollReveal variant="image" className="aspect-[4/5] w-full relative overflow-hidden">
+            <ScrollReveal variant="image" className="aspect-4/5 w-full relative overflow-hidden">
               <Image
                 src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=80"
                 alt="Wedding venue — Althea Resorts Corinthia"
@@ -455,7 +455,7 @@ export default async function ExperiencesPage() {
                 <SectionLabel className="mb-6">Weddings</SectionLabel>
               </ScrollReveal>
               <ScrollReveal delay={100}>
-                <h2 className="text-display-sm text-[#102027] mb-6">
+                <h2 className="text-display-sm text-deep mb-6">
                   A Wedding in Corinthia
                 </h2>
               </ScrollReveal>
@@ -492,8 +492,8 @@ export default async function ExperiencesPage() {
                   href={`mailto:reservations@althearesorts.com?subject=Wedding Enquiry`}
                   className="inline-flex items-center gap-2 h-11 px-7
                              text-xs uppercase tracking-[0.2em]
-                             bg-[#102027] text-white border border-[#102027]
-                             hover:bg-transparent hover:text-[#102027]
+                             bg-deep text-white border border-deep
+                             hover:bg-transparent hover:text-deep
                              transition-all duration-500"
                 >
                   Enquire About Weddings

@@ -33,7 +33,7 @@ export default async function GreekExperiencesPage() {
     <main id="main-content">
       {/* Hero */}
       <section
-        className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
+        className="relative h-[70vh] min-h-130 flex items-end overflow-hidden"
         aria-label="Εμπειρίες"
       >
         <Image
@@ -44,7 +44,7 @@ export default async function GreekExperiencesPage() {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#102027]/90 via-[#102027]/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-deep/90 via-deep/30 to-transparent" />
         <div className="relative z-10 container-luxury pb-16 lg:pb-24 w-full">
           <ScrollReveal>
             <SectionLabel light className="mb-5">Εμπειρίες</SectionLabel>
@@ -73,7 +73,7 @@ export default async function GreekExperiencesPage() {
             <p className="text-body-refined text-lg leading-relaxed mb-5">
               Ένα resort δεν είναι απλώς ένα μέρος για να κοιμηθείς καλά. Στο Althea, η εμπειρία
               εκτείνεται πολύ πέρα από το δωμάτιο, την πισίνα, το{' '}
-              <a href="/el/spa" className="text-[#ad8b27] hover:underline font-light">spa</a>{' '}
+              <a href="/el/spa" className="text-gold hover:underline font-light">spa</a>{' '}
               ή τη θέα από τη βεράντα. Οι λόφοι της Κορινθίας ζητούν να τους εξερευνήσετε.
             </p>
             <p className="text-body-refined text-lg leading-relaxed mb-5">
@@ -96,7 +96,7 @@ export default async function GreekExperiencesPage() {
       <section id="activities" className="section-padding bg-white">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <ScrollReveal variant="image" className="aspect-[4/5] w-full relative overflow-hidden">
+            <ScrollReveal variant="image" className="aspect-4/5 w-full relative overflow-hidden">
               <Image
                 src={img('activities', '/images/activities%20pexel%20photo.jpg')}
                 alt="Πεζοπορία και δραστηριότητες στην Κορινθία"
@@ -110,7 +110,7 @@ export default async function GreekExperiencesPage() {
                 <SectionLabel className="mb-6">Δραστηριότητες</SectionLabel>
               </ScrollReveal>
               <ScrollReveal delay={100}>
-                <h2 className="text-display-sm text-[#102027] mb-6">Κινηθείτε στους Δικούς σας Ρυθμούς</h2>
+                <h2 className="text-display-sm text-deep mb-6">Κινηθείτε στους Δικούς σας Ρυθμούς</h2>
               </ScrollReveal>
               <ScrollReveal delay={150}>
                 <GoldLine className="mb-8" />
@@ -134,10 +134,10 @@ export default async function GreekExperiencesPage() {
       </section>
 
       {/* Spa */}
-      <section id="spa" className="section-padding bg-[#102027]">
+      <section id="spa" className="section-padding bg-deep">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-            <ScrollReveal variant="image" className="aspect-[4/5] w-full relative overflow-hidden lg:sticky lg:top-32">
+            <ScrollReveal variant="image" className="aspect-4/5 w-full relative overflow-hidden lg:sticky lg:top-32">
               <Image
                 src={img('spa', 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=900&q=80')}
                 alt="Ocean Spa — Althea Resorts"
@@ -177,7 +177,7 @@ export default async function GreekExperiencesPage() {
               {/* Oceanis philosophy */}
               <ScrollReveal delay={250}>
                 <div className="border-t border-white/10 pt-8 mb-8">
-                  <h3 className="text-label-upper text-[#ad8b27] mb-5">OCEANIS: Η ΦΙΛΟΣΟΦΙΑ ΠΙΣΩ ΑΠΟ ΤΑ ΠΡΟΪΟΝΤΑ</h3>
+                  <h3 className="text-label-upper text-gold mb-5">OCEANIS: Η ΦΙΛΟΣΟΦΙΑ ΠΙΣΩ ΑΠΟ ΤΑ ΠΡΟΪΟΝΤΑ</h3>
                   <p className="text-sm font-light text-white/50 leading-relaxed mb-4">
                     Η επιλογή της Oceanis ήταν μια απόφαση βασισμένη σε κοινές αξίες, για την οποία δεν
                     χρειάστηκε δεύτερη σκέψη. Η Oceanis πήρε το όνομά της από τις Ωκεανίδες, τις νύμφες
@@ -210,7 +210,7 @@ export default async function GreekExperiencesPage() {
               <ScrollReveal delay={300}>
                 <a
                   href="/el/spa"
-                  className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-white border-b border-white/30 pb-1 hover:text-[#ad8b27] hover:border-[#ad8b27] transition-colors duration-300"
+                  className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-white border-b border-white/30 pb-1 hover:text-gold hover:border-gold transition-colors duration-300"
                 >
                   Ανακαλύψτε το Πλήρες Ocean Spa
                   <svg width="16" height="6" viewBox="0 0 16 6" fill="none" aria-hidden="true">
@@ -224,10 +224,10 @@ export default async function GreekExperiencesPage() {
       </section>
 
       {/* Pool */}
-      <section id="pool" className="section-padding bg-[#f2f8fb]">
+      <section id="pool" className="section-padding bg-soft">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <ScrollReveal variant="image" className="aspect-[4/3] w-full relative overflow-hidden">
+            <ScrollReveal variant="image" className="aspect-4/3 w-full relative overflow-hidden">
               <Image
                 src="/images/main-pool.jpg"
                 alt="Κεντρική πισίνα στην Althea Resorts"
@@ -269,7 +269,7 @@ export default async function GreekExperiencesPage() {
             <SectionLabel className="mb-6 justify-center">Εκδηλώσεις</SectionLabel>
           </ScrollReveal>
           <ScrollReveal delay={100}>
-            <h2 className="text-display-sm text-[#102027] mb-6">
+            <h2 className="text-display-sm text-deep mb-6">
               Η Περίσταση Αξίζει<br />Κάτι Παραπάνω από Έναν Χώρο
             </h2>
           </ScrollReveal>
@@ -288,7 +288,7 @@ export default async function GreekExperiencesPage() {
                 <SectionLabel className="mb-6">Εταιρικές Εκδηλώσεις</SectionLabel>
               </ScrollReveal>
               <ScrollReveal delay={100}>
-                <h2 className="text-display-sm text-[#102027] mb-6">
+                <h2 className="text-display-sm text-deep mb-6">
                   Συναντήσεις που Αφήνουν το Αποτύπωμά τους
                 </h2>
               </ScrollReveal>
@@ -308,7 +308,7 @@ export default async function GreekExperiencesPage() {
               </ScrollReveal>
 
               <ScrollReveal delay={220}>
-                <h3 className="text-label-upper text-[#102027] mb-6">Συνεδριακές Εγκαταστάσεις</h3>
+                <h3 className="text-label-upper text-deep mb-6">Συνεδριακές Εγκαταστάσεις</h3>
                 <p className="text-body-refined mb-10">
                   Η αίθουσα συνεδριάσεων του Althea έχει χωρητικότητα έως και εκατό άτομα σε διάταξη
                   θεάτρου, ένας χώρος για σημαντικές συναντήσεις, χωρίς την εταιρική ανωνυμία που
@@ -322,7 +322,7 @@ export default async function GreekExperiencesPage() {
               </ScrollReveal>
 
               <ScrollReveal delay={250}>
-                <h3 className="text-label-upper text-[#102027] mb-5">Διατάξεις Αίθουσας</h3>
+                <h3 className="text-label-upper text-deep mb-5">Διατάξεις Αίθουσας</h3>
                 <div className="grid grid-cols-2 gap-3 mb-10">
                   {[
                     { layout: 'Theatre',   capacity: '100 άτομα' },
@@ -330,16 +330,16 @@ export default async function GreekExperiencesPage() {
                     { layout: 'U-Shape',   capacity: '40 άτομα' },
                     { layout: 'Boardroom', capacity: '30 άτομα' },
                   ].map((c) => (
-                    <div key={c.layout} className="border border-[#e8e4dd] p-4">
-                      <span className="text-xs uppercase tracking-[0.18em] text-[#ad8b27] block mb-1">{c.layout}</span>
-                      <span className="font-editorial text-2xl font-light text-[#102027]">{c.capacity}</span>
+                    <div key={c.layout} className="border border-stone p-4">
+                      <span className="text-xs uppercase tracking-[0.18em] text-gold block mb-1">{c.layout}</span>
+                      <span className="font-editorial text-2xl font-light text-deep">{c.capacity}</span>
                     </div>
                   ))}
                 </div>
               </ScrollReveal>
 
               <ScrollReveal delay={265}>
-                <h3 className="text-label-upper text-[#102027] mb-5">Εξοπλισμός & Υπηρεσίες</h3>
+                <h3 className="text-label-upper text-deep mb-5">Εξοπλισμός & Υπηρεσίες</h3>
                 <div className="flex flex-col gap-2 mb-10">
                   {[
                     'Βιντεοπροβολέας υψηλής ευκρίνειας & οθόνες',
@@ -351,8 +351,8 @@ export default async function GreekExperiencesPage() {
                     'Τεχνική υποστήριξη οπτικοακουστικών',
                     'Πακέτα διαμονής για συμμετέχοντες',
                   ].map((item) => (
-                    <div key={item} className="flex items-center gap-3 text-sm font-light text-[#6b6b6b]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#ad8b27] shrink-0" />
+                    <div key={item} className="flex items-center gap-3 text-sm font-light text-smoke">
+                      <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
                       {item}
                     </div>
                   ))}
@@ -364,8 +364,8 @@ export default async function GreekExperiencesPage() {
                   href="mailto:reservations@althearesorts.com?subject=Αίτημα Εταιρικής Εκδήλωσης"
                   className="inline-flex items-center gap-2 h-11 px-7
                              text-xs uppercase tracking-[0.2em]
-                             bg-[#102027] text-white border border-[#102027]
-                             hover:bg-transparent hover:text-[#102027]
+                             bg-deep text-white border border-deep
+                             hover:bg-transparent hover:text-deep
                              transition-all duration-500"
                 >
                   Πληροφορίες για Εταιρικές Εκδηλώσεις
@@ -373,7 +373,7 @@ export default async function GreekExperiencesPage() {
               </ScrollReveal>
             </div>
 
-            <ScrollReveal variant="image" delay={100} className="aspect-[4/5] w-full relative overflow-hidden">
+            <ScrollReveal variant="image" delay={100} className="aspect-4/5 w-full relative overflow-hidden">
               <Image
                 src="/images/conference%20pexel%20photo.jpg"
                 alt="Αίθουσα συνεδρίων — Althea Resorts"
@@ -387,10 +387,10 @@ export default async function GreekExperiencesPage() {
       </section>
 
       {/* Weddings */}
-      <section id="weddings" className="section-padding bg-[#faf8f4]">
+      <section id="weddings" className="section-padding bg-cream">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <ScrollReveal variant="image" className="aspect-[4/5] w-full relative overflow-hidden">
+            <ScrollReveal variant="image" className="aspect-4/5 w-full relative overflow-hidden">
               <Image
                 src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=80"
                 alt="Γαμήλιος χώρος — Althea Resorts Κορινθία"
@@ -404,7 +404,7 @@ export default async function GreekExperiencesPage() {
                 <SectionLabel className="mb-6">Γάμοι</SectionLabel>
               </ScrollReveal>
               <ScrollReveal delay={100}>
-                <h2 className="text-display-sm text-[#102027] mb-6">
+                <h2 className="text-display-sm text-deep mb-6">
                   Ένας Γάμος στην Κορινθία
                 </h2>
               </ScrollReveal>
@@ -427,8 +427,8 @@ export default async function GreekExperiencesPage() {
                   href="mailto:reservations@althearesorts.com?subject=Αίτημα Γάμου"
                   className="inline-flex items-center gap-2 h-11 px-7
                              text-xs uppercase tracking-[0.2em]
-                             bg-[#102027] text-white border border-[#102027]
-                             hover:bg-transparent hover:text-[#102027]
+                             bg-deep text-white border border-deep
+                             hover:bg-transparent hover:text-deep
                              transition-all duration-500"
                 >
                   Πληροφορίες για Γάμους

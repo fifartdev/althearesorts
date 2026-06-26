@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
-import { SITE_URL, ROOMS } from '@/lib/constants'
+import { SITE_URL } from '@/lib/seo'
+import { getRooms } from '@/lib/cms'
 
 type SitemapEntry = MetadataRoute.Sitemap[number]
 
@@ -16,7 +17,7 @@ function pair(enPath: string, elPath: string, changeFreq: SitemapEntry['changeFr
   ]
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries: MetadataRoute.Sitemap = [
     ...pair('', '/el', 'weekly', 1),
     ...pair('/accommodation', '/el/accommodation', 'weekly', 0.9),
@@ -34,9 +35,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/terms`, lastModified: new Date(), changeFrequency: 'yearly' as const, priority: 0.3 },
   ]
 
-  const roomEntries: MetadataRoute.Sitemap = ROOMS.flatMap((room) =>
-    pair(`/accommodation/${room.slug}`, `/el/accommodation/${room.slug}`, 'monthly', 0.8)
-  )
+  const roomDocs = await getRooms('en').catch(() => [])
+  const roomEntries: MetadataRoute.Sitemap = (roomDocs as any[])
+    .filter((r) => r.slug)
+    .flatMap((r) => pair(`/accommodation/${r.slug}`, `/el/accommodation/${r.slug}`, 'monthly', 0.8))
 
   return [...staticEntries, ...roomEntries]
 }

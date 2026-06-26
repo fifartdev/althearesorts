@@ -47,7 +47,7 @@ export default async function GreekJournalPage() {
             <SectionLabel className="mb-6">Ημερολόγιο</SectionLabel>
           </ScrollReveal>
           <ScrollReveal delay={100}>
-            <h1 className="text-display-lg text-[#102027]">Ιστορίες από την Κορινθία</h1>
+            <h1 className="text-display-lg text-deep">Ιστορίες από την Κορινθία</h1>
           </ScrollReveal>
         </div>
       </section>

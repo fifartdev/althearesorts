@@ -100,7 +100,7 @@ export function GalleryClient({ cmsItems }: { cmsItems?: GalleryItem[] }) {
     <main id="main-content">
       {/* Hero */}
       <section
-        className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
+        className="relative h-[70vh] min-h-130 flex items-end overflow-hidden"
         aria-label="Γκαλερί"
       >
         <Image
@@ -111,7 +111,7 @@ export function GalleryClient({ cmsItems }: { cmsItems?: GalleryItem[] }) {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#102027]/90 via-[#102027]/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-deep/90 via-deep/30 to-transparent" />
         <div className="relative z-10 container-luxury pb-16 lg:pb-24 w-full">
           <ScrollReveal>
             <SectionLabel light className="mb-5">Γκαλερί</SectionLabel>
@@ -126,7 +126,7 @@ export function GalleryClient({ cmsItems }: { cmsItems?: GalleryItem[] }) {
       </section>
 
       {/* Filter bar */}
-      <section className="py-10 bg-white border-b border-[#e8e4dd]">
+      <section className="py-10 bg-white border-b border-stone">
         <div className="container-luxury">
           <ScrollReveal>
             <div className="flex flex-wrap gap-3">
@@ -136,8 +136,8 @@ export function GalleryClient({ cmsItems }: { cmsItems?: GalleryItem[] }) {
                   onClick={() => setActiveCategory(cat)}
                   className={`h-8 px-4 text-xs uppercase tracking-[0.18em] transition-all duration-300 ${
                     activeCategory === cat
-                      ? 'bg-[#102027] text-white border border-[#102027]'
-                      : 'bg-transparent text-[#6b6b6b] border border-[#e8e4dd] hover:border-[#102027] hover:text-[#102027]'
+                      ? 'bg-deep text-white border border-deep'
+                      : 'bg-transparent text-smoke border border-stone hover:border-deep hover:text-deep'
                   }`}
                 >
                   {cat}
@@ -158,7 +158,7 @@ export function GalleryClient({ cmsItems }: { cmsItems?: GalleryItem[] }) {
                 delay={i * 40}
                 className="break-inside-avoid group relative overflow-hidden cursor-pointer"
               >
-                <div className={`w-full relative ${item.wide ? 'aspect-[16/9]' : 'aspect-square'}`}>
+                <div className={`w-full relative ${item.wide ? 'aspect-video' : 'aspect-square'}`}>
                   <Image
                     src={item.src}
                     alt={item.caption}
@@ -166,7 +166,7 @@ export function GalleryClient({ cmsItems }: { cmsItems?: GalleryItem[] }) {
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-[#102027]/0 group-hover:bg-[#102027]/40 transition-colors duration-500 flex flex-col items-center justify-center">
+                  <div className="absolute inset-0 bg-deep/0 group-hover:bg-deep/40 transition-colors duration-500 flex flex-col items-center justify-center">
                     <p className="text-white text-xs uppercase tracking-widest font-light opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center px-4">
                       {item.caption}
                     </p>

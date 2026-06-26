@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { SITE_NAME, SITE_TAGLINE, SITE_URL, COORDINATES, PHONE, SOCIAL } from './constants'
+
+export const SITE_URL = 'https://althearesorts.com'
 
 interface SEOProps {
   title?: string
@@ -20,18 +21,16 @@ export function generateMetadata({
   keywords,
   locale,
 }: SEOProps = {}): Metadata {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — ${SITE_TAGLINE}`
-  const defaultDesc = `Althea Resorts — A luxury boutique hotel on the hillside of Ano Loutro, near Xylokastro, Corinthia, Greece. 60 minutes from Athens. 41 rooms and suites with views of the Corinthian Gulf.`
-  const metaDesc = description || defaultDesc
+  const siteName = 'Althea Resorts'
+  const fullTitle = title ? `${title} | ${siteName}` : `${siteName} — Redefining Hospitality With Timeless Elegance`
+  const metaDesc = description ?? ''
   const ogImage = image || `${SITE_URL}/og-default.jpg`
   const canonicalUrl = canonical || SITE_URL
 
-  // Auto-derive locale from canonical path if not explicitly provided
   const canonicalPath = canonicalUrl.replace(SITE_URL, '') || '/'
   const isGreekPage = canonicalPath.startsWith('/el')
   const ogLocale = locale ?? (isGreekPage ? 'el_GR' : 'en_GB')
 
-  // Auto-derive hreflang alternates from canonical URL
   const hreflangAlternates: Record<string, string> = {}
   if (isGreekPage) {
     const enPath = canonicalPath === '/el' ? '' : canonicalPath.replace(/^\/el/, '')
@@ -48,9 +47,9 @@ export function generateMetadata({
   return {
     metadataBase: new URL(SITE_URL),
     title: fullTitle,
-    description: metaDesc,
-    keywords: keywords?.join(', '),
-    authors: [{ name: SITE_NAME }],
+    ...(metaDesc ? { description: metaDesc } : {}),
+    ...(keywords?.length ? { keywords: keywords.join(', ') } : {}),
+    authors: [{ name: siteName }],
     robots: noIndex
       ? { index: false, follow: false }
       : { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
@@ -60,31 +59,26 @@ export function generateMetadata({
     },
     openGraph: {
       type: 'website',
-      siteName: SITE_NAME,
+      siteName,
       title: fullTitle,
-      description: metaDesc,
+      ...(metaDesc ? { description: metaDesc } : {}),
       url: canonicalUrl,
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: fullTitle,
-        },
-      ],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: fullTitle }],
       locale: ogLocale,
       countryName: 'Greece',
     },
     twitter: {
       card: 'summary_large_image',
       title: fullTitle,
-      description: metaDesc,
+      ...(metaDesc ? { description: metaDesc } : {}),
       images: [ogImage],
     },
   }
 }
 
-// Helper to build BreadcrumbList schema
+// ---------------------------------------------------------------------------
+// BreadcrumbList schema helper
+// ---------------------------------------------------------------------------
 export interface BreadcrumbItem { name: string; href: string }
 
 export function buildBreadcrumb(items: BreadcrumbItem[]) {
@@ -100,93 +94,145 @@ export function buildBreadcrumb(items: BreadcrumbItem[]) {
   }
 }
 
-export const hotelSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'LodgingBusiness',
-  '@id': 'https://althearesorts.com/#hotel',
-  name: 'Althea Resorts',
-  alternateName: 'Althea Exclusive Resorts & Spa',
-  description: 'A luxury boutique resort on the hillside of Ano Loutro, near Xylokastro, Corinthia, Greece. 60 minutes from Athens. 41 rooms and suites, Ocean Spa, and rooftop restaurant AITHER.',
-  url: SITE_URL,
-  telephone: PHONE,
-  email: 'reservations@althearesorts.com',
-  address: {
+// ---------------------------------------------------------------------------
+// Dynamic schema builders — driven by Payload globals
+// ---------------------------------------------------------------------------
+
+/**
+ * Builds the LodgingBusiness JSON-LD schema from Payload geo-settings and
+ * site-settings globals. Falls back to minimal safe values if CMS is empty.
+ */
+export function buildHotelSchema(geo: any, site: any): object {
+  const name = geo?.legalName || geo?.brandName || 'Althea Resorts'
+  const alternateName = geo?.alternateName || undefined
+  const description = geo?.description || undefined
+  const telephone = geo?.telephone || undefined
+  const email = geo?.email || undefined
+  const checkinTime = geo?.checkinTime || '15:00'
+  const checkoutTime = geo?.checkoutTime || '11:00'
+  const starRating = geo?.starRating ?? 5
+  const numberOfRooms = geo?.numberOfRooms ?? 41
+  const priceRange = geo?.priceRange || '€€€€'
+  const currenciesAccepted = geo?.currenciesAccepted || 'EUR'
+  const paymentAccepted = geo?.paymentAccepted || 'Cash, Credit Card, Debit Card'
+
+  const address = {
     '@type': 'PostalAddress',
-    streetAddress: 'Ano Loutro',
-    addressLocality: 'Xylokastro',
-    addressRegion: 'Corinthia',
-    postalCode: '20400',
-    addressCountry: 'GR',
-  },
-  geo: {
+    streetAddress: geo?.streetAddress || undefined,
+    addressLocality: geo?.addressLocality || undefined,
+    addressRegion: geo?.addressRegion || undefined,
+    postalCode: geo?.postalCode || undefined,
+    addressCountry: geo?.addressCountry || 'GR',
+  }
+
+  const lat = geo?.coordinates?.latitude
+  const lng = geo?.coordinates?.longitude
+  const geo_ = lat && lng ? {
     '@type': 'GeoCoordinates',
-    latitude: COORDINATES.lat,
-    longitude: COORDINATES.lng,
-  },
-  hasMap: `https://www.google.com/maps?q=${COORDINATES.lat},${COORDINATES.lng}`,
-  starRating: {
-    '@type': 'Rating',
-    ratingValue: '5',
-  },
-  numberOfRooms: 41,
-  checkinTime: '15:00',
-  checkoutTime: '11:00',
-  currenciesAccepted: 'EUR',
-  paymentAccepted: 'Cash, Credit Card, Debit Card',
-  availableLanguage: [
-    { '@type': 'Language', name: 'English' },
-    { '@type': 'Language', name: 'Greek' },
-    { '@type': 'Language', name: 'French' },
-  ],
-  amenityFeature: [
-    { '@type': 'LocationFeatureSpecification', name: 'Ocean Spa', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Sauna', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Hammam', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Swimming Pool', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Rooftop Restaurant', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Pool Bar', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Free WiFi', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Conference Room', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Fitness Centre', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Yoga Room', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Air Conditioning', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Parking', value: true },
-  ],
-  priceRange: '€€€€',
-  image: `${SITE_URL}/og-default.jpg`,
-  sameAs: [SOCIAL.instagram, SOCIAL.facebook, SOCIAL.linkedin],
-  containsPlace: [
-    {
-      '@type': 'Restaurant',
-      '@id': 'https://althearesorts.com/gastronomy#aither',
-      name: 'AITHER',
-      description: 'Rooftop restaurant with panoramic views of the Corinthian Gulf. Mediterranean cuisine told through a Greek lens.',
-      servesCuisine: ['Greek', 'Mediterranean'],
-      priceRange: '€€€€',
-      url: `${SITE_URL}/gastronomy#aither`,
-    },
-    {
-      '@type': 'HealthAndBeautyBusiness',
-      '@id': 'https://althearesorts.com/spa#ocean-spa',
-      name: 'Ocean Spa',
-      description: 'Full-service spa with sauna, hammam, ice bath, dedicated pool, yoga room, gym, and three treatment cabins. Treatments use Oceanis certified Greek cosmetics.',
-      url: `${SITE_URL}/spa`,
-    },
-  ],
+    latitude: lat,
+    longitude: lng,
+  } : undefined
+
+  const sameAs: string[] = []
+  if (geo?.instagram) sameAs.push(geo.instagram)
+  if (geo?.facebook) sameAs.push(geo.facebook)
+  if (geo?.linkedin) sameAs.push(geo.linkedin)
+  if (geo?.tripadvisor) sameAs.push(geo.tripadvisor)
+  if (geo?.bookingcom) sameAs.push(geo.bookingcom)
+  if (geo?.googleBusinessProfile) sameAs.push(geo.googleBusinessProfile)
+
+  const availableLanguage = (geo?.availableLanguages ?? []).map((l: any) => ({
+    '@type': 'Language',
+    name: l.language,
+  }))
+
+  const amenityFeature = (geo?.amenityFeatures ?? []).map((f: any) => ({
+    '@type': 'LocationFeatureSpecification',
+    name: f.name,
+    value: f.value !== false,
+  }))
+
+  const containsPlace = (geo?.nestedPlaces ?? []).map((p: any) => {
+    const entry: Record<string, unknown> = {
+      '@type': p.schemaType || 'Restaurant',
+      name: p.name,
+    }
+    if (p.id) entry['@id'] = p.id
+    if (p.description) entry.description = p.description
+    if (p.servesCuisine) entry.servesCuisine = p.servesCuisine.split(',').map((s: string) => s.trim())
+    if (p.priceRange) entry.priceRange = p.priceRange
+    if (p.url) entry.url = p.url
+    return entry
+  })
+
+  const heroImageUrl = typeof site?.defaultOGImage === 'object'
+    ? site?.defaultOGImage?.url
+    : site?.defaultOGImage
+
+  const schema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'LodgingBusiness',
+    '@id': `${SITE_URL}/#hotel`,
+    name,
+    url: geo?.url || SITE_URL,
+    address,
+    starRating: { '@type': 'Rating', ratingValue: String(starRating) },
+    numberOfRooms,
+    checkinTime,
+    checkoutTime,
+    currenciesAccepted,
+    paymentAccepted,
+    priceRange,
+  }
+  if (alternateName) schema.alternateName = alternateName
+  if (description) schema.description = description
+  if (telephone) schema.telephone = telephone
+  if (email) schema.email = email
+  if (geo_) schema.geo = geo_
+  if (lat && lng) schema.hasMap = `https://www.google.com/maps?q=${lat},${lng}`
+  if (availableLanguage.length) schema.availableLanguage = availableLanguage
+  if (amenityFeature.length) schema.amenityFeature = amenityFeature
+  if (containsPlace.length) schema.containsPlace = containsPlace
+  if (sameAs.length) schema.sameAs = sameAs
+  if (heroImageUrl) schema.image = heroImageUrl
+
+  return schema
 }
 
-export const organizationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  '@id': 'https://althearesorts.com/#organization',
-  name: 'Althea Resorts',
-  url: SITE_URL,
-  logo: `${SITE_URL}/logos/althea_logo_white-f.png`,
-  contactPoint: {
-    '@type': 'ContactPoint',
-    telephone: PHONE,
-    contactType: 'reservations',
-    availableLanguage: ['English', 'Greek', 'French'],
-  },
-  sameAs: [SOCIAL.instagram, SOCIAL.facebook, SOCIAL.linkedin],
+/**
+ * Builds the Organization JSON-LD schema from Payload globals.
+ */
+export function buildOrganizationSchema(geo: any, site: any): object {
+  const name = geo?.legalName || 'Althea Resorts'
+  const telephone = geo?.telephone || undefined
+  const url = geo?.url || SITE_URL
+
+  const logoUrl = typeof site?.logo === 'object'
+    ? site?.logo?.url
+    : site?.logo
+
+  const sameAs: string[] = []
+  if (geo?.instagram) sameAs.push(geo.instagram)
+  if (geo?.facebook) sameAs.push(geo.facebook)
+  if (geo?.linkedin) sameAs.push(geo.linkedin)
+  if (geo?.tripadvisor) sameAs.push(geo.tripadvisor)
+
+  const schema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${SITE_URL}/#organization`,
+    name,
+    url,
+  }
+  if (logoUrl) schema.logo = logoUrl
+  if (telephone) {
+    schema.contactPoint = {
+      '@type': 'ContactPoint',
+      telephone,
+      contactType: 'reservations',
+    }
+  }
+  if (sameAs.length) schema.sameAs = sameAs
+
+  return schema
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { generateMetadata as genMeta } from '@/lib/seo'
-import { SITE_URL } from '@/lib/constants'
+import { SITE_URL } from '@/lib/seo'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
@@ -40,7 +40,7 @@ export default function GreekAboutPage() {
       </section>
 
       {/* Intro */}
-      <section className="section-padding bg-[#f2f8fb]">
+      <section className="section-padding bg-soft">
         <div className="container-narrow">
           <ScrollReveal>
             <p className="text-body-refined text-lg leading-relaxed mb-6">
@@ -72,7 +72,7 @@ export default function GreekAboutPage() {
       <section className="section-padding bg-white">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <ScrollReveal variant="image" className="aspect-[4/5] w-full relative overflow-hidden">
+            <ScrollReveal variant="image" className="aspect-4/5 w-full relative overflow-hidden">
               <Image
                 src="/images/new-images/New-Hero.jpg"
                 alt="Althea Resorts — πισίνα και λόφος"
@@ -101,7 +101,7 @@ export default function GreekAboutPage() {
                 </p>
                 <p className="text-body-refined">
                   Το Althea σχεδιάστηκε γύρω από αυτές τις λεπτομέρειες. Σαράντα ένα{' '}
-                  <a href="/el/accommodation" className="text-[#ad8b27] hover:underline font-light">δωμάτια και σουίτες</a>,
+                  <a href="/el/accommodation" className="text-gold hover:underline font-light">δωμάτια και σουίτες</a>,
                   το καθένα τοποθετημένο έτσι ώστε να αξιοποιεί στο έπακρο το κορινθιακό τοπίο.
                   Ένα rooftop εστιατόριο εμπνευσμένο από τις γεύσεις, τα αρώματα και τις ιστορίες της
                   Μεσογείου. Ένα spa, το Ocean Spa, εμπνευσμένο από τα αρχαία Ασκληπιεία, όπου οι
@@ -117,7 +117,7 @@ export default function GreekAboutPage() {
       </section>
 
       {/* Where We Are */}
-      <section className="section-padding bg-[#102027]">
+      <section className="section-padding bg-deep">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5">
@@ -150,7 +150,7 @@ export default function GreekAboutPage() {
               </ScrollReveal>
             </div>
             <div className="lg:col-span-6 lg:col-start-7">
-              <ScrollReveal variant="image" className="aspect-[4/3] w-full relative overflow-hidden">
+              <ScrollReveal variant="image" className="aspect-4/3 w-full relative overflow-hidden">
                 <Image
                   src="https://images.unsplash.com/photo-1698933464922-cb7af8fe9267?auto=format&fit=crop&w=900&q=80"
                   alt="Αρχαίοι κίονες στην Κόρινθο"
@@ -165,14 +165,14 @@ export default function GreekAboutPage() {
       </section>
 
       {/* What We Stand For */}
-      <section className="section-padding bg-[#faf8f4]">
+      <section className="section-padding bg-cream">
         <div className="container-luxury">
           <div className="max-w-3xl mx-auto text-center">
             <ScrollReveal>
               <SectionLabel className="mb-6 justify-center">Οι Αξίες Μας</SectionLabel>
             </ScrollReveal>
             <ScrollReveal delay={100}>
-              <h2 className="text-display-sm text-[#102027] mb-8">
+              <h2 className="text-display-sm text-deep mb-8">
                 Η Ελληνική Φιλοξενία
               </h2>
             </ScrollReveal>
@@ -204,14 +204,14 @@ export default function GreekAboutPage() {
               </p>
             </ScrollReveal>
             <ScrollReveal delay={250}>
-              <div className="flex flex-col items-center gap-3 pt-8 border-t border-[#e8e4dd]">
+              <div className="flex flex-col items-center gap-3 pt-8 border-t border-stone">
                 {[
                   '41 Δωμάτια και σουίτες σε έξι κατηγορίες',
                   "5' Λεπτά από την ιδιωτική μας παραλία στον Κορινθιακό Κόλπο",
                   "60' Λεπτά από το κέντρο της Αθήνας",
                 ].map((stat) => (
-                  <div key={stat} className="flex items-center gap-3 text-sm font-light text-[#6b6b6b]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#ad8b27] shrink-0" />
+                  <div key={stat} className="flex items-center gap-3 text-sm font-light text-smoke">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
                     {stat}
                   </div>
                 ))}

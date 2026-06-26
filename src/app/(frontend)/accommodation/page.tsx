@@ -5,8 +5,8 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
-import { ROOMS, BOOKING_URL, SITE_URL } from '@/lib/constants'
-import { getRooms } from '@/lib/cms'
+import { SITE_URL } from '@/lib/seo'
+import { getRooms, getBookingSettings } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Rooms & Suites',
@@ -16,7 +16,8 @@ export const metadata = genMeta({
 })
 
 export default async function AccommodationPage() {
-  const docs = await getRooms('en')
+  const [docs, bookingSettings] = await Promise.all([getRooms('en'), getBookingSettings()])
+  const bookingUrl: string | undefined = (bookingSettings as any)?.bookingEngineUrl || undefined
   const rooms = docs.length > 0
     ? docs.map((r: any) => ({
         slug: r.slug ?? '',
@@ -29,14 +30,14 @@ export default async function AccommodationPage() {
         features: (r.highlights ?? []).map((h: any) => h.text ?? '').filter(Boolean),
         featured: r.featured ?? false,
       }))
-    : ROOMS
+    : []
 
   return (
     <main id="main-content">
 
       {/* ── Hero ── */}
       <section
-        className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
+        className="relative h-[70vh] min-h-130 flex items-end overflow-hidden"
         aria-label="Accommodation hero"
       >
         <Image
@@ -47,7 +48,7 @@ export default async function AccommodationPage() {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#102027]/90 via-[#102027]/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-deep/90 via-deep/30 to-transparent" />
         <div className="relative z-10 container-luxury pb-16 lg:pb-24 w-full">
           <ScrollReveal>
             <SectionLabel light className="mb-5">Accommodation</SectionLabel>
@@ -82,7 +83,7 @@ export default async function AccommodationPage() {
             </p>
           </ScrollReveal>
           <ScrollReveal delay={150}>
-            <div className="flex flex-wrap justify-center gap-x-12 gap-y-4 mt-12 pt-10 border-t border-[#e8e4dd]">
+            <div className="flex flex-wrap justify-center gap-x-12 gap-y-4 mt-12 pt-10 border-t border-stone">
               {[
                 { value: '41', label: 'Rooms & Suites' },
                 { value: '6', label: 'Categories' },
@@ -90,8 +91,8 @@ export default async function AccommodationPage() {
                 { value: '5★', label: 'Standard' },
               ].map((s) => (
                 <div key={s.label} className="flex flex-col items-center gap-1">
-                  <span className="font-editorial text-3xl font-light text-[#102027]">{s.value}</span>
-                  <span className="text-label-upper text-[#6b6b6b]">{s.label}</span>
+                  <span className="font-editorial text-3xl font-light text-deep">{s.value}</span>
+                  <span className="text-label-upper text-smoke">{s.label}</span>
                 </div>
               ))}
             </div>
@@ -108,14 +109,14 @@ export default async function AccommodationPage() {
           <section
             key={room.slug}
             id={room.slug}
-            className={`${isFeatured ? 'bg-[#102027]' : i % 2 === 0 ? 'bg-white' : 'bg-[#f2f8fb]'} overflow-hidden`}
+            className={`${isFeatured ? 'bg-deep' : i % 2 === 0 ? 'bg-white' : 'bg-soft'} overflow-hidden`}
             aria-label={room.title}
           >
             <div className="container-luxury py-0">
               <div className={`grid grid-cols-1 lg:grid-cols-2 ${isEven ? '' : 'lg:[direction:rtl]'}`}>
 
                 {/* Image */}
-                <ScrollReveal variant="image" className="aspect-[4/3] lg:aspect-auto lg:min-h-[600px] relative overflow-hidden">
+                <ScrollReveal variant="image" className="aspect-4/3 lg:aspect-auto lg:min-h-150 relative overflow-hidden">
                   <Image
                     src={room.image}
                     alt={room.title}
@@ -125,36 +126,36 @@ export default async function AccommodationPage() {
                     priority={i === 0}
                   />
                   {isFeatured && (
-                    <div className="absolute top-6 left-6 bg-[#ad8b27] px-4 py-1.5">
+                    <div className="absolute top-6 left-6 bg-gold px-4 py-1.5">
                       <span className="text-label-upper text-white">Signature Suite</span>
                     </div>
                   )}
                 </ScrollReveal>
 
                 {/* Content */}
-                <div className={`flex flex-col justify-center px-8 py-16 lg:px-16 lg:py-20 [direction:ltr] ${isFeatured ? 'bg-[#102027]' : ''}`}>
+                <div className={`flex flex-col justify-center px-8 py-16 lg:px-16 lg:py-20 [direction:ltr] ${isFeatured ? 'bg-deep' : ''}`}>
                   <ScrollReveal>
-                    <span className="text-label-upper text-[#ad8b27] mb-6 block">{room.view}</span>
+                    <span className="text-label-upper text-gold mb-6 block">{room.view}</span>
                   </ScrollReveal>
                   <ScrollReveal delay={80}>
-                    <h2 className={`text-display-sm mb-3 ${isFeatured ? 'text-white' : 'text-[#102027]'}`}>
+                    <h2 className={`text-display-sm mb-3 ${isFeatured ? 'text-white' : 'text-deep'}`}>
                       {room.title}
                     </h2>
                   </ScrollReveal>
                   {'tagline' in room && room.tagline && (
                     <ScrollReveal delay={100}>
-                      <p className={`font-editorial text-lg font-light italic mb-4 ${isFeatured ? 'text-white/70' : 'text-[#6b6b6b]'}`}>
+                      <p className={`font-editorial text-lg font-light italic mb-4 ${isFeatured ? 'text-white/70' : 'text-smoke'}`}>
                         {room.tagline}
                       </p>
                     </ScrollReveal>
                   )}
                   <ScrollReveal delay={120}>
                     <div className="flex items-center gap-4 mb-6">
-                      <span className={`text-sm font-light ${isFeatured ? 'text-white/50' : 'text-[#6b6b6b]'}`}>
+                      <span className={`text-sm font-light ${isFeatured ? 'text-white/50' : 'text-smoke'}`}>
                         {room.size}
                       </span>
-                      <span className={`w-px h-4 ${isFeatured ? 'bg-white/20' : 'bg-[#e8e4dd]'}`} />
-                      <span className={`text-sm font-light ${isFeatured ? 'text-white/50' : 'text-[#6b6b6b]'}`}>
+                      <span className={`w-px h-4 ${isFeatured ? 'bg-white/20' : 'bg-stone'}`} />
+                      <span className={`text-sm font-light ${isFeatured ? 'text-white/50' : 'text-smoke'}`}>
                         King or twin configuration
                       </span>
                     </div>
@@ -163,7 +164,7 @@ export default async function AccommodationPage() {
                     <GoldLine className="mb-6" />
                   </ScrollReveal>
                   <ScrollReveal delay={180}>
-                    <p className={`text-sm font-light leading-relaxed mb-8 ${isFeatured ? 'text-white/60' : 'text-[#6b6b6b]'}`}>
+                    <p className={`text-sm font-light leading-relaxed mb-8 ${isFeatured ? 'text-white/60' : 'text-smoke'}`}>
                       {room.shortDesc}
                     </p>
                   </ScrollReveal>
@@ -173,8 +174,8 @@ export default async function AccommodationPage() {
                     <ul className="grid grid-cols-2 gap-x-6 gap-y-2.5 mb-10">
                       {room.features.slice(0, 6).map((f: string) => (
                         <li key={f} className="flex items-center gap-2.5">
-                          <span className="w-1 h-1 rounded-full bg-[#ad8b27] shrink-0" aria-hidden="true" />
-                          <span className={`text-xs font-light ${isFeatured ? 'text-white/50' : 'text-[#6b6b6b]'}`}>
+                          <span className="w-1 h-1 rounded-full bg-gold shrink-0" aria-hidden="true" />
+                          <span className={`text-xs font-light ${isFeatured ? 'text-white/50' : 'text-smoke'}`}>
                             {f}
                           </span>
                         </li>
@@ -186,13 +187,13 @@ export default async function AccommodationPage() {
                   <ScrollReveal delay={250}>
                     <div className="flex flex-wrap gap-4">
                       <a
-                        href={BOOKING_URL}
+                        href={bookingUrl || '#'}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="h-11 px-7 inline-flex items-center
                                    text-xs uppercase tracking-[0.2em]
-                                   bg-[#ad8b27] text-white border border-[#ad8b27]
-                                   hover:bg-transparent hover:text-[#ad8b27]
+                                   bg-gold text-white border border-gold
+                                   hover:bg-transparent hover:text-gold
                                    transition-all duration-500"
                       >
                         Reserve
@@ -203,8 +204,8 @@ export default async function AccommodationPage() {
                                    text-xs uppercase tracking-[0.2em]
                                    bg-transparent border transition-all duration-500
                                    ${isFeatured
-                                     ? 'text-white border-white/30 hover:bg-white hover:text-[#102027]'
-                                     : 'text-[#102027] border-[#102027]/30 hover:bg-[#102027] hover:text-white'
+                                     ? 'text-white border-white/30 hover:bg-white hover:text-deep'
+                                     : 'text-deep border-deep/30 hover:bg-deep hover:text-white'
                                    }`}
                       >
                         View Details
@@ -219,18 +220,18 @@ export default async function AccommodationPage() {
       })}
 
       {/* ── All rooms include ── */}
-      <section className="section-padding bg-[#faf8f4]" aria-label="All rooms include">
+      <section className="section-padding bg-cream" aria-label="All rooms include">
         <div className="container-luxury">
           <div className="text-center mb-14">
             <ScrollReveal>
               <SectionLabel className="mb-5 justify-center">Standard Across Every Room</SectionLabel>
             </ScrollReveal>
             <ScrollReveal delay={100}>
-              <h2 className="text-display-sm text-[#102027]">All Rooms Include</h2>
+              <h2 className="text-display-sm text-deep">All Rooms Include</h2>
             </ScrollReveal>
           </div>
           <ScrollReveal delay={150}>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px bg-[#e8e4dd]">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-px bg-stone">
               {[
                 'Free WiFi',
                 'Air Conditioning',
@@ -247,10 +248,10 @@ export default async function AccommodationPage() {
               ].map((amenity) => (
                 <div
                   key={amenity}
-                  className="flex flex-col items-center text-center gap-3 p-6 bg-[#faf8f4]"
+                  className="flex flex-col items-center text-center gap-3 p-6 bg-cream"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#ad8b27]" aria-hidden="true" />
-                  <span className="text-xs uppercase tracking-wider text-[#102027] font-light leading-tight">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold" aria-hidden="true" />
+                  <span className="text-xs uppercase tracking-wider text-deep font-light leading-tight">
                     {amenity}
                   </span>
                 </div>

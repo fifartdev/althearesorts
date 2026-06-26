@@ -5,9 +5,9 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
-import { BOOKING_URL, SITE_URL } from '@/lib/constants'
+import { SITE_URL } from '@/lib/seo'
+import { getExperiences, getBookingSettings, getGeoSettings } from '@/lib/cms'
 import { SpaBanner } from '@/components/ui/SpaBanner'
-import { getExperiences } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Ocean Spa — Ευεξία & Θεραπείες',
@@ -43,15 +43,43 @@ const cabins = [
 ]
 
 export default async function GreekSpaPage() {
-  const docs = await getExperiences('el')
+  const [docs, bookingSettings, geoSettings] = await Promise.all([
+    getExperiences('el'),
+    getBookingSettings(),
+    getGeoSettings('el'),
+  ])
   const spaDoc = docs.find((d: any) => d.category === 'spa') as any | undefined
   const spaIntro: string | undefined = spaDoc?.shortDescription || undefined
+  const bookingUrl: string | undefined = (bookingSettings as any)?.bookingEngineUrl || undefined
+
+  const geoNested: any[] = (geoSettings as any)?.nestedPlaces ?? []
+  const spaEntry = geoNested.find(
+    (p: any) => p.schemaType === 'HealthAndBeautyBusiness' || p.name?.toLowerCase().includes('spa')
+  )
+  const oceanSpaSchema = spaEntry
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'HealthAndBeautyBusiness',
+        ...(spaEntry.id ? { '@id': spaEntry.id } : { '@id': `${SITE_URL}/spa#ocean-spa` }),
+        name: spaEntry.name,
+        ...(spaEntry.description ? { description: spaEntry.description } : {}),
+        url: spaEntry.url || `${SITE_URL}/spa`,
+        containedInPlace: { '@id': `${SITE_URL}/#hotel` },
+      }
+    : null
   return (
+    <>
+      {oceanSpaSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(oceanSpaSchema) }}
+        />
+      )}
     <main id="main-content">
       <SpaBanner locale="el" />
       {/* Hero */}
       <section
-        className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
+        className="relative h-[70vh] min-h-130 flex items-end overflow-hidden"
         aria-label="Ocean Spa"
       >
         <Image
@@ -62,7 +90,7 @@ export default async function GreekSpaPage() {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#102027]/90 via-[#102027]/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-deep/90 via-deep/30 to-transparent" />
         <div className="relative z-10 container-luxury pb-16 lg:pb-24 w-full">
           <ScrollReveal>
             <SectionLabel light className="mb-5">Spa & Ευεξία</SectionLabel>
@@ -85,7 +113,7 @@ export default async function GreekSpaPage() {
                 <SectionLabel className="mb-6">Ο Χώρος</SectionLabel>
               </ScrollReveal>
               <ScrollReveal delay={100}>
-                <h2 className="text-display-sm text-[#102027] mb-6">
+                <h2 className="text-display-sm text-deep mb-6">
                   Ένας από τους Κύριους Λόγους για να Έρθετε
                 </h2>
               </ScrollReveal>
@@ -117,7 +145,7 @@ export default async function GreekSpaPage() {
                 }
               </ScrollReveal>
             </div>
-            <ScrollReveal variant="image" delay={100} className="aspect-[4/5] w-full relative overflow-hidden">
+            <ScrollReveal variant="image" delay={100} className="aspect-4/5 w-full relative overflow-hidden">
               <Image
                 src="/images/oceanisphoto.jpg"
                 alt="Καλλυντικά Oceanis — φυσικά ελληνικά προϊόντα"
@@ -131,29 +159,29 @@ export default async function GreekSpaPage() {
       </section>
 
       {/* Facilities */}
-      <section className="section-padding bg-[#faf8f4]">
+      <section className="section-padding bg-cream">
         <div className="container-luxury">
           <div className="max-w-xl mb-16">
             <ScrollReveal>
               <SectionLabel className="mb-6">Εγκαταστάσεις</SectionLabel>
             </ScrollReveal>
             <ScrollReveal delay={100}>
-              <h2 className="text-display-sm text-[#102027] mb-6">Όλα Όσα Χρειάζεται ένα Spa</h2>
+              <h2 className="text-display-sm text-deep mb-6">Όλα Όσα Χρειάζεται ένα Spa</h2>
             </ScrollReveal>
             <ScrollReveal delay={150}>
               <GoldLine className="mb-0" />
             </ScrollReveal>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[#e8e4dd]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-stone">
             {facilities.map((f, i) => (
               <ScrollReveal key={f.name} delay={i * 60}>
                 <div className="bg-white p-8 h-full flex flex-col gap-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#ad8b27] shrink-0" />
-                  <h3 className="text-xs uppercase tracking-[0.18em] text-[#102027] font-light leading-relaxed">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
+                  <h3 className="text-xs uppercase tracking-[0.18em] text-deep font-light leading-relaxed">
                     {f.name}
                   </h3>
-                  <p className="text-sm font-light text-[#6b6b6b] leading-relaxed">
+                  <p className="text-sm font-light text-smoke leading-relaxed">
                     {f.desc}
                   </p>
                 </div>
@@ -164,7 +192,7 @@ export default async function GreekSpaPage() {
       </section>
 
       {/* Treatment Cabins */}
-      <section className="section-padding bg-[#102027]">
+      <section className="section-padding bg-deep">
         <div className="container-luxury">
           <div className="max-w-xl mb-16">
             <ScrollReveal>
@@ -189,7 +217,7 @@ export default async function GreekSpaPage() {
             {cabins.map((cabin, i) => (
               <ScrollReveal key={cabin.title} delay={i * 100}>
                 <div className="group relative overflow-hidden">
-                  <div className="aspect-[3/2] relative overflow-hidden">
+                  <div className="aspect-3/2 relative overflow-hidden">
                     <Image
                       src={cabin.image}
                       alt={cabin.imageAlt}
@@ -197,16 +225,16 @@ export default async function GreekSpaPage() {
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 1024px) 100vw, 50vw"
                     />
-                    <div className="absolute inset-0 bg-[#102027]/20" />
+                    <div className="absolute inset-0 bg-deep/20" />
                   </div>
                   <div className="bg-[#0d1b21] p-8">
                     <h3 className="font-editorial text-xl font-light text-white mb-4">{cabin.title}</h3>
                     <p className="text-sm font-light text-white/60 leading-relaxed mb-6">{cabin.desc}</p>
                     <a
-                      href={BOOKING_URL}
+                      href={bookingUrl || '#'}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-[#ad8b27] border-b border-[#ad8b27]/40 pb-1 hover:border-[#ad8b27] transition-colors duration-300"
+                      className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-gold border-b border-gold/40 pb-1 hover:border-gold transition-colors duration-300"
                     >
                       Κλείστε αυτό το Δωμάτιο
                       <svg width="16" height="6" viewBox="0 0 16 6" fill="none" aria-hidden="true">
@@ -221,13 +249,13 @@ export default async function GreekSpaPage() {
 
           <ScrollReveal delay={200} className="mt-12 text-center">
             <a
-              href={BOOKING_URL}
+              href={bookingUrl || '#'}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 h-11 px-10
                          text-xs uppercase tracking-[0.2em]
-                         bg-[#ad8b27] text-white border border-[#ad8b27]
-                         hover:bg-transparent hover:text-[#ad8b27]
+                         bg-gold text-white border border-gold
+                         hover:bg-transparent hover:text-gold
                          transition-all duration-500"
             >
               Κλείστε Θεραπεία
@@ -237,7 +265,7 @@ export default async function GreekSpaPage() {
       </section>
 
       {/* Oceanis Philosophy */}
-      <section className="section-padding bg-[#f2f8fb]">
+      <section className="section-padding bg-soft">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -245,7 +273,7 @@ export default async function GreekSpaPage() {
                 <SectionLabel className="mb-6">Βιωσιμότητα</SectionLabel>
               </ScrollReveal>
               <ScrollReveal delay={100}>
-                <h2 className="text-display-sm text-[#102027] mb-6">
+                <h2 className="text-display-sm text-deep mb-6">
                   Oceanis: Η Φιλοσοφία Πίσω από το Προϊόν
                 </h2>
               </ScrollReveal>
@@ -272,7 +300,7 @@ export default async function GreekSpaPage() {
                 </p>
               </ScrollReveal>
             </div>
-            <ScrollReveal variant="image" delay={100} className="aspect-[4/5] w-full relative overflow-hidden">
+            <ScrollReveal variant="image" delay={100} className="aspect-4/5 w-full relative overflow-hidden">
               <Image
                 src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=900&q=80"
                 alt="Φυσικά συστατικά — βιώσιμα καλλυντικά Oceanis"
@@ -287,5 +315,6 @@ export default async function GreekSpaPage() {
 
       <FinalBookingCTA locale="el" />
     </main>
+    </>
   )
 }

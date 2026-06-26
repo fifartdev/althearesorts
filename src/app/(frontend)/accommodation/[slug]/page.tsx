@@ -2,8 +2,8 @@ import React from 'react'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { generateMetadata as genMeta } from '@/lib/seo'
-import { ROOMS, BOOKING_URL, SITE_URL } from '@/lib/constants'
-import { getRoom, getRooms } from '@/lib/cms'
+import { SITE_URL } from '@/lib/seo'
+import { getRoom, getRooms, getBookingSettings } from '@/lib/cms'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
@@ -14,42 +14,36 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return ROOMS.map((room) => ({ slug: room.slug }))
+  const docs = await getRooms('en').catch(() => [])
+  return (docs as any[]).filter((r) => r.slug).map((r) => ({ slug: r.slug }))
 }
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const cmsRoom = await getRoom(slug, 'en')
-  if (cmsRoom) {
-    const image = (typeof (cmsRoom as any).heroImage === 'object'
-      ? (cmsRoom as any).heroImage?.url
-      : (cmsRoom as any).heroImage) || (cmsRoom as any).imageUrl || ''
-    return genMeta({
-      title: (cmsRoom as any).title ?? '',
-      description: `${(cmsRoom as any).title} at Althea Resorts — ${(cmsRoom as any).shortDescription ?? ''}`,
-      keywords: [`${(cmsRoom as any).title} Althea`, 'luxury room Corinthia', 'book hotel room Greece'],
-      canonical: `${SITE_URL}/accommodation/${slug}`,
-      image,
-    })
-  }
-  const room = ROOMS.find((r) => r.slug === slug)
-  if (!room) return {}
+  if (!cmsRoom) return {}
+  const image = (typeof (cmsRoom as any).heroImage === 'object'
+    ? (cmsRoom as any).heroImage?.url
+    : (cmsRoom as any).heroImage) || (cmsRoom as any).imageUrl || ''
   return genMeta({
-    title: room.title,
-    description: `${room.title} at Althea Resorts — ${room.shortDesc} ${room.size}. ${room.view}.`,
-    keywords: [`${room.title} Althea`, 'luxury room Corinthia', 'book hotel room Greece'],
+    title: (cmsRoom as any).title ?? '',
+    description: `${(cmsRoom as any).title} at Althea Resorts — ${(cmsRoom as any).shortDescription ?? ''}`,
+    keywords: [`${(cmsRoom as any).title} Althea`, 'luxury room Corinthia', 'book hotel room Greece'],
     canonical: `${SITE_URL}/accommodation/${slug}`,
-    image: room.image,
+    image,
   })
 }
 
 export default async function RoomPage({ params }: Props) {
   const { slug } = await params
 
-  const cmsRoom = await getRoom(slug, 'en')
-  const allCmsRooms = await getRooms('en')
+  const [cmsRoom, allCmsRooms, bookingSettings] = await Promise.all([
+    getRoom(slug, 'en'),
+    getRooms('en'),
+    getBookingSettings(),
+  ])
+  const bookingUrl: string | undefined = (bookingSettings as any)?.bookingEngineUrl || undefined
 
-  // Normalise to a single shape whether source is CMS or constants
   const room = cmsRoom
     ? {
         slug: (cmsRoom as any).slug ?? slug,
@@ -66,40 +60,21 @@ export default async function RoomPage({ params }: Props) {
         features: ((cmsRoom as any).amenities ?? []).map((a: any) => a.label ?? '').filter(Boolean) as string[],
         maxOccupancy: (cmsRoom as any).maxOccupancy ?? 2,
       }
-    : (() => {
-        const r = ROOMS.find((r) => r.slug === slug)
-        if (!r) return null
-        return {
-          slug: r.slug,
-          title: r.title,
-          view: r.view,
-          size: r.size,
-          shortDesc: r.shortDesc,
-          image: r.image,
-          images: r.images ?? [],
-          features: r.features ?? [],
-          maxOccupancy: 2,
-        }
-      })()
+    : null
 
   if (!room) notFound()
 
-  const similarRooms = allCmsRooms.length > 0
-    ? allCmsRooms
-        .filter((r: any) => r.slug !== slug)
-        .slice(0, 3)
-        .map((r: any) => ({
-          slug: r.slug ?? '',
-          title: r.title ?? '',
-          size: r.size ?? '',
-          shortDesc: r.shortDescription ?? '',
-          view: r.viewType ?? '',
-          image: (typeof r.heroImage === 'object' ? r.heroImage?.url : r.heroImage) || r.imageUrl || '',
-        }))
-    : ROOMS.filter((r) => r.slug !== slug).slice(0, 3).map((r) => ({
-        slug: r.slug, title: r.title, size: r.size,
-        shortDesc: r.shortDesc, view: r.view, image: r.image,
-      }))
+  const similarRooms = (allCmsRooms as any[])
+    .filter((r: any) => r.slug !== slug)
+    .slice(0, 3)
+    .map((r: any) => ({
+      slug: r.slug ?? '',
+      title: r.title ?? '',
+      size: r.size ?? '',
+      shortDesc: r.shortDescription ?? '',
+      view: r.viewType ?? '',
+      image: (typeof r.heroImage === 'object' ? r.heroImage?.url : r.heroImage) || r.imageUrl || '',
+    }))
 
   const hotelRoomSchema = {
     '@context': 'https://schema.org',
@@ -160,7 +135,7 @@ export default async function RoomPage({ params }: Props) {
           </ScrollReveal>
           <ScrollReveal delay={200}>
             <a
-              href={BOOKING_URL}
+              href={bookingUrl || '#'}
               target="_blank"
               rel="noopener noreferrer"
               className="h-11 px-8 inline-flex items-center
@@ -218,7 +193,7 @@ export default async function RoomPage({ params }: Props) {
                     </div>
                   </div>
                   <a
-                    href={BOOKING_URL}
+                    href={bookingUrl || '#'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="h-11 px-6 inline-flex items-center justify-center

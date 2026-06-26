@@ -1,5 +1,5 @@
 import { generateMetadata as genMeta } from '@/lib/seo'
-import { SITE_URL } from '@/lib/constants'
+import { SITE_URL } from '@/lib/seo'
 import { getGalleryItems } from '@/lib/cms'
 import { GalleryClient } from './GalleryClient'
 

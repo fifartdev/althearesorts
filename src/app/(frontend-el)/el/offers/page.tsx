@@ -10,7 +10,7 @@ import { getOffers, getContactInfo, getBookingSettings } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Προσφορές & Ειδικές Τιμές',
-  description: '10% έκπτωση για όλες τις άμεσες κρατήσεις στην Althea Resorts. Προσφορά ανοίγματος ισχύει έως 30 Ιουνίου 2026. Κλείστε απευθείας μέσω ιστοσελίδας, τηλεφώνου ή email.',
+  description: '10% έκπτωση για όλες τις άμεσες κρατήσεις στην Althea Resorts. Προσφορά ανοίγματος για την πρώτη σεζόν. Κλείστε απευθείας μέσω ιστοσελίδας, τηλεφώνου ή email.',
   keywords: ['προσφορές Althea Resorts', 'έκπτωση ξενοδοχείο Κορινθία', 'άμεση κράτηση Ελλάδα', 'προσφορά ανοίγματος ξενοδοχείο'],
   canonical: `${SITE_URL}/el/offers`,
 })
@@ -24,6 +24,9 @@ export default async function GreekOffersPage() {
   const email: string | undefined = (contactInfo as any)?.email || undefined
   const bookingUrl: string | undefined = (bookingSettings as any)?.bookingEngineUrl || undefined
   const b = bookingSettings as any
+  const offerEndDate: string | null = b?.openingOfferEndDate
+    ? new Date(b.openingOfferEndDate).toLocaleDateString('el-GR', { day: 'numeric', month: 'long', year: 'numeric' })
+    : null
   const directReasons = b?.reasons?.length > 0
     ? (b.reasons as any[]).map((r: any) => ({ title: r.title ?? '', body: r.body ?? '' })).filter((r: any) => r.title)
     : undefined
@@ -102,7 +105,7 @@ export default async function GreekOffersPage() {
                   Για να γιορτάσουμε το άνοιγμα του Althea Resorts, προσφέρουμε έκπτωση 10%
                   σε όλες τις απευθείας κρατήσεις που πραγματοποιούνται μέσω της ιστοσελίδας
                   μας ή επικοινωνώντας απευθείας μαζί μας. Η προσφορά ισχύει για κρατήσεις
-                  που θα γίνουν έως το τέλος Ιουνίου 2026 και αφορά όλες τις κατηγορίες
+                  που θα γίνουν έως {offerEndDate ?? 'το τέλος της εναρκτήριας σεζόν'} και αφορά όλες τις κατηγορίες
                   δωματίων, από το Standard Double έως το Althea Loft Suite με Εξωτερικό Jacuzzi.
                 </p>
                 <p className="text-body-refined mb-5">
@@ -124,7 +127,7 @@ export default async function GreekOffersPage() {
                   {[
                     'Όλες τις κατηγορίες δωματίων',
                     'Απευθείας κρατήσεις μόνο μέσω του althearesorts.com ή μέσω τηλεφώνου και email',
-                    'Κρατήσεις που θα πραγματοποιηθούν έως τις 30 Ιουνίου 2026',
+                    offerEndDate ? `Κρατήσεις που θα πραγματοποιηθούν έως τις ${offerEndDate}` : 'Κρατήσεις κατά την εναρκτήρια σεζόν',
                   ].map((cond) => (
                     <div key={cond} className="flex items-start gap-3 text-sm font-light text-smoke">
                       <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0 mt-1.5" />
@@ -187,7 +190,7 @@ export default async function GreekOffersPage() {
                     Έκπτωση σε όλη τη διαμονή σας με άμεση κράτηση
                   </p>
                   <p className="text-xs font-light text-white/40 uppercase tracking-wider mb-8">
-                    Ισχύει έως 30 Ιουνίου 2026
+                    {offerEndDate ? `Ισχύει έως ${offerEndDate}` : 'Προσφορά εναρκτήριας σεζόν'}
                   </p>
                   {bookingUrl && (
                     <a

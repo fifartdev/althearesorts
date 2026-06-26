@@ -1,6 +1,6 @@
 import { generateMetadata as genMeta } from '@/lib/seo'
-import { SITE_URL } from '@/lib/constants'
-import { getFAQs } from '@/lib/cms'
+import { SITE_URL } from '@/lib/seo'
+import { getFAQs, getContactInfo, getBookingSettings } from '@/lib/cms'
 import { FaqClient } from './FaqClient'
 import { faqs as staticFaqs, type FaqCategory } from './faqData'
 
@@ -21,7 +21,14 @@ const CATEGORY_LABELS: Record<string, string> = {
 }
 
 export default async function GreekFAQPage() {
-  const docs = await getFAQs('el')
+  const [docs, contactInfo, bookingSettings] = await Promise.all([
+    getFAQs('el'),
+    getContactInfo(),
+    getBookingSettings(),
+  ])
+  const phone: string | undefined = (contactInfo as any)?.phone || undefined
+  const email: string | undefined = (contactInfo as any)?.email || undefined
+  const bookingUrl: string | undefined = (bookingSettings as any)?.bookingEngineUrl || undefined
 
   const categories: FaqCategory[] = docs.length > 0
     ? Object.entries(
@@ -52,7 +59,7 @@ export default async function GreekFAQPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <FaqClient categories={categories} />
+      <FaqClient categories={categories} phone={phone} email={email} bookingUrl={bookingUrl} />
     </>
   )
 }

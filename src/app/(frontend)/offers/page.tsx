@@ -10,7 +10,7 @@ import { getOffers, getContactInfo, getBookingSettings } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Offers & Special Rates',
-  description: '10% off for all direct bookings at Althea Resorts. Opening offer valid until June 30, 2026. Book direct via our website, phone, or email for the best rate guaranteed.',
+  description: '10% off for all direct bookings at Althea Resorts. Opening offer for the first season. Book direct via our website, phone, or email for the best rate guaranteed.',
   keywords: ['Althea Resorts offers', 'hotel discount Corinthia', 'direct booking discount Greece', 'opening offer hotel'],
   canonical: `${SITE_URL}/offers`,
 })
@@ -28,6 +28,10 @@ export default async function OffersPage() {
   const directReasons = b?.reasons?.length > 0
     ? (b.reasons as any[]).map((r: any) => ({ title: r.title ?? '', body: r.body ?? '' })).filter((r: any) => r.title)
     : undefined
+
+  const offerEndDate: string | null = b?.openingOfferEndDate
+    ? new Date(b.openingOfferEndDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    : null
 
   const firstOffer = (offerDocs as any[])?.[0]
   const offerSchema = firstOffer
@@ -54,7 +58,7 @@ export default async function OffersPage() {
     <main id="main-content">
       {/* Hero */}
       <section
-        className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
+        className="relative h-[70vh] min-h-130 flex items-end overflow-hidden"
         aria-label="Offers"
       >
         <Image
@@ -65,9 +69,9 @@ export default async function OffersPage() {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#102027]/90 via-[#102027]/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-deep/90 via-deep/30 to-transparent" />
         {/* Large decorative "10%" */}
-        <div className="absolute right-8 top-1/2 -translate-y-1/2 font-editorial text-[18vw] font-light text-white/[0.06] leading-none select-none pointer-events-none" aria-hidden="true">
+        <div className="absolute right-8 top-1/2 -translate-y-1/2 font-editorial text-[18vw] font-light text-white/6 leading-none select-none pointer-events-none" aria-hidden="true">
           10%
         </div>
         <div className="relative z-10 container-luxury pb-16 lg:pb-24 w-full">
@@ -84,7 +88,7 @@ export default async function OffersPage() {
       </section>
 
       {/* Page Intro */}
-      <section className="section-padding bg-white border-b border-[#e8e4dd]">
+      <section className="section-padding bg-white border-b border-stone">
         <div className="container-narrow text-center">
           <ScrollReveal>
             <GoldLine className="mx-auto mb-8" />
@@ -96,7 +100,7 @@ export default async function OffersPage() {
               you read twice. Book directly with us and receive ten percent off your stay.
               No intermediaries, no platform fees, no complicated conditions.
             </p>
-            <p className="font-editorial text-xl font-light italic text-[#102027]">
+            <p className="font-editorial text-xl font-light italic text-deep">
               Just a better rate for choosing to come to us first.
             </p>
           </ScrollReveal>
@@ -109,12 +113,12 @@ export default async function OffersPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
             <div className="lg:col-span-7">
               <ScrollReveal>
-                <div className="inline-flex items-center gap-2 bg-[#ad8b27] text-white px-4 py-2 mb-8">
+                <div className="inline-flex items-center gap-2 bg-gold text-white px-4 py-2 mb-8">
                   <span className="text-xs uppercase tracking-[0.2em]">Opening Offer</span>
                 </div>
               </ScrollReveal>
               <ScrollReveal delay={100}>
-                <h2 className="text-display-md text-[#102027] mb-6">
+                <h2 className="text-display-md text-deep mb-6">
                   10% Off for Direct Bookings
                 </h2>
               </ScrollReveal>
@@ -128,7 +132,7 @@ export default async function OffersPage() {
                   contacting us directly.
                 </p>
                 <p className="text-body-refined mb-5">
-                  This offer is available for bookings made until the end of June 2026 and
+                  This offer is available for bookings made until {offerEndDate ?? 'the end of the opening season'} and
                   applies across all room categories — from the Standard Double to the
                   Althea Loft Suite with Outdoor Jacuzzi.
                 </p>
@@ -145,16 +149,16 @@ export default async function OffersPage() {
 
               {/* Conditions */}
               <ScrollReveal delay={250}>
-                <h3 className="text-label-upper text-[#102027] mb-5">Offer Conditions</h3>
+                <h3 className="text-label-upper text-deep mb-5">Offer Conditions</h3>
                 <div className="flex flex-col gap-3 mb-10">
                   {[
                     'Valid for all room categories',
                     'Direct bookings only via althearesorts.com or by phone and email',
-                    'Bookings made until 30 June 2026',
+                    offerEndDate ? `Bookings made until ${offerEndDate}` : 'Bookings made during the opening season',
                     'Cannot be combined with other promotions',
                   ].map((cond) => (
-                    <div key={cond} className="flex items-start gap-3 text-sm font-light text-[#6b6b6b]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#ad8b27] shrink-0 mt-1.5" />
+                    <div key={cond} className="flex items-start gap-3 text-sm font-light text-smoke">
+                      <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0 mt-1.5" />
                       {cond}
                     </div>
                   ))}
@@ -162,20 +166,22 @@ export default async function OffersPage() {
               </ScrollReveal>
 
               <ScrollReveal delay={300}>
-                <h3 className="text-label-upper text-[#102027] mb-5">How to Book</h3>
+                <h3 className="text-label-upper text-deep mb-5">How to Book</h3>
                 <div className="flex flex-col sm:flex-row gap-4">
+                  {bookingUrl && (
                   <a
-                    href={bookingUrl || '#'}
+                    href={bookingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="h-11 px-7 inline-flex items-center justify-center
                                text-xs uppercase tracking-[0.2em]
-                               bg-[#102027] text-white border border-[#102027]
-                               hover:bg-transparent hover:text-[#102027]
+                               bg-deep text-white border border-deep
+                               hover:bg-transparent hover:text-deep
                                transition-all duration-500"
                   >
                     Book Online
                   </a>
+                  )}
                   {phone && (
                   <a
                     href={`tel:${phone.replace(/\s/g, '')}`}
@@ -203,8 +209,8 @@ export default async function OffersPage() {
             {/* Offer card */}
             <div className="lg:col-span-4 lg:col-start-9">
               <ScrollReveal delay={150}>
-                <div className="bg-[#102027] p-10 text-center sticky top-32">
-                  <span className="text-label-upper text-[#ad8b27] block mb-4">Opening Offer</span>
+                <div className="bg-deep p-10 text-center sticky top-32">
+                  <span className="text-label-upper text-gold block mb-4">Opening Offer</span>
                   <div className="font-editorial text-8xl font-light text-white leading-none mb-4">
                     10%
                   </div>
@@ -212,20 +218,22 @@ export default async function OffersPage() {
                     Off your entire stay when you book direct
                   </p>
                   <p className="text-xs font-light text-white/40 uppercase tracking-wider mb-8">
-                    Valid until 30 June 2026
+                    {offerEndDate ? `Valid until ${offerEndDate}` : 'Opening season offer'}
                   </p>
+                  {bookingUrl && (
                   <a
-                    href={bookingUrl || '#'}
+                    href={bookingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="h-11 px-7 inline-flex items-center justify-center w-full
                                text-xs uppercase tracking-[0.2em]
-                               bg-[#ad8b27] text-white border border-[#ad8b27]
-                               hover:bg-transparent hover:text-[#ad8b27]
+                               bg-gold text-white border border-gold
+                               hover:bg-transparent hover:text-gold
                                transition-all duration-500"
                   >
                     Claim This Offer
                   </a>
+                  )}
                 </div>
               </ScrollReveal>
             </div>

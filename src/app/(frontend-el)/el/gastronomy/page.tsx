@@ -5,8 +5,8 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
-import { PHONE, SITE_URL } from '@/lib/constants'
-import { getDining } from '@/lib/cms'
+import { SITE_URL } from '@/lib/seo'
+import { getDining, getContactInfo, getGeoSettings } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Γαστρονομία — AITHER Εστιατόριο Ταράτσας',
@@ -41,7 +41,7 @@ const venues = [
     desc: 'Εκλεκτά αποστάγματα, καλοφτιαγμένα κοκτέιλ και η κατάλληλη ηρεμία που βοηθά μια συζήτηση να εμβαθύνει. Η συλλογή είναι προσεκτικά επιλεγμένη: κρασιά από τον ελληνικό αμπελώνα, premium ποτά που αξίζει να γνωρίσετε και κοκτέιλ φτιαγμένα με έμπνευση και όχι από συνήθεια. Ανοιχτό από αργά το απόγευμα έως τη νύχτα, για όσους δεν βιάζονται και έχουν βρει έναν καλό λόγο να παραμείνουν στο τραπέζι.',
     image: 'https://images.unsplash.com/photo-1674654658721-ffc9c08ee1d0?auto=format&fit=crop&w=900&q=80',
     imageAlt: 'Bar Althea — κοκτέιλ στο χέρι',
-    bg: 'bg-[#f2f8fb]',
+    bg: 'bg-soft',
   },
   {
     id: 'pool-bar',
@@ -55,7 +55,30 @@ const venues = [
 ]
 
 export default async function GreekGastronomyPage() {
-  const docs = await getDining('el')
+  const [docs, contactInfo, geoSettings] = await Promise.all([
+    getDining('el'),
+    getContactInfo(),
+    getGeoSettings('el'),
+  ])
+  const phone: string | undefined = (contactInfo as any)?.phone || undefined
+
+  const geoNested: any[] = (geoSettings as any)?.nestedPlaces ?? []
+  const restaurantEntry = geoNested.find(
+    (p: any) => p.schemaType === 'Restaurant' || p.name?.toLowerCase().includes('aither')
+  )
+  const aithirSchema = restaurantEntry
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Restaurant',
+        ...(restaurantEntry.id ? { '@id': restaurantEntry.id } : { '@id': `${SITE_URL}/el/gastronomy#aither` }),
+        name: restaurantEntry.name,
+        ...(restaurantEntry.description ? { description: restaurantEntry.description } : {}),
+        url: restaurantEntry.url || `${SITE_URL}/el/gastronomy`,
+        ...(restaurantEntry.servesCuisine ? { servesCuisine: restaurantEntry.servesCuisine.split(',').map((s: string) => s.trim()) } : {}),
+        ...(restaurantEntry.priceRange ? { priceRange: restaurantEntry.priceRange } : {}),
+        containedInPlace: { '@id': `${SITE_URL}/#hotel` },
+      }
+    : null
   const cmsVenues = docs.length > 0
     ? docs.map((d: any) => ({
         id: d.slug ?? d.id,
@@ -68,10 +91,17 @@ export default async function GreekGastronomyPage() {
       })).filter((v: any) => v.image)
     : null
   return (
+    <>
+      {aithirSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(aithirSchema) }}
+        />
+      )}
     <main id="main-content">
       {/* Hero */}
       <section
-        className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
+        className="relative h-[70vh] min-h-130 flex items-end overflow-hidden"
         aria-label="Γαστρονομία"
       >
         <Image
@@ -82,7 +112,7 @@ export default async function GreekGastronomyPage() {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#102027]/90 via-[#102027]/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-deep/90 via-deep/30 to-transparent" />
         <div className="relative z-10 container-luxury pb-16 lg:pb-24 w-full">
           <ScrollReveal>
             <SectionLabel light className="mb-5">Γαστρονομία</SectionLabel>
@@ -101,7 +131,7 @@ export default async function GreekGastronomyPage() {
       </section>
 
       {/* AITHER featured section */}
-      <section id="aither" className="section-padding bg-[#e8e4dd]" aria-label="Εστιατόριο AITHER">
+      <section id="aither" className="section-padding bg-stone" aria-label="Εστιατόριο AITHER">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -109,7 +139,7 @@ export default async function GreekGastronomyPage() {
                 <SectionLabel className="mb-6">AITHER</SectionLabel>
               </ScrollReveal>
               <ScrollReveal delay={100}>
-                <h2 className="text-display-sm text-[#102027] mb-6">
+                <h2 className="text-display-sm text-deep mb-6">
                   Το Εστιατόριο Αναφοράς<br />της Althea Resorts
                 </h2>
               </ScrollReveal>
@@ -148,21 +178,23 @@ export default async function GreekGastronomyPage() {
               </ScrollReveal>
               <ScrollReveal delay={300}>
                 <a
-                  href={`tel:${PHONE.replace(/\s/g, '')}`}
+                  href={phone ? `tel:${phone.replace(/\s/g, '')}` : '#'}
                   className="inline-flex items-center gap-2 h-11 px-7
                              text-xs uppercase tracking-[0.2em]
-                             bg-[#102027] text-white border border-[#102027]
-                             hover:bg-transparent hover:text-[#102027]
+                             bg-deep text-white border border-deep
+                             hover:bg-transparent hover:text-deep
                              transition-all duration-500"
                 >
                   Κράτηση Τραπεζιού
                 </a>
-                <p className="mt-3 text-xs font-light text-[#6b6b6b]">
-                  Καλέστε μας στο {PHONE} — ρεσεψιόν ή εστιατόριο
-                </p>
+                {phone && (
+                  <p className="mt-3 text-xs font-light text-smoke">
+                    Καλέστε μας στο {phone} — ρεσεψιόν ή εστιατόριο
+                  </p>
+                )}
               </ScrollReveal>
             </div>
-            <ScrollReveal variant="image" className="aspect-[3/4] w-full relative overflow-hidden">
+            <ScrollReveal variant="image" className="aspect-3/4 w-full relative overflow-hidden">
               <Image
                 src="/images/aither.jpg"
                 alt="Εστιατόριο AITHER με θέα τον Κόλπο"
@@ -190,7 +222,7 @@ export default async function GreekGastronomyPage() {
                   <SectionLabel className="mb-6">{venue.label}</SectionLabel>
                 </ScrollReveal>
                 <ScrollReveal delay={100}>
-                  <h2 className="text-display-sm text-[#102027] mb-6">
+                  <h2 className="text-display-sm text-deep mb-6">
                     {venue.title}
                   </h2>
                 </ScrollReveal>
@@ -204,7 +236,7 @@ export default async function GreekGastronomyPage() {
                 </ScrollReveal>
               </div>
               <div className={i % 2 !== 0 ? 'lg:col-start-1 lg:row-start-1' : ''}>
-                <ScrollReveal variant="image" className="relative overflow-hidden aspect-[4/3]">
+                <ScrollReveal variant="image" className="relative overflow-hidden aspect-4/3">
                   <Image
                     src={venue.image}
                     alt={venue.imageAlt}
@@ -221,5 +253,6 @@ export default async function GreekGastronomyPage() {
 
       <FinalBookingCTA locale="el" />
     </main>
+    </>
   )
 }

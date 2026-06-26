@@ -1,7 +1,5 @@
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
-import { BOOKING_URL } from '@/lib/constants'
-
 type Locale = 'en' | 'el'
 
 const content = {
@@ -27,7 +25,7 @@ const content = {
   },
 }
 
-export function FinalBookingCTA({ locale = 'en' }: { locale?: Locale }) {
+export function FinalBookingCTA({ locale = 'en', bookingUrl }: { locale?: Locale; bookingUrl?: string }) {
   const c = content[locale]
 
   return (
@@ -67,18 +65,20 @@ export function FinalBookingCTA({ locale = 'en' }: { locale?: Locale }) {
 
         <ScrollReveal delay={300}>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            {bookingUrl && (
             <a
-              href={BOOKING_URL}
+              href={bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="h-12 px-10 inline-flex items-center
                          text-xs uppercase tracking-[0.2em]
-                         bg-[#102027] text-white border border-[#102027]
-                         hover:bg-transparent hover:text-[#102027]
+                         bg-deep text-white border border-deep
+                         hover:bg-transparent hover:text-deep
                          transition-all duration-500"
             >
               {c.cta1}
             </a>
+            )}
             <a
               href={c.offersHref}
               className="h-12 px-10 inline-flex items-center

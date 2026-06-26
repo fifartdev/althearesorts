@@ -2,8 +2,6 @@ import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { RoomCard } from '@/components/ui/RoomCard'
-import { ROOMS } from '@/lib/constants'
-
 type Locale = 'en' | 'el'
 
 const content = {
@@ -46,13 +44,10 @@ const greekRoomData: Record<string, { title: string; shortDesc: string; view: st
 type RoomItem = { slug: string; title: string; size: string; shortDesc: string; view: string; image: string }
 
 export function RoomsShowcase({ locale = 'en', rooms }: { locale?: Locale; rooms?: RoomItem[] }) {
-  const staticFeatured = ROOMS.slice(3)
-  // CMS rooms (already localized) take precedence; fall back to last 3 static rooms
-  const featuredRooms: RoomItem[] = rooms && rooms.length > 0 ? rooms.slice(0, 3) : staticFeatured.map((r) => {
-    const gr = locale === 'el' ? greekRoomData[r.slug] : null
-    return { slug: r.slug, title: gr?.title ?? r.title, size: r.size, shortDesc: gr?.shortDesc ?? r.shortDesc, view: gr?.view ?? r.view, image: r.image }
-  })
+  const featuredRooms: RoomItem[] = rooms && rooms.length > 0 ? rooms.slice(0, 3) : []
   const c = content[locale]
+
+  if (featuredRooms.length === 0) return null
 
   return (
     <section className="section-padding bg-white" aria-label="Rooms and Suites">

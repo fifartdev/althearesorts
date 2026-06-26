@@ -154,3 +154,39 @@ export const getTestimonials = unstable_cache(
   ['testimonials'],
   { revalidate: false, tags: ['testimonials'] }
 )
+
+export const getGeoSettings = unstable_cache(
+  async (locale: Locale = 'en') => {
+    const payload = await getPayload({ config })
+    return payload.findGlobal({ slug: 'geo-settings', locale }).catch(() => null)
+  },
+  ['geo-settings'],
+  { revalidate: 3600, tags: ['geo-settings'] }
+)
+
+export const getSEOSettings = unstable_cache(
+  async (locale: Locale = 'en') => {
+    const payload = await getPayload({ config })
+    return payload.findGlobal({ slug: 'seo-settings', locale }).catch(() => null)
+  },
+  ['seo-settings'],
+  { revalidate: 3600, tags: ['seo-settings'] }
+)
+
+export const getHeaderGlobal = unstable_cache(
+  async (locale: Locale = 'en') => {
+    const payload = await getPayload({ config })
+    return payload.findGlobal({ slug: 'header', locale }).catch(() => null)
+  },
+  ['header'],
+  { revalidate: 3600, tags: ['header'] }
+)
+
+export const getFooterGlobal = unstable_cache(
+  async (locale: Locale = 'en') => {
+    const payload = await getPayload({ config })
+    return payload.findGlobal({ slug: 'footer', locale }).catch(() => null)
+  },
+  ['footer'],
+  { revalidate: 3600, tags: ['footer'] }
+)

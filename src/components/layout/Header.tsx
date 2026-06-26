@@ -5,26 +5,26 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/cn'
-import { NAV_LINKS, NAV_LINKS_EL, BOOKING_URL, PHONE, SOCIAL } from '@/lib/constants'
+
+interface NavLink { label: string; href: string }
 
 interface HeaderProps {
   bookingUrl?: string
   phone?: string
   social?: { instagram?: string; facebook?: string; linkedin?: string }
+  navLinks?: NavLink[]
+  ctaLabel?: string
+  locale?: 'en' | 'el'
 }
 
-export function Header({ bookingUrl, phone, social }: HeaderProps = {}) {
-  const _bookingUrl = bookingUrl || BOOKING_URL
-  const _phone = phone || PHONE
-  const _social = social || SOCIAL
+export function Header({ bookingUrl, phone, social, navLinks = [], ctaLabel, locale }: HeaderProps = {}) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
 
-  const isGreek = pathname.startsWith('/el')
-  const links = isGreek ? NAV_LINKS_EL : NAV_LINKS
+  const isGreek = locale === 'el' || pathname.startsWith('/el')
   const logoHref = isGreek ? '/el' : '/'
-  const bookLabel = isGreek ? 'Κράτηση' : 'Book Now'
+  const bookLabel = ctaLabel || (isGreek ? 'Κράτηση' : 'Book Now')
   const switchHref = isGreek
     ? (pathname === '/el' ? '/' : pathname.replace(/^\/el/, ''))
     : (pathname === '/' ? '/el' : `/el${pathname}`)
@@ -67,45 +67,50 @@ export function Header({ bookingUrl, phone, social }: HeaderProps = {}) {
             />
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav
-            className="hidden lg:flex items-center gap-5"
-            aria-label="Primary navigation"
-          >
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-label-upper text-white/80 transition-colors duration-300 hover:text-[#ad8b27]"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+          {/* Desktop Navigation — only renders if nav links exist */}
+          {navLinks.length > 0 && (
+            <nav className="hidden lg:flex items-center gap-5" aria-label="Primary navigation">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-label-upper text-white/80 transition-colors duration-300 hover:text-gold"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          )}
 
           {/* CTA + Language switcher + Burger */}
           <div className="flex items-center gap-4">
             {/* Social icons — desktop only */}
             <div className="hidden lg:flex items-center gap-3">
-              <a href={_social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/40 hover:text-white transition-colors duration-200">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                  <circle cx="12" cy="12" r="4"/>
-                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-                </svg>
-              </a>
-              <a href={_social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-white/40 hover:text-white transition-colors duration-200">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                </svg>
-              </a>
-              <a href={_social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-white/40 hover:text-white transition-colors duration-200">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                  <rect x="2" y="9" width="4" height="12"/>
-                  <circle cx="4" cy="4" r="2"/>
-                </svg>
-              </a>
+              {social?.instagram && (
+                <a href={social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/40 hover:text-white transition-colors duration-200">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                  </svg>
+                </a>
+              )}
+              {social?.facebook && (
+                <a href={social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-white/40 hover:text-white transition-colors duration-200">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                  </svg>
+                </a>
+              )}
+              {social?.linkedin && (
+                <a href={social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-white/40 hover:text-white transition-colors duration-200">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                    <rect x="2" y="9" width="4" height="12"/>
+                    <circle cx="4" cy="4" r="2"/>
+                  </svg>
+                </a>
+              )}
             </div>
 
             {/* Language switcher — desktop */}
@@ -119,18 +124,20 @@ export function Header({ bookingUrl, phone, social }: HeaderProps = {}) {
               {isGreek ? 'EN' : 'ΕΛ'}
             </Link>
 
-            <a
-              href={_bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                'hidden lg:inline-flex items-center gap-2 h-9 px-5',
-                'text-[10px] uppercase tracking-[0.2em] transition-all duration-400',
-                'bg-white/10 text-white border border-white/40 hover:bg-white/20'
-              )}
-            >
-              {bookLabel}
-            </a>
+            {bookingUrl && (
+              <a
+                href={bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  'hidden lg:inline-flex items-center gap-2 h-9 px-5',
+                  'text-[10px] uppercase tracking-[0.2em] transition-all duration-400',
+                  'bg-white/10 text-white border border-white/40 hover:bg-white/20'
+                )}
+              >
+                {bookLabel}
+              </a>
+            )}
 
             {/* Mobile burger */}
             <button
@@ -139,24 +146,9 @@ export function Header({ bookingUrl, phone, social }: HeaderProps = {}) {
               aria-label={menuOpen ? (isGreek ? 'Κλείσιμο μενού' : 'Close menu') : (isGreek ? 'Άνοιγμα μενού' : 'Open menu')}
               aria-expanded={menuOpen}
             >
-              <span
-                className={cn(
-                  'block w-6 h-px bg-current transition-all duration-300 origin-center',
-                  menuOpen && 'rotate-45 translate-y-[5px]'
-                )}
-              />
-              <span
-                className={cn(
-                  'block w-4 h-px bg-current transition-all duration-300',
-                  menuOpen && 'opacity-0 w-0'
-                )}
-              />
-              <span
-                className={cn(
-                  'block w-6 h-px bg-current transition-all duration-300 origin-center',
-                  menuOpen && '-rotate-45 -translate-y-[5px]'
-                )}
-              />
+              <span className={cn('block w-6 h-px bg-current transition-all duration-300 origin-center', menuOpen && 'rotate-45 translate-y-1.25')} />
+              <span className={cn('block w-4 h-px bg-current transition-all duration-300', menuOpen && 'opacity-0 w-0')} />
+              <span className={cn('block w-6 h-px bg-current transition-all duration-300 origin-center', menuOpen && '-rotate-45 -translate-y-1.25')} />
             </button>
           </div>
         </div>
@@ -171,12 +163,12 @@ export function Header({ bookingUrl, phone, social }: HeaderProps = {}) {
         aria-hidden={!menuOpen}
       >
         <div className="flex-1 overflow-y-auto container-luxury flex flex-col gap-6 pt-28 pb-6">
-          {links.map((link, i) => (
+          {navLinks.map((link, i) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="font-editorial text-4xl font-light text-white hover:text-[#ad8b27] transition-colors duration-300"
+              className="font-editorial text-4xl font-light text-white hover:text-gold transition-colors duration-300"
               style={{ transitionDelay: menuOpen ? `${i * 50}ms` : '0ms' }}
             >
               {link.label}
@@ -184,17 +176,19 @@ export function Header({ bookingUrl, phone, social }: HeaderProps = {}) {
           ))}
 
           <div className="flex items-center gap-6 mt-2">
-            <a
-              href={_bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMenuOpen(false)}
-              className="inline-flex items-center gap-2 h-11 px-7
-                         text-xs uppercase tracking-[0.2em]
-                         bg-gold text-white border border-gold"
-            >
-              {bookLabel}
-            </a>
+            {bookingUrl && (
+              <a
+                href={bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMenuOpen(false)}
+                className="inline-flex items-center gap-2 h-11 px-7
+                           text-xs uppercase tracking-[0.2em]
+                           bg-gold text-white border border-gold"
+              >
+                {bookLabel}
+              </a>
+            )}
             <Link
               href={switchHref}
               onClick={() => setMenuOpen(false)}
@@ -211,11 +205,15 @@ export function Header({ bookingUrl, phone, social }: HeaderProps = {}) {
             <span className="text-white/40 text-xs uppercase tracking-widest">
               {isGreek ? 'Κορινθία, Ελλάδα' : 'Corinthia, Greece'}
             </span>
-            <span className="text-white/60 text-xs">{_phone}</span>
+            {phone && <span className="text-white/60 text-xs">{phone}</span>}
           </div>
           <div className="flex gap-4">
-            <a href={_social.instagram} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200">IG</a>
-            <a href={_social.facebook} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200">FB</a>
+            {social?.instagram && (
+              <a href={social.instagram} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200">IG</a>
+            )}
+            {social?.facebook && (
+              <a href={social.facebook} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200">FB</a>
+            )}
           </div>
         </div>
       </div>

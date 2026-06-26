@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { generateMetadata as genMeta } from '@/lib/seo'
-import { SITE_URL } from '@/lib/constants'
+import { SITE_URL } from '@/lib/seo'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
@@ -41,12 +41,12 @@ export default function AboutPage() {
       </section>
 
       {/* Intro */}
-      <section className="section-padding bg-[#f2f8fb]">
+      <section className="section-padding bg-soft">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <div className="lg:col-span-7">
               <ScrollReveal>
-                <p className="font-editorial text-2xl font-light text-[#102027] leading-relaxed mb-8">
+                <p className="font-editorial text-2xl font-light text-deep leading-relaxed mb-8">
                   There is a moment, usually on the second day, when a guest
                   at Althea stops thinking about what they left behind.
                 </p>
@@ -84,7 +84,7 @@ export default function AboutPage() {
       <section className="section-padding bg-white">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <ScrollReveal variant="image" className="aspect-[4/5] w-full relative overflow-hidden">
+            <ScrollReveal variant="image" className="aspect-4/5 w-full relative overflow-hidden">
               <Image
                 src="/images/new-images/New-Hero.jpg"
                 alt="Althea Resorts — pool and hillside"
@@ -98,7 +98,7 @@ export default function AboutPage() {
                 <SectionLabel className="mb-6">Who We Are</SectionLabel>
               </ScrollReveal>
               <ScrollReveal delay={100}>
-                <h2 className="text-display-sm text-[#102027] mb-6">
+                <h2 className="text-display-sm text-deep mb-6">
                   Built on a Simple Idea
                 </h2>
               </ScrollReveal>
@@ -113,15 +113,15 @@ export default function AboutPage() {
                   the way a meal arrives when you are hungry and disappears when you are done.
                 </p>
                 <p className="text-body-refined mb-5">
-                  It is the <a href="/gastronomy" className="text-[#ad8b27] hover:underline font-light">breakfast</a> made
+                  It is the <a href="/gastronomy" className="text-gold hover:underline font-light">breakfast</a> made
                   from what the local farmers brought in that morning. It is the{' '}
-                  <a href="/spa" className="text-[#ad8b27] hover:underline font-light">spa</a> treatment
+                  <a href="/spa" className="text-gold hover:underline font-light">spa</a> treatment
                   that uses what this land and this sea have always produced. It is the staff
                   member who remembers your name on the second day without being reminded.
                 </p>
                 <p className="text-body-refined mb-5">
                   Althea was designed around these details. Forty-one{' '}
-                  <a href="/accommodation" className="text-[#ad8b27] hover:underline font-light">rooms and suites</a>,
+                  <a href="/accommodation" className="text-gold hover:underline font-light">rooms and suites</a>,
                   each one positioned to make the most of the Corinthian landscape. A rooftop
                   restaurant, AITHER, that tells a different Mediterranean story every evening.
                   A spa — the Ocean Spa — built as a modern Asclepeion, where ancient wellness
@@ -139,7 +139,7 @@ export default function AboutPage() {
       </section>
 
       {/* Where We Are */}
-      <section className="section-padding bg-[#102027]">
+      <section className="section-padding bg-deep">
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5">
@@ -174,7 +174,7 @@ export default function AboutPage() {
               </ScrollReveal>
             </div>
             <div className="lg:col-span-6 lg:col-start-7">
-              <ScrollReveal variant="image" className="aspect-[4/3] w-full relative overflow-hidden">
+              <ScrollReveal variant="image" className="aspect-4/3 w-full relative overflow-hidden">
                 <Image
                   src="https://images.unsplash.com/photo-1698933464922-cb7af8fe9267?auto=format&fit=crop&w=900&q=80"
                   alt="Ancient stone pillars at Corinth"
@@ -189,14 +189,14 @@ export default function AboutPage() {
       </section>
 
       {/* What We Stand For */}
-      <section className="section-padding bg-[#faf8f4]">
+      <section className="section-padding bg-cream">
         <div className="container-luxury">
           <div className="max-w-3xl mx-auto text-center">
             <ScrollReveal>
               <SectionLabel className="mb-6 justify-center">What We Stand For</SectionLabel>
             </ScrollReveal>
             <ScrollReveal delay={100}>
-              <h2 className="text-display-sm text-[#102027] mb-8">
+              <h2 className="text-display-sm text-deep mb-8">
                 Greek Hospitality, Without the Script
               </h2>
             </ScrollReveal>
@@ -220,7 +220,7 @@ export default function AboutPage() {
                 is one of the quiet advantages of Althea, close enough to be spontaneous,
                 far enough to feel completely removed from the city you left behind.
               </p>
-              <p className="font-editorial text-xl font-light italic text-[#102027] mt-8">
+              <p className="font-editorial text-xl font-light italic text-deep mt-8">
                 "This is Greek hospitality at its most honest. Not performed for tourists.
                 Not packaged for a brochure. Simply offered, the way it has always been
                 offered here, to anyone who arrives at the door."
