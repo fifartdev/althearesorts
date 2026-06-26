@@ -5,8 +5,8 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { DirectBookingReasons } from '@/components/sections/DirectBookingReasons'
-import { BOOKING_URL, PHONE, EMAIL, SITE_URL } from '@/lib/constants'
-import { getContactInfo } from '@/lib/cms'
+import { SITE_URL } from '@/lib/seo'
+import { getOffers, getContactInfo, getBookingSettings } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Προσφορές & Ειδικές Τιμές',
@@ -16,14 +16,22 @@ export const metadata = genMeta({
 })
 
 export default async function GreekOffersPage() {
-  const contactInfo = await getContactInfo()
-  const phone = (contactInfo as any)?.phone || PHONE
-  const email = (contactInfo as any)?.email || EMAIL
+  const [contactInfo, bookingSettings] = await Promise.all([
+    getContactInfo(),
+    getBookingSettings(),
+  ])
+  const phone: string | undefined = (contactInfo as any)?.phone || undefined
+  const email: string | undefined = (contactInfo as any)?.email || undefined
+  const bookingUrl: string | undefined = (bookingSettings as any)?.bookingEngineUrl || undefined
+  const b = bookingSettings as any
+  const directReasons = b?.reasons?.length > 0
+    ? (b.reasons as any[]).map((r: any) => ({ title: r.title ?? '', body: r.body ?? '' })).filter((r: any) => r.title)
+    : undefined
   return (
     <main id="main-content">
       {/* Hero */}
       <section
-        className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
+        className="relative h-[70vh] min-h-130 flex items-end overflow-hidden"
         aria-label="Προσφορές"
       >
         <Image
@@ -34,9 +42,9 @@ export default async function GreekOffersPage() {
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#102027]/90 via-[#102027]/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-deep/90 via-deep/30 to-transparent" />
         {/* Large decorative "10%" */}
-        <div className="absolute right-8 top-1/2 -translate-y-1/2 font-editorial text-[18vw] font-light text-white/[0.06] leading-none select-none pointer-events-none" aria-hidden="true">
+        <div className="absolute right-8 top-1/2 -translate-y-1/2 font-editorial text-[18vw] font-light text-white/6 leading-none select-none pointer-events-none" aria-hidden="true">
           10%
         </div>
         <div className="relative z-10 container-luxury pb-16 lg:pb-24 w-full">
@@ -53,7 +61,7 @@ export default async function GreekOffersPage() {
       </section>
 
       {/* Page Intro */}
-      <section className="section-padding bg-white border-b border-[#e8e4dd]">
+      <section className="section-padding bg-white border-b border-stone">
         <div className="container-narrow text-center">
           <ScrollReveal>
             <GoldLine className="mx-auto mb-8" />
@@ -77,12 +85,12 @@ export default async function GreekOffersPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
             <div className="lg:col-span-7">
               <ScrollReveal>
-                <div className="inline-flex items-center gap-2 bg-[#ad8b27] text-white px-4 py-2 mb-8">
+                <div className="inline-flex items-center gap-2 bg-gold text-white px-4 py-2 mb-8">
                   <span className="text-xs uppercase tracking-[0.2em]">Προσφορά Ανοίγματος</span>
                 </div>
               </ScrollReveal>
               <ScrollReveal delay={100}>
-                <h2 className="text-display-md text-[#102027] mb-6">
+                <h2 className="text-display-md text-deep mb-6">
                   10% Έκπτωση για Απευθείας Κρατήσεις
                 </h2>
               </ScrollReveal>
@@ -111,15 +119,15 @@ export default async function GreekOffersPage() {
 
               {/* Conditions */}
               <ScrollReveal delay={250}>
-                <h3 className="text-label-upper text-[#102027] mb-5">ΙΣΧΥΕΙ ΓΙΑ:</h3>
+                <h3 className="text-label-upper text-deep mb-5">ΙΣΧΥΕΙ ΓΙΑ:</h3>
                 <div className="flex flex-col gap-3 mb-10">
                   {[
                     'Όλες τις κατηγορίες δωματίων',
                     'Απευθείας κρατήσεις μόνο μέσω του althearesorts.com ή μέσω τηλεφώνου και email',
                     'Κρατήσεις που θα πραγματοποιηθούν έως τις 30 Ιουνίου 2026',
                   ].map((cond) => (
-                    <div key={cond} className="flex items-start gap-3 text-sm font-light text-[#6b6b6b]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#ad8b27] shrink-0 mt-1.5" />
+                    <div key={cond} className="flex items-start gap-3 text-sm font-light text-smoke">
+                      <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0 mt-1.5" />
                       {cond}
                     </div>
                   ))}
@@ -127,45 +135,51 @@ export default async function GreekOffersPage() {
               </ScrollReveal>
 
               <ScrollReveal delay={300}>
-                <h3 className="text-label-upper text-[#102027] mb-5">Τρόποι Κράτησης</h3>
+                <h3 className="text-label-upper text-deep mb-5">Τρόποι Κράτησης</h3>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <a
-                    href={BOOKING_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="h-11 px-7 inline-flex items-center justify-center
-                               text-xs uppercase tracking-[0.2em]
-                               bg-[#102027] text-white border border-[#102027]
-                               hover:bg-transparent hover:text-[#102027]
-                               transition-all duration-500"
-                  >
-                    Online Κράτηση
-                  </a>
-                  <a
-                    href={`tel:${phone.replace(/\s/g, '')}`}
-                    className="h-11 px-7 inline-flex items-center justify-center
-                               text-xs uppercase tracking-[0.2em]
-                               bg-transparent text-[#102027] border border-[#102027]
-                               hover:bg-[#102027] hover:text-white
-                               transition-all duration-500"
-                  >
-                    {phone}
-                  </a>
+                  {bookingUrl && (
+                    <a
+                      href={bookingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="h-11 px-7 inline-flex items-center justify-center
+                                 text-xs uppercase tracking-[0.2em]
+                                 bg-deep text-white border border-deep
+                                 hover:bg-transparent hover:text-deep
+                                 transition-all duration-500"
+                    >
+                      Online Κράτηση
+                    </a>
+                  )}
+                  {phone && (
+                    <a
+                      href={`tel:${phone.replace(/\s/g, '')}`}
+                      className="h-11 px-7 inline-flex items-center justify-center
+                                 text-xs uppercase tracking-[0.2em]
+                                 bg-transparent text-deep border border-deep
+                                 hover:bg-deep hover:text-white
+                                 transition-all duration-500"
+                    >
+                      {phone}
+                    </a>
+                  )}
                 </div>
-                <p className="mt-4 text-sm font-light text-[#6b6b6b]">
-                  Ή γράψτε μας στο{' '}
-                  <a href={`mailto:${email}`} className="text-[#ad8b27] hover:underline">
-                    {email}
-                  </a>
-                </p>
+                {email && (
+                  <p className="mt-4 text-sm font-light text-smoke">
+                    Ή γράψτε μας στο{' '}
+                    <a href={`mailto:${email}`} className="text-gold hover:underline">
+                      {email}
+                    </a>
+                  </p>
+                )}
               </ScrollReveal>
             </div>
 
             {/* Offer card */}
             <div className="lg:col-span-4 lg:col-start-9">
               <ScrollReveal delay={150}>
-                <div className="bg-[#102027] p-10 text-center sticky top-32">
-                  <span className="text-label-upper text-[#ad8b27] block mb-4">Προσφορά Ανοίγματος</span>
+                <div className="bg-deep p-10 text-center sticky top-32">
+                  <span className="text-label-upper text-gold block mb-4">Προσφορά Ανοίγματος</span>
                   <div className="font-editorial text-8xl font-light text-white leading-none mb-4">
                     10%
                   </div>
@@ -175,18 +189,20 @@ export default async function GreekOffersPage() {
                   <p className="text-xs font-light text-white/40 uppercase tracking-wider mb-8">
                     Ισχύει έως 30 Ιουνίου 2026
                   </p>
-                  <a
-                    href={BOOKING_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="h-11 px-7 inline-flex items-center justify-center w-full
-                               text-xs uppercase tracking-[0.2em]
-                               bg-[#ad8b27] text-white border border-[#ad8b27]
-                               hover:bg-transparent hover:text-[#ad8b27]
-                               transition-all duration-500"
-                  >
-                    Εξαργυρώστε την Προσφορά
-                  </a>
+                  {bookingUrl && (
+                    <a
+                      href={bookingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="h-11 px-7 inline-flex items-center justify-center w-full
+                                 text-xs uppercase tracking-[0.2em]
+                                 bg-gold text-white border border-gold
+                                 hover:bg-transparent hover:text-gold
+                                 transition-all duration-500"
+                    >
+                      Εξαργυρώστε την Προσφορά
+                    </a>
+                  )}
                 </div>
               </ScrollReveal>
             </div>
@@ -194,7 +210,15 @@ export default async function GreekOffersPage() {
         </div>
       </section>
 
-      <DirectBookingReasons locale="el" />
+      <DirectBookingReasons
+        label={b?.directBookingLabel || undefined}
+        headline1={b?.directBookingHeadline1 || undefined}
+        headline2={b?.directBookingHeadline2 || undefined}
+        intro={b?.directBookingIntro || undefined}
+        ctaLabel={b?.directBookingCtaLabel || undefined}
+        reasons={directReasons}
+        bookingUrl={bookingUrl}
+      />
     </main>
   )
 }

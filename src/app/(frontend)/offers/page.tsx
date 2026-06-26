@@ -5,8 +5,8 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { DirectBookingReasons } from '@/components/sections/DirectBookingReasons'
-import { BOOKING_URL, PHONE, EMAIL, INFO_EMAIL, SITE_URL } from '@/lib/constants'
-import { getOffers, getContactInfo } from '@/lib/cms'
+import { SITE_URL } from '@/lib/seo'
+import { getOffers, getContactInfo, getBookingSettings } from '@/lib/cms'
 
 export const metadata = genMeta({
   title: 'Offers & Special Rates',
@@ -15,34 +15,42 @@ export const metadata = genMeta({
   canonical: `${SITE_URL}/offers`,
 })
 
-const offerSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Offer',
-  name: '10% Direct Booking Discount',
-  description: '10% discount on all room rates when booking directly via the Althea Resorts website, phone, or email. Best rate guaranteed.',
-  url: `${SITE_URL}/offers`,
-  priceSpecification: {
-    '@type': 'PriceSpecification',
-    priceCurrency: 'EUR',
-  },
-  validThrough: '2026-06-30',
-  seller: {
-    '@id': `${SITE_URL}/#hotel`,
-  },
-  eligibleCustomerType: 'http://purl.org/goodrelations/v1#EndUser',
-}
-
 export default async function OffersPage() {
-  const [offerDocs, contactInfo] = await Promise.all([getOffers('en'), getContactInfo()])
-  const phone = (contactInfo as any)?.phone || PHONE
-  const email = (contactInfo as any)?.email || EMAIL
-  const infoEmail = (contactInfo as any)?.infoEmail || INFO_EMAIL
+  const [offerDocs, contactInfo, bookingSettings] = await Promise.all([
+    getOffers('en'),
+    getContactInfo(),
+    getBookingSettings(),
+  ])
+  const phone: string | undefined = (contactInfo as any)?.phone || undefined
+  const email: string | undefined = (contactInfo as any)?.email || undefined
+  const bookingUrl: string | undefined = (bookingSettings as any)?.bookingEngineUrl || undefined
+  const b = bookingSettings as any
+  const directReasons = b?.reasons?.length > 0
+    ? (b.reasons as any[]).map((r: any) => ({ title: r.title ?? '', body: r.body ?? '' })).filter((r: any) => r.title)
+    : undefined
+
+  const firstOffer = (offerDocs as any[])?.[0]
+  const offerSchema = firstOffer
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Offer',
+        name: firstOffer.name || firstOffer.title,
+        ...(firstOffer.description ? { description: firstOffer.description } : {}),
+        url: `${SITE_URL}/offers`,
+        priceSpecification: { '@type': 'PriceSpecification', priceCurrency: 'EUR' },
+        ...(firstOffer.validThrough ? { validThrough: firstOffer.validThrough } : {}),
+        seller: { '@id': `${SITE_URL}/#hotel` },
+        eligibleCustomerType: 'http://purl.org/goodrelations/v1#EndUser',
+      }
+    : null
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(offerSchema) }}
-      />
+      {offerSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(offerSchema) }}
+        />
+      )}
     <main id="main-content">
       {/* Hero */}
       <section
@@ -157,7 +165,7 @@ export default async function OffersPage() {
                 <h3 className="text-label-upper text-[#102027] mb-5">How to Book</h3>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
-                    href={BOOKING_URL}
+                    href={bookingUrl || '#'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="h-11 px-7 inline-flex items-center justify-center
@@ -168,23 +176,27 @@ export default async function OffersPage() {
                   >
                     Book Online
                   </a>
+                  {phone && (
                   <a
                     href={`tel:${phone.replace(/\s/g, '')}`}
                     className="h-11 px-7 inline-flex items-center justify-center
                                text-xs uppercase tracking-[0.2em]
-                               bg-transparent text-[#102027] border border-[#102027]
-                               hover:bg-[#102027] hover:text-white
+                               bg-transparent text-deep border border-deep
+                               hover:bg-deep hover:text-white
                                transition-all duration-500"
                   >
                     {phone}
                   </a>
+                  )}
                 </div>
-                <p className="mt-4 text-sm font-light text-[#6b6b6b]">
+                {email && (
+                <p className="mt-4 text-sm font-light text-smoke">
                   Or write to us at{' '}
-                  <a href={`mailto:${email}`} className="text-[#ad8b27] hover:underline">
+                  <a href={`mailto:${email}`} className="text-gold hover:underline">
                     {email}
                   </a>
                 </p>
+                )}
               </ScrollReveal>
             </div>
 
@@ -203,7 +215,7 @@ export default async function OffersPage() {
                     Valid until 30 June 2026
                   </p>
                   <a
-                    href={BOOKING_URL}
+                    href={bookingUrl || '#'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="h-11 px-7 inline-flex items-center justify-center w-full
@@ -221,7 +233,15 @@ export default async function OffersPage() {
         </div>
       </section>
 
-      <DirectBookingReasons />
+      <DirectBookingReasons
+        label={b?.directBookingLabel || undefined}
+        headline1={b?.directBookingHeadline1 || undefined}
+        headline2={b?.directBookingHeadline2 || undefined}
+        intro={b?.directBookingIntro || undefined}
+        ctaLabel={b?.directBookingCtaLabel || undefined}
+        reasons={directReasons}
+        bookingUrl={bookingUrl}
+      />
     </main>
     </>
   )

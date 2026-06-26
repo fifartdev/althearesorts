@@ -137,6 +137,149 @@ export const SiteSettings: GlobalConfig = {
           ],
         },
 
+        // ─── HOMEPAGE HERO ───────────────────────────────────────────────
+        {
+          label: 'Homepage Hero',
+          description: 'Content for the full-screen homepage hero section.',
+          fields: [
+            {
+              name: 'heroImage',
+              type: 'upload',
+              relationTo: 'media',
+              admin: { description: 'Full-screen hero background image. Recommended 2400×1600px.' },
+            },
+            {
+              name: 'heroHeadline1',
+              type: 'text',
+              localized: true,
+              defaultValue: 'Where the Gulf',
+              admin: { description: 'First line of the hero headline.' },
+            },
+            {
+              name: 'heroHeadline2',
+              type: 'text',
+              localized: true,
+              defaultValue: 'Begins to Heal You',
+              admin: { description: 'Second line (italic) of the hero headline.' },
+            },
+            {
+              name: 'heroTagline',
+              type: 'textarea',
+              localized: true,
+              defaultValue: '41 rooms and suites on the hills of Ano Loutro. Sixty minutes from Athens. A world away from everything else.',
+            },
+            {
+              name: 'heroLocationLabel',
+              type: 'text',
+              localized: true,
+              defaultValue: 'Corinthia, Greece',
+            },
+            {
+              name: 'heroScrollLabel',
+              type: 'text',
+              localized: true,
+              defaultValue: 'Scroll',
+            },
+            {
+              name: 'heroCta1Label',
+              type: 'text',
+              localized: true,
+              defaultValue: 'Reserve a Room',
+              admin: { description: 'Primary CTA button label (links to booking engine).' },
+            },
+            {
+              name: 'heroCta2Label',
+              type: 'text',
+              localized: true,
+              defaultValue: 'Explore Rooms',
+              admin: { description: 'Secondary CTA button label (links to /accommodation).' },
+            },
+            {
+              name: 'heroStat1Value',
+              type: 'text',
+              localized: true,
+              defaultValue: '41',
+            },
+            {
+              name: 'heroStat1Label',
+              type: 'text',
+              localized: true,
+              defaultValue: 'Rooms & Suites',
+            },
+            {
+              name: 'heroStat2Value',
+              type: 'text',
+              localized: true,
+              defaultValue: "60'",
+            },
+            {
+              name: 'heroStat2Label',
+              type: 'text',
+              localized: true,
+              defaultValue: 'From Athens',
+            },
+            {
+              name: 'heroStat3Value',
+              type: 'text',
+              localized: true,
+              defaultValue: '5★',
+            },
+            {
+              name: 'heroStat3Label',
+              type: 'text',
+              localized: true,
+              defaultValue: 'Experience',
+            },
+          ],
+        },
+
+        // ─── HOMEPAGE COPY ───────────────────────────────────────────────
+        {
+          label: 'Homepage Copy',
+          description: 'Text for all homepage section components. All fields are localized (EN + EL).',
+          fields: [
+            // Brand Intro section
+            { type: 'row', fields: [
+              { name: 'brandIntroLabel', type: 'text', localized: true, admin: { width: '50%', description: 'Section chip label ("The Property")' } },
+              { name: 'brandIntroLinkLabel', type: 'text', localized: true, admin: { width: '50%', description: 'Link text ("Our Story")' } },
+            ]},
+            { name: 'brandIntroHeadline1', type: 'text', localized: true, defaultValue: 'Built for', admin: { description: 'Brand intro headline line 1' } },
+            { name: 'brandIntroHeadline2', type: 'text', localized: true, defaultValue: 'That Moment', admin: { description: 'Brand intro headline line 2 (italic)' } },
+            { name: 'brandIntroBody1', type: 'textarea', localized: true, admin: { description: 'Brand intro paragraph 1' } },
+            { name: 'brandIntroBody2', type: 'textarea', localized: true, admin: { description: 'Brand intro paragraph 2' } },
+            { name: 'brandIntroCardLabel', type: 'text', admin: { description: 'Info card label (e.g. "Althos")' } },
+            { name: 'brandIntroCardLine1', type: 'text', localized: true, admin: { description: 'Card text line 1' } },
+            { name: 'brandIntroCardLine2', type: 'text', localized: true, admin: { description: 'Card text line 2 (italic)' } },
+            { name: 'brandIntroCardSub', type: 'textarea', localized: true, admin: { description: 'Small card subtext' } },
+            { name: 'brandIntroImage1', type: 'upload', relationTo: 'media' as const, admin: { description: 'Brand intro left tall image' } },
+            { name: 'brandIntroImage2', type: 'upload', relationTo: 'media' as const, admin: { description: 'Brand intro right square image' } },
+            // Experiences Highlight section
+            { name: 'expHighlightLabel', type: 'text', localized: true, defaultValue: 'Experiences', admin: { description: 'Experiences section chip label' } },
+            { name: 'expHighlightHeadline1', type: 'text', localized: true, defaultValue: 'This Is What You', admin: { description: 'Experiences headline line 1' } },
+            { name: 'expHighlightHeadline2', type: 'text', localized: true, defaultValue: 'Come Back For', admin: { description: 'Experiences headline line 2 (italic)' } },
+            { name: 'expHighlightSubtext', type: 'textarea', localized: true, admin: { description: 'Experiences section subtext (right side)' } },
+            { name: 'expHighlightDiscoverLabel', type: 'text', localized: true, defaultValue: 'Discover', admin: { description: 'Card link label' } },
+            // Gastronomy section
+            { name: 'gastronomyLabel', type: 'text', localized: true, defaultValue: 'Gastronomy', admin: { description: 'Gastronomy section chip label' } },
+            { name: 'gastronomyHeadline1', type: 'text', localized: true, defaultValue: 'Food Here Is Not', admin: { description: 'Gastronomy headline line 1' } },
+            { name: 'gastronomyHeadline2', type: 'text', localized: true, defaultValue: 'an Afterthought', admin: { description: 'Gastronomy headline line 2 (italic)' } },
+            { name: 'gastronomyBody1', type: 'textarea', localized: true, admin: { description: 'Gastronomy paragraph 1' } },
+            { name: 'gastronomyBody2', type: 'textarea', localized: true, admin: { description: 'Gastronomy paragraph 2' } },
+            { name: 'gastronomyCardQuote', type: 'textarea', localized: true, admin: { description: 'Quote card text' } },
+            { name: 'gastronomyCtaLabel', type: 'text', localized: true, defaultValue: 'Explore Gastronomy', admin: { description: 'Gastronomy section CTA label' } },
+            { name: 'gastronomyImage', type: 'upload', relationTo: 'media' as const, admin: { description: 'Gastronomy section image (aspect 3/4)' } },
+            // Journal preview section
+            { name: 'journalLabel', type: 'text', localized: true, defaultValue: 'Journal', admin: { description: 'Journal section chip label' } },
+            { name: 'journalHeadline1', type: 'text', localized: true, defaultValue: 'Stories from', admin: { description: 'Journal headline line 1' } },
+            { name: 'journalHeadline2', type: 'text', localized: true, defaultValue: 'Corinthia', admin: { description: 'Journal headline line 2' } },
+            { name: 'journalCtaLabel', type: 'text', localized: true, defaultValue: 'All Stories', admin: { description: 'Journal section CTA label' } },
+            // Gallery preview section
+            { name: 'galleryLabel', type: 'text', localized: true, defaultValue: 'Gallery', admin: { description: 'Gallery section chip label' } },
+            { name: 'galleryHeadline', type: 'text', localized: true, defaultValue: 'The View From Here', admin: { description: 'Gallery section headline' } },
+            { name: 'galleryCtaLabel', type: 'text', localized: true, defaultValue: 'View Full Gallery', admin: { description: 'Gallery section CTA label' } },
+          ],
+        },
+
         // ─── ANNOUNCEMENT BANNER ─────────────────────────────────────────
         {
           label: 'Announcement Banner',

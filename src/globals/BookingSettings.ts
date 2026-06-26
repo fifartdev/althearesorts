@@ -41,5 +41,25 @@ export const BookingSettings: GlobalConfig = {
       admin: { description: 'Direct booking discount percentage' },
     },
     { name: 'openingOfferEndDate', type: 'date' },
+    { name: 'directBookingLabel', type: 'text', localized: true, defaultValue: 'Direct Booking' },
+    { name: 'directBookingHeadline1', type: 'text', localized: true, defaultValue: 'Reasons to Book' },
+    { name: 'directBookingHeadline2', type: 'text', localized: true, defaultValue: 'Directly With Us' },
+    {
+      name: 'directBookingIntro',
+      type: 'textarea',
+      localized: true,
+      defaultValue: 'Booking direct means you speak to the people who actually know the property. Every arrangement, every request, every question — handled without a third party in between.',
+    },
+    { name: 'directBookingCtaLabel', type: 'text', localized: true, defaultValue: 'Book Direct Now' },
+    {
+      name: 'reasons',
+      type: 'array',
+      localized: true,
+      admin: { description: 'Accordion reasons shown in the Direct Booking section.' },
+      fields: [
+        { name: 'title', type: 'text', required: true },
+        { name: 'body', type: 'textarea', required: true },
+      ],
+    },
   ],
 }

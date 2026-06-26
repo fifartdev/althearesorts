@@ -1,6 +1,6 @@
 import React from 'react'
 import { generateMetadata as genMeta } from '@/lib/seo'
-import { getRooms, getJournalPosts } from '@/lib/cms'
+import { getRooms, getJournalPosts, getSiteSettings, getBookingSettings, getExperiences, getDining } from '@/lib/cms'
 
 import { Hero } from '@/components/sections/Hero'
 import { BrandIntro } from '@/components/sections/BrandIntro'
@@ -26,7 +26,29 @@ export const metadata = genMeta({
 })
 
 export default async function HomePage() {
-  const [roomDocs, journalDocs] = await Promise.all([getRooms('en'), getJournalPosts('en', 3)])
+  const [roomDocs, journalDocs, siteSettings, bookingSettings, experienceDocs, diningDocs] = await Promise.all([
+    getRooms('en'),
+    getJournalPosts('en', 3),
+    getSiteSettings(),
+    getBookingSettings(),
+    getExperiences('en'),
+    getDining('en'),
+  ])
+
+  const s = siteSettings as any
+  const b = bookingSettings as any
+
+  const heroImageRaw = s?.heroImage
+  const heroImage: string | undefined =
+    typeof heroImageRaw === 'object' ? heroImageRaw?.url : heroImageRaw || undefined
+
+  const heroStats = [
+    s?.heroStat1Value && s?.heroStat1Label ? { value: s.heroStat1Value, label: s.heroStat1Label } : null,
+    s?.heroStat2Value && s?.heroStat2Label ? { value: s.heroStat2Value, label: s.heroStat2Label } : null,
+    s?.heroStat3Value && s?.heroStat3Label ? { value: s.heroStat3Value, label: s.heroStat3Label } : null,
+  ].filter(Boolean) as { value: string; label: string }[]
+
+  const bookingUrl: string | undefined = b?.bookingEngineUrl || undefined
 
   const cmsRooms = roomDocs.length > 0
     ? roomDocs.slice(3, 6).map((r: any) => ({
@@ -51,40 +73,113 @@ export default async function HomePage() {
       })).filter((p: any) => p.image)
     : undefined
 
+  const cmsExperiences = experienceDocs.length > 0
+    ? experienceDocs.slice(0, 3).map((e: any) => ({
+        label: e.category ?? '',
+        title: e.title ?? '',
+        desc: e.shortDescription ?? '',
+        href: `/experiences#${e.slug ?? e.category ?? ''}`,
+        image: (typeof e.heroImage === 'object' ? e.heroImage?.url : e.heroImage) || '',
+        imageAlt: e.title ?? '',
+      })).filter((e: any) => e.image)
+    : undefined
+
+  const gastronomyVenues = diningDocs.length > 0
+    ? diningDocs.map((d: any) => d.name ?? d.title ?? '').filter(Boolean)
+    : undefined
+
+  const gastronomyImage = diningDocs.length > 0
+    ? ((typeof diningDocs[0]?.heroImage === 'object' ? diningDocs[0].heroImage?.url : diningDocs[0]?.heroImage) || diningDocs[0]?.imageUrl || undefined)
+    : undefined
+
+  const directReasons = b?.reasons?.length > 0
+    ? (b.reasons as any[]).map((r: any) => ({ title: r.title ?? '', body: r.body ?? '' })).filter((r: any) => r.title)
+    : undefined
+
+  const brandIntroImage1Raw = s?.brandIntroImage1
+  const brandIntroImage1: string | undefined = typeof brandIntroImage1Raw === 'object' ? brandIntroImage1Raw?.url : brandIntroImage1Raw || undefined
+  const brandIntroImage2Raw = s?.brandIntroImage2
+  const brandIntroImage2: string | undefined = typeof brandIntroImage2Raw === 'object' ? brandIntroImage2Raw?.url : brandIntroImage2Raw || undefined
+
+  const gastronomyImageResolved: string | undefined = (() => {
+    const raw = s?.gastronomyImage
+    return typeof raw === 'object' ? raw?.url : raw || gastronomyImage || undefined
+  })()
+
   return (
     <>
       <main id="main-content">
-        {/* 1. Cinematic hero */}
-        <Hero />
-
-        {/* 2. Brand introduction */}
-        <BrandIntro />
-
-        {/* 3. Rooms showcase */}
+        <Hero
+          heroImage={heroImage}
+          headline1={s?.heroHeadline1 || undefined}
+          headline2={s?.heroHeadline2 || undefined}
+          tagline={s?.heroTagline || undefined}
+          locationLabel={s?.heroLocationLabel || undefined}
+          scrollLabel={s?.heroScrollLabel || undefined}
+          cta1Label={s?.heroCta1Label || undefined}
+          cta1Url={bookingUrl}
+          cta2Label={s?.heroCta2Label || undefined}
+          cta2Href={s?.heroCta2Label ? '/accommodation' : undefined}
+          stats={heroStats}
+        />
+        <BrandIntro
+          label={s?.brandIntroLabel || undefined}
+          headline1={s?.brandIntroHeadline1 || undefined}
+          headline2={s?.brandIntroHeadline2 || undefined}
+          body1={s?.brandIntroBody1 || undefined}
+          body2={s?.brandIntroBody2 || undefined}
+          linkLabel={s?.brandIntroLinkLabel || undefined}
+          cardLabel={s?.brandIntroCardLabel || undefined}
+          cardLine1={s?.brandIntroCardLine1 || undefined}
+          cardLine2={s?.brandIntroCardLine2 || undefined}
+          cardSub={s?.brandIntroCardSub || undefined}
+          image1={brandIntroImage1}
+          image2={brandIntroImage2}
+        />
         <RoomsShowcase rooms={cmsRooms} />
-
-        {/* 4. Experience highlights */}
-        <ExperiencesHighlight />
-
-        {/* 5. Gastronomy */}
-        <GastronomySection />
-
-        {/* 6. Gallery preview */}
-        <GalleryPreview />
-
-        {/* 7. Testimonials */}
+        <ExperiencesHighlight
+          label={s?.expHighlightLabel || undefined}
+          headline1={s?.expHighlightHeadline1 || undefined}
+          headline2={s?.expHighlightHeadline2 || undefined}
+          subtext={s?.expHighlightSubtext || undefined}
+          discoverLabel={s?.expHighlightDiscoverLabel || undefined}
+          experiences={cmsExperiences}
+        />
+        <GastronomySection
+          label={s?.gastronomyLabel || undefined}
+          headline1={s?.gastronomyHeadline1 || undefined}
+          headline2={s?.gastronomyHeadline2 || undefined}
+          cardQuote={s?.gastronomyCardQuote || undefined}
+          cardLabel={undefined}
+          body1={s?.gastronomyBody1 || undefined}
+          body2={s?.gastronomyBody2 || undefined}
+          venues={gastronomyVenues}
+          cta={s?.gastronomyCtaLabel || undefined}
+          image={gastronomyImageResolved}
+        />
+        <GalleryPreview
+          label={s?.galleryLabel || undefined}
+          headline={s?.galleryHeadline || undefined}
+          ctaLabel={s?.galleryCtaLabel || undefined}
+        />
         <TestimonialsSection />
-
-        {/* 8. Location storytelling */}
         <LocationSection />
-
-        {/* 9. Journal preview */}
-        <JournalPreview posts={cmsPosts} />
-
-        {/* 10. Direct booking reasons */}
-        <DirectBookingReasons />
-
-        {/* 11. Final booking CTA */}
+        <JournalPreview
+          label={s?.journalLabel || undefined}
+          headline1={s?.journalHeadline1 || undefined}
+          headline2={s?.journalHeadline2 || undefined}
+          ctaLabel={s?.journalCtaLabel || undefined}
+          posts={cmsPosts}
+        />
+        <DirectBookingReasons
+          label={b?.directBookingLabel || undefined}
+          headline1={b?.directBookingHeadline1 || undefined}
+          headline2={b?.directBookingHeadline2 || undefined}
+          intro={b?.directBookingIntro || undefined}
+          ctaLabel={b?.directBookingCtaLabel || undefined}
+          reasons={directReasons}
+          bookingUrl={bookingUrl}
+        />
         <FinalBookingCTA />
       </main>
     </>
