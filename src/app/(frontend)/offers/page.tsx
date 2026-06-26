@@ -58,7 +58,7 @@ export default async function OffersPage() {
         aria-label="Offers"
       >
         <Image
-          src="https://staging.althearesorts.com/wp-content/uploads/2026/02/althea-exclusive-resorts-spa-9.png"
+          src="/images/new-images/althea-deluxe-double7.jpg"
           alt="Althea Resorts — special offers"
           fill
           priority

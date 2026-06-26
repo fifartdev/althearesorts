@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { generateMetadata as genMeta } from '@/lib/seo'
-import { SITE_URL } from '@/lib/constants'
+import { SITE_URL } from '@/lib/seo'
 import { getJournalPosts } from '@/lib/cms'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
@@ -22,53 +22,6 @@ const CATEGORY_LABELS: Record<string, string> = {
   corinthia: 'Corinthia',
 }
 
-const S = 'https://staging.althearesorts.com/wp-content/uploads/2026/02'
-
-const staticPosts = [
-  {
-    category: 'Local Guides',
-    title: 'Ancient Corinth: A Morning Away From Everything',
-    excerpt: 'One hour to one of the most powerful city-states of antiquity, still quiet enough to feel like a discovery.',
-    readTime: '5 min read', href: '/journal/ancient-corinth', date: 'May 2025',
-    image: 'https://images.unsplash.com/photo-1698933464922-cb7af8fe9267?auto=format&fit=crop&w=900&q=80', imageAlt: 'Ancient stone columns at Corinth',
-  },
-  {
-    category: 'Wellness',
-    title: 'The Philosophy Behind Oceanis',
-    excerpt: 'Greek mythology, certified biodegradable formulas, and the decision that no explanation was needed.',
-    readTime: '4 min read', href: '/journal/oceanis-philosophy', date: 'April 2025',
-    image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=800&q=80', imageAlt: 'Spa wellness ritual',
-  },
-  {
-    category: 'Gastronomy',
-    title: 'What the Fishermen Bring In',
-    excerpt: 'How a rooftop restaurant in Corinthia begins its evening story — at the harbor, before sunrise.',
-    readTime: '6 min read', href: '/journal/fishermen-harvest', date: 'April 2025',
-    image: 'https://images.unsplash.com/photo-1534482421-64566f976cfa?auto=format&fit=crop&w=800&q=80', imageAlt: 'Fresh seafood from the Corinthian Gulf',
-  },
-  {
-    category: 'Corinthia',
-    title: 'The Corinth Canal: Closer Than You Think',
-    excerpt: 'One of the great feats of nineteenth-century engineering, still stopping people in their tracks.',
-    readTime: '3 min read', href: '/journal/corinth-canal', date: 'March 2025',
-    image: `${S}/Gallery-9VZMNYN.jpg`, imageAlt: 'Corinthia landscape',
-  },
-  {
-    category: 'Hotel Stories',
-    title: 'On Althos: The Word Behind the Name',
-    excerpt: 'How an ancient Greek word for healing became a design brief, an operating philosophy, and a place.',
-    readTime: '7 min read', href: '/journal/althos-meaning', date: 'March 2025',
-    image: `${S}/2.jpg`, imageAlt: 'Althea Resorts — the property',
-  },
-  {
-    category: 'Wellness',
-    title: 'The Case for Doing Nothing by a Pool',
-    excerpt: 'A defense of the afternoon with no plan, no itinerary, and no particular reason to move.',
-    readTime: '3 min read', href: '/journal/pool-afternoon', date: 'February 2025',
-    image: `${S}/Gallery-MUZ36MM.jpg`, imageAlt: 'Pool and Gulf views at Althea',
-  },
-]
-
 export default async function JournalPage() {
   const docs = await getJournalPosts('en', 20)
 
@@ -85,7 +38,7 @@ export default async function JournalPage() {
         image: (typeof p.heroImage === 'object' ? p.heroImage?.url : p.heroImage) || p.imageUrl || '',
         imageAlt: p.title ?? 'Althea Resorts journal',
       }))
-    : staticPosts
+    : []
 
   return (
     <main id="main-content">
@@ -102,6 +55,7 @@ export default async function JournalPage() {
       </section>
 
       {/* Featured post */}
+      {posts.length > 0 && (
       <section className="pb-16 bg-white">
         <div className="container-luxury">
           <ScrollReveal>
@@ -132,8 +86,10 @@ export default async function JournalPage() {
           </ScrollReveal>
         </div>
       </section>
+      )}
 
       {/* Posts grid */}
+      {posts.length > 1 && (
       <section className="section-padding bg-cream">
         <div className="container-luxury">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -166,6 +122,7 @@ export default async function JournalPage() {
           </div>
         </div>
       </section>
+      )}
     </main>
   )
 }

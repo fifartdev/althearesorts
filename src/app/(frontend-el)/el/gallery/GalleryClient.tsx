@@ -5,36 +5,34 @@ import Image from 'next/image'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 
-const S = 'https://staging.althearesorts.com/wp-content/uploads/2026/02'
-
 const categories = ['Όλες', 'Δωμάτια & Σουίτες', 'Πισίνα & Εξωτερικοί Χώροι', 'Γαστρονομία', 'Λόμπι & Ρεσεψιόν', 'Πρωινό', 'Spa & Ευεξία', 'Θέες']
 
 const galleryItems = [
-  { src: '/images/new-images/althea-front.jpg',         caption: 'Althea Resorts',              category: 'Πισίνα & Εξωτερικοί Χώροι', wide: true },
-  { src: '/images/main-pool.jpg',                        caption: 'Κεντρική Πισίνα',             category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
-  { src: `${S}/Gallery-9VZMNYN.jpg`,                    caption: 'Κήποι & Ταράτσες',            category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
-  { src: '/images/new-images/New-Hero.jpg',             caption: 'Το Resort',                   category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
+  { src: '/images/new-images/althea-front.jpg',             caption: 'Althea Resorts',              category: 'Πισίνα & Εξωτερικοί Χώροι', wide: true },
+  { src: '/images/main-pool.jpg',                            caption: 'Κεντρική Πισίνα',             category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
+  { src: '/images/new-images/althea-side-images1.jpg',      caption: 'Κήποι & Ταράτσες',            category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
+  { src: '/images/new-images/New-Hero.jpg',                 caption: 'Το Resort',                   category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
 
-  { src: `${S}/althea-exclusive-resorts-spa-1.png`,     caption: 'Standard Double',             category: 'Δωμάτια & Σουίτες',         wide: false },
-  { src: `${S}/althea-exclusive-resorts-spa-2.png`,     caption: 'Εσωτερικό Δωματίου',         category: 'Δωμάτια & Σουίτες',         wide: false },
-  { src: `${S}/althea-exclusive-resorts-spa-3.png`,     caption: 'Λεπτομέρειες Δωματίου',      category: 'Δωμάτια & Σουίτες',         wide: false },
-  { src: `${S}/althea-exclusive-resorts-spa-4.png`,     caption: 'Deluxe Double',               category: 'Δωμάτια & Σουίτες',         wide: true },
-  { src: `${S}/althea-exclusive-resorts-spa-5.png`,     caption: 'Deluxe με Πισίνα',            category: 'Δωμάτια & Σουίτες',         wide: false },
-  { src: `${S}/althea-exclusive-resorts-spa-6.png`,     caption: 'Superior Sea View',           category: 'Δωμάτια & Σουίτες',         wide: false },
-  { src: `${S}/althea-exclusive-resorts-spa-8.png`,     caption: 'Junior Suite',                category: 'Δωμάτια & Σουίτες',         wide: false },
-  { src: `${S}/althea-exclusive-resorts-spa-9.png`,     caption: 'Loft Suite',                  category: 'Δωμάτια & Σουίτες',         wide: true },
-  { src: `${S}/althea-exclusive-resorts-spa-10.png`,    caption: 'Καθιστικό Σουίτας',          category: 'Δωμάτια & Σουίτες',         wide: false },
-  { src: `${S}/althea-exclusive-resorts-spa-11.png`,    caption: 'Βεράντα Σουίτας',             category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/new-images/althea-deluxe-double2.jpg',    caption: 'Standard Double',             category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/new-images/althea-rooms-bathroom1.jpg',   caption: 'Εσωτερικό Δωματίου',         category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/new-images/althea-rooms-bathroom2.jpg',   caption: 'Λεπτομέρειες Δωματίου',      category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/new-images/althea-deluxe-double3.jpg',    caption: 'Deluxe Double',               category: 'Δωμάτια & Σουίτες',         wide: true },
+  { src: '/images/new-images/althea-deluxe-double4.jpg',    caption: 'Deluxe με Πισίνα',            category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/new-images/althea-deluxe-double5.jpg',    caption: 'Superior Sea View',           category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/new-images/althea-deluxe-double6.jpg',    caption: 'Junior Suite',                category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/new-images/althea-deluxe-double7.jpg',    caption: 'Loft Suite',                  category: 'Δωμάτια & Σουίτες',         wide: true },
+  { src: '/images/new-images/althea-rooms-bathroom3.jpg',   caption: 'Καθιστικό Σουίτας',          category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/new-images/althea-rooms-bathroom4.jpg',   caption: 'Βεράντα Σουίτας',             category: 'Δωμάτια & Σουίτες',         wide: false },
 
-  { src: '/images/new-images/althea-side-images1.jpg',  caption: 'Θέα στον Κορινθιακό Κόλπο', category: 'Θέες',                       wide: true },
-  { src: '/images/new-images/althea-side-images2.jpg',  caption: 'Κορινθιακή Ακτή',           category: 'Θέες',                       wide: false },
-  { src: '/images/new-images/althea-side-images3.jpg',  caption: 'Το Περιβάλλον',             category: 'Θέες',                       wide: false },
-  { src: '/images/new-images/althea-side-images4.jpg',  caption: 'Τοπίο & Φύση',              category: 'Θέες',                       wide: false },
-  { src: `${S}/1.jpg`,                                  caption: 'Το Κατάλυμα',               category: 'Θέες',                       wide: false },
-  { src: `${S}/2.jpg`,                                  caption: 'Κόλπος στο Σούρουπο',       category: 'Θέες',                       wide: false },
+  { src: '/images/new-images/althea-side-images2.jpg',      caption: 'Θέα στον Κορινθιακό Κόλπο', category: 'Θέες',                       wide: true },
+  { src: '/images/new-images/althea-side-images3.jpg',      caption: 'Κορινθιακή Ακτή',           category: 'Θέες',                       wide: false },
+  { src: '/images/new-images/althea-side-images4.jpg',      caption: 'Το Περιβάλλον',             category: 'Θέες',                       wide: false },
+  { src: '/images/new-images/althea-deluxe-double8.jpg',    caption: 'Τοπίο & Φύση',              category: 'Θέες',                       wide: false },
+  { src: '/images/new-images/althea-deluxe-double9.jpg',    caption: 'Το Κατάλυμα',               category: 'Θέες',                       wide: false },
+  { src: '/images/new-images/althea-deluxe-double10.jpg',   caption: 'Κόλπος στο Σούρουπο',       category: 'Θέες',                       wide: false },
 
-  { src: `${S}/FAQ-CKK5K7K.jpg`,                        caption: 'Althea Resorts',             category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
-  { src: '/images/oceanisphoto.jpg',                    caption: 'Oceanis — Προϊόντα Spa',     category: 'Spa & Ευεξία',               wide: false },
+  { src: '/images/new-images/althea-front.jpg',             caption: 'Althea Resorts',             category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
+  { src: '/images/oceanisphoto.jpg',                        caption: 'Oceanis — Προϊόντα Spa',     category: 'Spa & Ευεξία',               wide: false },
 
   { src: '/images/breakfast/althea-breakfast-1.jpg',   caption: 'Πρωινό Τραπέζι',            category: 'Πρωινό',                     wide: true },
   { src: '/images/breakfast/althea-breakfast-2.jpg',   caption: 'Φρέσκα Αρτοσκευάσματα',    category: 'Πρωινό',                     wide: false },

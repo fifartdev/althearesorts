@@ -5,7 +5,7 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
-import { BOOKING_URL, SITE_URL } from '@/lib/constants'
+import { SITE_URL } from '@/lib/seo'
 import { getExperiences } from '@/lib/cms'
 
 export const metadata = genMeta({
@@ -37,7 +37,7 @@ export default async function ExperiencesPage() {
         aria-label="Experiences"
       >
         <Image
-          src="https://staging.althearesorts.com/wp-content/uploads/2026/02/1.jpg"
+          src="/images/new-images/New-Hero.jpg"
           alt="Althea Resorts — experiences and wellness"
           fill
           priority
