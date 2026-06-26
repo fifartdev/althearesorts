@@ -2,9 +2,16 @@ import type { CollectionConfig } from 'payload'
 
 import { slugField } from '../fields/slug'
 import { isAdmin, isSuperAdmin } from '../access'
+import { makeRevalidateHook } from '../hooks/revalidate'
+
+const { afterChange: revalidateAfterChange, afterDelete: revalidateAfterDelete } = makeRevalidateHook('rooms')
 
 export const Rooms: CollectionConfig = {
   slug: 'rooms',
+  hooks: {
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'size', '_status', 'updatedAt'],

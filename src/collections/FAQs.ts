@@ -1,8 +1,15 @@
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isSuperAdmin } from '../access'
+import { makeRevalidateHook } from '../hooks/revalidate'
+
+const { afterChange: revalidateAfterChange, afterDelete: revalidateAfterDelete } = makeRevalidateHook('faqs')
 
 export const FAQs: CollectionConfig = {
   slug: 'faqs',
+  hooks: {
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
+  },
   admin: {
     useAsTitle: 'question',
     defaultColumns: ['question', 'category', 'order', 'updatedAt'],

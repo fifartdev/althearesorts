@@ -36,18 +36,22 @@ export const getSiteSettings = unstable_cache(
 )
 
 // ---------------------------------------------------------------------------
-// Collections
+// Collections — all wrapped in unstable_cache for on-demand revalidation
 // ---------------------------------------------------------------------------
 
-export async function getRooms(locale: Locale = 'en') {
-  const payload = await getPayload({ config })
-  const result = await payload
-    .find({ collection: 'rooms', locale, limit: 20, sort: 'order' })
-    .catch(() => null)
-  return result?.docs ?? []
-}
+export const getRooms = unstable_cache(
+  async (locale: Locale = 'en') => {
+    const payload = await getPayload({ config })
+    const result = await payload
+      .find({ collection: 'rooms', locale, limit: 20, sort: 'order' })
+      .catch(() => null)
+    return result?.docs ?? []
+  },
+  ['rooms'],
+  { revalidate: false, tags: ['rooms'] }
+)
 
-export async function getRoom(slug: string, locale: Locale = 'en') {
+export const getRoom = async (slug: string, locale: Locale = 'en') => {
   const payload = await getPayload({ config })
   const result = await payload
     .find({ collection: 'rooms', locale, where: { slug: { equals: slug } }, limit: 1 })
@@ -55,66 +59,98 @@ export async function getRoom(slug: string, locale: Locale = 'en') {
   return result?.docs[0] ?? null
 }
 
-export async function getDining(locale: Locale = 'en') {
-  const payload = await getPayload({ config })
-  const result = await payload
-    .find({ collection: 'dining', locale, limit: 20, sort: 'order' })
-    .catch(() => null)
-  return result?.docs ?? []
-}
+export const getDining = unstable_cache(
+  async (locale: Locale = 'en') => {
+    const payload = await getPayload({ config })
+    const result = await payload
+      .find({ collection: 'dining', locale, limit: 20, sort: 'order' })
+      .catch(() => null)
+    return result?.docs ?? []
+  },
+  ['dining'],
+  { revalidate: false, tags: ['dining'] }
+)
 
-export async function getFAQs(locale: Locale = 'en') {
-  const payload = await getPayload({ config })
-  const result = await payload
-    .find({ collection: 'faqs', locale, limit: 100, sort: 'order' })
-    .catch(() => null)
-  return result?.docs ?? []
-}
+export const getFAQs = unstable_cache(
+  async (locale: Locale = 'en') => {
+    const payload = await getPayload({ config })
+    const result = await payload
+      .find({ collection: 'faqs', locale, limit: 100, sort: 'order' })
+      .catch(() => null)
+    return result?.docs ?? []
+  },
+  ['faqs'],
+  { revalidate: false, tags: ['faqs'] }
+)
 
-export async function getOffers(locale: Locale = 'en') {
-  const payload = await getPayload({ config })
-  const result = await payload
-    .find({ collection: 'offers', locale, limit: 20 })
-    .catch(() => null)
-  return result?.docs ?? []
-}
+export const getOffers = unstable_cache(
+  async (locale: Locale = 'en') => {
+    const payload = await getPayload({ config })
+    const result = await payload
+      .find({ collection: 'offers', locale, limit: 20 })
+      .catch(() => null)
+    return result?.docs ?? []
+  },
+  ['offers'],
+  { revalidate: false, tags: ['offers'] }
+)
 
-export async function getJournalPosts(locale: Locale = 'en', limit = 20) {
-  const payload = await getPayload({ config })
-  const result = await payload
-    .find({ collection: 'journal', locale, limit, sort: '-publishedAt' })
-    .catch(() => null)
-  return result?.docs ?? []
-}
+export const getJournalPosts = unstable_cache(
+  async (locale: Locale = 'en', limit = 20) => {
+    const payload = await getPayload({ config })
+    const result = await payload
+      .find({ collection: 'journal', locale, limit, sort: '-publishedAt' })
+      .catch(() => null)
+    return result?.docs ?? []
+  },
+  ['journal'],
+  { revalidate: false, tags: ['journal'] }
+)
 
-export async function getGalleryItems(locale: Locale = 'en') {
-  const payload = await getPayload({ config })
-  const result = await payload
-    .find({ collection: 'gallery', locale, limit: 100, sort: 'order' })
-    .catch(() => null)
-  return result?.docs ?? []
-}
+export const getGalleryItems = unstable_cache(
+  async (locale: Locale = 'en') => {
+    const payload = await getPayload({ config })
+    const result = await payload
+      .find({ collection: 'gallery', locale, limit: 100, sort: 'order' })
+      .catch(() => null)
+    return result?.docs ?? []
+  },
+  ['gallery'],
+  { revalidate: false, tags: ['gallery'] }
+)
 
-export async function getLocations(locale: Locale = 'en') {
-  const payload = await getPayload({ config })
-  const result = await payload
-    .find({ collection: 'locations', locale, limit: 20 })
-    .catch(() => null)
-  return result?.docs ?? []
-}
+export const getLocations = unstable_cache(
+  async (locale: Locale = 'en') => {
+    const payload = await getPayload({ config })
+    const result = await payload
+      .find({ collection: 'locations', locale, limit: 20 })
+      .catch(() => null)
+    return result?.docs ?? []
+  },
+  ['locations'],
+  { revalidate: false, tags: ['locations'] }
+)
 
-export async function getExperiences(locale: Locale = 'en') {
-  const payload = await getPayload({ config })
-  const result = await payload
-    .find({ collection: 'experiences', locale, limit: 20, sort: 'order' })
-    .catch(() => null)
-  return result?.docs ?? []
-}
+export const getExperiences = unstable_cache(
+  async (locale: Locale = 'en') => {
+    const payload = await getPayload({ config })
+    const result = await payload
+      .find({ collection: 'experiences', locale, limit: 20, sort: 'order' })
+      .catch(() => null)
+    return result?.docs ?? []
+  },
+  ['experiences'],
+  { revalidate: false, tags: ['experiences'] }
+)
 
-export async function getTestimonials(locale: Locale = 'en') {
-  const payload = await getPayload({ config })
-  const result = await payload
-    .find({ collection: 'testimonials', locale, limit: 20, where: { featured: { equals: true } } })
-    .catch(() => null)
-  return result?.docs ?? []
-}
+export const getTestimonials = unstable_cache(
+  async (locale: Locale = 'en') => {
+    const payload = await getPayload({ config })
+    const result = await payload
+      .find({ collection: 'testimonials', locale, limit: 20, where: { featured: { equals: true } } })
+      .catch(() => null)
+    return result?.docs ?? []
+  },
+  ['testimonials'],
+  { revalidate: false, tags: ['testimonials'] }
+)

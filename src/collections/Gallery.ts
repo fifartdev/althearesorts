@@ -1,8 +1,15 @@
 import type { CollectionConfig } from 'payload'
 import { isAdmin, isSuperAdmin } from '../access'
+import { makeRevalidateHook } from '../hooks/revalidate'
+
+const { afterChange: revalidateAfterChange, afterDelete: revalidateAfterDelete } = makeRevalidateHook('gallery')
 
 export const Gallery: CollectionConfig = {
   slug: 'gallery',
+  hooks: {
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
+  },
   admin: {
     useAsTitle: 'caption',
     defaultColumns: ['caption', 'category', 'order', 'updatedAt'],
