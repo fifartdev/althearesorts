@@ -167,8 +167,7 @@ export function Header() {
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="font-editorial text-4xl font-light text-white hover:text-[#ad8b27] transition-colors duration-300"
-              style={{ transitionDelay: menuOpen ? `${i * 50}ms` : '0ms' }}
+              className={`font-editorial text-4xl font-light text-white hover:text-[#ad8b27] transition-colors duration-300 ${menuOpen ? `nav-delay-${i}` : ''}`}
             >
               {link.label}
             </Link>

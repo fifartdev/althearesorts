@@ -422,4 +422,16 @@
   .gsap-fade-init { opacity: 0; }
   /* Vertical writing mode for scroll indicator — avoids inline writingMode style */
   .writing-vertical-rl { writing-mode: vertical-rl; text-orientation: mixed; }
+  /* ParallaxImage inner wrapper — avoids inline style={{ margin: '-10%' }} */
+  .parallax-inner { margin: -10%; }
+  /* Mobile menu item stagger delays — avoids inline transitionDelay style */
+  .nav-delay-0 { transition-delay: 0ms; }
+  .nav-delay-1 { transition-delay: 50ms; }
+  .nav-delay-2 { transition-delay: 100ms; }
+  .nav-delay-3 { transition-delay: 150ms; }
+  .nav-delay-4 { transition-delay: 200ms; }
+  .nav-delay-5 { transition-delay: 250ms; }
+  .nav-delay-6 { transition-delay: 300ms; }
+  .nav-delay-7 { transition-delay: 350ms; }
+  .nav-delay-8 { transition-delay: 400ms; }
 }

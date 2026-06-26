@@ -56,9 +56,11 @@ export function Footer({ locale = 'en' }: { locale?: Locale }) {
             <p className="text-sm font-light text-white/50 leading-relaxed max-w-xs">
               {c.desc}
             </p>
-            <div className="flex flex-col gap-2 text-sm font-light text-white/50">
-              <span>{ADDRESS}</span>
-              <a href={`tel:${PHONE.replace(/\s/g, '')}`} className="hover:text-[#ad8b27] transition-colors duration-200">{PHONE}</a>
+            <address className="not-italic flex flex-col gap-2 text-sm font-light text-white/50"
+              itemScope itemType="https://schema.org/PostalAddress"
+            >
+              <span itemProp="streetAddress">{ADDRESS}</span>
+              <a href={`tel:${PHONE.replace(/\s/g, '')}`} itemProp="telephone" className="hover:text-[#ad8b27] transition-colors duration-200">{PHONE}</a>
               <a
                 href={GOOGLE_MAPS_CID_URL}
                 target="_blank"
@@ -67,7 +69,7 @@ export function Footer({ locale = 'en' }: { locale?: Locale }) {
               >
                 {c.googleMaps}
               </a>
-            </div>
+            </address>
           </div>
 
           {/* Navigation columns */}

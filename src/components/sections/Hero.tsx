@@ -49,22 +49,30 @@ export function Hero({ locale = 'en' }: { locale?: Locale }) {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion) {
       ;[headlineRef, subtitleRef, ctaRef].forEach((r) => {
-        if (r.current) { r.current.classList.remove('gsap-fade-init') }
+        if (r.current) {
+          r.current.classList.remove('gsap-fade-init')
+          r.current.style.opacity = '1'
+        }
       })
       return
     }
 
     import('gsap').then(({ default: gsap }) => {
       const tl = gsap.timeline({ delay: 0.2 })
-      tl.from(headlineRef.current, {
-        opacity: 0, y: 40, duration: 1.4, ease: 'power3.out',
-      })
-      .from(subtitleRef.current, {
-        opacity: 0, y: 20, duration: 1, ease: 'power2.out',
-      }, '-=0.8')
-      .from(ctaRef.current, {
-        opacity: 0, y: 16, duration: 0.8, ease: 'power2.out',
-      }, '-=0.6')
+      tl.fromTo(headlineRef.current,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out' }
+      )
+      .fromTo(subtitleRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1, ease: 'power2.out' },
+        '-=0.8'
+      )
+      .fromTo(ctaRef.current,
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
+        '-=0.6'
+      )
     })
   }, [])
 

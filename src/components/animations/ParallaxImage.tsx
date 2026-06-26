@@ -53,7 +53,7 @@ export function ParallaxImage({
 
   return (
     <div ref={containerRef} className={`relative overflow-hidden ${className ?? ''}`}>
-      <div ref={imageRef} className="absolute inset-0" style={{ margin: '-10%' }}>
+      <div ref={imageRef} className="absolute inset-0 parallax-inner">
         <Image
           src={src}
           alt={alt}
