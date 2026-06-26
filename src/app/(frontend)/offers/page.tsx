@@ -5,7 +5,8 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { DirectBookingReasons } from '@/components/sections/DirectBookingReasons'
-import { BOOKING_URL, PHONE, EMAIL, INFO_EMAIL, SITE_URL } from '@/lib/constants'
+import Link from 'next/link'
+import { BOOKING_URL, PHONE, EMAIL, SITE_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
   title: 'Offers & Special Rates',
@@ -116,13 +117,18 @@ export default function OffersPage() {
                 </p>
                 <p className="text-body-refined mb-5">
                   This offer is available for bookings made until the end of June 2026 and
-                  applies across all room categories — from the Standard Double to the
-                  Althea Loft Suite with Outdoor Jacuzzi.
+                  applies across all{' '}
+                  <Link href="/accommodation" className="text-[#ad8b27] hover:underline font-light">room categories</Link>
+                  {' '}— from the{' '}
+                  <Link href="/accommodation/standard-double" className="text-[#ad8b27] hover:underline font-light">Standard Double</Link>
+                  {' '}to the{' '}
+                  <Link href="/accommodation/althea-loft-suite" className="text-[#ad8b27] hover:underline font-light">Althea Loft Suite with Outdoor Jacuzzi</Link>.
                 </p>
                 <p className="text-body-refined mb-5">
                   Booking direct also means you speak to us directly. Questions about your
                   stay, requests before arrival, specific arrangements — all handled by the
-                  people who actually know the property, without a third party in between.
+                  people who actually know the property, without a third party in between.{' '}
+                  <Link href="/contact" className="text-[#ad8b27] hover:underline font-light">Contact us</Link> any time.
                 </p>
                 <p className="text-body-refined mb-10">
                   This is how we prefer to welcome our first guests. With a real offer
@@ -175,10 +181,10 @@ export default function OffersPage() {
                   </a>
                 </div>
                 <p className="mt-4 text-sm font-light text-[#6b6b6b]">
-                  Or write to us at{' '}
-                  <a href={`mailto:${EMAIL}`} className="text-[#ad8b27] hover:underline">
-                    {EMAIL}
-                  </a>
+                  Or{' '}
+                  <a href={`mailto:${EMAIL}`} aria-label={`Email us at ${EMAIL}`} className="text-[#ad8b27] hover:underline">
+                    send us an email
+                  </a>.
                 </p>
               </ScrollReveal>
             </div>

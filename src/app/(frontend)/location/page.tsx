@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { generateMetadata as genMeta } from '@/lib/seo'
+import Link from 'next/link'
 import { SITE_URL } from '@/lib/constants'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
@@ -118,7 +119,8 @@ export default function LocationPage() {
                   that is difficult to describe and very easy to remember.
                 </p>
                 <p className="text-body-refined">
-                  Althea sits on the gentle hills of Ano Loutro, five minutes from the sea,
+                  <Link href="/accommodation" className="text-[#ad8b27] hover:underline font-light">Althea</Link>
+                  {' '}sits on the gentle hills of Ano Loutro, five minutes from the sea,
                   at the center of a region that rewards the curious and rests the tired
                   in equal measure.
                 </p>
@@ -163,9 +165,13 @@ export default function LocationPage() {
             <p className="text-body-refined max-w-2xl mb-12">
               Corinthia is one of the most historically layered regions in Greece and one
               of the least overrun by tourism, which makes it a rare thing — a place where the ancient world is still
-              legible and still quiet. Althea is a base as much as it is a destination.
-              The region around it is worth exploring and we are happy to help you do
-              exactly that.
+              legible and still quiet.{' '}
+              <Link href="/accommodation" className="text-[#ad8b27] hover:underline font-light">Althea</Link>
+              {' '}is a base as much as it is a destination.
+              The region around it is worth{' '}
+              <Link href="/experiences" className="text-[#ad8b27] hover:underline font-light">exploring</Link>
+              {' '}and we are{' '}
+              <Link href="/contact" className="text-[#ad8b27] hover:underline font-light">happy to help you do exactly that</Link>.
             </p>
           </ScrollReveal>
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { generateMetadata as genMeta } from '@/lib/seo'
+import Link from 'next/link'
 import { SITE_URL } from '@/lib/constants'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
@@ -60,8 +61,9 @@ export default function AboutPage() {
                   the spa, is designed to bring it closer.
                 </p>
                 <p className="text-body-refined">
-                  Althea Resorts sits on the gentle hillside of Ano Loutro, near Xylokastro,
-                  sixty minutes from Athens and a world away from the rhythm that most of our
+                  Althea Resorts sits on the gentle hillside of Ano Loutro, near Xylokastro,{' '}
+                  <Link href="/location" className="text-[#ad8b27] hover:underline font-light">sixty minutes from Athens</Link>
+                  {' '}and a world away from the rhythm that most of our
                   guests arrive carrying. The name comes from the ancient Greek word <em>althos</em>,
                   meaning healing. That was not a random decision. It was a statement of intent.
                 </p>
@@ -165,8 +167,10 @@ export default function AboutPage() {
                 </p>
                 <p className="text-sm font-light text-white/60 leading-relaxed mb-5">
                   The town of Xylokastro sits ten minutes from our door, with its seafront,
-                  its fish, and its unhurried pace. The sea is always close. Athens is sixty
-                  minutes away.
+                  its fish, and its unhurried pace. The sea is always close.{' '}
+                  <Link href="/location" className="text-[#ad8b27]/70 hover:text-[#ad8b27] transition-colors duration-200 font-light">
+                    Athens is sixty minutes away.
+                  </Link>
                 </p>
                 <p className="text-sm font-light text-white/60 leading-relaxed">
                   Everything else can wait..
@@ -214,7 +218,8 @@ export default function AboutPage() {
                 our job correctly, like the best version of somewhere you already belong.
               </p>
               <p className="text-body-refined text-center mb-6">
-                Sixty minutes from Athens. Not sixty minutes and a ferry. Not sixty minutes
+                <Link href="/location" className="text-[#ad8b27] hover:underline font-light">Sixty minutes from Athens</Link>.
+                {' '}Not sixty minutes and a ferry. Not sixty minutes
                 and a connecting flight. Sixty minutes by car, on a good road, with the Gulf
                 appearing on your left before you have finished your first coffee. That proximity
                 is one of the quiet advantages of Althea, close enough to be spontaneous,

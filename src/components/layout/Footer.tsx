@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { NAV_LINKS, NAV_LINKS_EL, BOOKING_URL, PHONE, EMAIL, ADDRESS } from '@/lib/constants'
+import { NAV_LINKS, NAV_LINKS_EL, BOOKING_URL, PHONE, ADDRESS, GOOGLE_MAPS_CID_URL } from '@/lib/constants'
 
 type Locale = 'en' | 'el'
 
@@ -11,6 +11,7 @@ const footerContent = {
     explore: 'Explore',
     stay: 'Stay',
     bookNow: 'Book Now →',
+    googleMaps: 'View on Google Maps',
     copyright: (year: number) => `© ${year} Althea Resorts. All rights reserved.`,
     privacy: 'Privacy Policy',
     terms: 'Terms',
@@ -22,6 +23,7 @@ const footerContent = {
     explore: 'Εξερευνήστε',
     stay: 'Διαμονή',
     bookNow: 'Κράτηση →',
+    googleMaps: 'Δείτε μας στο Google Maps',
     copyright: (year: number) => `© ${year} Althea Resorts. Με επιφύλαξη κάθε δικαιώματος.`,
     privacy: 'Πολιτική Απορρήτου',
     terms: 'Όροι Χρήσης',
@@ -57,7 +59,14 @@ export function Footer({ locale = 'en' }: { locale?: Locale }) {
             <div className="flex flex-col gap-2 text-sm font-light text-white/50">
               <span>{ADDRESS}</span>
               <a href={`tel:${PHONE.replace(/\s/g, '')}`} className="hover:text-[#ad8b27] transition-colors duration-200">{PHONE}</a>
-              <a href={`mailto:${EMAIL}`} className="hover:text-[#ad8b27] transition-colors duration-200">{EMAIL}</a>
+              <a
+                href={GOOGLE_MAPS_CID_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#ad8b27] transition-colors duration-200"
+              >
+                {c.googleMaps}
+              </a>
             </div>
           </div>
 

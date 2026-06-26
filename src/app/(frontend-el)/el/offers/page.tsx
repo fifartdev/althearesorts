@@ -5,6 +5,7 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { DirectBookingReasons } from '@/components/sections/DirectBookingReasons'
+import Link from 'next/link'
 import { BOOKING_URL, PHONE, EMAIL, SITE_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
@@ -90,14 +91,19 @@ export default function GreekOffersPage() {
                   Για να γιορτάσουμε το άνοιγμα του Althea Resorts, προσφέρουμε έκπτωση 10%
                   σε όλες τις απευθείας κρατήσεις που πραγματοποιούνται μέσω της ιστοσελίδας
                   μας ή επικοινωνώντας απευθείας μαζί μας. Η προσφορά ισχύει για κρατήσεις
-                  που θα γίνουν έως το τέλος Ιουνίου 2026 και αφορά όλες τις κατηγορίες
-                  δωματίων, από το Standard Double έως το Althea Loft Suite με Εξωτερικό Jacuzzi.
+                  που θα γίνουν έως το τέλος Ιουνίου 2026 και αφορά όλες τις{' '}
+                  <Link href="/el/accommodation" className="text-[#ad8b27] hover:underline font-light">κατηγορίες δωματίων</Link>
+                  , από το{' '}
+                  <Link href="/el/accommodation/standard-double" className="text-[#ad8b27] hover:underline font-light">Standard Double</Link>
+                  {' '}έως το{' '}
+                  <Link href="/el/accommodation/althea-loft-suite" className="text-[#ad8b27] hover:underline font-light">Althea Loft Suite με Εξωτερικό Jacuzzi</Link>.
                 </p>
                 <p className="text-body-refined mb-5">
                   Η απευθείας κράτηση σημαίνει επίσης ότι μιλάτε απευθείας με εμάς. Ερωτήσεις
                   σχετικά με τη διαμονή σας, αιτήματα πριν από την άφιξη, ειδικές διευθετήσεις,
                   όλα διαχειρίζονται από τους ανθρώπους που γνωρίζουν πραγματικά το κατάλυμα,
-                  χωρίς τη μεσολάβηση τρίτων.
+                  χωρίς τη μεσολάβηση τρίτων.{' '}
+                  <Link href="/el/contact" className="text-[#ad8b27] hover:underline font-light">Επικοινωνήστε μαζί μας</Link> οποιαδήποτε στιγμή.
                 </p>
                 <p className="text-body-refined mb-10">
                   Αυτός είναι ο τρόπος που προτιμάμε για να καλωσορίσουμε τους πρώτους μας
@@ -149,10 +155,10 @@ export default function GreekOffersPage() {
                   </a>
                 </div>
                 <p className="mt-4 text-sm font-light text-[#6b6b6b]">
-                  Ή γράψτε μας στο{' '}
-                  <a href={`mailto:${EMAIL}`} className="text-[#ad8b27] hover:underline">
-                    {EMAIL}
-                  </a>
+                  Ή{' '}
+                  <a href={`mailto:${EMAIL}`} aria-label={`Στείλτε μας email στο ${EMAIL}`} className="text-[#ad8b27] hover:underline">
+                    στείλτε μας email
+                  </a>.
                 </p>
               </ScrollReveal>
             </div>

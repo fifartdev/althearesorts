@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { SITE_NAME, SITE_TAGLINE, SITE_URL, COORDINATES, PHONE, SOCIAL } from './constants'
+import { SITE_NAME, SITE_TAGLINE, SITE_URL, COORDINATES, PHONE, SOCIAL, GOOGLE_MAPS_CID_URL } from './constants'
 
 interface SEOProps {
   title?: string
@@ -21,7 +21,7 @@ export function generateMetadata({
   locale,
 }: SEOProps = {}): Metadata {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — ${SITE_TAGLINE}`
-  const defaultDesc = `Althea Resorts — A luxury boutique hotel on the hillside of Ano Loutro, near Xylokastro, Corinthia, Greece. 60 minutes from Athens. 41 rooms and suites with views of the Corinthian Gulf.`
+  const defaultDesc = `Luxury boutique hotel in Ano Loutro, Corinthia, 60 minutes from Athens. Elegant rooms, Ocean Spa & Corinthian Gulf views.`
   const metaDesc = description || defaultDesc
   const ogImage = image || `${SITE_URL}/og-default.jpg`
   const canonicalUrl = canonical || SITE_URL
@@ -123,7 +123,7 @@ export const hotelSchema = {
     latitude: COORDINATES.lat,
     longitude: COORDINATES.lng,
   },
-  hasMap: `https://www.google.com/maps?q=${COORDINATES.lat},${COORDINATES.lng}`,
+  hasMap: GOOGLE_MAPS_CID_URL,
   starRating: {
     '@type': 'Rating',
     ratingValue: '5',

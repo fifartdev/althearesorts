@@ -5,11 +5,11 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { ContactForm } from '@/components/contact/ContactForm'
-import { PHONE, EMAIL, INFO_EMAIL, ADDRESS, BOOKING_URL, COORDINATES, SITE_URL } from '@/lib/constants'
+import { PHONE, EMAIL, INFO_EMAIL, ADDRESS, BOOKING_URL, COORDINATES, SITE_URL, GOOGLE_MAPS_CID_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
   title: 'Contact',
-  description: 'Contact Althea Resorts. Located in Ano Loutro, Xylokastro, Corinthia, Greece. Phone: +30 27430 24063. Email: reservations@althearesorts.com.',
+  description: 'Contact Althea Resorts in Ano Loutro, Xylokastro, Corinthia. Phone, email, and directions from Athens.',
   keywords: ['contact Althea Resorts', 'hotel phone number Corinthia', 'reservations Greece'],
   canonical: `${SITE_URL}/contact`,
 })
@@ -68,11 +68,11 @@ export default function ContactPage() {
                     <a href={`tel:${PHONE.replace(/\s/g, '')}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200 block mb-1">
                       {PHONE}
                     </a>
-                    <a href={`mailto:${INFO_EMAIL}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200 block mb-1">
-                      {INFO_EMAIL}
+                    <a href={`mailto:${INFO_EMAIL}`} aria-label={`Email us at ${INFO_EMAIL}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200 block mb-1">
+                      General Enquiries
                     </a>
-                    <a href={`mailto:${EMAIL}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200">
-                      {EMAIL}
+                    <a href={`mailto:${EMAIL}`} aria-label={`Email reservations at ${EMAIL}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200">
+                      Reservations
                     </a>
                   </div>
                   <div>
@@ -118,12 +118,11 @@ export default function ContactPage() {
           src={`https://maps.google.com/maps?q=${COORDINATES.lat},${COORDINATES.lng}&z=15&output=embed`}
           width="100%"
           height="100%"
-          style={{ border: 0 }}
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
           title="Althea Resorts — Ano Loutro, Xylokastro, Corinthia, Greece"
-          className="grayscale opacity-90"
+          className="border-0 grayscale opacity-90"
         />
         {/* Address bar overlay */}
         <div className="absolute bottom-0 left-0 right-0 bg-[#102027]/90 backdrop-blur-sm px-8 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -132,7 +131,7 @@ export default function ContactPage() {
             <p className="text-sm font-light text-white/70">Ano Loutro, Xylokastro, Corinthia, Greece</p>
           </div>
           <a
-            href={`https://www.google.com/maps/dir/?api=1&destination=${COORDINATES.lat},${COORDINATES.lng}`}
+            href={GOOGLE_MAPS_CID_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-white/50 hover:text-[#ad8b27] transition-colors duration-300 shrink-0"

@@ -5,6 +5,7 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
+import Link from 'next/link'
 import { BOOKING_URL, SITE_URL } from '@/lib/constants'
 import { SpaBanner } from '@/components/ui/SpaBanner'
 
@@ -253,7 +254,9 @@ export default function GreekSpaPage() {
                 <p className="text-body-refined mb-5">
                   Οι φόρμουλες είναι πιστοποιημένα βιοδιασπώμενες σε είκοσι οκτώ ημέρες. Η
                   συσκευασία είναι από ανακυκλωμένο PET και είναι εκατό τοις εκατό ανακυκλώσιμη.
-                  Κάθε dispenser στο spa και σε κάθε δωμάτιο είναι μέρος ενός συστήματος
+                  Κάθε dispenser στο spa και σε κάθε{' '}
+                  <Link href="/el/accommodation" className="text-[#ad8b27] hover:underline font-light">δωμάτιο και σουίτα</Link>
+                  {' '}είναι μέρος ενός συστήματος
                   επαναπλήρωσης σχεδιασμένου να εξαλείψει τα μίας χρήσης απόβλητα.
                 </p>
                 <p className="text-body-refined">
@@ -274,6 +277,17 @@ export default function GreekSpaPage() {
             </ScrollReveal>
           </div>
         </div>
+      </section>
+
+      {/* Cross-link to offers */}
+      <section className="py-12 bg-white text-center">
+        <p className="text-sm font-light text-[#6b6b6b]">
+          Σχεδιάζετε διαμονή;{' '}
+          <Link href="/el/offers" className="text-[#ad8b27] hover:underline font-light">
+            Δείτε τις τρέχουσες προσφορές μας
+          </Link>
+          {' '}και εξοικονομήστε 10% με απευθείας κράτηση.
+        </p>
       </section>
 
       <FinalBookingCTA locale="el" />

@@ -1,17 +1,22 @@
 export const BOOKING_URL = 'https://althearesort.reserve-online.net'
 export const SITE_URL = 'https://althearesorts.com'
 export const SITE_NAME = 'Althea Resorts'
-export const SITE_TAGLINE = 'Redefining Hospitality With Timeless Elegance'
+export const SITE_TAGLINE = 'Boutique Hotel in Corinthia, Greece'
 export const PHONE = '+30 27430 24063'
 export const PHONE_MOBILE = '+30 211 41 84 108'
 export const EMAIL = 'reservations@althearesorts.com'
 export const INFO_EMAIL = 'info@althearesorts.com'
 export const ADDRESS = 'Ano Loutro, Xylokastro, Corinthia, Greece'
 export const COORDINATES = { lat: 38.0945616, lng: 22.5454614 }
+// Google Maps Business Profile — CID-based canonical URL
+export const GOOGLE_MAPS_CID_URL = 'https://maps.google.com/?cid=16064789505503046924'
 export const SOCIAL = {
   instagram: 'https://www.instagram.com/althearesorts',
   facebook: 'https://www.facebook.com/profile.php?id=61589365637032',
   linkedin: 'https://www.linkedin.com/company/althearesorts',
+  // Add X (Twitter) and YouTube URLs here when accounts are created:
+  // x: 'https://x.com/althearesorts',
+  // youtube: 'https://www.youtube.com/@althearesorts',
 }
 
 export const NAV_LINKS = [

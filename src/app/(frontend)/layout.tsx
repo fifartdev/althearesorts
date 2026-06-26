@@ -8,6 +8,7 @@ import { StickyBookingBar, FloatingBookingButton } from '@/components/layout/Boo
 import { CookieConsent } from '@/components/layout/CookieConsent'
 import { CustomCursor } from '@/components/animations/CustomCursor'
 import { hotelSchema, organizationSchema } from '@/lib/seo'
+import { MetaPixel } from '@/components/analytics/MetaPixel'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -71,6 +72,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
           `}
         </Script>
 
+        <MetaPixel />
         <CustomCursor />
         <Header />
         {children}

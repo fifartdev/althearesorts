@@ -5,6 +5,7 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
+import Link from 'next/link'
 import { BOOKING_URL, SITE_URL } from '@/lib/constants'
 import { SpaBanner } from '@/components/ui/SpaBanner'
 
@@ -280,7 +281,9 @@ export default function SpaPage() {
                 <p className="text-body-refined mb-5">
                   The formulas are certified biodegradable in twenty-eight days. The packaging
                   is made from recycled PET and is one hundred percent recyclable. Every
-                  dispenser in the spa and in each room is part of a refill system designed
+                  dispenser in the spa and in each{' '}
+                  <Link href="/accommodation" className="text-[#ad8b27] hover:underline font-light">room and suite</Link>
+                  {' '}is part of a refill system designed
                   to eliminate single-use waste at its source.
                 </p>
                 <p className="text-body-refined">
@@ -301,6 +304,17 @@ export default function SpaPage() {
             </ScrollReveal>
           </div>
         </div>
+      </section>
+
+      {/* Cross-link to offers */}
+      <section className="py-12 bg-white text-center">
+        <p className="text-sm font-light text-[#6b6b6b]">
+          Planning a stay?{' '}
+          <Link href="/offers" className="text-[#ad8b27] hover:underline font-light">
+            Check our current offers
+          </Link>
+          {' '}and save 10% when you book direct.
+        </p>
       </section>
 
       <FinalBookingCTA />

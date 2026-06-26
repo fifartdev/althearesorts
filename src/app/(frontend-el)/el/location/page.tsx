@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import { generateMetadata as genMeta } from '@/lib/seo'
+import Link from 'next/link'
 import { SITE_URL } from '@/lib/constants'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
@@ -107,8 +108,9 @@ export default function GreekLocationPage() {
                   μπροστά σας, ήρεμος και πλατύς, με τα βουνά της Στερεάς Ελλάδας στην απέναντι
                   όχθη. Το φως εδώ είναι διαφορετικό από το φως των νησιών. Πιο απαλό το πρωί,
                   χρυσό το απόγευμα, και στο σούρουπο μεταμορφώνει το νερό με έναν τρόπο που
-                  είναι δύσκολο να περιγραφεί και πολύ εύκολο να αποτυπωθεί στη μνήμη. Το Althea
-                  βρίσκεται στους ήρεμους λόφους του Άνω Λουτρού, πέντε λεπτά από τη θάλασσα,
+                  είναι δύσκολο να περιγραφεί και πολύ εύκολο να αποτυπωθεί στη μνήμη.{' '}
+                  <Link href="/el/accommodation" className="text-[#ad8b27] hover:underline font-light">Το Althea</Link>
+                  {' '}βρίσκεται στους ήρεμους λόφους του Άνω Λουτρού, πέντε λεπτά από τη θάλασσα,
                   στο κέντρο μιας περιοχής που ανταμείβει τους περίεργους και ξεκουράζει τους
                   κουρασμένους σε ίση μοίρα.
                 </p>
@@ -190,9 +192,13 @@ export default function GreekLocationPage() {
               επισκεπτών. Προχωρώντας βαθύτερα στην Πελοπόννησο, η καστροπολιτεία του
               Μυστρά, το αρχαίο θέατρο της Επιδαύρου και τα ερείπια των Μυκηνών είναι όλα
               εύκολα προσβάσιμα για τους επισκέπτες που θέλουν να περάσουν μια μέρα
-              ταξιδεύοντας στην ιστορία με τον δικό τους ρυθμό. Το Althea είναι τόσο ορμητήριο
-              όσο και προορισμός. Η γύρω περιοχή αξίζει την εξερεύνησή σας και θα χαρούμε να
-              σας βοηθήσουμε να το κάνετε πράξη.
+              ταξιδεύοντας στην ιστορία με τον δικό τους ρυθμό.{' '}
+              <Link href="/el/accommodation" className="text-[#ad8b27] hover:underline font-light">Το Althea</Link>
+              {' '}είναι τόσο ορμητήριο
+              όσο και προορισμός. Η γύρω περιοχή αξίζει την{' '}
+              <Link href="/el/experiences" className="text-[#ad8b27] hover:underline font-light">εξερεύνησή σας</Link>
+              {' '}και θα χαρούμε να{' '}
+              <Link href="/el/contact" className="text-[#ad8b27] hover:underline font-light">σας βοηθήσουμε να το κάνετε πράξη</Link>.
             </p>
           </ScrollReveal>
 
