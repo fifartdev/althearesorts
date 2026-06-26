@@ -49,7 +49,7 @@ export function Hero({ locale = 'en' }: { locale?: Locale }) {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion) {
       ;[headlineRef, subtitleRef, ctaRef].forEach((r) => {
-        if (r.current) { r.current.style.opacity = '1'; r.current.style.transform = 'none' }
+        if (r.current) { r.current.classList.remove('gsap-fade-init') }
       })
       return
     }
@@ -90,7 +90,7 @@ export function Hero({ locale = 'en' }: { locale?: Locale }) {
 
       {/* Scroll indicator */}
       <div className="absolute right-8 bottom-1/3 flex flex-col items-center gap-3 z-10 hidden lg:flex">
-        <span className="text-white/40 text-[10px] uppercase tracking-[0.25em]" style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}>
+        <span className="text-white/40 text-[10px] uppercase tracking-[0.25em] writing-vertical-rl">
           {c.scrollLabel}
         </span>
         <div className="w-px h-16 bg-white/20 relative overflow-hidden">
@@ -112,8 +112,7 @@ export function Hero({ locale = 'en' }: { locale?: Locale }) {
           {/* Main headline */}
           <h1
             ref={headlineRef}
-            className="text-display-xl text-white mb-6"
-            style={{ opacity: 0 }}
+            className="text-display-xl text-white mb-6 gsap-fade-init"
           >
             {c.headlineLine1}<br />
             <em className="not-italic text-white/80">{c.headlineLine2}</em>
@@ -122,8 +121,7 @@ export function Hero({ locale = 'en' }: { locale?: Locale }) {
           {/* Tagline */}
           <p
             ref={subtitleRef}
-            className="text-base font-light text-white/65 leading-relaxed max-w-md mb-10"
-            style={{ opacity: 0 }}
+            className="text-base font-light text-white/65 leading-relaxed max-w-md mb-10 gsap-fade-init"
           >
             {c.tagline}
           </p>
@@ -131,8 +129,7 @@ export function Hero({ locale = 'en' }: { locale?: Locale }) {
           {/* CTAs */}
           <div
             ref={ctaRef}
-            className="flex flex-wrap gap-4"
-            style={{ opacity: 0 }}
+            className="flex flex-wrap gap-4 gsap-fade-init"
           >
             <a
               href={BOOKING_URL}

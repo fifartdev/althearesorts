@@ -418,4 +418,8 @@
   .animate-scroll-line {
     animation: scrollLine 2s ease-in-out infinite;
   }
+  /* Initial state for GSAP hero animations — avoids inline style={{ opacity: 0 }} */
+  .gsap-fade-init { opacity: 0; }
+  /* Vertical writing mode for scroll indicator — avoids inline writingMode style */
+  .writing-vertical-rl { writing-mode: vertical-rl; text-orientation: mixed; }
 }

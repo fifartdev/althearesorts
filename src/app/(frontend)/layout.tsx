@@ -5,8 +5,10 @@ import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { StickyBookingBar, FloatingBookingButton } from '@/components/layout/BookingCTA'
-import { CookieConsent } from '@/components/layout/CookieConsent'
-import { CustomCursor } from '@/components/animations/CustomCursor'
+import dynamic from 'next/dynamic'
+
+const CookieConsent = dynamic(() => import('@/components/layout/CookieConsent').then(m => ({ default: m.CookieConsent })), { ssr: false })
+const CustomCursor = dynamic(() => import('@/components/animations/CustomCursor').then(m => ({ default: m.CustomCursor })), { ssr: false })
 import { hotelSchema, organizationSchema } from '@/lib/seo'
 import { MetaPixel } from '@/components/analytics/MetaPixel'
 import './globals.css'
