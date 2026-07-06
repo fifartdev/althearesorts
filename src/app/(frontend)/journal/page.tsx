@@ -37,43 +37,17 @@ export default function JournalPage() {
         <div className="container-luxury">
           <ScrollReveal>
             <Link href={`/journal/${featured.slug}`} className="group grid grid-cols-1 lg:grid-cols-2 gap-8 border border-[#e8e4dd] overflow-hidden">
-              {featured.image2 ? (
-                <div className="grid grid-rows-[2fr_1fr] gap-1 min-h-[320px] lg:min-h-[460px]">
-                  <div className="relative overflow-hidden">
-                    <Image
-                      src={featured.image}
-                      alt={featured.imageAlt}
-                      fill
-                      priority
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                    />
-                    <div className="absolute inset-0 bg-[#102027]/0 group-hover:bg-[#102027]/10 transition-colors duration-500" />
-                  </div>
-                  <div className="relative overflow-hidden">
-                    <Image
-                      src={featured.image2}
-                      alt={featured.image2Alt ?? ''}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                    />
-                    <div className="absolute inset-0 bg-[#102027]/0 group-hover:bg-[#102027]/10 transition-colors duration-500" />
-                  </div>
-                </div>
-              ) : (
-                <div className="aspect-[16/9] lg:aspect-auto relative min-h-[280px]">
-                  <Image
-                    src={featured.image}
-                    alt={featured.imageAlt}
-                    fill
-                    priority
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-[#102027]/0 group-hover:bg-[#102027]/10 transition-colors duration-500" />
-                </div>
-              )}
+              <div className="aspect-[16/9] lg:aspect-auto relative min-h-[280px]">
+                <Image
+                  src={featured.image}
+                  alt={featured.imageAlt}
+                  fill
+                  priority
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-[#102027]/0 group-hover:bg-[#102027]/10 transition-colors duration-500" />
+              </div>
               <div className="p-8 lg:p-12 flex flex-col justify-center">
                 <span className="text-label-upper text-[#ad8b27] block mb-4">{featured.category}</span>
                 <h2 className="font-editorial text-3xl font-light text-[#102027] leading-snug mb-4 group-hover:text-[#ad8b27]/80 transition-colors duration-300">
@@ -112,17 +86,6 @@ export default function JournalPage() {
                   <h3 className="font-editorial text-xl font-light text-[#102027] leading-snug mb-3 group-hover:text-[#ad8b27]/80 transition-colors duration-300">
                     {post.title}
                   </h3>
-                  {post.image2 && (
-                    <div className="aspect-[16/6] overflow-hidden mb-4 relative">
-                      <Image
-                        src={post.image2}
-                        alt={post.image2Alt ?? ''}
-                        fill
-                        className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
-                    </div>
-                  )}
                   <p className="text-sm font-light text-[#6b6b6b] leading-relaxed mb-3">{post.excerpt}</p>
                   <div className="flex items-center gap-3 text-xs text-[#a0a0a0] uppercase tracking-wider">
                     <span>{post.date}</span>
