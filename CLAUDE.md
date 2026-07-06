@@ -248,13 +248,12 @@ export async function generateMetadata({ params }) {
 
 **Hreflang** — auto-derived in `generateMetadata()` from the canonical URL path. Pages with canonical starting `/el` get `el`/`en`/`x-default`; all others get `en`/`el`/`x-default`. No per-page manual maintenance needed.
 
-**Schema types live (2026-06-24):**
+**Schema types live (2026-07-06):**
 - `LodgingBusiness` + `Organization` — all pages (layout)
 - `HotelRoom` — each of 6 `/accommodation/[slug]` pages
 - `Restaurant` — `/gastronomy` (AITHER)
 - `HealthAndBeautyBusiness` — `/spa` (Ocean Spa)
 - `FAQPage` — `/faq` and `/el/faq` (14 Q&As each)
-- `Offer` — `/offers` (10% direct booking, validThrough: 2026-06-30 — update on renewal)
 
 **buildBreadcrumb()** helper exists in `seo.ts` but is not yet deployed on any page. Use it when adding BreadcrumbList schema to interior pages.
 
@@ -264,7 +263,7 @@ export async function generateMetadata({ params }) {
 
 ## Missing before launch (client action required)
 
-1. **OG image** — create `/public/og-default.jpg` at 1200×630px (logo + hero image). Referenced everywhere, file does not exist.
+1. **OG image** — ✅ `/public/og-default.jpg` added (1200×630px, client-supplied).
 2. **Favicon** — `/public/favicon.ico` (32×32), `/public/icon.png` (512×512), `/public/apple-touch-icon.png` (180×180)
 3. **Google Analytics** — ✅ added. GA4 property `G-WYCXWW127J` wired via `next/script` `afterInteractive` in both `layout.tsx` files. Constant `GA_ID` defined at top of each file.
 4. **Cookie consent** — ✅ `CookieConsent.tsx` added to both layouts (EN + EL). Appears on first visit, stores acceptance in `localStorage`.

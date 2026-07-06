@@ -10,35 +10,13 @@ import { BOOKING_URL, PHONE, EMAIL, SITE_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
   title: 'Offers & Special Rates',
-  description: '10% off for all direct bookings at Althea Resorts. Opening offer valid until June 30, 2026. Book direct via our website, phone, or email for the best rate guaranteed.',
-  keywords: ['Althea Resorts offers', 'hotel discount Corinthia', 'direct booking discount Greece', 'opening offer hotel'],
+  description: 'Book directly with Althea Resorts for the best rate guaranteed. No intermediaries, no platform fees — just a better rate when you book via our website, phone, or email.',
+  keywords: ['Althea Resorts offers', 'hotel discount Corinthia', 'direct booking discount Greece', 'best rate hotel'],
   canonical: `${SITE_URL}/offers`,
 })
 
-const offerSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Offer',
-  name: '10% Direct Booking Discount',
-  description: '10% discount on all room rates when booking directly via the Althea Resorts website, phone, or email. Best rate guaranteed.',
-  url: `${SITE_URL}/offers`,
-  priceSpecification: {
-    '@type': 'PriceSpecification',
-    priceCurrency: 'EUR',
-  },
-  validThrough: '2026-06-30',
-  seller: {
-    '@id': `${SITE_URL}/#hotel`,
-  },
-  eligibleCustomerType: 'http://purl.org/goodrelations/v1#EndUser',
-}
-
 export default function OffersPage() {
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(offerSchema) }}
-      />
     <main id="main-content">
       {/* Hero */}
       <section
@@ -224,6 +202,5 @@ export default function OffersPage() {
 
       <DirectBookingReasons />
     </main>
-    </>
   )
 }
