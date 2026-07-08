@@ -20,6 +20,13 @@ export function Header() {
   const journalSlugMatch = !isGreek ? pathname.match(/^\/journal\/(.+)$/) : null
   const enOnlyJournalPage = journalSlugMatch ? !EL_JOURNAL_SLUGS.has(journalSlugMatch[1]) : false
 
+  // Pages with white backgrounds (no hero image) need a dark header from the start
+  const isWhiteBgPage =
+    pathname === '/journal' || pathname === '/el/journal' ||
+    pathname.startsWith('/journal/') || pathname.startsWith('/el/journal/') ||
+    pathname === '/faq' || pathname === '/el/faq' ||
+    pathname === '/privacy-policy' || pathname === '/terms'
+
   const switchHref = isGreek
     ? (pathname === '/el' ? '/' : pathname.replace(/^\/el/, ''))
     : pathname === '/'
@@ -44,7 +51,9 @@ export function Header() {
       <header
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-700',
-          'bg-deep/95 backdrop-blur-sm border-b border-white/10',
+          scrolled || isWhiteBgPage
+            ? 'bg-deep/95 backdrop-blur-sm border-b border-white/10'
+            : 'bg-transparent border-b border-transparent',
           scrolled ? 'py-4' : 'py-6'
         )}
         role="banner"
