@@ -81,3 +81,5 @@ export const JOURNAL_POSTS_EL: JournalPost[] = [
     imageAlt: 'Πισίνα και θέα στον Κορινθιακό Κόλπο, Althea Resorts, Ξυλόκαστρο',
   },
 ]
+
+export const EL_JOURNAL_SLUGS = new Set(JOURNAL_POSTS_EL.map((p) => p.slug))

@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/cn'
 import { NAV_LINKS, NAV_LINKS_EL, BOOKING_URL, PHONE, SOCIAL } from '@/lib/constants'
+import { EL_JOURNAL_SLUGS } from '@/app/(frontend-el)/el/journal/journalData'
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -16,9 +17,16 @@ export function Header() {
   const links = isGreek ? NAV_LINKS_EL : NAV_LINKS
   const logoHref = isGreek ? '/el' : '/'
   const bookLabel = isGreek ? 'Κράτηση' : 'Book Now'
+  const journalSlugMatch = !isGreek ? pathname.match(/^\/journal\/(.+)$/) : null
+  const enOnlyJournalPage = journalSlugMatch ? !EL_JOURNAL_SLUGS.has(journalSlugMatch[1]) : false
+
   const switchHref = isGreek
     ? (pathname === '/el' ? '/' : pathname.replace(/^\/el/, ''))
-    : (pathname === '/' ? '/el' : `/el${pathname}`)
+    : pathname === '/'
+      ? '/el'
+      : enOnlyJournalPage
+        ? '/el/journal'
+        : `/el${pathname}`
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
@@ -36,9 +44,8 @@ export function Header() {
       <header
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-700',
-          scrolled
-            ? 'bg-[#102027]/95 backdrop-blur-sm border-b border-white/10 py-4'
-            : 'bg-transparent py-6'
+          'bg-deep/95 backdrop-blur-sm border-b border-white/10',
+          scrolled ? 'py-4' : 'py-6'
         )}
         role="banner"
       >
