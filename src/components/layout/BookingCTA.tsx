@@ -7,13 +7,11 @@ import { cn } from '@/lib/cn'
 const barContent = {
   en: {
     tagline: 'Reserve your stay — 60 minutes from Athens',
-    offer: '10% off direct bookings',
     cta: 'Book Now',
     ariaLabel: 'Quick booking',
   },
   el: {
     tagline: 'Κλείστε τη διαμονή σας — 60 λεπτά από Αθήνα',
-    offer: '10% έκπτωση για απευθείας κρατήσεις',
     cta: 'Κράτηση',
     ariaLabel: 'Γρήγορη κράτηση',
   },
@@ -44,9 +42,6 @@ export function StickyBookingBar({ locale = 'en' }: { locale?: 'en' | 'el' }) {
         {c.tagline}
       </p>
       <div className="flex items-center gap-6">
-        <span className="text-xs text-[#ad8b27] uppercase tracking-widest font-light">
-          {c.offer}
-        </span>
         <a
           href={BOOKING_URL}
           target="_blank"

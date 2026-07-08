@@ -6,7 +6,7 @@ export const faqs: FaqCategory[] = [
     category: 'Rooms & Rates',
     items: [
       { q: 'How many rooms does Althea Resorts have?', a: 'Althea Resorts has 41 rooms and suites across six categories, from the Standard Double to the Althea Loft Suite with Outdoor Jacuzzi.' },
-      { q: 'What is the best rate guarantee?', a: 'The best rate is always guaranteed when you book directly through our website or by contacting us by phone or email. We currently offer a 10% discount on all direct bookings, valid for reservations made until June 30, 2026.' },
+      { q: 'What is the best rate guarantee?', a: 'The best rate is always guaranteed when you book directly through our website or by contacting us by phone or email. Booking direct means no intermediary fees and access to any exclusive rates we offer.' },
       { q: 'Do all rooms have a view?', a: 'All rooms feature either mountain, pool, or sea views. The Superior Sea View Room and Althea Loft Suite offer uninterrupted views of the Corinthian Gulf from generous terraces.' },
     ],
   },

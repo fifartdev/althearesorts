@@ -286,7 +286,7 @@ export default function GreekSpaPage() {
           <Link href="/el/offers" className="text-[#ad8b27] hover:underline font-light">
             Δείτε τις τρέχουσες προσφορές μας
           </Link>
-          {' '}και εξοικονομήστε 10% με απευθείας κράτηση.
+          {' '}για εγγυημένα καλύτερη τιμή με απευθείας κράτηση.
         </p>
       </section>
 

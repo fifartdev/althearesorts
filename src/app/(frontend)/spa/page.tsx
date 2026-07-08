@@ -313,7 +313,7 @@ export default function SpaPage() {
           <Link href="/offers" className="text-[#ad8b27] hover:underline font-light">
             Check our current offers
           </Link>
-          {' '}and save 10% when you book direct.
+          {' '}and book direct for the best available rate.
         </p>
       </section>
 

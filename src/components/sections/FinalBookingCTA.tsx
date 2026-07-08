@@ -13,7 +13,6 @@ const content = {
     cta1: 'Book Now',
     cta2: 'View Offers',
     offersHref: '/offers',
-    note: '10% off all direct bookings · Valid until June 30, 2026',
   },
   el: {
     eyebrow: 'Κλείστε τη Διαμονή σας',
@@ -23,7 +22,6 @@ const content = {
     cta1: 'Κάντε Κράτηση',
     cta2: 'Δείτε Προσφορές',
     offersHref: '/el/offers',
-    note: '10% έκπτωση σε όλες τις άμεσες κρατήσεις · Ισχύει έως 30 Ιουνίου 2026',
   },
 }
 
@@ -92,11 +90,6 @@ export function FinalBookingCTA({ locale = 'en' }: { locale?: Locale }) {
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={400}>
-          <p className="mt-8 text-xs text-[#a0a0a0] uppercase tracking-widest">
-            {c.note}
-          </p>
-        </ScrollReveal>
       </div>
     </section>
   )
