@@ -21,6 +21,47 @@ export type JournalPost = {
 
 export const JOURNAL_POSTS: JournalPost[] = [
   {
+    slug: 'blue-space-corinthian-gulf',
+    category: 'Wellness',
+    title: 'The Restorative Power of Blue Space: Why the Corinthian Gulf Heals Differently',
+    excerpt: 'Marine biologists call it the Blue Mind. Environmental psychologists study it in depth. In the still, protected waters of the Corinthian Gulf, it is simply what happens on your second afternoon at Althea Resorts.',
+    readTime: '5 min read',
+    date: 'July 2026',
+    image: '/images/oceanisphoto.jpg',
+    imageAlt: 'Oceanis spa wellness products — Althea Resorts Ocean Spa, Corinthian Gulf, Corinthia',
+    sections: [
+      {
+        paragraphs: [
+          `There is a moment, usually on the second afternoon of a stay at Althea Resorts, when the quiet finally sinks in. You sit on the terrace of your Superior Sea View room, looking out over the water, and realize that the background hum of modern life — the urgent emails, the mental checklists, the relentless rush — has completely evaporated.`,
+          `This is not a coincidence. It is the science of Blue Space, and in our corner of Ano Loutro, Corinthia, it is the foundation of everything we do.`,
+        ],
+      },
+      {
+        heading: 'The "Blue Mind" vs. The Windy Aegean',
+        paragraphs: [
+          `Marine biologists and environmental psychologists often speak of the "Blue Mind" — a mildly meditative state characterized by calmness, peacefulness, and general happiness, triggered when we are near water.`,
+          `Not all water is the same when it comes to how it affects our nerves. The Aegean Sea, for example, is beautiful, but it is also known for its strong winds and rough waters. This can be exciting, but it is not always calming — the energy of the sea can be overwhelming, and can leave you feeling more anxious or stressed than when you arrived. While the Aegean is undeniably spectacular, it is not necessarily the right environment if what you are seeking is genuine rest.`,
+          `The Corinthian Gulf offers a profoundly different experience.`,
+          `Nestled in the heart of the northern Peloponnese and Central Greece, the Gulf is like a vast mirror, reflecting the beauty of the surrounding landscape. The water is calm and quiet, with no large waves or disruptive noise. This stillness is like a breath of fresh air for a tired mind. When the water is still, your thoughts settle with it — you feel more at peace. The Gulf seems to say: slow down, take a deep breath, let your mind rest. The stillness of the water has a way of calming your thoughts and soothing your spirit, making you feel more connected to nature and to yourself.`,
+        ],
+      },
+      {
+        heading: 'Healing Rooted in Heritage',
+        paragraphs: [
+          `The ancient Greeks understood this implicitly. When we named our boutique hotel, we chose a word that carries centuries of meaning: Althos (ἄλθος), the ancient Greek word for healing.`,
+          `Our resort is built around that idea, and we have created a place that brings it to life. The Ocean Spa is more than a space for pampering — it connects the calming ocean waters directly in front of you to the wellbeing of your body. We use only the finest sea-derived products and locally sourced botanicals, rich in antioxidants, to create treatments that restore balance.`,
+          `As you finish your morning treatment, take a moment to unwind by our main pool or retreat to your private balcony. From there, you can watch the gentle play of blue and silver light dancing across the water as the sun moves across the sky above the Peloponnese. The soft, shifting light is mesmerizing, and you cannot help but feel your worries fade with each passing moment.`,
+        ],
+      },
+      {
+        heading: 'Key Takeaway for the Deliberate Traveler',
+        paragraphs: [
+          `Sometimes, the best thing you can do is simply nothing. If you are looking for a high-end wellness retreat in the Peloponnese where you can calm your mind and rejuvenate your spirit, there is a serene escape waiting for you in the hills of Corinthia. It is a place where luxury is not about doing more, but about being still and content — your own private refuge, where you can let the world slow down and simply be.`,
+        ],
+      },
+    ],
+  },
+  {
     slug: 'sixty-minute-shift-corinthia',
     category: 'Destination',
     title: 'The Sixty-Minute Shift: Why Savvy Travelers Are Choosing Corinthia Over the Cyclades',
