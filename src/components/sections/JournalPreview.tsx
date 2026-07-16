@@ -9,10 +9,10 @@ const S = 'https://staging.althearesorts.com/wp-content/uploads/2026/02'
 
 const content = {
   en: {
-    label: 'Journal',
-    headlineLine1: 'Stories from',
+    label: 'Blog',
+    headlineLine1: 'Articles from',
     headlineLine2: 'Corinthia',
-    allStoriesCta: 'All Stories',
+    allStoriesCta: 'All Articles',
     journalHref: '/journal',
     posts: [
       {
@@ -45,8 +45,8 @@ const content = {
     ],
   },
   el: {
-    label: 'Περιοδικό',
-    headlineLine1: 'Ιστορίες από',
+    label: 'Blog',
+    headlineLine1: 'Άρθρα από',
     headlineLine2: 'την Κορινθία',
     allStoriesCta: 'Όλα τα Άρθρα',
     journalHref: '/el/journal',
@@ -86,7 +86,7 @@ export function JournalPreview({ locale = 'en' }: { locale?: Locale }) {
   const c = content[locale]
 
   return (
-    <section className="section-padding bg-white" aria-label="Journal — Althea Stories">
+    <section className="section-padding bg-white" aria-label="Blog — Althea Articles">
       <div className="container-luxury">
         <div className="flex items-end justify-between mb-12">
           <div>

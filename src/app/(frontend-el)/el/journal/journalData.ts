@@ -62,7 +62,7 @@ export const JOURNAL_POSTS_EL: JournalPost[] = [
   },
   {
     slug: 'althos-meaning',
-    category: 'Ιστορίες Ξενοδοχείου',
+    category: 'Άρθρα Ξενοδοχείου',
     title: 'Περί Άλθους: Η Λέξη Πίσω από το Όνομα',
     excerpt: 'Πώς μια αρχαία ελληνική λέξη για θεραπεία έγινε σχέδιο, λειτουργική φιλοσοφία και ένας τόπος.',
     readTime: '7 λεπτά ανάγνωση',
@@ -77,8 +77,8 @@ export const JOURNAL_POSTS_EL: JournalPost[] = [
     excerpt: 'Μια υπεράσπιση του απογεύματος χωρίς σχέδιο, χωρίς πρόγραμμα και χωρίς ιδιαίτερο λόγο να κουνηθείς.',
     readTime: '3 λεπτά ανάγνωση',
     date: 'Φεβρουάριος 2025',
-    image: `${S}/Gallery-MUZ36MM.jpg`,
-    imageAlt: 'Πισίνα και θέα στον Κορινθιακό Κόλπο, Althea Resorts, Ξυλόκαστρο',
+    image: '/images/outdoor-pool/althea-indoor-outdoor-15.jpg',
+    imageAlt: 'Βεράντα πισίνας, Althea Resorts, Ξυλόκαστρο, Κορινθία',
   },
 ]
 

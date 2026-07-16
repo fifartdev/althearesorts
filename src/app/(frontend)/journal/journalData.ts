@@ -199,7 +199,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
   },
   {
     slug: 'althos-meaning',
-    category: 'Hotel Stories',
+    category: 'Hotel Articles',
     title: 'On Althos: The Word Behind the Name',
     excerpt: 'How an ancient Greek word for healing became a design brief, an operating philosophy, and a place.',
     readTime: '7 min read',
@@ -214,7 +214,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
     excerpt: 'A defense of the afternoon with no plan, no itinerary, and no particular reason to move.',
     readTime: '3 min read',
     date: 'February 2025',
-    image: `${S}/Gallery-MUZ36MM.jpg`,
-    imageAlt: 'Pool and Corinthian Gulf views at Althea Resorts, Xylokastro',
+    image: '/images/outdoor-pool/althea-indoor-outdoor-15.jpg',
+    imageAlt: 'Pool terrace at Althea Resorts, Xylokastro, Corinthia',
   },
 ]

@@ -8,8 +8,8 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { JOURNAL_POSTS_EL } from './journalData'
 
 export const metadata = genMeta({
-  title: 'Ημερολόγιο — Ιστορίες από την Κορινθία',
-  description: 'Ιστορίες από την Κορινθία — το ημερολόγιο της Althea Resorts. Οδηγοί προορισμών, γαστρονομία, ευεξία, τοπική κουλτούρα και η ζωή στον Κορινθιακό Κόλπο.',
+  title: 'Blog — Άρθρα από την Κορινθία',
+  description: 'Άρθρα από την Κορινθία — το blog της Althea Resorts. Οδηγοί προορισμών, γαστρονομία, ευεξία, τοπική κουλτούρα και η ζωή στον Κορινθιακό Κόλπο.',
   keywords: ['blog Althea Resorts', 'οδηγός Κορινθία', 'ξενοδοχείο Ελλάδα ημερολόγιο', 'ταξίδι Ξυλόκαστρο', 'εστιατόριο AITHER Κορινθία'],
   canonical: `${SITE_URL}/el/journal`,
 })
@@ -21,13 +21,13 @@ export default function GreekJournalPage() {
   return (
     <main id="main-content">
       {/* Header */}
-      <section className="pt-40 pb-16 lg:pt-56 lg:pb-20 bg-white" aria-label="Ημερολόγιο">
+      <section className="pt-40 pb-16 lg:pt-56 lg:pb-20 bg-white" aria-label="Blog">
         <div className="container-luxury">
           <ScrollReveal>
-            <SectionLabel className="mb-6">Ημερολόγιο</SectionLabel>
+            <SectionLabel className="mb-6">Blog</SectionLabel>
           </ScrollReveal>
           <ScrollReveal delay={100}>
-            <h1 className="text-display-lg text-[#102027]">Ιστορίες από την Κορινθία</h1>
+            <h1 className="text-display-lg text-[#102027]">Άρθρα από την Κορινθία</h1>
           </ScrollReveal>
         </div>
       </section>

@@ -29,7 +29,7 @@ export const NAV_LINKS = [
   { label: 'Location', href: '/location' },
   { label: 'Offers', href: '/offers' },
   { label: 'Contact', href: '/contact' },
-  { label: 'Stories', href: '/journal' },
+  { label: 'Articles', href: '/journal' },
 ]
 
 export const NAV_LINKS_EL = [
@@ -42,7 +42,7 @@ export const NAV_LINKS_EL = [
   { label: 'Τοποθεσία', href: '/el/location' },
   { label: 'Προσφορές', href: '/el/offers' },
   { label: 'Επικοινωνία', href: '/el/contact' },
-  { label: 'Ιστορίες', href: '/el/journal' },
+  { label: 'Άρθρα', href: '/el/journal' },
 ]
 
 const BATHROOM_IMAGES = [

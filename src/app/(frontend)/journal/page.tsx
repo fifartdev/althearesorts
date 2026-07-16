@@ -8,8 +8,8 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { JOURNAL_POSTS } from './journalData'
 
 export const metadata = genMeta({
-  title: 'Journal',
-  description: 'Stories from Corinthia — the Althea Resorts journal. Destination guides, gastronomy, wellness, local culture, and the life of the Corinthian Gulf region.',
+  title: 'Blog',
+  description: 'Articles from Corinthia — the Althea Resorts blog. Destination guides, gastronomy, wellness, local culture, and the life of the Corinthian Gulf region.',
   keywords: ['Althea Resorts blog', 'Corinthia travel guide', 'Greece hotel journal', 'Xylokastro travel', 'AITHER restaurant Corinthia'],
   canonical: `${SITE_URL}/journal`,
 })
@@ -21,13 +21,13 @@ export default function JournalPage() {
   return (
     <main id="main-content">
       {/* Header */}
-      <section className="pt-40 pb-16 lg:pt-56 lg:pb-20 bg-white" aria-label="Journal">
+      <section className="pt-40 pb-16 lg:pt-56 lg:pb-20 bg-white" aria-label="Blog">
         <div className="container-luxury">
           <ScrollReveal>
-            <SectionLabel className="mb-6">Journal</SectionLabel>
+            <SectionLabel className="mb-6">Blog</SectionLabel>
           </ScrollReveal>
           <ScrollReveal delay={100}>
-            <h1 className="text-display-lg text-[#102027]">Stories from Corinthia</h1>
+            <h1 className="text-display-lg text-[#102027]">Articles from Corinthia</h1>
           </ScrollReveal>
         </div>
       </section>

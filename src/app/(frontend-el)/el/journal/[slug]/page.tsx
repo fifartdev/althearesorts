@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return genMeta({
     title: post.title,
     description: post.excerpt,
-    keywords: [post.category, 'Althea Resorts ημερολόγιο', 'Κορινθία', 'Ξυλόκαστρο Ελλάδα'],
+    keywords: [post.category, 'Althea Resorts blog', 'Κορινθία', 'Ξυλόκαστρο Ελλάδα'],
     canonical: `${SITE_URL}/el/journal/${post.slug}`,
     image: post.image,
   })
@@ -52,7 +52,7 @@ export default async function GreekJournalArticlePage({ params }: { params: Prom
         <div className="relative z-10 container-luxury pb-16 lg:pb-24 w-full">
           <ScrollReveal>
             <div className="flex flex-wrap items-center gap-3 text-xs text-white/50 uppercase tracking-[0.15em] mb-5">
-              <Link href="/el/journal" className="hover:text-white transition-colors duration-200">Ημερολόγιο</Link>
+              <Link href="/el/journal" className="hover:text-white transition-colors duration-200">Blog</Link>
               <span>·</span>
               <span>{post.category}</span>
               <span>·</span>
@@ -108,9 +108,9 @@ export default async function GreekJournalArticlePage({ params }: { params: Prom
           ) : (
             <div className="text-center py-16">
               <GoldLine className="mx-auto mb-8" />
-              <p className="text-body-refined text-lg mb-4">Αυτή η ιστορία έρχεται σύντομα.</p>
+              <p className="text-body-refined text-lg mb-4">Αυτό το άρθρο έρχεται σύντομα.</p>
               <p className="font-editorial text-xl font-light italic text-[#102027] mb-10">
-                Δημοσιεύουμε νέες ιστορίες από την Κορινθία τακτικά.
+                Δημοσιεύουμε νέα άρθρα από την Κορινθία τακτικά.
               </p>
               <Link
                 href="/el/journal"
@@ -120,7 +120,7 @@ export default async function GreekJournalArticlePage({ params }: { params: Prom
                            hover:bg-transparent hover:text-[#102027]
                            transition-all duration-500"
               >
-                Όλες οι Ιστορίες
+                Όλα τα Άρθρα
               </Link>
             </div>
           )}
@@ -129,10 +129,10 @@ export default async function GreekJournalArticlePage({ params }: { params: Prom
 
       {/* Related stories */}
       {related.length > 0 && (
-        <section className="section-padding bg-[#faf8f4]" aria-label="Περισσότερες ιστορίες">
+        <section className="section-padding bg-[#faf8f4]" aria-label="Περισσότερα άρθρα">
           <div className="container-luxury">
             <ScrollReveal>
-              <SectionLabel className="mb-10">Περισσότερες Ιστορίες</SectionLabel>
+              <SectionLabel className="mb-10">Περισσότερα Άρθρα</SectionLabel>
             </ScrollReveal>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {related.map((item, i) => (
@@ -168,7 +168,7 @@ export default async function GreekJournalArticlePage({ params }: { params: Prom
                   href="/el/journal"
                   className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-[#102027] hover:text-[#ad8b27] transition-colors duration-300"
                 >
-                  Όλες οι ιστορίες
+                  Όλα τα άρθρα
                   <svg width="20" height="8" viewBox="0 0 20 8" fill="none" aria-hidden="true">
                     <path d="M0 4h18M14 1l4 3-4 3" stroke="currentColor" strokeWidth="0.75" />
                   </svg>
