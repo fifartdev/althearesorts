@@ -83,7 +83,7 @@ export const ROOMS = [
     features: ['King size or twin beds', 'Balcony', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Garden view',
     image: '/images/standard.jpg',
-    images: BATHROOM_IMAGES,
+    images: ['/images/gallery/stand.double.jpg', ...BATHROOM_IMAGES],
   },
   {
     slug: 'deluxe-double-mv-pv',
@@ -94,7 +94,7 @@ export const ROOMS = [
     features: ['King size or twin beds', 'Balcony with view', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Mountain or pool view',
     image: '/images/deluxe%20double.jpg',
-    images: DELUXE_DOUBLE_IMAGES,
+    images: ['/images/gallery/deluxe%20doubl.jpg', ...DELUXE_DOUBLE_IMAGES],
   },
   {
     slug: 'deluxe-double-private-pool',
@@ -105,7 +105,7 @@ export const ROOMS = [
     features: ['King size or twin beds', 'Sharing pool', 'Balcony', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Sharing pool',
     image: '/images/del.double.jpg',
-    images: DELUXE_DOUBLE_IMAGES,
+    images: ['/images/gallery/deluxe%20doubl.jpg', ...DELUXE_DOUBLE_IMAGES],
   },
   {
     slug: 'superior-sea-view',
@@ -116,7 +116,7 @@ export const ROOMS = [
     features: ['King size or twin beds', 'Sea view', 'Terrace or Balcony', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Sea view',
     image: '/images/superior%20sea%20view.jpg',
-    images: BATHROOM_IMAGES,
+    images: ['/images/gallery/Superior%20sv.jpg', ...BATHROOM_IMAGES],
   },
   {
     slug: 'junior-suite-private-pool',
@@ -127,7 +127,7 @@ export const ROOMS = [
     features: ['King size or twin beds', '1 bedroom', '1 living room', 'Private pool', 'Balcony with view', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Soundproofing'],
     view: 'Private pool & views',
     image: '/images/Junior%20suite%20.jpg',
-    images: BATHROOM_IMAGES,
+    images: ['/images/gallery/JSPOOL.jpg', ...BATHROOM_IMAGES],
   },
   {
     slug: 'althea-loft-suite',
@@ -138,7 +138,13 @@ export const ROOMS = [
     features: ['King size or twin beds', '1 bedroom', '1 living room with sofa bed', 'Outdoor Jacuzzi', 'Balcony with view', 'Ensuite bathroom', 'Free WiFi', 'Air conditioning', 'Flat-screen TV', 'Minibar', 'Soundproofing'],
     view: 'Panoramic Gulf views',
     image: '/images/js%20living%20room.jpg',
-    images: BATHROOM_IMAGES,
+    images: [
+      '/images/gallery/loft%20for%202..jpg',
+      '/images/gallery/loft%20for%202....jpg',
+      '/images/gallery/loft%20for%204.jpg',
+      '/images/gallery/loft%20for%204-.jpg',
+      ...BATHROOM_IMAGES,
+    ],
     featured: true,
   },
 ]

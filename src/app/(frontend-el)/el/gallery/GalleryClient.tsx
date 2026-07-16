@@ -86,6 +86,26 @@ const galleryItems = [
   { src: '/images/outdoor-pool/althea-indoor-outdoor-22.jpg', caption: 'Πισίνα & Κόλπος',          category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
   { src: '/images/outdoor-pool/althea-indoor-outdoor-23.jpg', caption: 'Κήπος Πισίνας',            category: 'Πισίνα & Εξωτερικοί Χώροι', wide: true },
   { src: '/images/outdoor-pool/althea-indoor-outdoor-24.jpg', caption: 'Εξωτερική Διαβίωση',       category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
+
+  { src: '/images/gallery/stand.double.jpg',              caption: 'Standard Double',             category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/gallery/deluxe%20doubl.jpg',            caption: 'Deluxe Double',               category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/gallery/Superior%20sv.jpg',             caption: 'Superior Sea View',           category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/gallery/JSPOOL.jpg',                    caption: 'Πισίνα Junior Suite',         category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/gallery/loft%20for%202..jpg',           caption: 'Loft Suite για Δύο',          category: 'Δωμάτια & Σουίτες',         wide: true },
+  { src: '/images/gallery/loft%20for%202....jpg',         caption: 'Loft — Επάνω Επίπεδο',        category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/gallery/loft%20for%204.jpg',            caption: 'Loft Suite για Τέσσερις',     category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/gallery/loft%20for%204-.jpg',           caption: 'Loft — Καθιστικό',            category: 'Δωμάτια & Σουίτες',         wide: false },
+  { src: '/images/gallery/mpanio...jpg',                  caption: 'Μπάνιο',                      category: 'Δωμάτια & Σουίτες',         wide: false },
+
+  { src: '/images/gallery/pool....jpg',                   caption: 'Πισίνα & Ταράτσα',            category: 'Πισίνα & Εξωτερικοί Χώροι', wide: true },
+  { src: '/images/gallery/pool%20.jpg',                   caption: 'Η Πισίνα',                    category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
+  { src: '/images/gallery/pool%202.jpg',                  caption: 'Πισίνα — Ημέρα',              category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
+  { src: '/images/gallery/pool%203.jpg',                  caption: 'Πλευρά Πισίνας',              category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
+  { src: '/images/gallery/pool%20night.jpg',              caption: 'Πισίνα τη Νύχτα',             category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
+  { src: '/images/gallery/pool%20night..jpg',             caption: 'Βραδινή Κολύμβηση',           category: 'Πισίνα & Εξωτερικοί Χώροι', wide: false },
+
+  { src: '/images/gallery/corridor.jpg',                  caption: 'Διάδρομος Ξενοδοχείου',       category: 'Λόμπι & Ρεσεψιόν',          wide: false },
+  { src: '/images/gallery/corridor..jpg',                 caption: 'Διάδρομος',                    category: 'Λόμπι & Ρεσεψιόν',          wide: false },
 ]
 
 export function GalleryClient() {
