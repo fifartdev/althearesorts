@@ -81,8 +81,8 @@ export function BrandIntro({ locale = 'en' }: { locale?: Locale }) {
           <div className="lg:col-span-7 grid grid-cols-2 gap-4 lg:gap-6">
             <ScrollReveal variant="image" className="col-span-1 aspect-[3/4] relative overflow-hidden">
               <Image
-                src="https://staging.althearesorts.com/wp-content/uploads/2026/02/1.jpg"
-                alt="Althea Resorts — pool and hillside"
+                src="/images/new-images/althea-front.jpg"
+                alt="Althea Resorts — hotel entrance and pool, Ano Loutro, Corinthia"
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 50vw, 33vw"
@@ -91,8 +91,8 @@ export function BrandIntro({ locale = 'en' }: { locale?: Locale }) {
             <div className="col-span-1 flex flex-col gap-4 lg:gap-6 pt-12">
               <ScrollReveal variant="image" className="aspect-square relative overflow-hidden">
                 <Image
-                  src="https://staging.althearesorts.com/wp-content/uploads/2026/02/2.jpg"
-                  alt="Althea Resorts — Corinthian Gulf view"
+                  src="/images/new-images/althea-side-images1.jpg"
+                  alt="Althea Resorts — Corinthian Gulf views from Ano Loutro"
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 50vw, 25vw"
