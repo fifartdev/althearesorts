@@ -23,7 +23,7 @@ export default function ExperiencesPage() {
         aria-label="Experiences"
       >
         <Image
-          src="https://staging.althearesorts.com/wp-content/uploads/2026/02/1.jpg"
+          src="/oldimages/1.jpg"
           alt="Althea Resorts — experiences and wellness"
           fill
           priority

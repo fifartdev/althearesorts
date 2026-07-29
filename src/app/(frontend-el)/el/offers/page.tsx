@@ -24,7 +24,7 @@ export default function GreekOffersPage() {
         aria-label="Προσφορές"
       >
         <Image
-          src="https://staging.althearesorts.com/wp-content/uploads/2026/02/althea-exclusive-resorts-spa-9.png"
+          src="/oldimages/althea-exclusive-resorts-spa-9.png"
           alt="Althea Resorts — ειδικές προσφορές"
           fill
           priority

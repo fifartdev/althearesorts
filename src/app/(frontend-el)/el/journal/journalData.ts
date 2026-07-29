@@ -1,4 +1,3 @@
-const S = 'https://staging.althearesorts.com/wp-content/uploads/2026/02'
 
 export type JournalSection = {
   heading?: string
@@ -57,7 +56,7 @@ export const JOURNAL_POSTS_EL: JournalPost[] = [
     excerpt: 'Ένα από τα μεγαλύτερα έργα μηχανικής του δέκατου ένατου αιώνα, που εξακολουθεί να αφήνει τους επισκέπτες άφωνους.',
     readTime: '3 λεπτά ανάγνωση',
     date: 'Μάρτιος 2025',
-    image: `${S}/Gallery-9VZMNYN.jpg`,
+    image: '/oldimages/Gallery-9VZMNYN.jpg',
     imageAlt: 'Τοπίο Κορινθίας και ακτογραμμή κοντά στο Ξυλόκαστρο',
   },
   {
@@ -67,7 +66,7 @@ export const JOURNAL_POSTS_EL: JournalPost[] = [
     excerpt: 'Πώς μια αρχαία ελληνική λέξη για θεραπεία έγινε σχέδιο, λειτουργική φιλοσοφία και ένας τόπος.',
     readTime: '7 λεπτά ανάγνωση',
     date: 'Μάρτιος 2025',
-    image: `${S}/1.jpg`,
+    image: '/oldimages/1.jpg',
     imageAlt: 'Althea Resorts — το κατάλυμα στο Άνω Λουτρό, Ξυλόκαστρο, Κορινθία',
   },
   {

@@ -23,7 +23,7 @@ export default function GreekExperiencesPage() {
         aria-label="Εμπειρίες"
       >
         <Image
-          src="https://staging.althearesorts.com/wp-content/uploads/2026/02/1.jpg"
+          src="/oldimages/1.jpg"
           alt="Althea Resorts — εμπειρίες και ευεξία"
           fill
           priority

@@ -14,7 +14,7 @@ const galleryItems = [
   {
     span: 'col-span-1',
     label: { en: 'Loft Suite', el: 'Loft Σουίτα' },
-    image: 'https://staging.althearesorts.com/wp-content/uploads/2026/02/althea-exclusive-resorts-spa-9.png',
+    image: '/oldimages/althea-exclusive-resorts-spa-9.png',
   },
   {
     span: 'col-span-1',

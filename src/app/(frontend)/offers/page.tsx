@@ -24,7 +24,7 @@ export default function OffersPage() {
         aria-label="Offers"
       >
         <Image
-          src="https://staging.althearesorts.com/wp-content/uploads/2026/02/althea-exclusive-resorts-spa-9.png"
+          src="/oldimages/althea-exclusive-resorts-spa-9.png"
           alt="Althea Resorts — special offers"
           fill
           priority

@@ -1,4 +1,3 @@
-const S = 'https://staging.althearesorts.com/wp-content/uploads/2026/02'
 
 export type JournalSection = {
   heading?: string
@@ -253,7 +252,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
     excerpt: 'One of the great feats of nineteenth-century engineering, still stopping people in their tracks.',
     readTime: '3 min read',
     date: 'March 2025',
-    image: `${S}/Gallery-9VZMNYN.jpg`,
+    image: '/oldimages/Gallery-9VZMNYN.jpg',
     imageAlt: 'Corinthia landscape and coastline near Xylokastro',
   },
   {
@@ -263,7 +262,7 @@ export const JOURNAL_POSTS: JournalPost[] = [
     excerpt: 'How an ancient Greek word for healing became a design brief, an operating philosophy, and a place.',
     readTime: '7 min read',
     date: 'March 2025',
-    image: `${S}/1.jpg`,
+    image: '/oldimages/1.jpg',
     imageAlt: 'Althea Resorts — the property in Ano Loutro, Xylokastro, Corinthia',
   },
   {
