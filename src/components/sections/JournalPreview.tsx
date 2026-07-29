@@ -5,8 +5,6 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 
 type Locale = 'en' | 'el'
 
-const S = 'https://staging.althearesorts.com/wp-content/uploads/2026/02'
-
 const content = {
   en: {
     label: 'Blog',
@@ -16,13 +14,22 @@ const content = {
     journalHref: '/journal',
     posts: [
       {
+        category: 'Local Guides',
+        title: 'The Ultimate Guide to Corinthia & Xylokastro: Coastline Charms, Ancient History and Mountain Excursions',
+        excerpt: 'Pine forests meeting the shoreline, ancient temples, medieval fortresses, alpine lakes, and acclaimed wine country — all within an hour of Althea Resorts.',
+        readTime: '7 min read',
+        href: '/journal/corinthia-xylokastro-guide',
+        image: '/images/blog/290726/pefkias-beach-1.jpg',
+        imageAlt: 'Pefkias coastal pine forest and beach in Xylokastro, Corinthia, Greece',
+      },
+      {
         category: 'Destination',
         title: 'The Sixty-Minute Shift: Why Savvy Travelers Are Choosing Corinthia Over the Cyclades',
         excerpt: 'As travel to the popular Aegean islands becomes increasingly congested, a growing number of deliberate travelers are turning their attention to Corinthia — one hour from Athens, no ferry required.',
         readTime: '6 min read',
         href: '/journal/sixty-minute-shift-corinthia',
-        image: `${S}/2.jpg`,
-        imageAlt: 'Gulf at dusk viewed from Althea Resorts, Ano Loutro, Xylokastro, Corinthia',
+        image: '/images/new-images/althea-side-images2.jpg',
+        imageAlt: 'Corinthian coastline and Gulf views from Althea Resorts, Ano Loutro, Xylokastro',
       },
       {
         category: 'Gastronomy',
@@ -32,15 +39,6 @@ const content = {
         href: '/journal/aither-rooftop-restaurant-corinthia',
         image: '/images/restaurant/althea-indoor-outdoor-9.jpg',
         imageAlt: 'Dining at AITHER rooftop restaurant at Althea Resorts, Xylokastro, Corinthia',
-      },
-      {
-        category: 'Local Guides',
-        title: 'Ancient Corinth: A Morning Away From Everything',
-        excerpt: 'One hour to one of the most powerful city-states of antiquity, still quiet enough to feel like a discovery.',
-        readTime: '5 min read',
-        href: '/journal/ancient-corinth',
-        image: 'https://images.unsplash.com/photo-1698933464922-cb7af8fe9267?auto=format&fit=crop&w=800&q=80',
-        imageAlt: 'Ancient stone columns at the Temple of Apollo, Corinth, Greece',
       },
     ],
   },
