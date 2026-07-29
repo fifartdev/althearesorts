@@ -127,10 +127,10 @@ export const JOURNAL_POSTS: JournalPost[] = [
     excerpt: 'As travel to the popular Aegean islands becomes increasingly congested, a growing number of deliberate travelers are turning their attention to Corinthia — one hour from Athens, no ferry required.',
     readTime: '6 min read',
     date: 'July 2026',
-    image: '/images/new-images/althea-side-images2.jpg',
-    imageAlt: 'Corinthian coastline and Gulf views from Althea Resorts, Ano Loutro, Xylokastro',
-    image2: '/images/new-images/althea-side-images1.jpg',
-    image2Alt: 'Panoramic views of the Corinthian Gulf and Peloponnese mountains from Althea Resorts, Xylokastro',
+    image: '/images/paralia.png',
+    imageAlt: 'Coastal hillside and beach near Xylokastro, Corinthian Gulf, Greece',
+    image2: '/images/blog/290726/pefkias-beach-2.jpg',
+    image2Alt: 'Pefkias pine forest and beach in Xylokastro, Corinthia, Greece',
     sections: [
       {
         paragraphs: [
