@@ -28,8 +28,8 @@ const content = {
         excerpt: 'As travel to the popular Aegean islands becomes increasingly congested, a growing number of deliberate travelers are turning their attention to Corinthia — one hour from Athens, no ferry required.',
         readTime: '6 min read',
         href: '/journal/sixty-minute-shift-corinthia',
-        image: '/images/paralia.png',
-        imageAlt: 'Coastal hillside and beach near Xylokastro, Corinthian Gulf, Greece',
+        image: '/images/xylokastro.jpg',
+        imageAlt: 'Xylokastro coastline and Corinthian Gulf, Greece',
       },
       {
         category: 'Gastronomy',
