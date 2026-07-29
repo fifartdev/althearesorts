@@ -21,6 +21,65 @@ export type JournalPost = {
 
 export const JOURNAL_POSTS: JournalPost[] = [
   {
+    slug: 'corinthia-xylokastro-guide',
+    category: 'Local Guides',
+    title: 'The Ultimate Guide to Corinthia & Xylokastro: Coastline Charms, Ancient History and Mountain Excursions',
+    excerpt: 'Pine forests meeting the shoreline, ancient temples, medieval fortresses, alpine lakes, and acclaimed wine country — all within an hour of Althea Resorts. A complete guide to the best of Corinthia and Xylokastro.',
+    readTime: '7 min read',
+    date: 'July 2026',
+    image: '/images/blog/290726/pefkias-beach-1.jpg',
+    imageAlt: 'Pefkias coastal pine forest and beach in Xylokastro, Corinthia, Greece',
+    image2: '/images/blog/290726/lake-doxa-1.jpg',
+    image2Alt: 'Lake Doxa surrounded by fir forests in Feneos valley, mountainous Corinthia, Greece',
+    sections: [
+      {
+        paragraphs: [
+          `In the vicinity of the blue waters of the Gulf of Corinth, just an hour and a half away from Athens, you can find a place where pine forests meet the shoreline and ancient history blends with the mountain wilderness. Whatever your interest may be — whether sea breeze, mountaineering, or historical sites — Xylokastro and the broader region of Corinthia are among the most diverse yet authentic destinations in Greece.`,
+          `By staying at Althea Resorts, you are able to conveniently experience the best of both coastal and hinterland areas of the region. Here are the top things to do in Xylokastro and Corinthia to make your stay unforgettable.`,
+        ],
+      },
+      {
+        heading: 'Walk Through Pefkias Beach Pine Forest',
+        paragraphs: [
+          `Pefkias is a unique natural coastal pine forest stretching more than two kilometers directly through the center of Xylokastro. Celebrated for inspiring famous Greek poets such as Kostas Karyotakis and Angelos Sikelianos, Pefkias offers shaded trails perfect for morning jogging, leisurely walks, and even biking.`,
+          `Combine your visit to the forest with a swim in the crystal clear waters of Xylokastro Beach. The mingling scents of pine and sea air is the iconic smell of the Greek summer — and one of those experiences that stays with you long after you return home.`,
+        ],
+      },
+      {
+        heading: 'Travel Back in Time with Ancient Corinth and Acrocorinth',
+        paragraphs: [
+          `Corinthia is one of the main centers of the ancient world. Located about thirty minutes from Xylokastro, Ancient Corinth boasts the impressive sixth-century BC Temple of Apollo, ancient agoras, and paved streets where Saint Paul once preached.`,
+          `Towering above the ancient city is Acrocorinth, the monolithic acropolis of Corinth. Acknowledged as one of the largest and most impressive medieval fortresses in Greece, it offers a panoramic view over the entire Corinthian Gulf — a sight made all the more dramatic by its triple circuit walls rising from the rock.`,
+        ],
+      },
+      {
+        heading: 'Driving to Lake Doxa and the Mountainous Feneos Valley',
+        paragraphs: [
+          `Sometimes referred to as "Alpine Greece," the inland part of Corinthia will surprise you with its mountainous landscape. About one hour's drive from Althea Resorts you will find the man-made Lake Doxa, surrounded by dense fir and pine forests in the Feneos valley.`,
+          `Walk to the little chapel of Agios Fanourios on the lake's small peninsula, then climb to the fourteenth-century Monastery of Saint George — where the monks produce a homemade rose petal sweet and the view of the lake below is unforgettable. Finish the day with dinner at a traditional village tavern in Feneos or Goura: wood-fired lamb, goges pasta, and giant beans cooked the way they have been for generations.`,
+        ],
+      },
+      {
+        heading: 'Visiting the Wine Regions of Nemea',
+        paragraphs: [
+          `About thirty-five minutes south of Xylokastro you will find Nemea, the leading red wine region in Greece, renowned for the indigenous Agiorgitiko grape. Ancient myth names Nemea as the site of Hercules' first labor. Today it is home to many wineries offering cellar tours and tastings alongside locally produced cheese and olive oil.`,
+        ],
+      },
+      {
+        heading: 'Quick Distances Guide from Althea Resorts',
+        paragraphs: [
+          `Xylokastro makes an ideal base for exploring Corinthia. Pefkias Forest and Beach is three to five minutes away — perfect for a morning walk and a swim. Ancient Corinth and Acrocorinth are thirty minutes away, ideal for a half-day visit. Nemea Wine Region is thirty-five minutes away for cellar tours and tastings. Lake Doxa in Feneos is one hour away for alpine scenery, monastery visits, and local cuisine. Trikala Korinthias is forty minutes away for exploring traditional mountain villages.`,
+        ],
+      },
+      {
+        heading: 'Make Althea Resorts Your Base in Corinthia',
+        paragraphs: [
+          `After spending your day exploring fortresses, mountain lakes, or wine country, return to the coast for the hospitality of Althea Resorts. Swim in the pool, taste local dishes at AITHER, and rest in comfort right on the shore of the Corinthian Gulf — ready for whatever tomorrow brings.`,
+        ],
+      },
+    ],
+  },
+  {
     slug: 'blue-space-corinthian-gulf',
     category: 'Wellness',
     title: 'The Restorative Power of Blue Space: Why the Corinthian Gulf Heals Differently',
