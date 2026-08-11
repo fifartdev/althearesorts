@@ -30,6 +30,8 @@ const galleryItems = [
   { src: '/images/new-images/althea-side-images4.jpg',  caption: 'Τοπίο & Φύση',              category: 'Θέες',                       wide: false },
 
   { src: '/images/oceanisphoto.jpg',                    caption: 'Oceanis — Προϊόντα Spa',     category: 'Spa & Ευεξία',               wide: false },
+  { src: '/images/spa/sauna.jpg',                        caption: 'Σάουνα',                     category: 'Spa & Ευεξία',               wide: false },
+  { src: '/images/spa/indoor-pool.jpg',                  caption: 'Εσωτερική Πισίνα',           category: 'Spa & Ευεξία',               wide: true  },
 
   { src: '/images/breakfast/althea-breakfast-1.jpg',   caption: 'Πρωινό Τραπέζι',            category: 'Πρωινό',                     wide: true },
   { src: '/images/breakfast/althea-breakfast-2.jpg',   caption: 'Φρέσκα Αρτοσκευάσματα',    category: 'Πρωινό',                     wide: false },

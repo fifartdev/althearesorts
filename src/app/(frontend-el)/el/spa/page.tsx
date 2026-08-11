@@ -155,6 +155,17 @@ export default function GreekSpaPage() {
         </div>
       </section>
 
+      {/* Indoor Pool — full-bleed image break */}
+      <section className="relative h-[60vh] min-h-[400px] overflow-hidden">
+        <Image
+          src="/images/spa/indoor-pool.jpg"
+          alt="Εσωτερική πισίνα Ocean Spa — Althea Resorts, Ξυλόκαστρο, Κορινθία"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+      </section>
+
       {/* Treatment Cabins */}
       <section className="section-padding bg-[#102027]">
         <div className="container-luxury">
@@ -268,8 +279,8 @@ export default function GreekSpaPage() {
             </div>
             <ScrollReveal variant="image" delay={100} className="aspect-[4/5] w-full relative overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=900&q=80"
-                alt="Φυσικά συστατικά — βιώσιμα καλλυντικά Oceanis"
+                src="/images/spa/sauna.jpg"
+                alt="Σάουνα στο Ocean Spa — Althea Resorts, Ξυλόκαστρο, Κορινθία"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"

@@ -30,6 +30,8 @@ const galleryItems = [
   { src: '/images/new-images/althea-side-images4.jpg',  caption: 'Landscape & Nature',      category: 'Views',            wide: false },
 
   { src: '/images/oceanisphoto.jpg',                    caption: 'Oceanis — Spa Products',  category: 'Spa & Wellness',   wide: false },
+  { src: '/images/spa/sauna.jpg',                        caption: 'Sauna',                   category: 'Spa & Wellness',   wide: false },
+  { src: '/images/spa/indoor-pool.jpg',                  caption: 'Indoor Pool',             category: 'Spa & Wellness',   wide: true  },
 
   { src: '/images/breakfast/althea-breakfast-1.jpg',   caption: 'Morning Spread',          category: 'Breakfast',           wide: true },
   { src: '/images/breakfast/althea-breakfast-2.jpg',   caption: 'Fresh Pastries',          category: 'Breakfast',           wide: false },
