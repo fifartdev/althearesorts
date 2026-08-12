@@ -14,6 +14,15 @@ const content = {
     journalHref: '/journal',
     posts: [
       {
+        category: 'Offers',
+        title: 'The Ultimate August Escape: Why a 60-Minute Drive from Athens is All You Need',
+        excerpt: 'No ferry ports, no airport queues. Just 60 minutes from Athens, Althea Resorts & Spa is offering a last-minute August getaway with up to 20% off and exclusive direct booking perks.',
+        readTime: '5 min read',
+        href: '/journal/august-escape-near-athens',
+        image: '/images/new-images/New-Hero.jpg',
+        imageAlt: 'Althea Resorts pool and resort exterior — luxury hotel near Athens, Corinthia, Greece',
+      },
+      {
         category: 'Local Guides',
         title: 'The Ultimate Guide to Corinthia & Xylokastro: Coastline Charms, Ancient History and Mountain Excursions',
         excerpt: 'Pine forests meeting the shoreline, ancient temples, medieval fortresses, alpine lakes, and acclaimed wine country — all within an hour of Althea Resorts.',
@@ -30,15 +39,6 @@ const content = {
         href: '/journal/sixty-minute-shift-corinthia',
         image: '/images/xylokastro.jpg',
         imageAlt: 'Xylokastro coastline and Corinthian Gulf, Greece',
-      },
-      {
-        category: 'Gastronomy',
-        title: 'From the Gulf to the Horizon: Culinary Storytelling at AITHER Rooftop Restaurant',
-        excerpt: 'At AITHER, the rooftop dining destination at Althea Resorts, the menu is a direct reflection of the Corinthian landscape — sourced within sight of the tables.',
-        readTime: '6 min read',
-        href: '/journal/aither-rooftop-restaurant-corinthia',
-        image: '/images/restaurant/althea-indoor-outdoor-9.jpg',
-        imageAlt: 'Dining at AITHER rooftop restaurant at Althea Resorts, Xylokastro, Corinthia',
       },
     ],
   },

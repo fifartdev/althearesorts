@@ -18,9 +18,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post = JOURNAL_POSTS.find((p) => p.slug === slug)
   if (!post) return {}
   return genMeta({
-    title: post.title,
-    description: post.excerpt,
-    keywords: [post.category, 'Althea Resorts blog', 'Corinthia', 'Xylokastro Greece'],
+    title: post.seoTitle ?? post.title,
+    description: post.seoDescription ?? post.excerpt,
+    keywords: post.seoKeywords ?? [post.category, 'Althea Resorts blog', 'Corinthia', 'Xylokastro Greece'],
     canonical: `${SITE_URL}/journal/${post.slug}`,
     image: post.image,
   })
@@ -90,7 +90,7 @@ export default async function JournalArticlePage({ params }: { params: Promise<{
                         {para}
                       </p>
                     ))}
-                    {/* Second image inserted after section 2 (before section 3) */}
+                    {/* Second image inserted after section index 1 */}
                     {i === 1 && post.image2 && (
                       <div className="relative aspect-[16/7] overflow-hidden mt-10 mb-2">
                         <Image
@@ -100,6 +100,45 @@ export default async function JournalArticlePage({ params }: { params: Promise<{
                           className="object-cover"
                           sizes="(max-width: 768px) 100vw, 720px"
                         />
+                      </div>
+                    )}
+                    {section.bullets && (
+                      <ul className="space-y-3 mt-4 mb-6">
+                        {section.bullets.map((bullet, k) => (
+                          <li key={k} className="flex gap-3 items-start">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#ad8b27] mt-[0.65rem] shrink-0" />
+                            <span className="text-body-refined text-lg leading-relaxed">{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {section.faqs && (
+                      <div className="space-y-6 mt-4 mb-6">
+                        {section.faqs.map((faq, k) => (
+                          <div key={k} className="border-l-2 border-[#ad8b27]/40 pl-5">
+                            <p className="font-editorial text-lg font-light text-[#102027] mb-1">{faq.q}</p>
+                            <p className="text-sm font-light text-[#6b6b6b] leading-relaxed">{faq.a}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {section.cta && (
+                      <div className="mt-8 mb-4">
+                        <a
+                          href={section.cta.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-3 h-11 px-8
+                                     text-xs uppercase tracking-[0.2em]
+                                     bg-[#ad8b27] text-white border border-[#ad8b27]
+                                     hover:bg-transparent hover:text-[#ad8b27]
+                                     transition-all duration-500"
+                        >
+                          {section.cta.label}
+                          <svg width="16" height="6" viewBox="0 0 16 6" fill="none" aria-hidden="true">
+                            <path d="M0 3h14M10 1l3 2-3 2" stroke="currentColor" strokeWidth="0.75" />
+                          </svg>
+                        </a>
                       </div>
                     )}
                   </div>

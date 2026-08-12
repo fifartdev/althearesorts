@@ -2,6 +2,9 @@
 export type JournalSection = {
   heading?: string
   paragraphs: string[]
+  bullets?: string[]
+  faqs?: Array<{ q: string; a: string }>
+  cta?: { label: string; href: string }
 }
 
 export type JournalPost = {
@@ -15,10 +18,94 @@ export type JournalPost = {
   imageAlt: string
   image2?: string
   image2Alt?: string
+  seoTitle?: string
+  seoDescription?: string
+  seoKeywords?: string[]
   sections?: JournalSection[]
 }
 
+const OFFER_URL = 'https://althearesort.reserve-online.net/?checkin=2026-10-01&rooms=1&nights=1&adults=2&offerid=59715'
+
 export const JOURNAL_POSTS: JournalPost[] = [
+  {
+    slug: 'august-escape-near-athens',
+    category: 'Offers',
+    title: 'The Ultimate August Escape: Why a 60-Minute Drive from Athens is All You Need for Pure Luxury',
+    excerpt: 'No ferry ports, no airport queues. Just 60 minutes from Athens, Althea Resorts & Spa is offering a last-minute August getaway with up to 20% off and a curated set of exclusive direct booking perks.',
+    readTime: '5 min read',
+    date: 'August 2026',
+    image: '/images/new-images/New-Hero.jpg',
+    imageAlt: 'Althea Resorts pool and resort exterior — luxury hotel near Athens, Corinthia, Greece',
+    image2: '/images/main-pool.jpg',
+    image2Alt: 'Main pool at Althea Resorts with Corinthian Gulf views, Xylokastro, Corinthia',
+    seoTitle: 'Last-Minute August Escape Near Athens',
+    seoDescription: 'Escape the city noise in just one hour. Book your August luxury getaway at Althea Resorts & Spa and unlock up to 20% off plus exclusive direct booking perks.',
+    seoKeywords: ['last-minute getaway from Athens', 'luxury resort near Athens', 'August luxury offer Greece', 'weekend escape from Athens', 'Althea Resorts direct booking perks'],
+    sections: [
+      {
+        paragraphs: [
+          'Are you dreaming of crystal-clear waters, serene Mediterranean views, and world-class relaxation — but dreading the chaos of crowded ferry ports, airport queues, and hours of tedious travel?',
+          `You don't need to board a flight or endure a 5-hour ferry to experience authentic Greek luxury. Hidden just 60 minutes from the heart of Athens, Althea Resorts & Spa offers the ultimate last-minute August getaway where city stress fades into golden sea breezes the moment you arrive.`,
+        ],
+      },
+      {
+        heading: 'The 60-Minute Shift: From City Hustle to Coastal Sanctuary',
+        paragraphs: [
+          `August in Athens has its charm, but when the mid-summer heat peaks, the desire for an effortless retreat becomes undeniable. That's where the true magic of Althea Resorts & Spa lies. Within an hour's seamless drive, you transition from urban concrete to an oasis of tranquility overlooking the shimmering Corinthian Gulf.`,
+          `Whether you're planning a spontaneous weekend trip, an extended summer pause, or a romantic mid-week reset, you don't have to waste half your day in transit. Your vacation begins almost immediately.`,
+        ],
+      },
+      {
+        heading: 'Why Booking Direct Makes Your Stay Unforgettable',
+        paragraphs: [
+          'We believe luxury should be seamless from the moment you decide to take a break. When you reserve your last-minute August getaway directly through our official booking portal, we elevate your experience with a collection of curated benefits designed to maximize your comfort and indulgence.',
+        ],
+        bullets: [
+          `Up to 20% Off Your Stay — Enjoy luxury hospitality at an unmissable price point with our limited-time August offer.`,
+          `Complimentary Welcome Drink — A refreshing signature drink upon arrival as our team handles every detail of your check-in.`,
+          `Choose Your Spa or Culinary Perk — A 20-minute relaxing massage per person at the Ocean Spa OR a €30 dining voucher for our all-day restaurant.`,
+          `2 Poolside Cocktails — Unwind by the water and kick off your relaxation with two handcrafted cocktails on us.`,
+          `Early Check-In & Late Check-Out — Squeeze every last drop of sunshine out of your stay (subject to availability).`,
+        ],
+        cta: { label: 'Claim Your August Getaway Today', href: OFFER_URL },
+      },
+      {
+        heading: 'Indulge Your Senses: What Awaits You at Althea Resorts & Spa',
+        paragraphs: [
+          'A stay at Althea is a full sensory reset:',
+        ],
+        bullets: [
+          `Savor Coastal Gastronomy — Fresh, locally sourced Mediterranean dishes paired with panoramic views of the water at our all-day restaurant.`,
+          `Unwind at The Ocean Spa — Rejuvenate body and mind with bespoke wellness treatments inspired by ancient Greek healing traditions.`,
+          `Bask in Sunshine & Style — Lounge by the pool, indulge in signature mixology, and absorb the peaceful ambience that sets Althea apart.`,
+        ],
+      },
+      {
+        paragraphs: [
+          `Spontaneous travel shouldn't mean compromising on quality or value. Take advantage of our exclusive August rate and turn a quick 1-hour drive into a luxury retreat you'll remember forever.`,
+        ],
+        cta: { label: 'Claim Your August Offer & Book Direct Here', href: OFFER_URL },
+      },
+      {
+        heading: 'Frequently Asked Questions',
+        paragraphs: [],
+        faqs: [
+          {
+            q: 'How far is Althea Resorts & Spa from Athens?',
+            a: 'Althea Resorts & Spa is approximately a 60-minute drive from central Athens — one of the most accessible luxury coastal retreats near the Greek capital.',
+          },
+          {
+            q: 'What are the benefits of booking directly with Althea Resorts?',
+            a: 'Guests who book directly receive up to 20% off their stay, a complimentary welcome drink, 2 poolside cocktails, flexible early check-in/late check-out (subject to availability), and a choice between a 20-minute massage per person or a €30 restaurant voucher.',
+          },
+          {
+            q: 'Is Althea Resorts & Spa suitable for a last-minute getaway?',
+            a: 'Yes. Thanks to its close proximity to Athens and hassle-free drive, Althea is ideal for spontaneous weekend escapes, mid-week wellness resets, or last-minute summer breaks.',
+          },
+        ],
+      },
+    ],
+  },
   {
     slug: 'corinthia-xylokastro-guide',
     category: 'Local Guides',
