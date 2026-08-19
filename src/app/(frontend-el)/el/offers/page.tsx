@@ -24,8 +24,8 @@ export default function GreekOffersPage() {
         aria-label="Προσφορές"
       >
         <Image
-          src="/oldimages/althea-exclusive-resorts-spa-9.png"
-          alt="Althea Resorts — ειδικές προσφορές"
+          src="/images/new-images/althea-front.jpg"
+          alt="Althea Resorts — είσοδος ξενοδοχείου"
           fill
           priority
           className="object-cover"
@@ -60,8 +60,7 @@ export default function GreekOffersPage() {
               </ScrollReveal>
               <ScrollReveal delay={120}>
                 <h2 className="text-display-sm text-[#102027] mb-6">
-                  Απόδραση Τελευταίας Στιγμής<br />
-                  <em className="font-light italic text-[#102027]/60">Κοντά στην Αθήνα</em>
+                  Γιορτή Εγκαινίων
                 </h2>
               </ScrollReveal>
               <ScrollReveal delay={160}>
@@ -69,7 +68,7 @@ export default function GreekOffersPage() {
               </ScrollReveal>
               <ScrollReveal delay={200}>
                 <p className="text-body-refined mb-6">
-                  Μόλις 60 λεπτά από την Αθήνα — χωρίς λιμάνια, χωρίς αεροδρόμια. Κλείστε απευθείας και απολαύστε αποκλειστικά παροχές σχεδιασμένες για να μεγιστοποιήσουν την άνεσή σας από τη στιγμή της άφιξης.
+                  Μόλις 60 λεπτά από την Αθήνα — η νέα σας πολυτελής απόδραση είναι πιο κοντά απ&apos; όσο νομίζετε. Για να γιορτάσουμε τα εγκαίνια της Althea Resorts &amp; Spa, κλείστε απευθείας και απολαύστε μια αποκλειστική συλλογή προνομίων σχεδιασμένων να κάνουν τη διαμονή σας ακόμα πιο αξέχαστη.
                 </p>
                 <ul className="space-y-3 mb-8">
                   {[

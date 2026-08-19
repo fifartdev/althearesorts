@@ -7,7 +7,6 @@ import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import Link from 'next/link'
 import { BOOKING_URL, SITE_URL } from '@/lib/constants'
-import { SpaBanner } from '@/components/ui/SpaBanner'
 
 export const metadata = genMeta({
   title: 'Ocean Spa — Ευεξία & Θεραπείες',
@@ -45,7 +44,6 @@ const cabins = [
 export default function GreekSpaPage() {
   return (
     <main id="main-content">
-      <SpaBanner locale="el" />
       {/* Hero */}
       <section
         className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"

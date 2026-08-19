@@ -24,8 +24,8 @@ export default function OffersPage() {
         aria-label="Offers"
       >
         <Image
-          src="/oldimages/althea-exclusive-resorts-spa-9.png"
-          alt="Althea Resorts — special offers"
+          src="/images/new-images/althea-front.jpg"
+          alt="Althea Resorts — hotel entrance"
           fill
           priority
           className="object-cover"
@@ -60,8 +60,7 @@ export default function OffersPage() {
               </ScrollReveal>
               <ScrollReveal delay={120}>
                 <h2 className="text-display-sm text-[#102027] mb-6">
-                  Last-Minute August Escape<br />
-                  <em className="font-light italic text-[#102027]/60">Near Athens</em>
+                  Opening Celebration
                 </h2>
               </ScrollReveal>
               <ScrollReveal delay={160}>
@@ -69,7 +68,7 @@ export default function OffersPage() {
               </ScrollReveal>
               <ScrollReveal delay={200}>
                 <p className="text-body-refined mb-6">
-                  Just 60 minutes from Athens — no ferry ports, no airport queues. Book directly and unlock a curated set of exclusive perks designed to maximize your comfort from the moment you arrive.
+                  Just 60 min from Athens — your new luxury escape is closer than you think. To celebrate the Opening of Althea Resorts &amp; Spa, book directly &amp; enjoy an exclusive collection of privileges designed to make your stay even more memorable.
                 </p>
                 <ul className="space-y-3 mb-8">
                   {[
