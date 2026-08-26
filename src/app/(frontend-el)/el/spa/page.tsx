@@ -5,6 +5,7 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
+import { SpaMenuLightbox } from '@/components/ui/SpaMenuLightbox'
 import Link from 'next/link'
 import { BOOKING_URL, SITE_URL } from '@/lib/constants'
 
@@ -234,6 +235,45 @@ export default function GreekSpaPage() {
               Κλείστε Θεραπεία
             </a>
           </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Spa Menu */}
+      <section className="section-padding bg-white">
+        <div className="container-luxury">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <ScrollReveal>
+                <SectionLabel className="mb-6">Κατάλογος Spa</SectionLabel>
+              </ScrollReveal>
+              <ScrollReveal delay={100}>
+                <h2 className="text-display-sm text-[#102027] mb-6">
+                  Θεραπείες & Τιμοκατάλογος
+                </h2>
+              </ScrollReveal>
+              <ScrollReveal delay={150}>
+                <GoldLine className="mb-8" />
+              </ScrollReveal>
+              <ScrollReveal delay={200}>
+                <p className="text-body-refined">
+                  Δείτε τον πλήρη κατάλογο του Ocean Spa — κάθε μασάζ, τελετουργικό και
+                  θεραπεία προσώπου, με διάρκειες και τιμές. Κάντε κλικ στον κατάλογο για
+                  να τον δείτε ολόκληρο.
+                </p>
+              </ScrollReveal>
+            </div>
+            <ScrollReveal variant="image" delay={100} className="max-w-sm mx-auto lg:mx-0 w-full">
+              <SpaMenuLightbox
+                src="/images/spa/spa-menu.jpg"
+                alt="Κατάλογος θεραπειών και τιμών Ocean Spa — Althea Resorts"
+                triggerLabel="Προβολή Καταλόγου"
+                closeLabel="Κλείσιμο"
+                openLabel="Άνοιγμα σε Νέα Καρτέλα"
+                downloadLabel="Λήψη"
+                downloadFileName="althea-ocean-spa-menu.jpg"
+              />
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
