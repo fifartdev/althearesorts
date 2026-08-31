@@ -88,7 +88,7 @@ export default function OffersPage() {
                     </svg>
                   </a>
                   <Link
-                    href="/journal/stay-3-pay-2"
+                    href="/journal/august-escape-near-athens"
                     className="h-11 px-7 inline-flex items-center justify-center
                                text-xs uppercase tracking-[0.2em]
                                bg-transparent text-[#102027] border border-[#102027]
