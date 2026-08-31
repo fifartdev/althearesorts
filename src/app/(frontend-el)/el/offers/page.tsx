@@ -9,9 +9,9 @@ import Link from 'next/link'
 import { BOOKING_URL, SITE_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
-  title: 'Απόδραση Αυγούστου — Ειδική Προσφορά',
-  description: 'Αφήστε τον θόρυβο της πόλης πίσω σε μία ώρα. Κλείστε τη θερινή σας διαμονή στην Althea Resorts & Spa και κερδίστε έως 20% έκπτωση συν αποκλειστικά προνόμια άμεσης κράτησης.',
-  keywords: ['προσφορές Althea Resorts', 'τελευταία στιγμή ξενοδοχείο Κορινθία', 'luxury resort κοντά Αθήνα', 'ειδική τιμή Αύγουστος Ελλάδα', 'άμεση κράτηση παροχές'],
+  title: 'Μείνετε 3, Πληρώστε 2 — Ειδική Προσφορά',
+  description: 'Κλείστε τρεις διανυκτερεύσεις στην Althea Resorts & Spa και πληρώστε μόνο για δύο. Ένας απλός τρόπος να μείνετε περισσότερο δίπλα στον Κορινθιακό Κόλπο, αποκλειστικά με απευθείας κράτηση.',
+  keywords: ['προσφορές Althea Resorts', 'μείνετε 3 πληρώστε 2', 'luxury resort κοντά Αθήνα', 'άμεση κράτηση ξενοδοχείο Κορινθία', 'δωρεάν διανυκτέρευση προσφορά Ελλάδα'],
   canonical: `${SITE_URL}/el/offers`,
 })
 
@@ -55,38 +55,25 @@ export default function GreekOffersPage() {
               </ScrollReveal>
               <ScrollReveal delay={80}>
                 <span className="inline-block text-[10px] uppercase tracking-[0.2em] bg-[#ad8b27] text-white px-3 py-1.5 mb-5">
-                  Έως 31 Αυγούστου 2026
+                  Κλείστε Απευθείας &amp; Εξοικονομήστε
                 </span>
               </ScrollReveal>
               <ScrollReveal delay={120}>
                 <h2 className="text-display-sm text-[#102027] mb-6">
-                  Γιορτή Εγκαινίων
+                  Μείνετε 3, Πληρώστε 2<br />
+                  <em className="italic font-light text-[#102027]/60">Τρεις Διανυκτερεύσεις, στην Τιμή των Δύο</em>
                 </h2>
               </ScrollReveal>
               <ScrollReveal delay={160}>
                 <GoldLine className="mb-8" />
               </ScrollReveal>
               <ScrollReveal delay={200}>
-                <p className="text-body-refined mb-6">
-                  Μόλις 60 λεπτά από την Αθήνα — η νέα σας πολυτελής απόδραση είναι πιο κοντά απ&apos; όσο νομίζετε. Για να γιορτάσουμε τα εγκαίνια της Althea Resorts &amp; Spa, κλείστε απευθείας και απολαύστε μια αποκλειστική συλλογή προνομίων σχεδιασμένων να κάνουν τη διαμονή σας ακόμα πιο αξέχαστη.
+                <p className="text-body-refined mb-8">
+                  Κλείστε τρεις διανυκτερεύσεις στην Althea Resorts &amp; Spa και πληρώστε μόνο για δύο. Χωρίς κωδικούς, χωρίς ψιλά γράμματα — απλώς περισσότερος χρόνος δίπλα στον Κορινθιακό Κόλπο, με απευθείας κράτηση μαζί μας.
                 </p>
-                <ul className="space-y-3 mb-8">
-                  {[
-                    `Έως 20% έκπτωση στη διαμονή σας`,
-                    `Δωρεάν ποτό καλωσορίσματος κατά την άφιξη`,
-                    `Μασάζ 20 λεπτών ανά άτομο στο Ocean Spa ή κουπόνι αξίας €30 για το εστιατόριο`,
-                    `2 cocktail δίπλα στην πισίνα, δώρο από εμάς`,
-                    `Early check-in & late check-out (κατόπιν διαθεσιμότητας)`,
-                  ].map((perk, idx) => (
-                    <li key={idx} className="flex gap-3 items-start">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#ad8b27] mt-[0.5rem] shrink-0" />
-                      <span className="text-sm font-light text-[#6b6b6b] leading-relaxed">{perk}</span>
-                    </li>
-                  ))}
-                </ul>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
-                    href="https://althearesort.reserve-online.net/?checkin=2026-10-01&rooms=1&nights=1&adults=2&offerid=59715"
+                    href="https://althearesort.reserve-online.net/?checkin=2026-10-02&rooms=1&nights=3&adults=2&offerid=59803"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="h-11 px-8 inline-flex items-center justify-center gap-3

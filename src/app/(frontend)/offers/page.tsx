@@ -9,9 +9,9 @@ import Link from 'next/link'
 import { BOOKING_URL, SITE_URL } from '@/lib/constants'
 
 export const metadata = genMeta({
-  title: 'Last-Minute August Escape — Special Offer',
-  description: 'Escape the city noise in just one hour. Book your August luxury getaway at Althea Resorts & Spa and unlock up to 20% off plus exclusive direct booking perks.',
-  keywords: ['Althea Resorts offers', 'last-minute getaway from Athens', 'luxury resort near Athens', 'August luxury offer Greece', 'direct booking hotel Corinthia'],
+  title: 'Stay 3, Pay 2 — Special Offer',
+  description: 'Book three nights at Althea Resorts & Spa and pay for only two. A simple way to spend more time by the Corinthian Gulf, available exclusively through direct booking.',
+  keywords: ['Althea Resorts offers', 'Stay 3 Pay 2 hotel offer', 'luxury resort near Athens', 'direct booking hotel Corinthia', 'free night hotel offer Greece'],
   canonical: `${SITE_URL}/offers`,
 })
 
@@ -55,38 +55,25 @@ export default function OffersPage() {
               </ScrollReveal>
               <ScrollReveal delay={80}>
                 <span className="inline-block text-[10px] uppercase tracking-[0.2em] bg-[#ad8b27] text-white px-3 py-1.5 mb-5">
-                  Until 31 August 2026
+                  Book Direct &amp; Save
                 </span>
               </ScrollReveal>
               <ScrollReveal delay={120}>
                 <h2 className="text-display-sm text-[#102027] mb-6">
-                  Opening Celebration
+                  Stay 3, Pay 2<br />
+                  <em className="italic font-light text-[#102027]/60">Three Nights, Two Nights&apos; Price</em>
                 </h2>
               </ScrollReveal>
               <ScrollReveal delay={160}>
                 <GoldLine className="mb-8" />
               </ScrollReveal>
               <ScrollReveal delay={200}>
-                <p className="text-body-refined mb-6">
-                  Just 60 min from Athens — your new luxury escape is closer than you think. To celebrate the Opening of Althea Resorts &amp; Spa, book directly &amp; enjoy an exclusive collection of privileges designed to make your stay even more memorable.
+                <p className="text-body-refined mb-8">
+                  Book three nights at Althea Resorts &amp; Spa and pay for only two. No codes, no fine print — just extra time by the Corinthian Gulf, reserved directly with us.
                 </p>
-                <ul className="space-y-3 mb-8">
-                  {[
-                    'Up to 20% off your stay',
-                    'Complimentary welcome drink on arrival',
-                    '20-minute relaxing massage per person at the Ocean Spa or a €30 dining voucher',
-                    '2 poolside cocktails on us',
-                    'Early check-in & late check-out (subject to availability)',
-                  ].map((perk, idx) => (
-                    <li key={idx} className="flex gap-3 items-start">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#ad8b27] mt-[0.5rem] shrink-0" />
-                      <span className="text-sm font-light text-[#6b6b6b] leading-relaxed">{perk}</span>
-                    </li>
-                  ))}
-                </ul>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
-                    href="https://althearesort.reserve-online.net/?checkin=2026-10-01&rooms=1&nights=1&adults=2&offerid=59715"
+                    href="https://althearesort.reserve-online.net/?checkin=2026-10-02&rooms=1&nights=3&adults=2&offerid=59803"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="h-11 px-8 inline-flex items-center justify-center gap-3
@@ -101,7 +88,7 @@ export default function OffersPage() {
                     </svg>
                   </a>
                   <Link
-                    href="/journal/august-escape-near-athens"
+                    href="/journal/stay-3-pay-2"
                     className="h-11 px-7 inline-flex items-center justify-center
                                text-xs uppercase tracking-[0.2em]
                                bg-transparent text-[#102027] border border-[#102027]

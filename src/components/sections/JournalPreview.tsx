@@ -15,10 +15,10 @@ const content = {
     posts: [
       {
         category: 'Offers',
-        title: 'The Ultimate August Escape: Why a 60-Minute Drive from Athens is All You Need',
-        excerpt: 'No ferry ports, no airport queues. Just 60 minutes from Athens, Althea Resorts & Spa is offering a last-minute August getaway with up to 20% off and exclusive direct booking perks.',
+        title: 'Stay 3, Pay 2: Why a 60-Minute Drive from Athens is All You Need',
+        excerpt: 'No ferry ports, no airport queues. Just 60 minutes from Athens, Althea Resorts & Spa is offering Stay 3, Pay 2 — book three nights and pay for only two, through direct booking.',
         readTime: '5 min read',
-        href: '/journal/august-escape-near-athens',
+        href: '/journal/stay-3-pay-2',
         image: '/images/new-images/New-Hero.jpg',
         imageAlt: 'Althea Resorts pool and resort exterior — luxury hotel near Athens, Corinthia, Greece',
       },
