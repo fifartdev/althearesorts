@@ -10,7 +10,9 @@ import type { Locale } from '@/lib/wp/schema-types'
 export async function JournalListPage({ locale }: { locale: Locale }) {
   const [c, posts] = await Promise.all([getPage('journal'), getPosts(locale)])
   const base = locale === 'el' ? '/el/journal' : '/journal'
-  const [featured, ...gridPosts] = posts
+  // The ticked "Featured on the blog page" post goes to the top, otherwise the first by Order.
+  const featured = posts.find((p) => p.fields.featured) ?? posts[0]
+  const gridPosts = posts.filter((p) => p !== featured)
 
   return (
     <main id="main-content">

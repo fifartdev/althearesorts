@@ -638,6 +638,7 @@ export type PostFields = {
   locale: "en" | "el" | ""
   route_slug: string
   translation_key: string
+  featured: boolean
   category: string
   read_time: string
   display_date: string

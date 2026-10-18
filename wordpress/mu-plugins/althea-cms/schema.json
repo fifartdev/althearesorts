@@ -71,6 +71,7 @@
         { "key": "locale", "type": "select", "label": "Language", "options": ["en", "el"] },
         { "key": "route_slug", "type": "text", "label": "URL slug", "help": "The post URL is /journal/<slug> (or /el/journal/<slug>)." },
         { "key": "translation_key", "type": "text", "label": "Translation key", "help": "Same value on the EN and EL versions of an article." },
+        { "key": "featured", "type": "bool", "label": "Featured on the blog page", "help": "Shows this article in the large slot at the top of the blog page (in its language). If several are ticked, the one with the lowest Order wins; if none, the post with the lowest Order is shown." },
         { "key": "category", "type": "text", "label": "Category" },
         { "key": "read_time", "type": "text", "label": "Read time", "help": "e.g. 5 min read" },
         { "key": "display_date", "type": "text", "label": "Display date", "help": "e.g. August 2026" },
