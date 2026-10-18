@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Site } from '@/lib/wp/site'
+import { tr } from '@/lib/wp/api'
 
 type Locale = 'en' | 'el'
 
@@ -33,7 +34,7 @@ export function Footer({ locale = 'en', site }: { locale?: Locale; site: Site })
             <address className="not-italic flex flex-col gap-2 text-sm font-light text-white/50"
               itemScope itemType="https://schema.org/PostalAddress"
             >
-              <span itemProp="streetAddress">{settings.address.en}</span>
+              <span itemProp="streetAddress">{tr(settings.address, locale)}</span>
               <a href={`tel:${settings.phone.replace(/\s/g, '')}`} itemProp="telephone" className="hover:text-[#ad8b27] transition-colors duration-200">{settings.phone}</a>
               <a
                 href={settings.google_maps_url}

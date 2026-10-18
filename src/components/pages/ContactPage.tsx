@@ -4,7 +4,7 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { ContactForm } from '@/components/contact/ContactForm'
-import { getPage, getSettings, src } from '@/lib/wp/api'
+import { getPage, getSettings, src, tr } from '@/lib/wp/api'
 import { Rich } from '@/lib/wp/Rich'
 import type { Locale } from '@/lib/wp/schema-types'
 
@@ -63,8 +63,7 @@ export async function ContactPage({ locale }: { locale: Locale }) {
                 <div className="flex flex-col gap-8">
                   <div>
                     <span className="text-label-upper text-[#ad8b27] block mb-2">{info.address_label[locale]}</span>
-                    {/* D5: the Greek page also shows the English address (reproduced as before). */}
-                    <p className="text-sm font-light text-[#6b6b6b] leading-relaxed">{settings.address.en}</p>
+                    <p className="text-sm font-light text-[#6b6b6b] leading-relaxed">{tr(settings.address, locale)}</p>
                   </div>
                   <div>
                     <span className="text-label-upper text-[#ad8b27] block mb-2">{info.contact_label[locale]}</span>

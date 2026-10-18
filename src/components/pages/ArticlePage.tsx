@@ -12,7 +12,7 @@ import { getPage, getPosts, src } from '@/lib/wp/api'
 import { siteDefaults } from '@/lib/wp/metadata'
 import { Rich, decodeEntities } from '@/lib/wp/Rich'
 import { blocksToSections, parseBlocks, splitLines } from '@/lib/wp/text'
-import type { Locale } from '@/lib/wp/schema-types'
+import type { Item, Locale } from '@/lib/wp/schema-types'
 
 const DEFAULT_KEYWORDS = {
   en: ['Althea Resorts blog', 'Corinthia', 'Xylokastro Greece'],
@@ -24,18 +24,32 @@ export async function articleStaticParams(locale: Locale) {
   return (await getPosts(locale)).map((p) => ({ slug: p.fields.route_slug }))
 }
 
+/** URL of a post's translation in the other language, if it exists. */
+async function translationUrl(post: Item<'althea_post'>, locale: Locale) {
+  const other: Locale = locale === 'el' ? 'en' : 'el'
+  const t = (await getPosts(other)).find((p) => p.fields.translation_key === post.fields.translation_key)
+  return t ? `${SITE_URL}${other === 'el' ? '/el' : ''}/journal/${t.fields.route_slug}` : null
+}
+
 export async function articleMetadata(slug: string, locale: Locale): Promise<Metadata> {
   const post = (await getPosts(locale)).find((p) => p.fields.route_slug === slug)
   if (!post) return {}
   const f = post.fields
   const keywords = splitLines(f.seo_keywords)
+  const url = `${SITE_URL}${locale === 'el' ? '/el' : ''}/journal/${slug}`
+  const other = await translationUrl(post, locale)
+  // Without a translation, don't point hreflang at a page that does not exist.
+  const languages = other
+    ? undefined
+    : { [locale]: url, 'x-default': url }
   return genMeta({
     title: f.seo_title || post.title,
     description: f.seo_description || post.excerpt,
     keywords: keywords.length ? keywords : [f.category, ...DEFAULT_KEYWORDS[locale]],
-    canonical: `${SITE_URL}${locale === 'el' ? '/el' : ''}/journal/${slug}`,
+    canonical: url,
     image: src(post.image),
     site: await siteDefaults(locale),
+    languages,
   })
 }
 

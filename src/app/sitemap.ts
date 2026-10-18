@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { SITE_URL } from '@/lib/constants'
-import { getItems } from '@/lib/wp/api'
+import { getItems, getPosts } from '@/lib/wp/api'
 
 type SitemapEntry = MetadataRoute.Sitemap[number]
 
@@ -40,5 +40,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     pair(`/accommodation/${room.slug}`, `/el/accommodation/${room.slug}`, 'monthly', 0.8)
   )
 
-  return [...staticEntries, ...roomEntries]
+  // Blog posts: EN/EL pairs share a translation key; single-language posts list only themselves.
+  const [enPosts, elPosts] = await Promise.all([getPosts('en'), getPosts('el')])
+  const postUrl = (locale: 'en' | 'el', slug: string) => `${SITE_URL}${locale === 'el' ? '/el' : ''}/journal/${slug}`
+  const postEntries: MetadataRoute.Sitemap = []
+  for (const post of enPosts) {
+    const el = elPosts.find((p) => p.fields.translation_key === post.fields.translation_key)
+    if (el) postEntries.push(...pair(`/journal/${post.fields.route_slug}`, `/el/journal/${el.fields.route_slug}`, 'monthly', 0.6))
+    else postEntries.push({ url: postUrl('en', post.fields.route_slug), lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 })
+  }
+  for (const post of elPosts) {
+    if (!enPosts.some((p) => p.fields.translation_key === post.fields.translation_key)) {
+      postEntries.push({ url: postUrl('el', post.fields.route_slug), lastModified: new Date(), changeFrequency: 'monthly', priority: 0.55 })
+    }
+  }
+
+  return [...staticEntries, ...roomEntries, ...postEntries]
 }

@@ -12,6 +12,8 @@ interface SEOProps {
   locale?: string
   /** Site-wide defaults from the CMS settings (name, tagline, default description). */
   site?: { name?: string; tagline?: string; description?: string }
+  /** Explicit hreflang alternates, for pages that exist in one language only (default: EN/EL pair). */
+  languages?: Record<string, string>
 }
 
 export function generateMetadata({
@@ -23,6 +25,7 @@ export function generateMetadata({
   keywords,
   locale,
   site,
+  languages,
 }: SEOProps = {}): Metadata {
   const siteName = site?.name || SITE_NAME
   const fullTitle = title ? `${title} | ${siteName}` : `${siteName} — ${site?.tagline || SITE_TAGLINE}`
@@ -61,7 +64,7 @@ export function generateMetadata({
       : { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
     alternates: {
       canonical: canonicalUrl,
-      languages: hreflangAlternates,
+      languages: languages ?? hreflangAlternates,
     },
     openGraph: {
       type: 'website',
