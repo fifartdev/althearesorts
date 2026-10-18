@@ -20,6 +20,10 @@ Every field is defined in [`mu-plugins/althea-cms/schema.json`](mu-plugins/althe
 
 ## Install
 
+**Staging is already installed** (2026-10-18, via `wordpress/deploy-ftp.sh`). To push plugin changes, run `wordpress/deploy-ftp.sh` (all files) or `wordpress/deploy-ftp.sh althea-cms/schema.json` (one file). It needs `FTP_USER`/`FTP_PASSWORD` in `.env.local`.
+
+Manual install:
+
 1. Upload the **contents** of `wordpress/mu-plugins/` to `wp-content/mu-plugins/` on the WordPress server. Create that folder if it doesn't exist. You should end up with:
    ```
    wp-content/mu-plugins/althea-cms.php
