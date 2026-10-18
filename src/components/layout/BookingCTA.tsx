@@ -1,25 +1,12 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { BOOKING_URL } from '@/lib/constants'
 import { cn } from '@/lib/cn'
 
-const barContent = {
-  en: {
-    tagline: 'Reserve your stay — 60 minutes from Athens',
-    cta: 'Book Now',
-    ariaLabel: 'Quick booking',
-  },
-  el: {
-    tagline: 'Κλείστε τη διαμονή σας — 60 λεπτά από Αθήνα',
-    cta: 'Κράτηση',
-    ariaLabel: 'Γρήγορη κράτηση',
-  },
-}
-
-export function StickyBookingBar({ locale = 'en' }: { locale?: 'en' | 'el' }) {
+export function StickyBookingBar({ locale = 'en', tagline, cta, bookingUrl }: { locale?: 'en' | 'el'; tagline: string; cta: string; bookingUrl: string }) {
   const [visible, setVisible] = useState(false)
-  const c = barContent[locale]
+  // Screen-reader label for the bar (UI microcopy, stays in code).
+  const ariaLabel = locale === 'el' ? 'Γρήγορη κράτηση' : 'Quick booking'
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.8)
@@ -36,14 +23,14 @@ export function StickyBookingBar({ locale = 'en' }: { locale?: 'en' | 'el' }) {
         visible ? 'translate-y-0' : 'translate-y-full'
       )}
       role="complementary"
-      aria-label={c.ariaLabel}
+      aria-label={ariaLabel}
     >
       <p className="text-xs uppercase tracking-[0.2em] text-white/70 font-light">
-        {c.tagline}
+        {tagline}
       </p>
       <div className="flex items-center gap-6">
         <a
-          href={BOOKING_URL}
+          href={bookingUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="h-9 px-6 inline-flex items-center
@@ -52,14 +39,14 @@ export function StickyBookingBar({ locale = 'en' }: { locale?: 'en' | 'el' }) {
                      hover:bg-transparent hover:text-[#ad8b27]
                      transition-all duration-400"
         >
-          {c.cta}
+          {cta}
         </a>
       </div>
     </div>
   )
 }
 
-export function FloatingBookingButton() {
+export function FloatingBookingButton({ label, bookingUrl }: { label: string; bookingUrl: string }) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -70,7 +57,7 @@ export function FloatingBookingButton() {
 
   return (
     <a
-      href={BOOKING_URL}
+      href={bookingUrl}
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
@@ -83,7 +70,7 @@ export function FloatingBookingButton() {
       )}
       aria-label="Book your stay at Althea Resorts"
     >
-      Book Now
+      {label}
     </a>
   )
 }

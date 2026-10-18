@@ -6,8 +6,9 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { StickyBookingBar, FloatingBookingButton } from '@/components/layout/BookingCTA'
 import { ClientShells } from '@/components/layout/ClientShells'
-import { hotelSchema, organizationSchema } from '@/lib/seo'
+import { buildHotelSchema, buildOrganizationSchema } from '@/lib/seo'
 import { MetaPixel } from '@/components/analytics/MetaPixel'
+import { getSite } from '@/lib/wp/site'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -38,17 +39,19 @@ const dmSans = DM_Sans({
   display: 'swap',
 })
 
-export default function FrontendLayout({ children }: { children: React.ReactNode }) {
+export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
+  const site = await getSite()
+  const { settings, shared } = site
   return (
     <html lang="en" className={`scroll-smooth ${cormorant.variable} ${dmSans.variable}`}>
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(hotelSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildHotelSchema(settings)) }}
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildOrganizationSchema(settings)) }}
         />
       </head>
       <body className="antialiased">
@@ -73,12 +76,12 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
 
         <MetaPixel />
 
-        <Header />
+        <Header site={site.header} />
         {children}
-        <Footer />
-        <StickyBookingBar />
-        <FloatingBookingButton />
-        <ClientShells />
+        <Footer site={site} />
+        <StickyBookingBar tagline={shared.booking_bar.tagline.en} cta={shared.booking_bar.cta.en} bookingUrl={settings.booking_url} />
+        <FloatingBookingButton label={shared.booking_bar.floating_label.en} bookingUrl={settings.booking_url} />
+        <ClientShells cookie={{ heading: shared.cookie.heading.en, body: shared.cookie.body.en, accept: shared.cookie.accept.en, reject: shared.cookie.reject.en }} />
       </body>
     </html>
   )

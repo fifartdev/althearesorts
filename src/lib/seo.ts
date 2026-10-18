@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { SITE_NAME, SITE_TAGLINE, SITE_URL, COORDINATES, PHONE, SOCIAL, GOOGLE_MAPS_CID_URL } from './constants'
+import { SITE_NAME, SITE_TAGLINE, SITE_URL } from './constants'
+import type { Settings } from './wp/schema-types'
 
 interface SEOProps {
   title?: string
@@ -9,6 +10,8 @@ interface SEOProps {
   canonical?: string
   keywords?: string[]
   locale?: string
+  /** Site-wide defaults from the CMS settings (name, tagline, default description). */
+  site?: { name?: string; tagline?: string; description?: string }
 }
 
 export function generateMetadata({
@@ -19,9 +22,11 @@ export function generateMetadata({
   canonical,
   keywords,
   locale,
+  site,
 }: SEOProps = {}): Metadata {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — ${SITE_TAGLINE}`
-  const defaultDesc = `Luxury boutique hotel in Ano Loutro, Corinthia, 60 minutes from Athens. Elegant rooms, Ocean Spa & Corinthian Gulf views.`
+  const siteName = site?.name || SITE_NAME
+  const fullTitle = title ? `${title} | ${siteName}` : `${siteName} — ${site?.tagline || SITE_TAGLINE}`
+  const defaultDesc = site?.description || `Luxury boutique hotel in Ano Loutro, Corinthia, 60 minutes from Athens. Elegant rooms, Ocean Spa & Corinthian Gulf views.`
   const metaDesc = description || defaultDesc
   const ogImage = image || `${SITE_URL}/og-default.jpg`
   const canonicalUrl = canonical || SITE_URL
@@ -100,7 +105,8 @@ export function buildBreadcrumb(items: BreadcrumbItem[]) {
   }
 }
 
-export const hotelSchema = {
+/** LodgingBusiness JSON-LD (every page), with contact details from the CMS settings. */
+export const buildHotelSchema = (settings: Settings) => ({
   '@context': 'https://schema.org',
   '@type': 'LodgingBusiness',
   '@id': 'https://althearesorts.com/#hotel',
@@ -108,8 +114,8 @@ export const hotelSchema = {
   alternateName: 'Althea Exclusive Resorts & Spa',
   description: 'A luxury boutique resort on the hillside of Ano Loutro, near Xylokastro, Corinthia, Greece. 60 minutes from Athens. 41 rooms and suites, Ocean Spa, and rooftop restaurant AITHER.',
   url: SITE_URL,
-  telephone: PHONE,
-  email: 'reservations@althearesorts.com',
+  telephone: settings.phone,
+  email: settings.email_reservations,
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Ano Loutro',
@@ -120,10 +126,10 @@ export const hotelSchema = {
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: COORDINATES.lat,
-    longitude: COORDINATES.lng,
+    latitude: Number(settings.lat),
+    longitude: Number(settings.lng),
   },
-  hasMap: GOOGLE_MAPS_CID_URL,
+  hasMap: settings.google_maps_url,
   starRating: {
     '@type': 'Rating',
     ratingValue: '5',
@@ -154,7 +160,7 @@ export const hotelSchema = {
   ],
   priceRange: '€€€€',
   image: `${SITE_URL}/og-default.jpg`,
-  sameAs: [SOCIAL.instagram, SOCIAL.facebook, SOCIAL.linkedin],
+  sameAs: [settings.instagram_url, settings.facebook_url, settings.linkedin_url],
   containsPlace: [
     {
       '@type': 'Restaurant',
@@ -173,9 +179,10 @@ export const hotelSchema = {
       url: `${SITE_URL}/spa`,
     },
   ],
-}
+})
 
-export const organizationSchema = {
+/** Organization JSON-LD (every page). */
+export const buildOrganizationSchema = (settings: Settings) => ({
   '@context': 'https://schema.org',
   '@type': 'Organization',
   '@id': 'https://althearesorts.com/#organization',
@@ -184,9 +191,9 @@ export const organizationSchema = {
   logo: `${SITE_URL}/logos/althea_logo_white-f.png`,
   contactPoint: {
     '@type': 'ContactPoint',
-    telephone: PHONE,
+    telephone: settings.phone,
     contactType: 'reservations',
     availableLanguage: ['English', 'Greek', 'French'],
   },
-  sameAs: [SOCIAL.instagram, SOCIAL.facebook, SOCIAL.linkedin],
-}
+  sameAs: [settings.instagram_url, settings.facebook_url, settings.linkedin_url],
+})

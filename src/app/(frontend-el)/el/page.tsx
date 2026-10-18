@@ -1,6 +1,5 @@
 import React from 'react'
-import { generateMetadata as genMeta } from '@/lib/seo'
-import { SITE_URL } from '@/lib/constants'
+import { pageMetadata } from '@/lib/wp/metadata'
 
 import { Hero } from '@/components/sections/Hero'
 import { BrandIntro } from '@/components/sections/BrandIntro'
@@ -14,12 +13,9 @@ import { JournalPreview } from '@/components/sections/JournalPreview'
 import { DirectBookingReasons } from '@/components/sections/DirectBookingReasons'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 
-export const metadata = genMeta({
-  title: 'Πολυτελές Boutique Resort στην Κορινθία',
-  description: 'Althea Resorts — Πολυτελές boutique resort στον λόφο του Άνω Λουτρού, κοντά στο Ξυλόκαστρο, Κορινθία. 60 λεπτά από Αθήνα. 41 δωμάτια και σουίτες με θέα στον Κορινθιακό Κόλπο.',
-  keywords: ['πολυτελές ξενοδοχείο Κορινθία', 'resort Ξυλόκαστρο', 'Althea Resorts Ελλάδα', 'boutique hotel Κορινθία'],
-  canonical: `${SITE_URL}/el`,
-})
+export async function generateMetadata() {
+  return pageMetadata('home', 'el', '/el')
+}
 
 export default function GreekHomePage() {
   return (

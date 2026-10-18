@@ -2,86 +2,13 @@ import React from 'react'
 import Image from 'next/image'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { getPage } from '@/lib/wp/api'
+import { Rich } from '@/lib/wp/Rich'
 
 type Locale = 'en' | 'el'
 
-const content = {
-  en: {
-    label: 'Blog',
-    headlineLine1: 'Articles from',
-    headlineLine2: 'Corinthia',
-    allStoriesCta: 'All Articles',
-    journalHref: '/journal',
-    posts: [
-      {
-        category: 'Offers',
-        title: 'The Ultimate August Escape: Why a 60-Minute Drive from Athens is All You Need',
-        excerpt: 'No ferry ports, no airport queues. Just 60 minutes from Athens, Althea Resorts & Spa is offering a last-minute August getaway with up to 20% off and exclusive direct booking perks.',
-        readTime: '5 min read',
-        href: '/journal/august-escape-near-athens',
-        image: '/images/new-images/New-Hero.jpg',
-        imageAlt: 'Althea Resorts pool and resort exterior — luxury hotel near Athens, Corinthia, Greece',
-      },
-      {
-        category: 'Local Guides',
-        title: 'The Ultimate Guide to Corinthia & Xylokastro: Coastline Charms, Ancient History and Mountain Excursions',
-        excerpt: 'Pine forests meeting the shoreline, ancient temples, medieval fortresses, alpine lakes, and acclaimed wine country — all within an hour of Althea Resorts.',
-        readTime: '7 min read',
-        href: '/journal/corinthia-xylokastro-guide',
-        image: '/images/blog/290726/pefkias-beach-1.jpg',
-        imageAlt: 'Pefkias coastal pine forest and beach in Xylokastro, Corinthia, Greece',
-      },
-      {
-        category: 'Destination',
-        title: 'The Sixty-Minute Shift: Why Savvy Travelers Are Choosing Corinthia Over the Cyclades',
-        excerpt: 'As travel to the popular Aegean islands becomes increasingly congested, a growing number of deliberate travelers are turning their attention to Corinthia — one hour from Athens, no ferry required.',
-        readTime: '6 min read',
-        href: '/journal/sixty-minute-shift-corinthia',
-        image: '/images/xylokastro.jpg',
-        imageAlt: 'Xylokastro coastline and Corinthian Gulf, Greece',
-      },
-    ],
-  },
-  el: {
-    label: 'Blog',
-    headlineLine1: 'Άρθρα από',
-    headlineLine2: 'την Κορινθία',
-    allStoriesCta: 'Όλα τα Άρθρα',
-    journalHref: '/el/journal',
-    posts: [
-      {
-        category: 'Τοπικοί Οδηγοί',
-        title: 'Αρχαία Κόρινθος: Ένα Πρωί Μακριά από Όλα',
-        excerpt: 'Μία ώρα από έναν από τους πιο ισχυρούς πόλεις-κράτη της αρχαιότητας, ακόμα αρκετά ήσυχη για να νιώθεις σαν ανακάλυψη.',
-        readTime: '5 λεπτά ανάγνωση',
-        href: '/el/journal/ancient-corinth',
-        image: 'https://images.unsplash.com/photo-1698933464922-cb7af8fe9267?auto=format&fit=crop&w=800&q=80',
-        imageAlt: 'Αρχαίοι κίονες στον Ναό του Απόλλωνα, Κόρινθος, Ελλάδα',
-      },
-      {
-        category: 'Ευεξία',
-        title: 'Η Φιλοσοφία Πίσω από την Oceanis',
-        excerpt: 'Ελληνική μυθολογία, πιστοποιημένα βιοδιασπώμενες φόρμουλες, και μια απόφαση που δεν χρειάστηκε εξήγηση.',
-        readTime: '4 λεπτά ανάγνωση',
-        href: '/el/journal/oceanis-philosophy',
-        image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=800&q=80',
-        imageAlt: 'Τελετουργικό spa ευεξίας Oceanis, Althea Resorts Ocean Spa, Κορινθία',
-      },
-      {
-        category: 'Γαστρονομία',
-        title: 'Αυτό που Φέρνουν οι Ψαράδες',
-        excerpt: 'Πώς ένα εστιατόριο ταράτσας στην Κορινθία αρχίζει την ιστορία της βραδιάς του — στο λιμάνι, πριν την ανατολή.',
-        readTime: '6 λεπτά ανάγνωση',
-        href: '/el/journal/fishermen-harvest',
-        image: 'https://images.unsplash.com/photo-1534482421-64566f976cfa?auto=format&fit=crop&w=800&q=80',
-        imageAlt: 'Φρέσκα θαλασσινά από τον Κορινθιακό Κόλπο για το εστιατόριο AITHER, Althea Resorts',
-      },
-    ],
-  },
-}
-
-export function JournalPreview({ locale = 'en' }: { locale?: Locale }) {
-  const c = content[locale]
+export async function JournalPreview({ locale = 'en' }: { locale?: Locale }) {
+  const c = (await getPage('home')).journal_preview
 
   return (
     <section className="section-padding bg-white" aria-label="Blog — Althea Articles">
@@ -89,23 +16,22 @@ export function JournalPreview({ locale = 'en' }: { locale?: Locale }) {
         <div className="flex items-end justify-between mb-12">
           <div>
             <ScrollReveal>
-              <SectionLabel className="mb-4">{c.label}</SectionLabel>
+              <SectionLabel className="mb-4">{c.label[locale]}</SectionLabel>
             </ScrollReveal>
             <ScrollReveal delay={100}>
               <h2 className="text-display-sm text-[#102027]">
-                {c.headlineLine1}<br />
-                {c.headlineLine2}
+                <Rich html={c.heading[locale]} />
               </h2>
             </ScrollReveal>
           </div>
           <ScrollReveal delay={150}>
             <a
-              href={c.journalHref}
+              href={locale === 'el' ? '/el/journal' : '/journal'}
               className="hidden lg:inline-flex items-center gap-2
                          text-xs uppercase tracking-[0.2em] text-[#6b6b6b]
                          hover:text-[#102027] transition-colors duration-300"
             >
-              {c.allStoriesCta}
+              {c.cta[locale]}
               <svg width="20" height="8" viewBox="0 0 20 8" fill="none" aria-hidden="true">
                 <path d="M0 4h18M14 1l4 3-4 3" stroke="currentColor" strokeWidth="0.75" />
               </svg>
@@ -114,13 +40,13 @@ export function JournalPreview({ locale = 'en' }: { locale?: Locale }) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {c.posts.map((post, i) => (
-            <ScrollReveal key={post.title} delay={i * 100}>
-              <a href={post.href} className="group block">
+          {c.cards.map((post, i) => (
+            <ScrollReveal key={post.title[locale]} delay={i * 100}>
+              <a href={post.href[locale]} className="group block">
                 <div className="aspect-[16/10] overflow-hidden mb-5 relative">
                   <Image
-                    src={post.image}
-                    alt={post.imageAlt}
+                    src={post.image[locale]?.url ?? ''}
+                    alt={post.image_alt[locale]}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 1024px) 100vw, 33vw"
@@ -128,15 +54,15 @@ export function JournalPreview({ locale = 'en' }: { locale?: Locale }) {
                   <div className="absolute inset-0 bg-[#102027]/0 group-hover:bg-[#102027]/10 transition-colors duration-500" />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span className="text-label-upper text-[#ad8b27]">{post.category}</span>
+                  <span className="text-label-upper text-[#ad8b27]">{post.category[locale]}</span>
                   <h3 className="font-editorial text-xl font-light text-[#102027] leading-snug group-hover:text-[#ad8b27]/80 transition-colors duration-300">
-                    {post.title}
+                    {post.title[locale]}
                   </h3>
                   <p className="text-sm font-light text-[#6b6b6b] leading-relaxed">
-                    {post.excerpt}
+                    {post.excerpt[locale]}
                   </p>
                   <span className="text-xs uppercase tracking-widest text-[#a0a0a0] mt-1">
-                    {post.readTime}
+                    {post.read_time[locale]}
                   </span>
                 </div>
               </a>

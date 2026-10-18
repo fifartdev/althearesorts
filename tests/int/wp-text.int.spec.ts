@@ -8,8 +8,7 @@ import {
   splitLinks,
   splitParagraphs,
 } from '@/lib/wp/text'
-import { JOURNAL_POSTS } from '@/app/(frontend)/journal/journalData'
-import { JOURNAL_POSTS_EL } from '@/app/(frontend-el)/el/journal/journalData'
+import content from '@/lib/wp/fallback/content.json'
 
 describe('wp text formats', () => {
   it('splits paragraphs on blank lines, tolerating CRLF and extra blank lines', () => {
@@ -50,20 +49,18 @@ describe('wp text formats', () => {
     expect(parseBlocks(serializeBlocks(parseBlocks(text)))).toEqual(parseBlocks(text))
   })
 
-  it('round-trips every existing blog post body (EN and EL)', () => {
-    for (const post of [...JOURNAL_POSTS, ...JOURNAL_POSTS_EL]) {
-      if (!post.sections) continue
-      const text = serializeBlocks(sectionsToBlocks(post.sections))
-      const back = blocksToSections(parseBlocks(text))
-      expect(back, post.slug).toEqual(
-        post.sections.map((s) => ({
-          ...(s.heading ? { heading: s.heading } : {}),
-          paragraphs: s.paragraphs,
-          ...('bullets' in s && s.bullets?.length ? { bullets: s.bullets } : {}),
-          ...('faqs' in s && s.faqs?.length ? { faqs: s.faqs } : {}),
-          ...('cta' in s && s.cta ? { cta: s.cta } : {}),
-        })),
-      )
+  it('round-trips every stored blog post body (EN and EL) through blocks and sections', () => {
+    const bodies = content.items.althea_post.map((p) => p.fields.body).filter(Boolean)
+    expect(bodies.length).toBeGreaterThan(0)
+    for (const body of bodies) {
+      expect(serializeBlocks(parseBlocks(body))).toBe(body)
+      expect(serializeBlocks(sectionsToBlocks(blocksToSections(parseBlocks(body))))).toBe(body)
+    }
+  })
+
+  it('round-trips the legal page bodies, including address blocks', () => {
+    for (const body of [content.pages['privacy-policy'].sections.main.body.en, content.pages.terms.sections.main.body.en]) {
+      expect(serializeBlocks(parseBlocks(body))).toBe(body)
     }
   })
 })

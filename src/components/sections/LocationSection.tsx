@@ -2,42 +2,15 @@ import React from 'react'
 import Image from 'next/image'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { getPage } from '@/lib/wp/api'
+import { Rich } from '@/lib/wp/Rich'
+import { splitParagraphs } from '@/lib/wp/text'
 
 type Locale = 'en' | 'el'
 
-const content = {
-  en: {
-    label: 'Location',
-    headlineLine1: 'Corinthia Has Been',
-    headlineLine2: 'Waiting for You',
-    body1: 'Most people drive through Corinthia on the way to somewhere else. That is their loss and, quietly, your gain.',
-    body2: 'The Corinthian Gulf stretches out in front of you, calm and wide. The light here is different — softer in the morning, golden in the afternoon, and at dusk it does something to the water that is difficult to describe and very easy to remember.',
-    facts: [
-      { value: "60'", label: 'From Athens by car' },
-      { value: "45'", label: 'To Ancient Corinth' },
-    ],
-    cta: 'Discover the Region',
-    ctaHref: '/location',
-    imageLocation: 'Ano Loutro, Corinthia',
-  },
-  el: {
-    label: 'Τοποθεσία',
-    headlineLine1: 'Η Κορινθία',
-    headlineLine2: 'σας περίμενε',
-    body1: 'Οι περισσότεροι περνούν από την Κορινθία για να πάνε αλλού. Αυτή είναι η απώλειά τους — και σιωπηλά, το κέρδος σας.',
-    body2: 'Ο Κορινθιακός Κόλπος ανοίγεται μπροστά σας, ήρεμος και πλατύς. Το φως εδώ είναι διαφορετικό — πιο απαλό το πρωί, χρυσό το απόγευμα, και στο σούρουπο κάνει κάτι στο νερό που δύσκολα περιγράφεται αλλά εύκολα θυμάται.',
-    facts: [
-      { value: "60'", label: 'Από Αθήνα με αυτοκίνητο' },
-      { value: "45'", label: 'Ως την Αρχαία Κόρινθο' },
-    ],
-    cta: 'Ανακαλύψτε την Περιοχή',
-    ctaHref: '/el/location',
-    imageLocation: 'Άνω Λουτρό, Κορινθία',
-  },
-}
-
-export function LocationSection({ locale = 'en' }: { locale?: Locale }) {
-  const c = content[locale]
+export async function LocationSection({ locale = 'en' }: { locale?: Locale }) {
+  const c = (await getPage('home')).location
+  const paragraphs = splitParagraphs(c.paragraphs[locale])
 
   return (
     <section
@@ -46,32 +19,32 @@ export function LocationSection({ locale = 'en' }: { locale?: Locale }) {
     >
       <div className="absolute inset-0 bg-[#102027]" />
       <div className="absolute right-0 top-1/2 -translate-y-1/2 font-editorial text-[20vw] font-light text-white/[0.03] leading-none select-none pointer-events-none" aria-hidden="true">
-        Corinthia
+        {c.watermark}
       </div>
 
       <div className="relative z-10 container-luxury">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <ScrollReveal>
-              <SectionLabel light className="mb-8">{c.label}</SectionLabel>
+              <SectionLabel light className="mb-8">{c.label[locale]}</SectionLabel>
             </ScrollReveal>
             <ScrollReveal delay={100}>
               <h2 className="text-display-md text-white mb-8">
-                {c.headlineLine1}<br />
-                <em className="italic font-light text-white/70">{c.headlineLine2}</em>
+                <Rich html={c.heading[locale]} classes={{ em: 'italic font-light text-white/70' }} />
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={200}>
-              <p className="text-sm font-light text-white/50 leading-relaxed mb-6">{c.body1}</p>
-              <p className="text-sm font-light text-white/50 leading-relaxed mb-10">{c.body2}</p>
+              {paragraphs.map((p, i) => (
+                <p key={i} className={`text-sm font-light text-white/50 leading-relaxed ${i === paragraphs.length - 1 ? 'mb-10' : 'mb-6'}`}><Rich html={p} /></p>
+              ))}
             </ScrollReveal>
 
             <ScrollReveal delay={250}>
               <div className="grid grid-cols-3 gap-6 mb-10">
                 {c.facts.map((fact) => (
-                  <div key={fact.label} className="flex flex-col gap-1 border-l border-white/10 pl-4">
+                  <div key={fact.label[locale]} className="flex flex-col gap-1 border-l border-white/10 pl-4">
                     <span className="font-editorial text-3xl font-light text-white">{fact.value}</span>
-                    <span className="text-label-upper text-white/40">{fact.label}</span>
+                    <span className="text-label-upper text-white/40">{fact.label[locale]}</span>
                   </div>
                 ))}
               </div>
@@ -79,14 +52,14 @@ export function LocationSection({ locale = 'en' }: { locale?: Locale }) {
 
             <ScrollReveal delay={300}>
               <a
-                href={c.ctaHref}
+                href={locale === 'el' ? '/el/location' : '/location'}
                 className="inline-flex items-center gap-3
                            text-xs uppercase tracking-[0.2em] text-white/60
                            border-b border-white/20 pb-1
                            hover:text-white hover:border-white
                            transition-colors duration-300"
               >
-                {c.cta}
+                {c.cta[locale]}
                 <svg width="20" height="8" viewBox="0 0 20 8" fill="none" aria-hidden="true">
                   <path d="M0 4h18M14 1l4 3-4 3" stroke="currentColor" strokeWidth="0.75" />
                 </svg>
@@ -96,15 +69,15 @@ export function LocationSection({ locale = 'en' }: { locale?: Locale }) {
 
           <ScrollReveal variant="image" className="aspect-square lg:aspect-[4/5] w-full relative overflow-hidden">
             <Image
-              src="https://enjoycorinthia.gr/wp-content/uploads/2021/06/ancient-corinth-2.jpg"
-              alt="Temple of Apollo at Ancient Corinth, Corinthia"
+              src={c.image?.url ?? ''}
+              alt={c.image_alt[locale]}
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
             <div className="absolute inset-0 bg-[#102027]/20" />
             <div className="absolute bottom-6 left-6">
-              <span className="text-label-upper text-white/70">{c.imageLocation}</span>
+              <span className="text-label-upper text-white/70">{c.image_caption[locale]}</span>
             </div>
           </ScrollReveal>
         </div>

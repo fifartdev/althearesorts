@@ -14,6 +14,8 @@ interface RoomCardProps {
   className?: string
   priority?: boolean
   locale?: 'en' | 'el'
+  /** 'Discover' link label (CMS: shared → room_card). */
+  discoverLabel?: string
 }
 
 export function RoomCard({
@@ -27,6 +29,7 @@ export function RoomCard({
   className,
   priority,
   locale = 'en',
+  discoverLabel,
 }: RoomCardProps) {
   return (
     <Link
@@ -72,7 +75,7 @@ export function RoomCard({
                        flex items-center gap-2 transition-gap duration-300
                        group-hover:gap-3"
           >
-            {locale === 'el' ? 'Ανακαλύψτε' : 'Discover'}
+            {discoverLabel ?? (locale === 'el' ? 'Ανακαλύψτε' : 'Discover')}
             <svg width="20" height="8" viewBox="0 0 20 8" fill="none" aria-hidden="true">
               <path d="M0 4h18M14 1l4 3-4 3" stroke="currentColor" strokeWidth="0.75" />
             </svg>

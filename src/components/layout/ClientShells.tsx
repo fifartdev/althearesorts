@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import type { CookieTexts } from '@/components/layout/CookieConsent'
 
 const CookieConsent = dynamic(
   () => import('@/components/layout/CookieConsent').then(m => ({ default: m.CookieConsent })),
@@ -12,11 +13,11 @@ const CustomCursor = dynamic(
   { ssr: false }
 )
 
-export function ClientShells({ locale }: { locale?: 'en' | 'el' }) {
+export function ClientShells({ cookie }: { cookie: CookieTexts }) {
   return (
     <>
       <CustomCursor />
-      <CookieConsent locale={locale} />
+      <CookieConsent texts={cookie} />
     </>
   )
 }

@@ -1,31 +1,20 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 const CONSENT_KEY = 'althea-cookie-consent'
 
-const content = {
-  en: {
-    heading: 'We use cookies',
-    body: 'We use cookies to enhance your browsing experience and analyse site traffic. You can accept all cookies or reject non-essential ones. Your choice will be remembered for future visits.',
-    accept: 'Accept All',
-    reject: 'Reject Non-Essential',
-  },
-  el: {
-    heading: 'Χρησιμοποιούμε cookies',
-    body: 'Χρησιμοποιούμε cookies για να βελτιώσουμε την εμπειρία πλοήγησής σας και να αναλύσουμε την επισκεψιμότητα του ιστότοπου. Μπορείτε να αποδεχτείτε όλα τα cookies ή να απορρίψετε τα μη απαραίτητα. Η επιλογή σας θα αποθηκευτεί για μελλοντικές επισκέψεις.',
-    accept: 'Αποδοχή Όλων',
-    reject: 'Απόρριψη Μη Απαραίτητων',
-  },
-}
+export type CookieTexts = { heading: string; body: string; accept: string; reject: string }
 
-export function CookieConsent({ locale = 'en' }: { locale?: 'en' | 'el' }) {
-  const [visible, setVisible] = useState(false)
-  const c = content[locale]
-
-  useEffect(() => {
-    if (!localStorage.getItem(CONSENT_KEY)) setVisible(true)
-  }, [])
+export function CookieConsent({ texts: c }: { texts: CookieTexts }) {
+  // Rendered client-side only (ssr: false in ClientShells), so localStorage can be read on first render.
+  const [visible, setVisible] = useState(() => {
+    try {
+      return !localStorage.getItem(CONSENT_KEY)
+    } catch {
+      return false
+    }
+  })
 
   const handleAccept = () => {
     localStorage.setItem(CONSENT_KEY, 'accepted')

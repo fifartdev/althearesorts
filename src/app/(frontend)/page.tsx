@@ -1,5 +1,5 @@
 import React from 'react'
-import { generateMetadata as genMeta } from '@/lib/seo'
+import { pageMetadata } from '@/lib/wp/metadata'
 
 import { Hero } from '@/components/sections/Hero'
 import { BrandIntro } from '@/components/sections/BrandIntro'
@@ -13,16 +13,9 @@ import { JournalPreview } from '@/components/sections/JournalPreview'
 import { DirectBookingReasons } from '@/components/sections/DirectBookingReasons'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 
-export const metadata = genMeta({
-  keywords: [
-    'luxury hotel Corinthia Greece',
-    'boutique resort Xylokastro',
-    'Althea Resorts',
-    'spa resort near Athens',
-    'hotel Corinthian Gulf',
-    'luxury hotel Greece',
-  ],
-})
+export async function generateMetadata() {
+  return pageMetadata('home', 'en', '')
+}
 
 export default function HomePage() {
   return (

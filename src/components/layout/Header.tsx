@@ -5,20 +5,19 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/cn'
-import { NAV_LINKS, NAV_LINKS_EL, BOOKING_URL, PHONE, SOCIAL } from '@/lib/constants'
-import { EL_JOURNAL_SLUGS } from '@/app/(frontend-el)/el/journal/journalData'
+import type { HeaderData } from '@/lib/wp/site'
 
-export function Header() {
+export function Header({ site }: { site: HeaderData }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
 
   const isGreek = pathname.startsWith('/el')
-  const links = isGreek ? NAV_LINKS_EL : NAV_LINKS
+  const links = isGreek ? site.nav.el : site.nav.en
   const logoHref = isGreek ? '/el' : '/'
-  const bookLabel = isGreek ? 'Κράτηση' : 'Book Now'
+  const bookLabel = isGreek ? site.bookLabel.el : site.bookLabel.en
   const journalSlugMatch = !isGreek ? pathname.match(/^\/journal\/(.+)$/) : null
-  const enOnlyJournalPage = journalSlugMatch ? !EL_JOURNAL_SLUGS.has(journalSlugMatch[1]) : false
+  const enOnlyJournalPage = journalSlugMatch ? !site.elJournalSlugs.includes(journalSlugMatch[1]) : false
 
   // Pages with white backgrounds (no hero image) need a dark header from the start
   const isWhiteBgPage =
@@ -94,19 +93,19 @@ export function Header() {
           <div className="flex items-center gap-4">
             {/* Social icons — desktop only */}
             <div className="hidden lg:flex items-center gap-3">
-              <a href="https://www.instagram.com/althearesorts" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/40 hover:text-white transition-colors duration-200">
+              <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-white/40 hover:text-white transition-colors duration-200">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                   <circle cx="12" cy="12" r="4"/>
                   <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
                 </svg>
               </a>
-              <a href="https://www.facebook.com/profile.php?id=61589365637032" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-white/40 hover:text-white transition-colors duration-200">
+              <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-white/40 hover:text-white transition-colors duration-200">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
                 </svg>
               </a>
-              <a href="https://www.linkedin.com/company/althearesorts" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-white/40 hover:text-white transition-colors duration-200">
+              <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-white/40 hover:text-white transition-colors duration-200">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
                   <rect x="2" y="9" width="4" height="12"/>
@@ -127,7 +126,7 @@ export function Header() {
             </Link>
 
             <a
-              href={BOOKING_URL}
+              href={site.bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
               className={cn(
@@ -191,7 +190,7 @@ export function Header() {
 
           <div className="flex items-center gap-6 mt-2">
             <a
-              href={BOOKING_URL}
+              href={site.bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
@@ -215,13 +214,13 @@ export function Header() {
         <div className="container-luxury pb-8 border-t border-white/10 pt-6 flex items-center justify-between">
           <div className="flex flex-col gap-0.5">
             <span className="text-white/40 text-xs uppercase tracking-widest">
-              {isGreek ? 'Κορινθία, Ελλάδα' : 'Corinthia, Greece'}
+              {isGreek ? site.menuLocation.el : site.menuLocation.en}
             </span>
-            <span className="text-white/60 text-xs">{PHONE}</span>
+            <span className="text-white/60 text-xs">{site.phone}</span>
           </div>
           <div className="flex gap-4">
-            <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200">IG</a>
-            <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200">FB</a>
+            <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200">IG</a>
+            <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white text-xs uppercase tracking-wider transition-colors duration-200">FB</a>
           </div>
         </div>
       </div>

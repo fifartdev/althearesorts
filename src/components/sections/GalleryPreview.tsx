@@ -2,56 +2,17 @@ import React from 'react'
 import Image from 'next/image'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { getPage } from '@/lib/wp/api'
+import { Rich } from '@/lib/wp/Rich'
 
 type Locale = 'en' | 'el'
 
-const galleryItems = [
-  {
-    span: 'col-span-2 row-span-2',
-    label: { en: 'Pool & Gulf Views', el: 'Πισίνα & Θέα Κόλπου' },
-    image: '/images/new-images/New-Hero.jpg',
-  },
-  {
-    span: 'col-span-1',
-    label: { en: 'Loft Suite', el: 'Loft Σουίτα' },
-    image: '/oldimages/althea-exclusive-resorts-spa-9.png',
-  },
-  {
-    span: 'col-span-1',
-    label: { en: 'Ocean Spa', el: 'Ocean Spa' },
-    image: '/images/oceanisphoto.jpg',
-  },
-  {
-    span: 'col-span-1',
-    label: { en: 'Main Pool', el: 'Κεντρική Πισίνα' },
-    image: '/images/main-pool.jpg',
-  },
-  {
-    span: 'col-span-1',
-    label: { en: 'Corinthian Coast', el: 'Κορινθιακή Ακτή' },
-    image: '/images/new-images/althea-side-images2.jpg',
-  },
-]
+// Grid layout of the five tiles (layout stays in code; images and labels come from the CMS).
+const TILE_SPANS = ['col-span-2 row-span-2', 'col-span-1', 'col-span-1', 'col-span-1', 'col-span-1']
 
-const content = {
-  en: {
-    sectionLabel: 'Gallery',
-    headline: 'The View From Here',
-    cta: 'View Full Gallery',
-    ctaHref: '/gallery',
-    mobileCta: 'View Full Gallery',
-  },
-  el: {
-    sectionLabel: 'Γκαλερί',
-    headline: 'Η Θέα από Εδώ',
-    cta: 'Πλήρης Γκαλερί',
-    ctaHref: '/el/gallery',
-    mobileCta: 'Δείτε τη Γκαλερί',
-  },
-}
-
-export function GalleryPreview({ locale = 'en' }: { locale?: Locale }) {
-  const c = content[locale]
+export async function GalleryPreview({ locale = 'en' }: { locale?: Locale }) {
+  const c = (await getPage('home')).gallery_preview
+  const ctaHref = locale === 'el' ? '/el/gallery' : '/gallery'
 
   return (
     <section className="section-padding bg-white" aria-label="Gallery preview">
@@ -59,22 +20,22 @@ export function GalleryPreview({ locale = 'en' }: { locale?: Locale }) {
         <div className="flex items-end justify-between mb-12">
           <div>
             <ScrollReveal>
-              <SectionLabel className="mb-4">{c.sectionLabel}</SectionLabel>
+              <SectionLabel className="mb-4">{c.label[locale]}</SectionLabel>
             </ScrollReveal>
             <ScrollReveal delay={100}>
               <h2 className="text-display-sm text-[#102027]">
-                {c.headline}
+                <Rich html={c.heading[locale]} />
               </h2>
             </ScrollReveal>
           </div>
           <ScrollReveal delay={150}>
             <a
-              href={c.ctaHref}
+              href={ctaHref}
               className="hidden lg:inline-flex items-center gap-2
                          text-xs uppercase tracking-[0.2em] text-[#6b6b6b]
                          hover:text-[#102027] transition-colors duration-300"
             >
-              {c.cta}
+              {c.cta[locale]}
               <svg width="20" height="8" viewBox="0 0 20 8" fill="none" aria-hidden="true">
                 <path d="M0 4h18M14 1l4 3-4 3" stroke="currentColor" strokeWidth="0.75" />
               </svg>
@@ -83,14 +44,14 @@ export function GalleryPreview({ locale = 'en' }: { locale?: Locale }) {
         </div>
 
         <div className="grid grid-cols-4 grid-rows-2 gap-3 h-[560px] lg:h-[640px]">
-          {galleryItems.map((item, i) => (
+          {c.tiles.map((item, i) => (
             <ScrollReveal
               key={item.label.en}
               delay={i * 80}
-              className={`${item.span} overflow-hidden group cursor-pointer relative`}
+              className={`${TILE_SPANS[i] ?? 'col-span-1'} overflow-hidden group cursor-pointer relative`}
             >
               <Image
-                src={item.image}
+                src={item.image?.url ?? ''}
                 alt={item.label[locale]}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -106,8 +67,8 @@ export function GalleryPreview({ locale = 'en' }: { locale?: Locale }) {
         </div>
 
         <div className="flex justify-center mt-8 lg:hidden">
-          <a href={c.ctaHref} className="text-xs uppercase tracking-[0.2em] text-[#102027] border-b border-[#102027] pb-1">
-            {c.mobileCta}
+          <a href={ctaHref} className="text-xs uppercase tracking-[0.2em] text-[#102027] border-b border-[#102027] pb-1">
+            {c.mobile_cta[locale]}
           </a>
         </div>
       </div>

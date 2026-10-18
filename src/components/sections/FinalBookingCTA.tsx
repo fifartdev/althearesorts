@@ -1,32 +1,13 @@
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
-import { BOOKING_URL } from '@/lib/constants'
+import { getPage, getSettings } from '@/lib/wp/api'
+import { Rich } from '@/lib/wp/Rich'
 
 type Locale = 'en' | 'el'
 
-const content = {
-  en: {
-    eyebrow: 'Reserve Your Stay',
-    headlineLine1: 'Sixty Minutes',
-    headlineLine2: 'From Athens',
-    body: 'Close enough to be spontaneous. Far enough to feel completely removed from the city you left behind.',
-    cta1: 'Book Now',
-    cta2: 'View Offers',
-    offersHref: '/offers',
-  },
-  el: {
-    eyebrow: 'Κλείστε τη Διαμονή σας',
-    headlineLine1: 'Εξήντα λεπτά',
-    headlineLine2: 'από Αθήνα',
-    body: 'Αρκετά κοντά για να είναι αυθόρμητο. Αρκετά μακριά για να αισθανθείτε τελείως αλλού.',
-    cta1: 'Κάντε Κράτηση',
-    cta2: 'Δείτε Προσφορές',
-    offersHref: '/el/offers',
-  },
-}
-
-export function FinalBookingCTA({ locale = 'en' }: { locale?: Locale }) {
-  const c = content[locale]
+export async function FinalBookingCTA({ locale = 'en' }: { locale?: Locale }) {
+  const [shared, settings] = await Promise.all([getPage('shared'), getSettings()])
+  const c = shared.final_cta
 
   return (
     <section
@@ -39,34 +20,33 @@ export function FinalBookingCTA({ locale = 'en' }: { locale?: Locale }) {
         aria-hidden="true"
       >
         <span className="font-editorial text-[18vw] font-light text-[#e8e4dd] leading-none">
-          Althea
+          {c.watermark}
         </span>
       </div>
 
       <div className="relative z-10 container-narrow text-center">
         <ScrollReveal>
           <span className="text-label-upper text-[#ad8b27] block mb-6">
-            {c.eyebrow}
+            {c.eyebrow[locale]}
           </span>
         </ScrollReveal>
 
         <ScrollReveal delay={100}>
           <h2 className="text-display-lg text-[#102027] mb-6">
-            {c.headlineLine1}<br />
-            {c.headlineLine2}
+            <Rich html={c.heading[locale]} />
           </h2>
         </ScrollReveal>
 
         <ScrollReveal delay={200}>
           <p className="text-body-refined text-center max-w-md mx-auto mb-12">
-            {c.body}
+            {c.body[locale]}
           </p>
         </ScrollReveal>
 
         <ScrollReveal delay={300}>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href={BOOKING_URL}
+              href={settings.booking_url}
               target="_blank"
               rel="noopener noreferrer"
               className="h-12 px-10 inline-flex items-center
@@ -75,17 +55,17 @@ export function FinalBookingCTA({ locale = 'en' }: { locale?: Locale }) {
                          hover:bg-transparent hover:text-[#102027]
                          transition-all duration-500"
             >
-              {c.cta1}
+              {c.cta1[locale]}
             </a>
             <a
-              href={c.offersHref}
+              href={locale === 'el' ? '/el/offers' : '/offers'}
               className="h-12 px-10 inline-flex items-center
                          text-xs uppercase tracking-[0.2em]
                          bg-transparent text-[#102027] border border-[#102027]
                          hover:bg-[#102027] hover:text-white
                          transition-all duration-500"
             >
-              {c.cta2}
+              {c.cta2[locale]}
             </a>
           </div>
         </ScrollReveal>
