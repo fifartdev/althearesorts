@@ -8,8 +8,12 @@ defined( 'ABSPATH' ) || exit;
 
 add_action( 'init', 'althea_register_meta', 20 );
 
-function althea_can_edit() {
-	return current_user_can( 'edit_posts' );
+/**
+ * Meta write permission: may the current user edit this post? (Falls back to edit_posts without
+ * an object, e.g. term meta.) Works for types with their own capabilities, like submissions.
+ */
+function althea_can_edit( $allowed = false, $meta_key = '', $object_id = 0 ) {
+	return $object_id ? current_user_can( 'edit_post', $object_id ) : current_user_can( 'edit_posts' );
 }
 
 /**

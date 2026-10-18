@@ -166,6 +166,20 @@
         { "key": "body", "type": "textarea", "label": "Text", "l": true }
       ]
     },
+    "althea_submission": {
+      "label": "Form submissions", "singular": "Form submission", "restBase": "althea-submissions", "icon": "dashicons-email-alt",
+      "supports": ["title"], "content": false, "capabilityType": "althea_submission",
+      "help": "Enquiries sent through the website's contact form. Private: never shown on the website or in the public API.",
+      "fields": [
+        { "key": "name", "type": "text", "label": "Name" },
+        { "key": "email", "type": "text", "label": "Email" },
+        { "key": "phone", "type": "text", "label": "Phone" },
+        { "key": "form_type", "type": "select", "label": "Type", "options": ["contact", "reservation", "wedding", "corporate", "restaurant", "general"] },
+        { "key": "subject", "type": "text", "label": "Subject" },
+        { "key": "message", "type": "textarea", "label": "Message" },
+        { "key": "state", "type": "select", "label": "Status", "options": ["new", "in_progress", "done"] }
+      ]
+    },
     "althea_page": {
       "label": "Site pages", "singular": "Site page", "restBase": "althea-pages", "icon": "dashicons-media-document",
       "supports": ["title"],

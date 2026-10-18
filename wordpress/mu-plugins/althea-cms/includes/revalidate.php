@@ -80,8 +80,8 @@ function althea_tags_for_post( $post ) {
 	if ( 'attachment' === $post->post_type ) {
 		return array( 'wp' );
 	}
-	if ( ! in_array( $post->post_type, althea_post_type_names(), true ) ) {
-		return array();
+	if ( ! in_array( $post->post_type, althea_post_type_names(), true ) || false === ( althea_schema()['postTypes'][ $post->post_type ]['content'] ?? true ) ) {
+		return array(); // Not website content (e.g. form submissions).
 	}
 	if ( 'althea_page' === $post->post_type ) {
 		// "shared" (header/footer/banners) appears on every page.

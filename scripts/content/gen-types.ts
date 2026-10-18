@@ -58,7 +58,7 @@ out += `export type Pages = {\n${pageNames.join('\n')}\n}\nexport type PageSlug 
 
 const itemNames: string[] = []
 for (const [type, def] of Object.entries<any>(schema.postTypes)) {
-  if (type === 'althea_page') continue
+  if (type === 'althea_page' || def.content === false) continue
   const name = `${pascal(type.replace(/^althea_/, ''))}Fields`
   itemNames.push(`  ${type}: ${name}`)
   out += `export type ${name} = ${obj(def.fields)}\n\n`
@@ -67,7 +67,7 @@ out += `export type ItemFields = {\n${itemNames.join('\n')}\n}\nexport type Item
 
 out += `export type Term = { slug: string; name: string; name_el: string; sort_order: number }\n`
 out += `export type TaxonomyOf = {\n${Object.entries<any>(schema.postTypes)
-  .filter(([t]) => t !== 'althea_page')
+  .filter(([t, d]: [string, any]) => t !== 'althea_page' && d.content !== false)
   .map(([t, d]) => `  ${t}: ${(d.taxonomies ?? []).map((x: string) => JSON.stringify(x)).join(' | ') || 'never'}`)
   .join('\n')}\n}\n`
 out += `export type Taxonomy = ${Object.keys(schema.taxonomies).map((x) => JSON.stringify(x)).join(' | ')}\n\n`

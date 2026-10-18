@@ -41,7 +41,7 @@ function althea_register_post_types() {
 				'rewrite'             => false,
 				'query_var'           => false,
 				'map_meta_cap'        => true,
-				'capability_type'     => 'post',
+				'capability_type'     => isset( $def['capabilityType'] ) ? array( $def['capabilityType'], $def['capabilityType'] . 's' ) : 'post',
 			)
 		);
 	}

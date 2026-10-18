@@ -76,7 +76,7 @@ async function main() {
   }
   for (const slug of Object.keys(schema.pages)) next.pages[slug] = { sections: toFallback((await get(`/pages/${slug}`)).sections, current.pages?.[slug]?.sections) }
   for (const type of Object.keys(schema.postTypes)) {
-    if (type === 'althea_page') continue
+    if (type === 'althea_page' || schema.postTypes[type].content === false) continue
     const items: any[] = await get(`/items/${type}`)
     // Keep the snapshot's existing item order (minimal diffs); new items go last.
     const position = new Map<string, number>((current.items?.[type] ?? []).map((x: any, n: number) => [x.slug, n]))

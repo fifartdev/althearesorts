@@ -32,13 +32,15 @@ mkdir -p wordpress/wp-content/mu-plugins
 ln -sf "$PLUGIN/althea-cms.php" wordpress/wp-content/mu-plugins/althea-cms.php
 ln -sfn "$PLUGIN/althea-cms" wordpress/wp-content/mu-plugins/althea-cms
 wp user application-password create admin test --porcelain > apppass.txt
+wp user create forms forms@example.com --role=althea_forms --porcelain > /dev/null
+wp user application-password create forms test --porcelain > formspass.txt
 
 php -S "localhost:$PORT" -t wordpress > server.log 2>&1 &
 SERVER=$!
 trap 'kill $SERVER 2>/dev/null || true' EXIT
 for _ in $(seq 1 50); do curl -s -o /dev/null "http://localhost:$PORT/" && break; sleep 0.2; done
 
-python3 -I "$HERE/rest_test.py" apppass.txt
+python3 -I "$HERE/rest_test.py" apppass.txt formspass.txt
 python3 -I "$HERE/form_test.py" \
   "$(wp post list --post_type=althea_page --name=home --field=ID)" \
   "$(wp post list --post_type=althea_room --field=ID | head -1)"

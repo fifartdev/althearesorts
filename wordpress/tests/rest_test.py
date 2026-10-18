@@ -1,9 +1,10 @@
 import base64, json, sys, urllib.request, urllib.error
 B = 'http://localhost:8899/index.php?rest_route='
 AUTH = 'Basic ' + base64.b64encode(('admin:' + open(sys.argv[1]).read().strip()).encode()).decode()
+FORMS = 'Basic ' + base64.b64encode(('forms:' + open(sys.argv[2]).read().strip()).encode()).decode()
 def req(method, route, body=None, raw=None, headers=None, auth=True):
     h = {'Content-Type': 'application/json'} if body is not None else {}
-    if auth: h['Authorization'] = AUTH
+    if auth: h['Authorization'] = AUTH if auth is True else auth
     h.update(headers or {})
     data = json.dumps(body).encode() if body is not None else raw
     r = urllib.request.Request(B + route, data=data, method=method, headers=h)
@@ -28,11 +29,11 @@ st, idx = req('GET', '/althea/v1/media-index', auth=False)
 check('media-index requires auth', st in (401, 403), st)
 
 # 2. room with typed meta
-meta = {'size': '27 m²', 'featured': True, 'gallery': [mid], 'tagline_en': "Don't & <b>stop</b>", 'features_en': 'Free WiFi\nBalcony', 'list_short_desc_el': 'Ελληνικά γι\' αυτό', '_althea_payload_hash': 'h1'}
+meta = {'size': '27 m²', 'featured': True, 'gallery': [mid], 'tagline_en': "Don't & <b>stop</b>", 'features_en': 'Free WiFi\nBalcony', 'short_desc_el': 'Ελληνικά γι\' αυτό', '_althea_payload_hash': 'h1'}
 st, room = req('POST', '/wp/v2/althea-rooms', {'title': 'Superior Sea View', 'slug': 'superior-sea-view', 'status': 'publish', 'menu_order': 3, 'featured_media': mid, 'meta': meta})
 check('create room', st == 201, room)
 check('room text sanitized (tags stripped, & kept)', room['meta']['tagline_en'] == "Don't & stop", room['meta'].get('tagline_en'))
-check('room greek apostrophe kept', room['meta']['list_short_desc_el'] == "Ελληνικά γι' αυτό", room['meta'].get('list_short_desc_el'))
+check('room greek apostrophe kept', room['meta']['short_desc_el'] == "Ελληνικά γι' αυτό", room['meta'].get('short_desc_el'))
 st, again = req('POST', f"/wp/v2/althea-rooms/{room['id']}", {'meta': meta})
 check('update room with identical meta', st == 200, again)
 st, found = req('GET', '/wp/v2/althea-rooms&slug=superior-sea-view&status=any&context=edit')
@@ -66,7 +67,7 @@ check('unknown template 404', st == 404, x)
 st, items = req('GET', '/althea/v1/items/althea_room', auth=False)
 check('items rooms', st == 200 and items[0]['slug'] == 'superior-sea-view' and items[0]['fields']['size'] == '27 m²', items)
 f = items[0]['fields']
-check('items localized + el-only', f['tagline'] == {'en': "Don't & stop"} and f['list_short_desc'] == {'el': "Ελληνικά γι' αυτό"}, f)
+check('items localized', f['tagline'] == {'en': "Don't & stop", 'el': ''} and f['short_desc'] == {'en': '', 'el': "Ελληνικά γι' αυτό"}, f)
 check('items images + bool', f['featured'] is True and f['gallery'][0]['id'] == mid and items[0]['image']['id'] == mid, f)
 st, x = req('GET', '/althea/v1/items/althea_page', auth=False)
 check('items refuses althea_page', st == 404, x)
@@ -100,7 +101,27 @@ st, bad = req('POST', '/wp/v2/althea-posts', {'title': 'T2', 'status': 'draft', 
 check('select rejects invalid option', st == 400, bad)
 
 st, sch = req('GET', '/althea/v1/schema', auth=False)
-check('schema route', sch['pluginVersion'] == '1.1.0' and 'althea_room' in sch['schema']['postTypes'], sch.keys() if isinstance(sch, dict) else sch)
+check('schema route', sch['pluginVersion'] == '1.2.0' and 'althea_room' in sch['schema']['postTypes'], sch.keys() if isinstance(sch, dict) else sch)
+
+# 9. form submissions: the forms user can only create them; always private, never public
+sub = {'title': 'Contact — Maria', 'status': 'publish', 'meta': {'name': 'Maria <b>P</b>', 'email': 'm@example.com', 'form_type': 'wedding', 'message': 'Hello & bye\nLine 2', 'state': 'new'}}
+st, s1 = req('POST', '/wp/v2/althea-submissions', sub, auth=FORMS)
+check('forms user creates submission', st == 201 and s1['meta']['form_type'] == 'wedding' and s1['meta']['name'] == 'Maria P', s1)
+check('submission forced private', s1.get('status') == 'private', s1.get('status'))
+st, x = req('POST', '/wp/v2/althea-submissions', sub, auth=False)
+check('anonymous cannot submit', st in (401, 403), st)
+st, x = req('POST', '/wp/v2/althea-rooms', {'title': 'Nope', 'status': 'publish'}, auth=FORMS)
+check('forms user cannot create rooms', st == 403, x)
+st, x = req('POST', '/wp/v2/settings', {'althea_settings': {'phone': 'x'}}, auth=FORMS)
+check('forms user cannot change settings', st in (401, 403), x)
+st, x = req('DELETE', f"/wp/v2/althea-submissions/{s1['id']}", auth=FORMS)
+check('forms user cannot delete', st == 403, x)
+st, x = req('GET', '/althea/v1/items/althea_submission', auth=False)
+check('submissions not in public items API', st == 404, x)
+st, x = req('GET', '/wp/v2/althea-submissions', auth=False)
+check('submissions not publicly listed', st == 200 and x == [], x)
+st, x = req('GET', '/wp/v2/althea-submissions&status=private&context=edit')
+check('admin sees submissions', st == 200 and len(x) == 1 and x[0]['meta']['email'] == 'm@example.com', x)
 
 if FAILED:
     sys.exit(f'{len(FAILED)} REST check(s) failed')

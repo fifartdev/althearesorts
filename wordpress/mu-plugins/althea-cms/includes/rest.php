@@ -230,7 +230,7 @@ function althea_rest_terms( WP_REST_Request $request ) {
 function althea_rest_items( WP_REST_Request $request ) {
 	$type   = $request['type'];
 	$schema = althea_schema();
-	if ( empty( $schema['postTypes'][ $type ] ) || 'althea_page' === $type ) {
+	if ( empty( $schema['postTypes'][ $type ] ) || 'althea_page' === $type || false === ( $schema['postTypes'][ $type ]['content'] ?? true ) ) {
 		return new WP_Error( 'althea_unknown_type', 'Unknown content type.', array( 'status' => 404 ) );
 	}
 	$def   = $schema['postTypes'][ $type ];

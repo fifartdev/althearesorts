@@ -18,6 +18,12 @@ Translated fields show **English and Ελληνικά side by side**. Blog posts
 
 Every field is defined in [`mu-plugins/althea-cms/schema.json`](mu-plugins/althea-cms/schema.json). The Next.js data layer and the migration script read the same file, so a field change means editing `schema.json` and re-uploading that one file.
 
+## Form submissions
+
+The website's contact form stores each enquiry as a private **Form submission** (`althea_submission`, under Althea in wp-admin). It is not website content: it is never in the read API, never triggers revalidation, and has its own capabilities. Administrators and editors can read, edit (set *Status* to in progress/done) and delete them.
+
+The website writes them as a dedicated user with the **Althea website (form submissions)** role (`althea_forms`), which can only create submissions. Create that user once (any email), add an application password, and set `WP_FORMS_USER` / `WP_FORMS_APP_PASSWORD` on Vercel. On staging this user is `althea-forms`.
+
 ## Headless mode
 
 WordPress is only the backend. Every public page of the WordPress site (home, posts, archives, feeds, 404s) shows a blank white page with one **Visit althearesorts.com** button, served with `noindex, nofollow`. `robots.txt` disallows everything and the WordPress sitemap is disabled. wp-admin, wp-login.php, the REST API and media files are unaffected. The button target can be changed with `define( 'ALTHEA_FRONTEND_URL', '…' );` in `wp-config.php`.

@@ -103,7 +103,7 @@ export function validate(content: any, schema = loadSchema()): string[] {
   for (const slug of Object.keys(content.pages ?? {})) if (!schema.pages[slug]) errors.push(`pages.${slug}: no template`)
 
   for (const [type, def] of Object.entries<any>(schema.postTypes)) {
-    if (type === 'althea_page') continue
+    if (type === 'althea_page' || def.content === false) continue
     const items = content.items?.[type]
     if (!Array.isArray(items)) {
       errors.push(`items.${type}: missing`)

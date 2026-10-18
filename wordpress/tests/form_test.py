@@ -32,7 +32,7 @@ ok(p['brand_intro']['paragraphs']['en'] == 'First <em>one</em>\n\nSecond', 'para
 ok(p['hero']['heading']['en'] == 'Where the Gulf<br><em>Begins to Heal You</em>', 'untouched fields preserved', p['hero']['heading'])
 save(room, {'althea_meta[short_desc_en]': tricky_en, 'althea_meta[featured]': '0', 'althea_meta[gallery]': ''})
 f = rest('/althea/v1/items/althea_room')[0]['fields']
-ok(f['short_desc'] == {'en': tricky_en}, 'room form roundtrip', f['short_desc'])
+ok(f['short_desc'] == {'en': tricky_en, 'el': "Ελληνικά γι' αυτό"}, 'room form roundtrip', f['short_desc'])
 ok(f['featured'] is False and f['gallery'] == [], 'room bool/images cleared', f['featured'], f['gallery'])
 ok(f['size'] == '27 m²', 'room other fields preserved', f['size'])
 if FAILED:
