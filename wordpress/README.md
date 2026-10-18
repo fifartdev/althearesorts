@@ -1,0 +1,67 @@
+# Althea CMS — WordPress plugin
+
+A must-use plugin that turns a WordPress site into the headless CMS for the Althea Resorts Next.js website. It adds the content types, the edit screens, and a read API. No theme or page builder is involved, and it does not touch existing pages, posts or media.
+
+## What it adds
+
+All of it lives under a single **Althea** menu in wp-admin.
+
+| Menu item | Content |
+|---|---|
+| Overview | Links to every site page, and a "Refresh all content now" button |
+| Settings | Contact details, booking URL, social links, navigation menus |
+| Site pages | One entry per website page (`home`, `about`, `spa`, …) with that page's texts and images. The slug decides which page it is. |
+| Rooms, Blog posts, FAQs, Gallery, Testimonials, Dining venues, Spa items, Sights, Offers, Booking reasons | Repeating content |
+| FAQ categories, Gallery categories | With a Greek name and an order |
+
+Translated fields show **English and Ελληνικά side by side**. Blog posts are the exception: there is one post per language, linked by a shared *Translation key*.
+
+Every field is defined in [`mu-plugins/althea-cms/schema.json`](mu-plugins/althea-cms/schema.json). The Next.js data layer and the migration script read the same file, so a field change means editing `schema.json` and re-uploading that one file.
+
+## Install
+
+1. Upload the **contents** of `wordpress/mu-plugins/` to `wp-content/mu-plugins/` on the WordPress server. Create that folder if it doesn't exist. You should end up with:
+   ```
+   wp-content/mu-plugins/althea-cms.php
+   wp-content/mu-plugins/althea-cms/schema.json
+   wp-content/mu-plugins/althea-cms/admin.js
+   wp-content/mu-plugins/althea-cms/admin.css
+   wp-content/mu-plugins/althea-cms/includes/*.php
+   ```
+2. Must-use plugins are active immediately, with nothing to activate. Check **Plugins → Must-Use** for "Althea CMS".
+3. Optional, for instant website updates: add to `wp-config.php` above "That's all, stop editing":
+   ```php
+   define( 'ALTHEA_REVALIDATE_URL', 'https://althearesorts.com/api/revalidate' );
+   define( 'ALTHEA_REVALIDATE_SECRET', '…same value as REVALIDATE_SECRET in the Next.js environment…' );
+   ```
+   Add these **after** the initial content migration. Otherwise every migrated item triggers its own refresh request.
+
+Requirements: WordPress 6.5+ and PHP 7.4+. Tested on WordPress 7.1.3 / PHP 8.2.
+
+To uninstall, delete the two items from `wp-content/mu-plugins/`. The content stays in the database.
+
+## Read API (public, published content only)
+
+| Route | Returns |
+|---|---|
+| `GET /wp-json/althea/v1/settings` | Settings. Translated values as `{ en, el }` |
+| `GET /wp-json/althea/v1/pages/<slug>` | A site page: `sections.<section>.<field>`. Images as `{ id, url, width, height, alt }`, repeated groups as arrays |
+| `GET /wp-json/althea/v1/items/<post_type>` | All published items of a type, in menu order, with `fields`, `image` and `terms` |
+| `GET /wp-json/althea/v1/terms/<taxonomy>` | Terms with `name_el` and `sort_order` |
+| `GET /wp-json/althea/v1/schema` | `schema.json` and the plugin version |
+| `GET /wp-json/althea/v1/media-index` | *(auth)* Media uploaded by the migration script, keyed by source path and hash |
+
+Writes use the core endpoints (`/wp/v2/althea-rooms`, `/wp/v2/settings`, `/wp/v2/media`, …) with an application password.
+
+## Field storage
+
+Text-like fields are stored as plain strings, and the Next.js data layer splits them:
+
+- **paragraphs**: paragraphs separated by an empty line
+- **lines**: one item per line (navigation: `Label | /path`)
+- **html / paragraphs / blocks**: may contain `<em>`, `<strong>`, `<br>` and `<a href>`. Anything else is removed.
+- **blocks** (article bodies, legal pages): `## Heading`; empty-line-separated paragraphs; `- item` lists; `Q: …` followed by `A: …`; `[cta] Label | /link`
+
+## Testing changes locally
+
+`wordpress/tests/` contains the integration test that was run against a throwaway local WordPress (PHP built-in server + SQLite). See [`tests/README.md`](tests/README.md).
