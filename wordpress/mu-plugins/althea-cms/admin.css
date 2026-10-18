@@ -1,0 +1,25 @@
+/* Althea CMS admin forms */
+.althea-section { margin: 0 0 12px; border: 1px solid #dcdcde; background: #fff; }
+.althea-section > summary { cursor: pointer; padding: 10px 12px; font-weight: 600; font-size: 14px; background: #f6f7f7; }
+.althea-section > .althea-row,
+.althea-section > .althea-group { margin: 0 12px; }
+.althea-section-title { margin: 24px 0 4px; padding-top: 12px; border-top: 1px solid #dcdcde; }
+
+.althea-row { display: grid; grid-template-columns: 220px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid #f0f0f1; }
+.althea-row:last-child { border-bottom: 0; }
+.althea-row-label .description { margin-top: 4px; }
+.althea-row-inputs { display: grid; gap: 12px; }
+.althea-cols-2 { grid-template-columns: 1fr 1fr; }
+.althea-locale { display: block; margin-bottom: 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: #646970; }
+.althea-mono { font-family: Menlo, Consolas, monospace; font-size: 12px; line-height: 1.5; }
+
+.althea-group { margin: 12px; padding: 0 12px; border: 1px solid #f0f0f1; }
+.althea-group > legend { padding: 0 6px; font-weight: 600; }
+
+.althea-media-preview { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+.althea-media-preview img { width: 72px; height: 72px; object-fit: cover; border: 1px solid #dcdcde; }
+
+@media (max-width: 960px) {
+  .althea-row { grid-template-columns: 1fr; }
+  .althea-cols-2 { grid-template-columns: 1fr; }
+}

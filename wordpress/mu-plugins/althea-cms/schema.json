@@ -1,0 +1,721 @@
+{
+  "version": 1,
+  "locales": ["en", "el"],
+  "fieldTypes": {
+    "text": "Single line, plain text",
+    "textarea": "Multi-line plain text; line breaks are preserved",
+    "html": "Inline HTML: a, strong, em, br only",
+    "paragraphs": "Paragraphs separated by a blank line; inline HTML allowed in each",
+    "lines": "One item per line",
+    "url": "URL or site-relative path",
+    "image": "Media library attachment",
+    "images": "Ordered list of media library attachments",
+    "bool": "Checkbox",
+    "select": "One of a fixed set of options",
+    "blocks": "Article body: '## Heading', paragraphs, '- bullet' lists, 'Q:'/'A:' pairs, '[cta] Label | /href'",
+    "group": "Fixed number of repeated sub-field sets"
+  },
+
+  "settings": {
+    "option": "althea_settings",
+    "groups": [
+      { "key": "identity", "label": "Identity", "fields": [
+        { "key": "site_name", "type": "text", "label": "Site name" },
+        { "key": "site_tagline", "type": "text", "label": "Tagline", "l": true },
+        { "key": "default_meta_description", "type": "textarea", "label": "Default meta description", "l": true }
+      ]},
+      { "key": "contact", "label": "Contact", "fields": [
+        { "key": "phone", "type": "text", "label": "Phone (main)" },
+        { "key": "phone_mobile", "type": "text", "label": "Phone (mobile)" },
+        { "key": "email_reservations", "type": "text", "label": "Reservations email" },
+        { "key": "email_info", "type": "text", "label": "General enquiries email" },
+        { "key": "address", "type": "text", "label": "Address", "l": true },
+        { "key": "lat", "type": "text", "label": "Latitude" },
+        { "key": "lng", "type": "text", "label": "Longitude" },
+        { "key": "google_maps_url", "type": "url", "label": "Google Maps business URL" }
+      ]},
+      { "key": "booking", "label": "Booking", "fields": [
+        { "key": "booking_url", "type": "url", "label": "Booking engine URL", "help": "All Book buttons point here. Do not change without client approval." }
+      ]},
+      { "key": "social", "label": "Social", "fields": [
+        { "key": "instagram_url", "type": "url", "label": "Instagram" },
+        { "key": "facebook_url", "type": "url", "label": "Facebook" },
+        { "key": "linkedin_url", "type": "url", "label": "LinkedIn" }
+      ]},
+      { "key": "navigation", "label": "Navigation", "fields": [
+        { "key": "nav", "type": "lines", "label": "Main menu", "l": true, "help": "One item per line: Label | /path" }
+      ]}
+    ]
+  },
+
+  "postTypes": {
+    "althea_room": {
+      "label": "Rooms", "singular": "Room", "restBase": "althea-rooms", "icon": "dashicons-admin-home",
+      "supports": ["title", "thumbnail", "page-attributes"],
+      "help": "Title = room name (shown in both languages). Featured image = hero photo. Order = display order (the homepage shows rooms 4–6).",
+      "fields": [
+        { "key": "size", "type": "text", "label": "Size", "help": "e.g. 27 m²" },
+        { "key": "featured", "type": "bool", "label": "Signature suite" },
+        { "key": "gallery", "type": "images", "label": "Photo gallery" },
+        { "key": "tagline", "type": "text", "label": "Tagline", "locales": ["en"] },
+        { "key": "view", "type": "text", "label": "View", "locales": ["en"] },
+        { "key": "short_desc", "type": "textarea", "label": "Description", "locales": ["en"] },
+        { "key": "features", "type": "lines", "label": "Features", "locales": ["en"] },
+        { "key": "list_view", "type": "text", "label": "View (accommodation list)", "locales": ["el"], "section": "Greek — accommodation list page" },
+        { "key": "list_tagline", "type": "text", "label": "Tagline (accommodation list)", "locales": ["el"], "section": "Greek — accommodation list page" },
+        { "key": "list_short_desc", "type": "textarea", "label": "Description (accommodation list)", "locales": ["el"], "section": "Greek — accommodation list page" },
+        { "key": "list_features", "type": "lines", "label": "Features (accommodation list)", "locales": ["el"], "section": "Greek — accommodation list page" },
+        { "key": "detail_view", "type": "text", "label": "View (room page)", "locales": ["el"], "section": "Greek — room page", "help": "Empty = the room page shows the English text." },
+        { "key": "detail_short_desc", "type": "textarea", "label": "Description (room page)", "locales": ["el"], "section": "Greek — room page" },
+        { "key": "detail_features", "type": "lines", "label": "Features (room page)", "locales": ["el"], "section": "Greek — room page" },
+        { "key": "card_view", "type": "text", "label": "View (homepage card)", "locales": ["el"], "section": "Greek — homepage card" },
+        { "key": "card_short_desc", "type": "textarea", "label": "Description (homepage card)", "locales": ["el"], "section": "Greek — homepage card" }
+      ]
+    },
+    "althea_post": {
+      "label": "Blog posts", "singular": "Blog post", "restBase": "althea-posts", "icon": "dashicons-welcome-write-blog",
+      "supports": ["title", "excerpt", "thumbnail"],
+      "help": "One post per language. Posts in different languages that are translations of each other share the same Translation key. Featured image = cover photo.",
+      "fields": [
+        { "key": "locale", "type": "select", "label": "Language", "options": ["en", "el"] },
+        { "key": "route_slug", "type": "text", "label": "URL slug", "help": "The post URL is /journal/<slug> (or /el/journal/<slug>)." },
+        { "key": "translation_key", "type": "text", "label": "Translation key", "help": "Same value on the EN and EL versions of an article." },
+        { "key": "category", "type": "text", "label": "Category" },
+        { "key": "read_time", "type": "text", "label": "Read time", "help": "e.g. 5 min read" },
+        { "key": "display_date", "type": "text", "label": "Display date", "help": "e.g. August 2026" },
+        { "key": "image_alt", "type": "text", "label": "Cover image alt text" },
+        { "key": "image2", "type": "image", "label": "Second image" },
+        { "key": "image2_alt", "type": "text", "label": "Second image alt text" },
+        { "key": "seo_title", "type": "text", "label": "SEO title" },
+        { "key": "seo_description", "type": "textarea", "label": "SEO description" },
+        { "key": "seo_keywords", "type": "lines", "label": "SEO keywords" },
+        { "key": "body", "type": "blocks", "label": "Article body", "help": "Leave empty to show the 'coming soon' message." }
+      ]
+    },
+    "althea_faq": {
+      "label": "FAQs", "singular": "FAQ", "restBase": "althea-faqs", "icon": "dashicons-editor-help",
+      "supports": ["title", "page-attributes"], "taxonomies": ["althea_faq_cat"],
+      "fields": [
+        { "key": "question", "type": "text", "label": "Question", "l": true },
+        { "key": "answer", "type": "textarea", "label": "Answer", "l": true }
+      ]
+    },
+    "althea_gallery": {
+      "label": "Gallery", "singular": "Gallery item", "restBase": "althea-gallery", "icon": "dashicons-format-gallery",
+      "supports": ["title", "thumbnail", "page-attributes"], "taxonomies": ["althea_gallery_cat"],
+      "help": "Featured image = the photo.",
+      "fields": [
+        { "key": "caption", "type": "text", "label": "Caption", "l": true },
+        { "key": "wide", "type": "bool", "label": "Wide tile" }
+      ]
+    },
+    "althea_testimonial": {
+      "label": "Testimonials", "singular": "Testimonial", "restBase": "althea-testimonials", "icon": "dashicons-format-quote",
+      "supports": ["title", "page-attributes"],
+      "fields": [
+        { "key": "quote", "type": "textarea", "label": "Quote", "l": true },
+        { "key": "name", "type": "text", "label": "Guest name", "l": true },
+        { "key": "origin", "type": "text", "label": "From", "l": true },
+        { "key": "stay", "type": "text", "label": "Room stayed in", "l": true }
+      ]
+    },
+    "althea_venue": {
+      "label": "Dining venues", "singular": "Dining venue", "restBase": "althea-venues", "icon": "dashicons-food",
+      "supports": ["title", "thumbnail", "page-attributes"],
+      "help": "Slug is the page anchor (e.g. breakfast → /gastronomy#breakfast). AITHER is edited on the Gastronomy page.",
+      "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "title", "type": "text", "label": "Heading", "l": true },
+        { "key": "desc", "type": "textarea", "label": "Description", "l": true },
+        { "key": "image_alt", "type": "text", "label": "Image alt text", "l": true }
+      ]
+    },
+    "althea_spa_item": {
+      "label": "Spa facilities & cabins", "singular": "Spa item", "restBase": "althea-spa-items", "icon": "dashicons-heart",
+      "supports": ["title", "thumbnail", "page-attributes"],
+      "fields": [
+        { "key": "kind", "type": "select", "label": "Kind", "options": ["facility", "cabin"] },
+        { "key": "name", "type": "text", "label": "Name", "l": true },
+        { "key": "desc", "type": "textarea", "label": "Description", "l": true },
+        { "key": "image_alt", "type": "text", "label": "Image alt text (cabins)", "l": true }
+      ]
+    },
+    "althea_sight": {
+      "label": "Sights", "singular": "Sight", "restBase": "althea-sights", "icon": "dashicons-location-alt",
+      "supports": ["title", "thumbnail", "page-attributes"],
+      "fields": [
+        { "key": "name", "type": "text", "label": "Name", "l": true },
+        { "key": "distance", "type": "text", "label": "Distance", "l": true },
+        { "key": "desc", "type": "textarea", "label": "Description", "l": true },
+        { "key": "category", "type": "text", "label": "Category", "l": true },
+        { "key": "object_position", "type": "text", "label": "Image focus", "help": "CSS object-position, e.g. center bottom. Leave empty for centred." }
+      ]
+    },
+    "althea_offer": {
+      "label": "Offers", "singular": "Offer", "restBase": "althea-offers", "icon": "dashicons-tag",
+      "supports": ["title", "thumbnail", "page-attributes"],
+      "fields": [
+        { "key": "active", "type": "bool", "label": "Show on Offers page" },
+        { "key": "booking_url", "type": "url", "label": "Booking link for this offer" },
+        { "key": "eyebrow", "type": "text", "label": "Eyebrow", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "body", "type": "html", "label": "Text", "l": true },
+        { "key": "cta_label", "type": "text", "label": "Booking button label", "l": true },
+        { "key": "read_more_label", "type": "text", "label": "Second button label", "l": true },
+        { "key": "read_more_href", "type": "url", "label": "Second button link", "l": true },
+        { "key": "image_alt", "type": "text", "label": "Image alt text", "l": true }
+      ]
+    },
+    "althea_reason": {
+      "label": "Booking reasons", "singular": "Booking reason", "restBase": "althea-reasons", "icon": "dashicons-yes-alt",
+      "supports": ["title", "page-attributes"],
+      "help": "The 'Reasons to book directly' accordion (homepage and Offers page).",
+      "fields": [
+        { "key": "title", "type": "text", "label": "Title", "l": true },
+        { "key": "body", "type": "textarea", "label": "Text", "l": true }
+      ]
+    },
+    "althea_page": {
+      "label": "Site pages", "singular": "Site page", "restBase": "althea-pages", "icon": "dashicons-media-document",
+      "supports": ["title"],
+      "help": "Text and images for one website page. The slug decides which page this is; do not change it.",
+      "fields": []
+    }
+  },
+
+  "taxonomies": {
+    "althea_faq_cat": {
+      "label": "FAQ categories", "singular": "FAQ category", "restBase": "althea-faq-cats", "postTypes": ["althea_faq"],
+      "fields": [
+        { "key": "name_el", "type": "text", "label": "Greek name" },
+        { "key": "sort_order", "type": "number", "label": "Order" }
+      ]
+    },
+    "althea_gallery_cat": {
+      "label": "Gallery categories", "singular": "Gallery category", "restBase": "althea-gallery-cats", "postTypes": ["althea_gallery"],
+      "fields": [
+        { "key": "name_el", "type": "text", "label": "Greek name" },
+        { "key": "sort_order", "type": "number", "label": "Order" }
+      ]
+    }
+  },
+
+  "pageSeo": [
+    { "key": "title", "type": "text", "label": "SEO title", "l": true, "help": "Shown as '<title> | Althea Resorts'. Empty on the homepage = site default." },
+    { "key": "description", "type": "textarea", "label": "SEO description", "l": true },
+    { "key": "keywords", "type": "lines", "label": "SEO keywords", "l": true }
+  ],
+
+  "pages": {
+    "shared": { "label": "Shared (header, footer, banners)", "sections": [
+      { "key": "header", "label": "Header", "fields": [
+        { "key": "book_label", "type": "text", "label": "Book button", "l": true },
+        { "key": "menu_location", "type": "text", "label": "Mobile menu location line", "l": true }
+      ]},
+      { "key": "footer", "label": "Footer", "fields": [
+        { "key": "description", "type": "textarea", "label": "Description", "l": true },
+        { "key": "explore", "type": "text", "label": "'Explore' heading", "l": true },
+        { "key": "stay", "type": "text", "label": "'Stay' heading", "l": true },
+        { "key": "book_now", "type": "text", "label": "Book link", "l": true },
+        { "key": "google_maps", "type": "text", "label": "Google Maps link", "l": true },
+        { "key": "copyright", "type": "text", "label": "Copyright", "l": true, "help": "{year} is replaced with the current year." },
+        { "key": "privacy", "type": "text", "label": "Privacy link", "l": true },
+        { "key": "terms", "type": "text", "label": "Terms link", "l": true }
+      ]},
+      { "key": "booking_bar", "label": "Sticky booking bar", "fields": [
+        { "key": "tagline", "type": "text", "label": "Tagline", "l": true },
+        { "key": "cta", "type": "text", "label": "Button", "l": true },
+        { "key": "floating_label", "type": "text", "label": "Mobile floating button", "l": true }
+      ]},
+      { "key": "cookie", "label": "Cookie banner", "fields": [
+        { "key": "heading", "type": "text", "label": "Heading", "l": true },
+        { "key": "body", "type": "textarea", "label": "Text", "l": true },
+        { "key": "accept", "type": "text", "label": "Accept button", "l": true },
+        { "key": "reject", "type": "text", "label": "Reject button", "l": true }
+      ]},
+      { "key": "final_cta", "label": "Final booking banner (bottom of most pages)", "fields": [
+        { "key": "eyebrow", "type": "text", "label": "Eyebrow", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "body", "type": "textarea", "label": "Text", "l": true },
+        { "key": "cta1", "type": "text", "label": "Book button", "l": true },
+        { "key": "cta2", "type": "text", "label": "Offers button", "l": true },
+        { "key": "watermark", "type": "text", "label": "Background word" }
+      ]},
+      { "key": "direct_booking", "label": "Reasons to book directly (intro)", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "body", "type": "textarea", "label": "Text", "l": true },
+        { "key": "cta", "type": "text", "label": "Button", "l": true }
+      ]},
+      { "key": "room_card", "label": "Room cards", "fields": [
+        { "key": "discover", "type": "text", "label": "'Discover' link", "l": true }
+      ]}
+    ]},
+
+    "home": { "label": "Homepage", "sections": [
+      { "key": "hero", "label": "Hero", "fields": [
+        { "key": "location_label", "type": "text", "label": "Location label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "tagline", "type": "textarea", "label": "Tagline", "l": true },
+        { "key": "cta1", "type": "text", "label": "Book button", "l": true },
+        { "key": "cta2", "type": "text", "label": "Rooms button", "l": true },
+        { "key": "scroll_label", "type": "text", "label": "Scroll label", "l": true },
+        { "key": "stats", "type": "group", "label": "Stats", "count": 3, "fields": [
+          { "key": "value", "type": "text", "label": "Value" },
+          { "key": "label", "type": "text", "label": "Label", "l": true }
+        ]},
+        { "key": "image", "type": "image", "label": "Background image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt text", "l": true }
+      ]},
+      { "key": "brand_intro", "label": "The Property", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "link_label", "type": "text", "label": "Link label", "l": true },
+        { "key": "card_label", "type": "text", "label": "Card label", "l": true },
+        { "key": "card_quote", "type": "html", "label": "Card quote", "l": true },
+        { "key": "card_sub", "type": "textarea", "label": "Card text", "l": true },
+        { "key": "image", "type": "image", "label": "Tall image" },
+        { "key": "image_alt", "type": "text", "label": "Tall image alt", "l": true },
+        { "key": "image2", "type": "image", "label": "Square image" },
+        { "key": "image2_alt", "type": "text", "label": "Square image alt", "l": true }
+      ]},
+      { "key": "rooms_showcase", "label": "Rooms", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "body", "type": "textarea", "label": "Text", "l": true },
+        { "key": "cta", "type": "text", "label": "Button", "l": true }
+      ]},
+      { "key": "experiences", "label": "Experiences", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "subtext", "type": "textarea", "label": "Subtext", "l": true },
+        { "key": "discover_label", "type": "text", "label": "'Discover' label", "l": true },
+        { "key": "cards", "type": "group", "label": "Cards", "count": 3, "fields": [
+          { "key": "label", "type": "text", "label": "Label", "l": true },
+          { "key": "title", "type": "text", "label": "Title", "l": true },
+          { "key": "desc", "type": "textarea", "label": "Text", "l": true },
+          { "key": "href", "type": "url", "label": "Link", "l": true },
+          { "key": "image", "type": "image", "label": "Image" },
+          { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+        ]}
+      ]},
+      { "key": "gastronomy", "label": "Gastronomy", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "card_quote", "type": "textarea", "label": "Card quote", "l": true },
+        { "key": "card_label", "type": "text", "label": "Card label", "l": true },
+        { "key": "venues", "type": "lines", "label": "Venue list", "l": true },
+        { "key": "cta", "type": "text", "label": "Button", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "gallery_preview", "label": "Gallery preview", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "cta", "type": "text", "label": "Button", "l": true },
+        { "key": "mobile_cta", "type": "text", "label": "Button (mobile)", "l": true },
+        { "key": "tiles", "type": "group", "label": "Tiles", "count": 5, "fields": [
+          { "key": "label", "type": "text", "label": "Label", "l": true },
+          { "key": "image", "type": "image", "label": "Image" }
+        ]}
+      ]},
+      { "key": "testimonials", "label": "Testimonials", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "textarea", "label": "Heading", "l": true }
+      ]},
+      { "key": "location", "label": "Location", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "facts", "type": "group", "label": "Facts", "count": 2, "fields": [
+          { "key": "value", "type": "text", "label": "Value" },
+          { "key": "label", "type": "text", "label": "Label", "l": true }
+        ]},
+        { "key": "cta", "type": "text", "label": "Button", "l": true },
+        { "key": "watermark", "type": "text", "label": "Background word" },
+        { "key": "image_caption", "type": "text", "label": "Image caption", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "journal_preview", "label": "Blog preview", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "cta", "type": "text", "label": "Button", "l": true },
+        { "key": "cards", "type": "group", "label": "Cards", "count": 3, "fields": [
+          { "key": "category", "type": "text", "label": "Category", "l": true },
+          { "key": "title", "type": "text", "label": "Title", "l": true },
+          { "key": "excerpt", "type": "textarea", "label": "Excerpt", "l": true },
+          { "key": "read_time", "type": "text", "label": "Read time", "l": true },
+          { "key": "href", "type": "url", "label": "Link", "l": true },
+          { "key": "image", "type": "image", "label": "Image", "l": true },
+          { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+        ]}
+      ]}
+    ]},
+
+    "about": { "label": "About", "sections": [
+      { "key": "hero", "label": "Hero", "fields": [
+        { "key": "watermark", "type": "text", "label": "Background word" },
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true }
+      ]},
+      { "key": "intro", "label": "Intro", "fields": [
+        { "key": "lead", "type": "html", "label": "Lead paragraph", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "stats", "type": "group", "label": "Stats", "count": 3, "fields": [
+          { "key": "value", "type": "text", "label": "Value" },
+          { "key": "label", "type": "text", "label": "Label", "l": true }
+        ]}
+      ]},
+      { "key": "who", "label": "Who We Are", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "where", "label": "Where We Are", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "values", "label": "What We Stand For", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "quote", "type": "html", "label": "Closing quote", "l": true },
+        { "key": "stats", "type": "lines", "label": "Highlights", "locales": ["el"] }
+      ]}
+    ]},
+
+    "experiences": { "label": "Experiences", "sections": [
+      { "key": "hero", "label": "Hero", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "subtitle", "type": "textarea", "label": "Subtitle", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "intro", "label": "Intro", "fields": [
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true }
+      ]},
+      { "key": "activities", "label": "Activities", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "note", "type": "html", "label": "Closing note", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "spa", "label": "Spa", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "oceanis_heading", "type": "text", "label": "Oceanis box heading", "l": true },
+        { "key": "oceanis_paragraphs", "type": "paragraphs", "label": "Oceanis box text", "l": true },
+        { "key": "oceanis_note", "type": "html", "label": "Oceanis box closing note", "l": true },
+        { "key": "cta", "type": "text", "label": "Link label", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "pool", "label": "Swimming Pool", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "events", "label": "Events heading", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true }
+      ]},
+      { "key": "corporate", "label": "Corporate events", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "facilities_heading", "type": "text", "label": "Facilities heading", "l": true },
+        { "key": "facilities_subheading", "type": "text", "label": "Facilities subheading", "l": true },
+        { "key": "facilities_body", "type": "html", "label": "Facilities text", "l": true },
+        { "key": "configs_heading", "type": "text", "label": "Configurations heading", "l": true },
+        { "key": "configs", "type": "group", "label": "Room configurations", "count": 4, "fields": [
+          { "key": "layout", "type": "text", "label": "Layout", "l": true },
+          { "key": "capacity", "type": "text", "label": "Capacity", "l": true }
+        ]},
+        { "key": "equipment_heading", "type": "text", "label": "Equipment heading", "l": true },
+        { "key": "equipment", "type": "lines", "label": "Equipment & services", "l": true },
+        { "key": "cta", "type": "text", "label": "Enquiry button", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "weddings", "label": "Weddings", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "cta", "type": "text", "label": "Enquiry button", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]}
+    ]},
+
+    "spa": { "label": "Ocean Spa", "sections": [
+      { "key": "hero", "label": "Hero", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "space", "label": "The Space", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "facilities", "label": "Facilities heading", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true }
+      ]},
+      { "key": "pool_break", "label": "Full-width image", "fields": [
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "treatments", "label": "Treatment cabins", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "body", "type": "html", "label": "Text", "l": true },
+        { "key": "cabin_cta", "type": "text", "label": "Cabin button", "l": true },
+        { "key": "cta", "type": "text", "label": "Main button", "l": true }
+      ]},
+      { "key": "menu", "label": "Spa menu", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "body", "type": "html", "label": "Text", "l": true },
+        { "key": "trigger_label", "type": "text", "label": "View button", "l": true },
+        { "key": "image", "type": "image", "label": "Menu image" },
+        { "key": "image_alt", "type": "text", "label": "Menu image alt", "l": true }
+      ]},
+      { "key": "philosophy", "label": "Oceanis philosophy", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "crosslink", "label": "Offers cross-link", "fields": [
+        { "key": "body", "type": "html", "label": "Text", "l": true }
+      ]}
+    ]},
+
+    "gastronomy": { "label": "Gastronomy", "sections": [
+      { "key": "hero", "label": "Hero", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "subtitle", "type": "text", "label": "Subtitle", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "aither", "label": "AITHER", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "quote", "type": "html", "label": "Quote", "l": true },
+        { "key": "cta", "type": "text", "label": "Reserve button", "l": true },
+        { "key": "phone_note", "type": "text", "label": "Phone note", "l": true, "help": "{phone} is replaced with the main phone number." },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]}
+    ]},
+
+    "location": { "label": "Location", "sections": [
+      { "key": "hero", "label": "Hero", "fields": [
+        { "key": "watermark", "type": "text", "label": "Background word" },
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "subtitle", "type": "textarea", "label": "Subtitle", "l": true }
+      ]},
+      { "key": "intro", "label": "Intro", "fields": [
+        { "key": "lead", "type": "html", "label": "Lead paragraph", "l": true },
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "facts", "type": "group", "label": "Facts", "count": 3, "fields": [
+          { "key": "value", "type": "text", "label": "Value" },
+          { "key": "label", "type": "text", "label": "Label", "l": true }
+        ]}
+      ]},
+      { "key": "beaches", "label": "Beaches", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "locales": ["el"] },
+        { "key": "body", "type": "html", "label": "Text", "locales": ["el"] }
+      ]},
+      { "key": "sights", "label": "Sightseeing", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "intro", "type": "html", "label": "Intro", "l": true }
+      ]}
+    ]},
+
+    "offers": { "label": "Offers", "sections": [
+      { "key": "hero", "label": "Hero", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "offer", "label": "Offer block", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true }
+      ]}
+    ]},
+
+    "contact": { "label": "Contact", "sections": [
+      { "key": "hero", "label": "Hero", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "info", "label": "Contact details", "fields": [
+        { "key": "heading", "type": "text", "label": "Heading", "l": true },
+        { "key": "address_label", "type": "text", "label": "'Address' label", "l": true },
+        { "key": "contact_label", "type": "text", "label": "'Contact' label", "l": true },
+        { "key": "general_label", "type": "text", "label": "General enquiries link", "l": true },
+        { "key": "reservations_label", "type": "text", "label": "Reservations link", "l": true },
+        { "key": "getting_here_label", "type": "text", "label": "'Getting here' label", "l": true },
+        { "key": "getting_here", "type": "textarea", "label": "Getting here", "l": true },
+        { "key": "book_label", "type": "text", "label": "'Book' label", "l": true },
+        { "key": "book_cta", "type": "text", "label": "Book button", "l": true }
+      ]},
+      { "key": "map", "label": "Map", "fields": [
+        { "key": "name", "type": "text", "label": "Name", "l": true },
+        { "key": "address", "type": "text", "label": "Address line", "l": true },
+        { "key": "directions", "type": "text", "label": "Directions link", "l": true },
+        { "key": "iframe_title", "type": "text", "label": "Map title (screen readers)", "l": true }
+      ]}
+    ]},
+
+    "accommodation": { "label": "Accommodation", "sections": [
+      { "key": "hero", "label": "Hero", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "intro", "label": "Intro", "fields": [
+        { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
+        { "key": "stats", "type": "group", "label": "Stats", "count": 4, "fields": [
+          { "key": "value", "type": "text", "label": "Value" },
+          { "key": "label", "type": "text", "label": "Label", "l": true }
+        ]}
+      ]},
+      { "key": "list", "label": "Room list labels", "fields": [
+        { "key": "signature_label", "type": "text", "label": "Signature badge", "l": true },
+        { "key": "config_label", "type": "text", "label": "Bed configuration line", "l": true },
+        { "key": "reserve", "type": "text", "label": "Reserve button", "l": true },
+        { "key": "details", "type": "text", "label": "Details button", "l": true }
+      ]},
+      { "key": "included", "label": "All rooms include", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "items", "type": "lines", "label": "Amenities", "l": true }
+      ]}
+    ]},
+
+    "room": { "label": "Room page (shared by all rooms)", "sections": [
+      { "key": "hero", "label": "Hero", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "guests", "type": "text", "label": "Occupancy line", "l": true },
+        { "key": "cta", "type": "text", "label": "Availability button", "l": true }
+      ]},
+      { "key": "description", "label": "Description", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true }
+      ]},
+      { "key": "specs", "label": "Specifications", "fields": [
+        { "key": "heading", "type": "text", "label": "Heading", "l": true },
+        { "key": "size", "type": "text", "label": "'Size'", "l": true },
+        { "key": "view", "type": "text", "label": "'View'", "l": true },
+        { "key": "bed", "type": "text", "label": "'Bed'", "l": true },
+        { "key": "bed_value", "type": "text", "label": "Bed value", "l": true },
+        { "key": "occupancy", "type": "text", "label": "'Occupancy'", "l": true },
+        { "key": "occupancy_value", "type": "text", "label": "Occupancy value", "l": true },
+        { "key": "cta", "type": "text", "label": "Book button", "l": true }
+      ]},
+      { "key": "gallery", "label": "Photo gallery", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "photo_alt", "type": "text", "label": "Photo alt pattern", "l": true, "help": "{room} and {n} are replaced." }
+      ]},
+      { "key": "amenities", "label": "Amenities", "fields": [
+        { "key": "heading", "type": "text", "label": "Heading", "l": true }
+      ]},
+      { "key": "similar", "label": "Other rooms", "fields": [
+        { "key": "heading", "type": "text", "label": "Heading", "l": true }
+      ]}
+    ]},
+
+    "journal": { "label": "Blog", "sections": [
+      { "key": "list", "label": "Blog list page", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true }
+      ]},
+      { "key": "article", "label": "Article page", "fields": [
+        { "key": "back_label", "type": "text", "label": "Back link", "l": true },
+        { "key": "coming_soon_title", "type": "text", "label": "'Coming soon' title", "l": true },
+        { "key": "coming_soon_body", "type": "text", "label": "'Coming soon' text", "l": true },
+        { "key": "browse_cta", "type": "text", "label": "Browse button", "l": true },
+        { "key": "more_heading", "type": "text", "label": "More articles heading", "l": true },
+        { "key": "view_all", "type": "text", "label": "View all link", "l": true }
+      ]}
+    ]},
+
+    "gallery": { "label": "Gallery", "sections": [
+      { "key": "hero", "label": "Hero", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+      ]},
+      { "key": "filter", "label": "Filter", "fields": [
+        { "key": "all_label", "type": "text", "label": "'All' filter", "l": true }
+      ]}
+    ]},
+
+    "faq": { "label": "FAQ", "sections": [
+      { "key": "hero", "label": "Hero", "fields": [
+        { "key": "label", "type": "text", "label": "Label", "l": true },
+        { "key": "heading", "type": "html", "label": "Heading", "l": true },
+        { "key": "intro", "type": "html", "label": "Intro", "l": true, "help": "{phone} and {email} become links." }
+      ]},
+      { "key": "footer", "label": "Still have questions", "fields": [
+        { "key": "heading", "type": "text", "label": "Heading", "l": true },
+        { "key": "body", "type": "text", "label": "Text", "l": true },
+        { "key": "call_label", "type": "text", "label": "Call button", "l": true },
+        { "key": "book_label", "type": "text", "label": "Book button", "l": true }
+      ]}
+    ]},
+
+    "privacy-policy": { "label": "Privacy Policy", "locales": ["en"], "sections": [
+      { "key": "notice", "label": "Legal review notice", "fields": [
+        { "key": "title", "type": "text", "label": "Title", "l": true },
+        { "key": "body", "type": "html", "label": "Text", "l": true }
+      ]},
+      { "key": "main", "label": "Policy", "fields": [
+        { "key": "title", "type": "text", "label": "Title", "l": true },
+        { "key": "updated", "type": "text", "label": "Last updated line", "l": true },
+        { "key": "body", "type": "blocks", "label": "Text", "l": true }
+      ]}
+    ]},
+
+    "terms": { "label": "Terms & Conditions", "locales": ["en"], "sections": [
+      { "key": "notice", "label": "Legal review notice", "fields": [
+        { "key": "title", "type": "text", "label": "Title", "l": true },
+        { "key": "body", "type": "html", "label": "Text", "l": true }
+      ]},
+      { "key": "main", "label": "Terms", "fields": [
+        { "key": "title", "type": "text", "label": "Title", "l": true },
+        { "key": "updated", "type": "text", "label": "Last updated line", "l": true },
+        { "key": "body", "type": "blocks", "label": "Text", "l": true }
+      ]}
+    ]}
+  }
+}
