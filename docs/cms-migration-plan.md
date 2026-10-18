@@ -1,7 +1,24 @@
 # CMS Migration Plan: hardcoded content → headless WordPress
 
-Status: **Phase 1 (audit and proposal). Waiting for review.** No application code has been changed.
+Status: **Phase 2 done (WordPress plugin). Waiting for the plugin to be installed on staging before Phase 3.**
 Branch: `feature/wordpress-cms`
+
+## Decisions (approved 2026-10-18)
+
+| # | Decision |
+|---|----------|
+| D1 | WordPress **replaces Payload**. Payload is left untouched on this branch and removed in a separate PR after WP is live. |
+| D2 | **Paired `_en`/`_el` fields** for all structured content. **One post per language** for blog posts, linked by `translation_key`. |
+| D3 | No ACF Pro, so **no ACF at all**. ACF free has no repeaters, which removes most of its benefit. A must-use plugin (`wordpress/mu-plugins/`) builds its own edit forms from `schema.json`. Repeating page items are fixed-size groups (e.g. 3 hero stats); lists are "one per line" text areas. |
+| D4 | **Upload every image** to WP Media, including the Unsplash and enjoycorinthia.gr photos. (Licensing of the two enjoycorinthia.gr images still needs confirming before launch.) |
+| D5 | **Reproduce existing inconsistencies exactly** on this branch (e.g. the three Greek room-text variants are three field sets; the EL junior-suite room page keeps falling back to English because its Greek fields stay empty). Fixes go in a follow-up (§1.9). |
+| D6 | UI microcopy stays in code: form labels and messages, lightbox controls, aria/screen-reader text. Every other visible text, including button labels, is editable in WP. |
+
+### Facts found in Phase 2 that shaped the design
+- `WP_API_URL` points to **staging.althearesorts.com**, an existing Elementor/Astra WordPress with 11 pages (including `home`, `accommodation`, `contact`, `privacy-policy` and the room slugs) and 95 media files. So website page content lives in its own post type **`althea_page`**, never in core Pages, and migrated media is tracked by `_althea_source_hash` meta. Existing content cannot be matched or overwritten.
+- The application-password user is an administrator (`upload_files`, `edit_pages`, `manage_options` confirmed). The API is HTTPS.
+- Text-like fields are stored as strings (paragraphs separated by a blank line, lists one per line, article bodies in a small markdown-like format). The Next.js data layer parses them, which keeps the PHP small and the parsing unit-testable.
+- §2 and §3 below are the original proposal. Where they differ, `wordpress/mu-plugins/althea-cms/schema.json` is the authoritative model.
 
 ---
 
