@@ -68,7 +68,7 @@ function althea_render_overview() {
 	if ( althea_revalidate_configured() ) {
 		echo '<form method="post">';
 		wp_nonce_field( 'althea_revalidate_all' );
-		echo '<p>Sends <code>' . esc_html( ALTHEA_REVALIDATE_URL ) . '</code> a request to refresh all content.</p>';
+		echo '<p>Asks <code>' . esc_html( ALTHEA_REVALIDATE_URL ) . '</code> to refresh all content.</p>';
 		submit_button( 'Refresh all content now', 'secondary', 'althea_revalidate_all', false );
 		echo '</form>';
 	} else {

@@ -532,7 +532,7 @@
 
     "location": { "label": "Location", "sections": [
       { "key": "hero", "label": "Hero", "fields": [
-        { "key": "watermark", "type": "text", "label": "Background word" },
+        { "key": "watermark", "type": "text", "label": "Background word", "l": true },
         { "key": "label", "type": "text", "label": "Label", "l": true },
         { "key": "heading", "type": "html", "label": "Heading", "l": true },
         { "key": "subtitle", "type": "textarea", "label": "Subtitle", "l": true }

@@ -9,6 +9,12 @@
  *   wp:page:<slug>     one site page, e.g. wp:page:home
  *
  * Changes are collected during the request and sent once at shutdown, non-blocking.
+ *
+ * wp-config.php:
+ *   ALTHEA_REVALIDATE_URL     one URL, or several separated by commas (e.g. preview and production)
+ *   ALTHEA_REVALIDATE_SECRET  shared secret, sent as the x-althea-secret header
+ *   ALTHEA_VERCEL_BYPASS      optional: Vercel "Protection Bypass for Automation" secret, needed to
+ *                             reach preview deployments behind Vercel Authentication
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -44,15 +50,26 @@ function althea_send_revalidate( array $tags, $blocking ) {
 	if ( ! althea_revalidate_configured() ) {
 		return null;
 	}
-	return wp_remote_post( ALTHEA_REVALIDATE_URL, array(
-		'blocking' => $blocking,
-		'timeout'  => $blocking ? 15 : 0.5,
-		'headers'  => array(
-			'Content-Type'      => 'application/json',
-			'x-althea-secret'   => ALTHEA_REVALIDATE_SECRET,
-		),
-		'body'     => wp_json_encode( array( 'tags' => array_values( $tags ) ) ),
-	) );
+	$headers = array(
+		'Content-Type'    => 'application/json',
+		'x-althea-secret' => ALTHEA_REVALIDATE_SECRET,
+	);
+	if ( defined( 'ALTHEA_VERCEL_BYPASS' ) && ALTHEA_VERCEL_BYPASS ) {
+		$headers['x-vercel-protection-bypass'] = ALTHEA_VERCEL_BYPASS;
+	}
+	$response = null;
+	foreach ( array_filter( array_map( 'trim', explode( ',', ALTHEA_REVALIDATE_URL ) ) ) as $url ) {
+		$response = wp_remote_post( $url, array(
+			'blocking' => $blocking,
+			'timeout'  => $blocking ? 15 : 0.5,
+			'headers'  => $headers,
+			'body'     => wp_json_encode( array( 'tags' => array_values( $tags ) ) ),
+		) );
+		if ( $blocking && ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) ) {
+			return $response; // Report the first failure to the "Refresh all" button.
+		}
+	}
+	return $response;
 }
 
 function althea_tags_for_post( $post ) {

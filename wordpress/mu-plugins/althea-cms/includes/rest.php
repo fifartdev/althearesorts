@@ -11,6 +11,19 @@ defined( 'ABSPATH' ) || exit;
 
 add_action( 'rest_api_init', 'althea_register_routes' );
 
+/**
+ * The read API must never be served from a server-side HTTP cache (e.g. an nginx micro-cache on
+ * the hosting): Next.js re-fetches right after WordPress reports a change, and a cached response
+ * would put the old content back into the site. Next.js does its own caching.
+ */
+add_filter( 'rest_post_dispatch', function ( $result, $server, $request ) {
+	if ( 0 === strpos( $request->get_route(), '/althea/v1' ) && $result instanceof WP_REST_Response ) {
+		$result->header( 'Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0' );
+		$result->header( 'X-Accel-Expires', '0' );
+	}
+	return $result;
+}, 10, 3 );
+
 function althea_register_routes() {
 	$public = '__return_true';
 
@@ -192,7 +205,8 @@ function althea_terms_output( $taxonomy, $terms ) {
 	$def = althea_schema()['taxonomies'][ $taxonomy ];
 	$out = array();
 	foreach ( (array) $terms as $term ) {
-		$item = array( 'id' => $term->term_id, 'slug' => $term->slug, 'name' => $term->name );
+		// Term names are stored HTML-encoded ("Rooms &amp; Suites"); the API returns plain text.
+		$item = array( 'id' => $term->term_id, 'slug' => $term->slug, 'name' => html_entity_decode( $term->name, ENT_QUOTES, 'UTF-8' ) );
 		foreach ( $def['fields'] as $field ) {
 			$item[ $field['key'] ] = althea_output_value( $field['type'], get_term_meta( $term->term_id, $field['key'], true ) );
 		}
