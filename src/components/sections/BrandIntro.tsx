@@ -3,9 +3,9 @@ import Image from 'next/image'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
-import { getPage, getSettings } from '@/lib/wp/api'
+import { getPage } from '@/lib/wp/api'
 import { Rich } from '@/lib/wp/Rich'
-import { splitParagraphs, splitLines } from '@/lib/wp/text'
+import { splitParagraphs } from '@/lib/wp/text'
 
 type Locale = 'en' | 'el'
 

@@ -1,7 +1,6 @@
 # Claude Code — Althea Resorts
 
-This project uses the Payload CMS skill at `.claude/skills/payload/`.
-Start with `.claude/skills/payload/SKILL.md` for a quick reference, then see `.claude/skills/payload/reference/` for detailed docs.
+All content (text, images, rooms, settings, SEO) is managed in **WordPress as a headless CMS** (staging.althearesorts.com, Althea CMS must-use plugin in `wordpress/`). Read `README.md` and `wordpress/README.md` first: data layer `src/lib/wp/`, field definitions in `wordpress/mu-plugins/althea-cms/schema.json`, instant revalidation, outage fallback. Payload CMS was removed.
 
 ---
 
@@ -9,7 +8,7 @@ Start with `.claude/skills/payload/SKILL.md` for a quick reference, then see `.c
 
 Luxury hotel website for **Althea Resorts** (althearesorts.com) — a 5-star boutique resort in Ano Loutro, Xylokastro, Corinthia, Greece. 41 rooms and suites, Ocean Spa, rooftop restaurant AITHER, conference facilities.
 
-**Stack:** Next.js 16 App Router · TypeScript · Tailwind CSS v4 · GSAP · Payload CMS 3.x · PostgreSQL (NEON) · Vercel
+**Stack:** Next.js 16 App Router · TypeScript · Tailwind CSS v4 · GSAP · headless WordPress (REST API) · Vercel
 
 **Booking engine:** https://althearesort.reserve-online.net (all CTAs point here — never change this URL without client approval)
 
@@ -107,7 +106,8 @@ All Greek pages mirror their English counterparts at `/el/*`. The route group `(
 ## Key files
 
 ```
-src/lib/constants.ts        — ROOMS[], NAV_LINKS, NAV_LINKS_EL, BOOKING_URL, PHONE, EMAIL, ADDRESS, COORDINATES, SITE_URL, SOCIAL
+src/lib/constants.ts        — SITE_URL, SITE_NAME, SITE_TAGLINE only (everything else comes from WordPress via src/lib/wp/)
+src/lib/wp/                 — api.ts (cached, tagged reads + fallback), submissions.ts (contact form → WordPress), Rich.tsx, text.ts, site.ts, metadata.ts
 src/lib/seo.ts              — generateMetadata(), buildBreadcrumb(), hotelSchema, organizationSchema
 src/app/(frontend)/
   layout.tsx                — fonts, JSON-LD schemas (hotelSchema + organizationSchema), GA4, skip-to-content (English)
@@ -192,7 +192,7 @@ A dark logo variant does not exist yet — if a white-background context needs o
 
 ## Images
 
-All content images are temporary placeholders — **will be replaced by Payload CMS media** once client approves content.
+Content images live in the WordPress media library (uploaded by `npm run cms:migrate`). The originals in `/public/images` stay: the outage fallback (`src/lib/wp/fallback/content.json`) references them. The notes below describe where each image is used.
 
 - Staging site images: `https://staging.althearesorts.com/wp-content/uploads/2026/02/` and `/2025/11/`
 - Fallback: Unsplash URLs with `?auto=format&fit=crop&w=900&q=80`
@@ -274,19 +274,13 @@ export async function generateMetadata({ params }) {
 
 ---
 
-## CMS migration (when Payload is connected)
+## CMS (WordPress)
 
-All hardcoded content (text, images, metadata, contact details, room data) is intentionally placeholder. On CMS connection:
+- Rooms, posts, FAQs, gallery, offers, venues, settings (phone, email, address, coordinates, nav, social, booking URL) and per-page text/SEO are WordPress content. Edit in wp-admin → Althea; saves appear on the site within about a second.
+- Contact-form enquiries are saved to WordPress (Althea → Form submissions, private) by `src/app/api/contact/route.ts`, then emailed via Resend.
+- To add or change a field: edit `schema.json`, `npm run cms:types`, `npm run cms:deploy-plugin`.
 
-- Install `@payloadcms/plugin-seo` → adds meta fields to collections/globals, generates OG images
-- `ROOMS` array → Rooms collection (already defined in Payload config)
-- `hotelSchema` data → SiteSettings global
-- `COORDINATES`, `PHONE`, `EMAIL`, `ADDRESS` → ContactInfo global
-- Journal posts → Posts collection
-- Sitemap dynamic routes → query Payload REST API at build time
-- Hreflang (`en`/`el`/`fr`) → add back to `generateMetadata()` once locale routing is built
-
-**Localization:** Greek (`/el/`) locale is fully built with static pages mirroring all EN routes. French (`/fr/`) not yet started. Payload CMS already configured for `en`, `el`, `fr`.
+**Localization:** Greek (`/el/`) locale is fully built, with paired `_en`/`_el` fields in WordPress. French (`/fr/`) not yet started.
 
 ---
 

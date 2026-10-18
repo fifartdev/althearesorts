@@ -12,7 +12,7 @@ WordPress (staging.althearesorts.com)           Next.js (Vercel)
 
 - **Editing:** wp-admin → **Althea**. English and Greek fields are side by side. Saving updates the website within about a second.
 - **The WordPress site has no public front end.** Its public URLs show a blank `noindex` page with a button to the website.
-- Payload CMS is still in the repo (admin route, collections) but unused. It will be removed in a separate PR.
+- **Contact form:** enquiries are saved in WordPress (**Althea → Form submissions**, private) and emailed via Resend. The visitor only sees an error if both fail.
 
 ## Setup
 
@@ -29,7 +29,8 @@ npm run dev
 | `REVALIDATE_SECRET` | site | Shared secret for `POST /api/revalidate`. Must equal `ALTHEA_REVALIDATE_SECRET` in `wp-config.php`. |
 | `VERCEL_BYPASS` | scripts/tests | Vercel *Protection Bypass for Automation* secret (lets WordPress reach protected preview deployments). |
 | `FTP_USER`, `FTP_PASSWORD` | `cms:deploy-plugin` | FTPS access to the WordPress server (host `server98.cretaforce.gr`). |
-| `DATABASE_URL`, `PAYLOAD_SECRET`, `RESEND_*` | Payload / contact form | As before. |
+| `WP_FORMS_USER`, `WP_FORMS_APP_PASSWORD` | contact form | WordPress user with the *Althea website (form submissions)* role (can only create submissions) + its application password |
+| `RESEND_API_KEY`, `RESEND_TO`, `RESEND_FROM` | contact form | Notification email |
 
 Never commit `.env*` files except `.env.example`. On Vercel, the WordPress variables are set for the **Preview** environment.
 
