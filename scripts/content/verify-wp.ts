@@ -87,7 +87,7 @@ async function main() {
 
   for (const [tax, terms] of Object.entries<any[]>(content.terms)) {
     const actual: any[] = await get(`/althea/v1/terms/${tax}`)
-    compare(terms.map((t) => ({ ...t, name: t.name })), actual.map(({ id, ...t }) => ({ ...t, name: t.name.replace(/&amp;/g, '&') })), `terms.${tax}`)
+    compare(terms, actual.map(({ id, ...t }) => t), `terms.${tax}`)
   }
 
   if (diffs.length) {

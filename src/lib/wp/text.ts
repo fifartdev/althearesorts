@@ -164,7 +164,8 @@ export function blocksToSections(blocks: Block[]): ArticleSection[] {
     if (block.type === 'paragraph') section.paragraphs.push(block.html)
     else if (block.type === 'list') section.bullets = [...(section.bullets ?? []), ...block.items]
     else if (block.type === 'faq') section.faqs = [...(section.faqs ?? []), ...block.items]
-    else section.cta = { label: block.label, href: block.href }
+    else if (block.type === 'cta') section.cta = { label: block.label, href: block.href }
+    // 'address' blocks only occur on legal pages, which render blocks directly.
   }
   return sections
 }
