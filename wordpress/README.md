@@ -37,12 +37,17 @@ Manual install:
    wp-content/mu-plugins/althea-cms/includes/*.php
    ```
 2. Must-use plugins are active immediately, with nothing to activate. Check **Plugins → Must-Use** for "Althea CMS".
-3. Optional, for instant website updates: add to `wp-config.php` above "That's all, stop editing":
+3. For instant website updates, add to `wp-config.php` above "That's all, stop editing":
    ```php
+   // One URL, or several separated by commas (e.g. preview, production).
    define( 'ALTHEA_REVALIDATE_URL', 'https://althearesorts.com/api/revalidate' );
    define( 'ALTHEA_REVALIDATE_SECRET', '…same value as REVALIDATE_SECRET in the Next.js environment…' );
+   // Only to reach Vercel preview deployments behind Vercel Authentication:
+   define( 'ALTHEA_VERCEL_BYPASS', '…Protection Bypass for Automation secret…' );
    ```
    Add these **after** the initial content migration. Otherwise every migrated item triggers its own refresh request.
+
+   **Staging today** (set 2026-10-18) points at the preview `https://althea-cms-preview.vercel.app/api/revalidate`. When going live, add the production URL (comma-separated) or replace it.
 
 Requirements: WordPress 6.5+ and PHP 7.4+. Tested on WordPress 7.1.3 / PHP 8.2. No other plugins or page builders are needed.
 
@@ -58,6 +63,8 @@ To uninstall, delete the two items from `wp-content/mu-plugins/`. The content st
 | `GET /wp-json/althea/v1/terms/<taxonomy>` | Terms with `name_el` and `sort_order` |
 | `GET /wp-json/althea/v1/schema` | `schema.json` and the plugin version |
 | `GET /wp-json/althea/v1/media-index` | *(auth)* Media uploaded by the migration script, keyed by source path and hash |
+
+Responses are sent with `Cache-Control: no-store` and `X-Accel-Expires: 0`. The hosting's nginx micro-cache (~10 s) would otherwise serve the old content back to Next.js right after a save.
 
 Writes use the core endpoints (`/wp/v2/althea-rooms`, `/wp/v2/settings`, `/wp/v2/media`, …) with an application password.
 

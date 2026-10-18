@@ -1,67 +1,78 @@
-# Payload Blank Template
+# Althea Resorts — website
 
-This template comes configured with the bare minimum to get started on anything you need.
+Next.js 16 (App Router) site for [althearesorts.com](https://althearesorts.com), with all content managed in **WordPress as a headless CMS**.
 
-## Quick start
+```
+WordPress (staging.althearesorts.com)           Next.js (Vercel)
+  Althea CMS must-use plugin                     src/lib/wp/  ← all WordPress access
+  ├─ content types, fields, wp-admin forms  ───▶  api.ts      read API (server only, cached, tagged)
+  ├─ read API  /wp-json/althea/v1/*              fallback/   offline snapshot if WordPress is down
+  └─ on save → POST /api/revalidate  ─────────▶  app/api/revalidate  expires the changed tags at once
+```
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+- **Editing:** wp-admin → **Althea**. English and Greek fields are side by side. Saving updates the website within about a second.
+- **The WordPress site has no public front end.** Its public URLs show a blank `noindex` page with a button to the website.
+- Payload CMS is still in the repo (admin route, collections) but unused. It will be removed in a separate PR.
 
-## Quick Start - local setup
+## Setup
 
-To spin up this template locally, follow these steps:
+```sh
+npm install
+cp .env.example .env.local   # then fill in the values below
+npm run dev
+```
 
-### Clone
+| Variable | Used by | Purpose |
+|---|---|---|
+| `WP_API_URL` | site, scripts | WordPress REST root, e.g. `https://staging.althearesorts.com/wp-json` (HTTPS only) |
+| `WP_USERNAME`, `WP_APP_PASSWORD` | scripts | WordPress user + [application password](https://make.wordpress.org/core/2020/11/05/application-passwords-integration-guide/) for the migration (writes). The site itself only reads public endpoints. |
+| `REVALIDATE_SECRET` | site | Shared secret for `POST /api/revalidate`. Must equal `ALTHEA_REVALIDATE_SECRET` in `wp-config.php`. |
+| `VERCEL_BYPASS` | scripts/tests | Vercel *Protection Bypass for Automation* secret (lets WordPress reach protected preview deployments). |
+| `FTP_USER`, `FTP_PASSWORD` | `cms:deploy-plugin` | FTPS access to the WordPress server (host `server98.cretaforce.gr`). |
+| `NTFY_URL`, `NTFY_TOPIC` | Claude Code hooks | Optional phone notifications. |
+| `DATABASE_URL`, `PAYLOAD_SECRET`, `RESEND_*` | Payload / contact form | As before. |
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+Never commit `.env*` files except `.env.example`. On Vercel, the WordPress variables are set for the **Preview** environment.
 
-### Development
+## How content is read
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+- Every page reads through `src/lib/wp/api.ts` (`getSettings`, `getPage`, `getItems`, `getTerms`, `getPosts`). It only runs on the server, so no credentials or API calls reach the browser.
+- Responses are cached by Next.js with tags: `wp`, `wp:settings`, `wp:page:<slug>`, `wp:<post_type>`. When content is saved, the plugin calls `/api/revalidate` with the affected tags. These are expired immediately (`revalidateTag(tag, { expire: 0 })`), so the very next visitor gets the new content. A 1-hour revalidation is only a safety net for a missed webhook.
+- Builds are gentle on WordPress: identical concurrent requests are shared, at most 4 run in parallel, and 429/5xx responses are retried.
+- **Fallback:** if WordPress is unreachable, the snapshot in `src/lib/wp/fallback/content.json` is served instead, so builds and pages never fail. It references the original images in `/public/images`, which therefore stay in the repo.
+- Stored text formats (`src/lib/wp/text.ts`): paragraphs separated by an empty line; lists one item per line; article bodies use a small markdown-like format (`## Heading`, `- item`, `Q:`/`A:`, `[cta] Label | /href`, `---`, `[address]`). Inline HTML (`a`, `em`, `strong`, `br`) is rendered by `Rich` without `dangerouslySetInnerHTML`.
+- Field definitions live in **one file**, `wordpress/mu-plugins/althea-cms/schema.json`. The plugin, the TypeScript types (`npm run cms:types`), the migration and the validators all read it.
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+## Scripts
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+| Command | What it does |
+|---|---|
+| `npm run cms:migrate -- --dry-run` | Shows what the migration would create, update or skip (read-only) |
+| `npm run cms:migrate` | Imports `content.json` and all images into WordPress. Idempotent: images are matched by source and hash; entries by slug, and only updated when their content in the repo changed (`--force` to update all, `--only=media,terms,items,pages,settings`). Prints a created/updated/skipped/failed report and writes `scripts/media-map.json`. |
+| `npm run cms:verify` | Reads everything back through the public API and checks it matches `content.json` |
+| `npm run cms:pull-fallback` | Refreshes `content.json` from WordPress so the outage fallback has the latest edits (`-- --check` only reports) |
+| `npm run cms:types` | Regenerates `src/lib/wp/schema-types.ts` after editing `schema.json` |
+| `npm run cms:deploy-plugin` | Uploads the plugin to `wp-content/mu-plugins/` over FTPS (`-- althea-cms/schema.json` for one file) |
+| `npx tsx scripts/compare/snapshot.ts <url> <dir>` + `compare.ts <a> <b>` | Saves and compares every page (body, meta, canonical/hreflang, JSON-LD) between two running builds |
 
-#### Docker (Optional)
+### Changing a field
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+1. Edit `wordpress/mu-plugins/althea-cms/schema.json`.
+2. `npm run cms:types`, then use the field in the page component.
+3. `npm run cms:deploy-plugin -- althea-cms/schema.json`.
+4. Fill in the new field in wp-admin (or in `content.json` and run `npm run cms:migrate`).
 
-To do so, follow these steps:
+## WordPress plugin
 
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+See [wordpress/README.md](wordpress/README.md): installation, `wp-config.php` constants (`ALTHEA_REVALIDATE_URL`, which may hold several URLs separated by commas, plus `ALTHEA_REVALIDATE_SECRET`, `ALTHEA_VERCEL_BYPASS` and `ALTHEA_FRONTEND_URL`), the read API, and the local integration tests (`wordpress/tests/run-local.sh`).
 
-## How it works
+## Verifying a change
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+```sh
+npm run lint && npx tsc --noEmit && npm run test:int
+npm run build
+```
 
-### Collections
+The migration was verified by building `main` and this branch and comparing all 59 public URLs (EN and EL pages, blog posts, robots.txt, sitemap.xml, llms.txt, a 404 page): identical body, meta, hreflang and structured data, both with WordPress available and with WordPress unreachable. The only intended difference is that `og:image` and room JSON-LD photos now point to the WordPress copy of the same image.
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
-
-- #### Users (Authentication)
-
-  Users are auth-enabled collections that have access to the admin panel.
-
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/3.x/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
-
-- #### Media
-
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
-
-### Docker
-
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
-
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
-
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
-
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+More background: [docs/cms-migration-plan.md](docs/cms-migration-plan.md).

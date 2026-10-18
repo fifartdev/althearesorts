@@ -16,7 +16,12 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --import=tsx/esm\" playwright test --config=playwright.config.ts",
-    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
+    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
+    "cms:migrate": "tsx scripts/migrate-to-wp.ts",
+    "cms:verify": "tsx scripts/content/verify-wp.ts",
+    "cms:pull-fallback": "tsx scripts/content/pull-fallback.ts",
+    "cms:types": "tsx scripts/content/gen-types.ts",
+    "cms:deploy-plugin": "bash wordpress/deploy-ftp.sh"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.84.1",
