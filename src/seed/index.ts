@@ -250,7 +250,7 @@ async function seedRooms(payload: Payload) {
   ]
 
   for (const room of rooms) {
-    await (payload.create as Function)({ collection: 'rooms', data: room })
+    await (payload.create as (args: unknown) => Promise<unknown>)({ collection: 'rooms', data: room })
     console.log(`    + Room: ${room.title}`)
   }
   console.log('  ✓ Rooms seeded')
@@ -353,7 +353,7 @@ async function seedDining(payload: Payload) {
   ]
 
   for (const venue of venues) {
-    await (payload.create as Function)({ collection: 'dining', data: venue })
+    await (payload.create as (args: unknown) => Promise<unknown>)({ collection: 'dining', data: venue })
     console.log(`    + Dining: ${venue.name}`)
   }
   console.log('  ✓ Dining seeded')
@@ -366,7 +366,7 @@ async function seedDining(payload: Payload) {
 async function seedOffers(payload: Payload) {
   if (await slugExists(payload, 'offers', 'opening-offer-10-percent')) { console.log('  ✓ Offers already seeded'); return }
 
-  await (payload.create as Function)({
+  await (payload.create as (args: unknown) => Promise<unknown>)({
     collection: 'offers',
     data: {
       slug: 'opening-offer-10-percent',
@@ -431,7 +431,7 @@ async function seedFAQs(payload: Payload) {
   ]
 
   for (const faq of faqs) {
-    await (payload.create as Function)({
+    await (payload.create as (args: unknown) => Promise<unknown>)({
       collection: 'faqs',
       data: {
         question: faq.question,
@@ -565,7 +565,7 @@ async function seedJournal(payload: Payload) {
   ]
 
   for (const post of posts) {
-    await (payload.create as Function)({
+    await (payload.create as (args: unknown) => Promise<unknown>)({
       collection: 'journal',
       data: {
         slug: post.slug,
@@ -627,7 +627,7 @@ async function seedTestimonials(payload: Payload) {
   ]
 
   for (const t of items) {
-    await (payload.create as Function)({ collection: 'testimonials', data: t })
+    await (payload.create as (args: unknown) => Promise<unknown>)({ collection: 'testimonials', data: t })
     console.log(`    + Testimonial: ${t.authorName}`)
   }
   console.log('  ✓ Testimonials seeded')
@@ -650,7 +650,7 @@ async function seedLocations(payload: Payload) {
   ]
 
   for (const sight of sights) {
-    await (payload.create as Function)({
+    await (payload.create as (args: unknown) => Promise<unknown>)({
       collection: 'locations',
       data: {
         name: sight.name,
@@ -774,7 +774,7 @@ async function seedExperiences(payload: Payload) {
   ]
 
   for (const item of items) {
-    await (payload.create as Function)({ collection: 'experiences', data: item })
+    await (payload.create as (args: unknown) => Promise<unknown>)({ collection: 'experiences', data: item })
     console.log(`    + Experience: ${item.title}`)
   }
   console.log('  ✓ Experiences seeded')
