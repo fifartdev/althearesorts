@@ -293,6 +293,8 @@ async function upsertPost(group: string, restBase: string, slug: string, payload
 
 const termIds = new Map<string, number>() // taxonomy:slug → id
 
+const decodeHtml = (s: string) => s.replace(/&#0?38;|&amp;/g, '&').replace(/&#0?39;|&#8217;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+
 async function migrateTerms() {
   for (const [taxonomy, terms] of Object.entries<any[]>(content.terms)) {
     const base = schema.taxonomies[taxonomy].restBase
@@ -304,7 +306,8 @@ async function migrateTerms() {
       try {
         if (found) {
           termIds.set(`${taxonomy}:${term.slug}`, found.id)
-          const same = found.name === term.name && found.meta?.name_el === meta.name_el && Number(found.meta?.sort_order) === meta.sort_order
+          // WordPress returns term names HTML-encoded ("Rooms &amp; Suites").
+          const same = decodeHtml(found.name) === term.name && found.meta?.name_el === meta.name_el && Number(found.meta?.sort_order) === meta.sort_order
           if (same && !FORCE) { record(group, 'skipped'); continue }
           if (!DRY) await wp('POST', `/wp/v2/${base}/${found.id}`, { name: term.name, meta })
           record(group, 'updated')

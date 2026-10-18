@@ -100,7 +100,7 @@ st, bad = req('POST', '/wp/v2/althea-posts', {'title': 'T2', 'status': 'draft', 
 check('select rejects invalid option', st == 400, bad)
 
 st, sch = req('GET', '/althea/v1/schema', auth=False)
-check('schema route', sch['pluginVersion'] == '1.0.0' and 'althea_room' in sch['schema']['postTypes'], sch.keys() if isinstance(sch, dict) else sch)
+check('schema route', sch['pluginVersion'] == '1.1.0' and 'althea_room' in sch['schema']['postTypes'], sch.keys() if isinstance(sch, dict) else sch)
 
 if FAILED:
     sys.exit(f'{len(FAILED)} REST check(s) failed')

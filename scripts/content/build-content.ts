@@ -682,7 +682,8 @@ function postItems() {
       paragraphs: s.paragraphs.map(escapeHtml),
       ...(s.bullets ? { bullets: s.bullets.map(escapeHtml) } : {}),
       ...(s.faqs ? { faqs: s.faqs.map((f: any) => ({ q: escapeHtml(f.q), a: escapeHtml(f.a) })) } : {}),
-      ...(s.cta ? { cta: { label: escapeHtml(s.cta.label), href: s.cta.href } } : {}),
+      // Article bodies are HTML: escape the URL too (WordPress' kses stores & as &amp;).
+      ...(s.cta ? { cta: { label: escapeHtml(s.cta.label), href: escapeHtml(s.cta.href) } } : {}),
     }))
     return {
       slug: `${locale}-${p.slug}`,

@@ -74,8 +74,8 @@
     },
     "althea_post": {
       "label": "Blog posts", "singular": "Blog post", "restBase": "althea-posts", "icon": "dashicons-welcome-write-blog",
-      "supports": ["title", "excerpt", "thumbnail"],
-      "help": "One post per language. Posts in different languages that are translations of each other share the same Translation key. Featured image = cover photo.",
+      "supports": ["title", "excerpt", "thumbnail", "page-attributes"],
+      "help": "One post per language. Order = position in the blog list (0 = first, shown as the featured post). Posts in different languages that are translations of each other share the same Translation key. Featured image = cover photo.",
       "fields": [
         { "key": "locale", "type": "select", "label": "Language", "options": ["en", "el"] },
         { "key": "route_slug", "type": "text", "label": "URL slug", "help": "The post URL is /journal/<slug> (or /el/journal/<slug>)." },

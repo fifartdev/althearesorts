@@ -18,6 +18,10 @@ Translated fields show **English and Ελληνικά side by side**. Blog posts
 
 Every field is defined in [`mu-plugins/althea-cms/schema.json`](mu-plugins/althea-cms/schema.json). The Next.js data layer and the migration script read the same file, so a field change means editing `schema.json` and re-uploading that one file.
 
+## Headless mode
+
+WordPress is only the backend. Every public page of the WordPress site (home, posts, archives, feeds, 404s) shows a blank white page with one **Visit althearesorts.com** button, served with `noindex, nofollow`. `robots.txt` disallows everything and the WordPress sitemap is disabled. wp-admin, wp-login.php, the REST API and media files are unaffected. The button target can be changed with `define( 'ALTHEA_FRONTEND_URL', '…' );` in `wp-config.php`.
+
 ## Install
 
 **Staging is already installed** (2026-10-18, via `wordpress/deploy-ftp.sh`). To push plugin changes, run `wordpress/deploy-ftp.sh` (all files) or `wordpress/deploy-ftp.sh althea-cms/schema.json` (one file). It needs `FTP_USER`/`FTP_PASSWORD` in `.env.local`.
@@ -40,7 +44,7 @@ Manual install:
    ```
    Add these **after** the initial content migration. Otherwise every migrated item triggers its own refresh request.
 
-Requirements: WordPress 6.5+ and PHP 7.4+. Tested on WordPress 7.1.3 / PHP 8.2.
+Requirements: WordPress 6.5+ and PHP 7.4+. Tested on WordPress 7.1.3 / PHP 8.2. No other plugins or page builders are needed.
 
 To uninstall, delete the two items from `wp-content/mu-plugins/`. The content stays in the database.
 
