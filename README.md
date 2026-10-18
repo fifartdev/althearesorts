@@ -29,7 +29,6 @@ npm run dev
 | `REVALIDATE_SECRET` | site | Shared secret for `POST /api/revalidate`. Must equal `ALTHEA_REVALIDATE_SECRET` in `wp-config.php`. |
 | `VERCEL_BYPASS` | scripts/tests | Vercel *Protection Bypass for Automation* secret (lets WordPress reach protected preview deployments). |
 | `FTP_USER`, `FTP_PASSWORD` | `cms:deploy-plugin` | FTPS access to the WordPress server (host `server98.cretaforce.gr`). |
-| `NTFY_URL`, `NTFY_TOPIC` | Claude Code hooks | Optional phone notifications. |
 | `DATABASE_URL`, `PAYLOAD_SECRET`, `RESEND_*` | Payload / contact form | As before. |
 
 Never commit `.env*` files except `.env.example`. On Vercel, the WordPress variables are set for the **Preview** environment.
