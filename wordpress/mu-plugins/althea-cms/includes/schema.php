@@ -94,7 +94,7 @@ function althea_settings_fields() {
 }
 
 /**
- * Template for a site page slug, with the SEO section appended. Null if the slug has no template.
+ * Template for a site page slug, with the SEO section appended (unless the template sets "seo": false). Null if the slug has no template.
  */
 function althea_page_template( $slug ) {
 	$schema = althea_schema();
@@ -102,7 +102,7 @@ function althea_page_template( $slug ) {
 		return null;
 	}
 	$template = $schema['pages'][ $slug ];
-	if ( 'shared' !== $slug ) {
+	if ( ! isset( $template['seo'] ) || false !== $template['seo'] ) {
 		$template['sections'][] = array(
 			'key'    => 'seo',
 			'label'  => 'SEO',

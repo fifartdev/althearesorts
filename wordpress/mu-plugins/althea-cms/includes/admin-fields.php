@@ -83,7 +83,7 @@ function althea_render_field_row( array $field, $key_fn, $name_fn, $value_fn, $p
 	} elseif ( 'lines' === $field['type'] ) {
 		$help = trim( $help . ' One per line.' );
 	} elseif ( 'blocks' === $field['type'] ) {
-		$help = trim( $help . ' Format: "## Heading" lines start sections; separate paragraphs with an empty line; "- item" lines make a list; "Q: …" followed by "A: …" makes a question; "[cta] Label | /link" makes a button.' );
+		$help = trim( $help . ' Format: "## Heading" lines start sections; separate paragraphs with an empty line; "- item" lines make a list; "Q: …" followed by "A: …" makes a question; "[cta] Label | /link" makes a button; a line with only "---" starts a new section without a heading; "[address]" on its own line starts an address block.' );
 	}
 
 	echo '<div class="althea-row"><div class="althea-row-label"><strong>' . esc_html( $field['label'] ) . '</strong>';

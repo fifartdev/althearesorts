@@ -12,7 +12,7 @@
     "images": "Ordered list of media library attachments",
     "bool": "Checkbox",
     "select": "One of a fixed set of options",
-    "blocks": "Article body: '## Heading', paragraphs, '- bullet' lists, 'Q:'/'A:' pairs, '[cta] Label | /href'",
+    "blocks": "Article body: '## Heading', paragraphs, '- bullet' lists, 'Q:'/'A:' pairs, '[cta] Label | /href', '---' (new untitled section), '[address]' block",
     "group": "Fixed number of repeated sub-field sets"
   },
 
@@ -207,7 +207,7 @@
   ],
 
   "pages": {
-    "shared": { "label": "Shared (header, footer, banners)", "sections": [
+    "shared": { "label": "Shared (header, footer, banners)", "seo": false, "sections": [
       { "key": "header", "label": "Header", "fields": [
         { "key": "book_label", "type": "text", "label": "Book button", "l": true },
         { "key": "menu_location", "type": "text", "label": "Mobile menu location line", "l": true }
@@ -621,7 +621,7 @@
       ]}
     ]},
 
-    "room": { "label": "Room page (shared by all rooms)", "sections": [
+    "room": { "label": "Room page (shared by all rooms)", "seo": false, "sections": [
       { "key": "hero", "label": "Hero", "fields": [
         { "key": "label", "type": "text", "label": "Label", "l": true },
         { "key": "guests", "type": "text", "label": "Occupancy line", "l": true },
