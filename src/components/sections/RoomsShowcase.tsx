@@ -2,7 +2,7 @@ import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { RoomCard } from '@/components/ui/RoomCard'
-import { getItems, getPage } from '@/lib/wp/api'
+import { getItems, getPage, tr } from '@/lib/wp/api'
 import { Rich } from '@/lib/wp/Rich'
 
 type Locale = 'en' | 'el'
@@ -43,8 +43,8 @@ export async function RoomsShowcase({ locale = 'en' }: { locale?: Locale }) {
                   href={locale === 'el' ? `/el/accommodation/${room.slug}` : undefined}
                   title={room.title}
                   size={f.size}
-                  shortDesc={(locale === 'el' && f.card_short_desc.el) || f.short_desc.en}
-                  view={(locale === 'el' && f.card_view.el) || f.view.en}
+                  shortDesc={tr(f.short_desc, locale)}
+                  view={tr(f.view, locale)}
                   image={room.image?.url ?? ''}
                   priority={i === 0}
                   locale={locale}

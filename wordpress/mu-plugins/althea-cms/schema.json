@@ -52,24 +52,15 @@
     "althea_room": {
       "label": "Rooms", "singular": "Room", "restBase": "althea-rooms", "icon": "dashicons-admin-home",
       "supports": ["title", "thumbnail", "page-attributes"],
-      "help": "Title = room name (shown in both languages). Featured image = hero photo. Order = display order (the homepage shows rooms 4–6).",
+      "help": "Title = room name (shown in both languages). Featured image = hero photo. Order = display order (the homepage shows rooms 4–6). Empty Greek fields fall back to English.",
       "fields": [
         { "key": "size", "type": "text", "label": "Size", "help": "e.g. 27 m²" },
         { "key": "featured", "type": "bool", "label": "Signature suite" },
         { "key": "gallery", "type": "images", "label": "Photo gallery" },
-        { "key": "tagline", "type": "text", "label": "Tagline", "locales": ["en"] },
-        { "key": "view", "type": "text", "label": "View", "locales": ["en"] },
-        { "key": "short_desc", "type": "textarea", "label": "Description", "locales": ["en"] },
-        { "key": "features", "type": "lines", "label": "Features", "locales": ["en"] },
-        { "key": "list_view", "type": "text", "label": "View (accommodation list)", "locales": ["el"], "section": "Greek — accommodation list page" },
-        { "key": "list_tagline", "type": "text", "label": "Tagline (accommodation list)", "locales": ["el"], "section": "Greek — accommodation list page" },
-        { "key": "list_short_desc", "type": "textarea", "label": "Description (accommodation list)", "locales": ["el"], "section": "Greek — accommodation list page" },
-        { "key": "list_features", "type": "lines", "label": "Features (accommodation list)", "locales": ["el"], "section": "Greek — accommodation list page" },
-        { "key": "detail_view", "type": "text", "label": "View (room page)", "locales": ["el"], "section": "Greek — room page", "help": "Empty = the room page shows the English text." },
-        { "key": "detail_short_desc", "type": "textarea", "label": "Description (room page)", "locales": ["el"], "section": "Greek — room page" },
-        { "key": "detail_features", "type": "lines", "label": "Features (room page)", "locales": ["el"], "section": "Greek — room page" },
-        { "key": "card_view", "type": "text", "label": "View (homepage card)", "locales": ["el"], "section": "Greek — homepage card" },
-        { "key": "card_short_desc", "type": "textarea", "label": "Description (homepage card)", "locales": ["el"], "section": "Greek — homepage card" }
+        { "key": "tagline", "type": "text", "label": "Tagline", "l": true },
+        { "key": "view", "type": "text", "label": "View", "l": true },
+        { "key": "short_desc", "type": "textarea", "label": "Description", "l": true },
+        { "key": "features", "type": "lines", "label": "Features", "l": true, "help": "The accommodation list shows the first 6." }
       ]
     },
     "althea_post": {

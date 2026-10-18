@@ -4,7 +4,7 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
-import { getItems, getPage, getSettings, src } from '@/lib/wp/api'
+import { getItems, getPage, getSettings, src, tr } from '@/lib/wp/api'
 import { Paragraphs, Rich, spaced } from '@/lib/wp/Rich'
 import { splitLines } from '@/lib/wp/text'
 import type { Item, Locale } from '@/lib/wp/schema-types'
@@ -14,22 +14,16 @@ const ARIA = {
   el: { hero: 'Δωμάτια', included: 'Παροχές σε όλα τα δωμάτια' },
 }
 
-/**
- * Room texts for the list. Greek uses the "accommodation list" Greek fields and falls back to
- * English per field (as the page did before the CMS); the Greek section label is the view.
- */
+/** Room texts in the page language (English fallback per field); the Greek section label is the view. */
 function roomTexts(room: Item<'althea_room'>, locale: Locale) {
   const f = room.fields
-  if (locale === 'el') {
-    return {
-      aria: f.list_view.el || room.title,
-      view: f.list_view.el || f.view.en,
-      tagline: f.list_tagline.el,
-      shortDesc: f.list_short_desc.el || f.short_desc.en,
-      features: splitLines(f.list_features.el || f.features.en),
-    }
+  return {
+    aria: locale === 'el' ? tr(f.view, locale) || room.title : room.title,
+    view: tr(f.view, locale),
+    tagline: locale === 'el' ? f.tagline.el : f.tagline.en,
+    shortDesc: tr(f.short_desc, locale),
+    features: splitLines(tr(f.features, locale)),
   }
-  return { aria: room.title, view: f.view.en, tagline: f.tagline.en, shortDesc: f.short_desc.en, features: splitLines(f.features.en) }
 }
 
 export async function AccommodationPage({ locale }: { locale: Locale }) {

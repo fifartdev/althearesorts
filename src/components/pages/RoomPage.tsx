@@ -8,28 +8,15 @@ import { GoldLine } from '@/components/ui/GoldLine'
 import { RoomCard } from '@/components/ui/RoomCard'
 import { generateMetadata as genMeta } from '@/lib/seo'
 import { SITE_URL } from '@/lib/constants'
-import { getItems, getPage, getSettings, src } from '@/lib/wp/api'
+import { getItems, getPage, getSettings, src, tr } from '@/lib/wp/api'
 import { siteDefaults } from '@/lib/wp/metadata'
 import { splitLines } from '@/lib/wp/text'
 import type { Item, Locale } from '@/lib/wp/schema-types'
 
-/** Room texts for the room page. Greek uses the "room page" Greek fields, English per field otherwise. */
+/** Room texts in the page language, falling back to English per field. */
 function roomTexts(room: Item<'althea_room'>, locale: Locale) {
   const f = room.fields
-  return {
-    view: (locale === 'el' && f.detail_view.el) || f.view.en,
-    shortDesc: (locale === 'el' && f.detail_short_desc.el) || f.short_desc.en,
-    features: splitLines((locale === 'el' && f.detail_features.el) || f.features.en),
-  }
-}
-
-/** Similar-room cards on the Greek page use the Greek "accommodation list" texts. */
-function cardTexts(room: Item<'althea_room'>, locale: Locale) {
-  const f = room.fields
-  return {
-    view: (locale === 'el' && f.detail_view.el) || f.view.en,
-    shortDesc: (locale === 'el' && f.detail_short_desc.el) || f.short_desc.en,
-  }
+  return { view: tr(f.view, locale), shortDesc: tr(f.short_desc, locale), features: splitLines(tr(f.features, locale)) }
 }
 
 async function findRoom(slug: string) {
@@ -47,10 +34,10 @@ export async function roomMetadata(slug: string, locale: Locale): Promise<Metada
   const f = room.fields
   const site = await siteDefaults(locale)
   if (locale === 'el') {
-    const grDesc = f.detail_short_desc.el
+    const grDesc = f.short_desc.el
     return genMeta({
       title: room.title,
-      description: `${room.title} στην Althea Resorts — ${grDesc ? grDesc.slice(0, 80) : f.short_desc.en}. ${f.detail_view.el || f.view.en}.`,
+      description: `${room.title} στην Althea Resorts — ${grDesc ? grDesc.slice(0, 80) : f.short_desc.en}. ${tr(f.view, locale)}.`,
       keywords: [`${room.title} Althea`, 'πολυτελές δωμάτιο Κορινθία', 'κράτηση δωματίου Ελλάδα'],
       canonical: `${SITE_URL}/el/accommodation/${slug}`,
       image: src(room.image),
@@ -284,7 +271,7 @@ export async function RoomPage({ slug, locale }: { slug: string; locale: Locale 
           </ScrollReveal>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {similarRooms.map((r, i) => {
-              const card = cardTexts(r, locale)
+              const card = roomTexts(r, locale)
               return (
                 <ScrollReveal key={r.slug} delay={i * 80}>
                   <RoomCard
@@ -295,8 +282,7 @@ export async function RoomPage({ slug, locale }: { slug: string; locale: Locale 
                     shortDesc={card.shortDesc}
                     view={card.view}
                     image={src(r.image)}
-                    // D5: the card link label has always been English on both room pages.
-                    discoverLabel={shared.room_card.discover.en}
+                    discoverLabel={shared.room_card.discover[locale]}
                   />
                 </ScrollReveal>
               )

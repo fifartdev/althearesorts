@@ -138,3 +138,6 @@ export const src = (media: Media | null | undefined) => media?.url ?? ''
 export async function getPosts(locale: 'en' | 'el') {
   return (await getItems('althea_post')).filter((p) => p.fields.locale === locale)
 }
+
+/** A translated field in the given language, falling back to English when the translation is empty. */
+export const tr = (field: { en: string; el?: string }, locale: 'en' | 'el') => (locale === 'el' && field.el) || field.en

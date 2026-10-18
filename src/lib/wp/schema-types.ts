@@ -628,19 +628,10 @@ export type RoomFields = {
   size: string
   featured: boolean
   gallery: Media[]
-  tagline: { en: string }
-  view: { en: string }
-  short_desc: { en: string }
-  features: { en: string }
-  list_view: { el: string }
-  list_tagline: { el: string }
-  list_short_desc: { el: string }
-  list_features: { el: string }
-  detail_view: { el: string }
-  detail_short_desc: { el: string }
-  detail_features: { el: string }
-  card_view: { el: string }
-  card_short_desc: { el: string }
+  tagline: { en: string; el: string }
+  view: { en: string; el: string }
+  short_desc: { en: string; el: string }
+  features: { en: string; el: string }
 }
 
 export type PostFields = {
