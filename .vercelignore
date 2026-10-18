@@ -1,0 +1,10 @@
+# Never upload local secrets with `vercel deploy`; deployments get env vars from the Vercel project.
+.env
+.env.*
+!.env.example
+test.env
+
+# Not part of the Next.js app
+.claude/
+wordpress/
+tests/
