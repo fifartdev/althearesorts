@@ -155,7 +155,7 @@
       "supports": ["title", "thumbnail", "page-attributes"],
       "fields": [
         { "key": "active", "type": "bool", "label": "Show on Offers page" },
-        { "key": "booking_url", "type": "url", "label": "Booking link for this offer", "help": "The booking engine link for this offer (e.g. with its offer id). Avoid fixed check-in dates, they expire. Empty = the central booking link." },
+        { "key": "booking_url", "type": "url", "label": "Booking link for this offer", "help": "The exact booking engine link for this offer. Empty = the central booking link. Unpublish the offer when it ends." },
         { "key": "eyebrow", "type": "text", "label": "Eyebrow", "l": true },
         { "key": "heading", "type": "html", "label": "Heading", "l": true },
         { "key": "body", "type": "html", "label": "Text", "l": true },
