@@ -17,7 +17,10 @@ add_action( 'rest_api_init', 'althea_register_routes' );
  * would put the old content back into the site. Next.js does its own caching.
  */
 add_filter( 'rest_post_dispatch', function ( $result, $server, $request ) {
-	if ( 0 === strpos( $request->get_route(), '/althea/v1' ) && $result instanceof WP_REST_Response ) {
+	// Also every authenticated response: the hosting's micro-cache ignores the Authorization header
+	// and would otherwise serve a logged-in user's response (e.g. /wp/v2/users/me) to anonymous visitors.
+	$private = is_user_logged_in() || $request->get_header( 'authorization' );
+	if ( ( $private || 0 === strpos( $request->get_route(), '/althea/v1' ) ) && $result instanceof WP_REST_Response ) {
 		$result->header( 'Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0' );
 		$result->header( 'X-Accel-Expires', '0' );
 	}
