@@ -54,7 +54,7 @@ Manual install:
 3. For instant website updates, add to `wp-config.php` above "That's all, stop editing":
    ```php
    // One URL, or several separated by commas (e.g. preview, production).
-   define( 'ALTHEA_REVALIDATE_URL', 'https://althearesorts.com/api/revalidate' );
+   define( 'ALTHEA_REVALIDATE_URL', 'https://www.althearesorts.com/api/revalidate' );
    define( 'ALTHEA_REVALIDATE_SECRET', '…same value as REVALIDATE_SECRET in the Next.js environment…' );
    // Only to reach Vercel preview deployments behind Vercel Authentication:
    define( 'ALTHEA_VERCEL_BYPASS', '…Protection Bypass for Automation secret…' );

@@ -12,7 +12,7 @@
  * wp-content/mu-plugins/, so this file loads the plugin from the althea-cms/ folder next to it.
  *
  * Optional wp-config.php constants (on-demand revalidation of the Next.js site):
- *   define( 'ALTHEA_REVALIDATE_URL', 'https://althearesorts.com/api/revalidate' );
+ *   define( 'ALTHEA_REVALIDATE_URL', 'https://www.althearesorts.com/api/revalidate' );
  *   define( 'ALTHEA_REVALIDATE_SECRET', '<same value as REVALIDATE_SECRET in Next.js>' );
  *   define( 'ALTHEA_FRONTEND_URL', 'https://www.althearesorts.com' ); // headless page button target
  */

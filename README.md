@@ -1,6 +1,6 @@
 # Althea Resorts — website
 
-Next.js 16 (App Router) site for [althearesorts.com](https://althearesorts.com), with all content managed in **WordPress as a headless CMS**.
+Next.js 16 (App Router) site for [althearesorts.com](https://www.althearesorts.com), with all content managed in **WordPress as a headless CMS**.
 
 ```
 WordPress (staging.althearesorts.com)           Next.js (Vercel)

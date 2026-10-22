@@ -119,7 +119,7 @@ export const buildHotelSchema = (settings: Settings, geo: SeoGeoPage) => {
   return {
     '@context': 'https://schema.org',
     '@type': 'LodgingBusiness',
-    '@id': 'https://althearesorts.com/#hotel',
+    '@id': 'https://www.althearesorts.com/#hotel',
     name: hotel.name,
     alternateName: hotel.alternate_name,
     description: hotel.description,
@@ -157,7 +157,7 @@ export const buildHotelSchema = (settings: Settings, geo: SeoGeoPage) => {
     containsPlace: [
       {
         '@type': 'Restaurant',
-        '@id': 'https://althearesorts.com/gastronomy#aither',
+        '@id': 'https://www.althearesorts.com/gastronomy#aither',
         name: restaurant.name,
         description: restaurant.description,
         servesCuisine: lines(restaurant.cuisines),
@@ -166,7 +166,7 @@ export const buildHotelSchema = (settings: Settings, geo: SeoGeoPage) => {
       },
       {
         '@type': 'HealthAndBeautyBusiness',
-        '@id': 'https://althearesorts.com/spa#ocean-spa',
+        '@id': 'https://www.althearesorts.com/spa#ocean-spa',
         name: spa.name,
         description: spa.description,
         url: `${SITE_URL}/spa`,
@@ -179,7 +179,7 @@ export const buildHotelSchema = (settings: Settings, geo: SeoGeoPage) => {
 export const buildOrganizationSchema = (settings: Settings, geo: SeoGeoPage) => ({
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  '@id': 'https://althearesorts.com/#organization',
+  '@id': 'https://www.althearesorts.com/#organization',
   name: geo.hotel.name,
   url: SITE_URL,
   logo: absoluteUrl(geo.hotel.logo?.url ?? '/logos/althea_logo_white-f.png'),
@@ -196,14 +196,14 @@ export const buildOrganizationSchema = (settings: Settings, geo: SeoGeoPage) => 
 export const buildRestaurantSchema = ({ restaurant }: SeoGeoPage) => ({
   '@context': 'https://schema.org',
   '@type': 'Restaurant',
-  '@id': 'https://althearesorts.com/gastronomy#aither',
+  '@id': 'https://www.althearesorts.com/gastronomy#aither',
   name: restaurant.name,
   description: restaurant.page_description,
-  url: 'https://althearesorts.com/gastronomy',
+  url: 'https://www.althearesorts.com/gastronomy',
   servesCuisine: lines(restaurant.page_cuisines),
   priceRange: restaurant.page_price_range,
   containedInPlace: {
-    '@id': 'https://althearesorts.com/#hotel',
+    '@id': 'https://www.althearesorts.com/#hotel',
   },
 })
 
@@ -211,12 +211,12 @@ export const buildRestaurantSchema = ({ restaurant }: SeoGeoPage) => ({
 export const buildSpaSchema = ({ spa }: SeoGeoPage) => ({
   '@context': 'https://schema.org',
   '@type': 'HealthAndBeautyBusiness',
-  '@id': 'https://althearesorts.com/spa#ocean-spa',
+  '@id': 'https://www.althearesorts.com/spa#ocean-spa',
   name: spa.page_name,
   description: spa.page_description,
-  url: 'https://althearesorts.com/spa',
+  url: 'https://www.althearesorts.com/spa',
   containedInPlace: {
-    '@id': 'https://althearesorts.com/#hotel',
+    '@id': 'https://www.althearesorts.com/#hotel',
   },
   hasOfferCatalog: {
     '@type': 'OfferCatalog',

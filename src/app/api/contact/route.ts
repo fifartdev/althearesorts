@@ -33,7 +33,7 @@ function emailHtml(s: Submission, typeLabel: string): string {
   return `
           <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#102027">
             <div style="background:#102027;padding:24px 32px">
-              <img src="https://althearesorts.com/logos/althea_logo_white-f.png" height="36" alt="Althea Resorts" />
+              <img src="https://www.althearesorts.com/logos/althea_logo_white-f.png" height="36" alt="Althea Resorts" />
             </div>
             <div style="padding:32px;border:1px solid #e8e4dd;border-top:none">
               <p style="margin:0 0 8px 0;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:#ad8b27">${typeLabel}</p>

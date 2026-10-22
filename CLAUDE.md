@@ -244,9 +244,9 @@ export async function generateMetadata({ params }) {
 
 **robots.ts** — Option D-A selective policy (AI training bots blocked, retrieval crawlers and search engines allowed). The bot lists live in WordPress → SEO & GEO → robots.txt.
 
-**hotelSchema** — `LodgingBusiness` with `@id: https://althearesorts.com/#hotel`, `sameAs` (Instagram, Facebook, LinkedIn), coordinates, check-in/out, languages, amenities, nested Restaurant (AITHER) and HealthAndBeautyBusiness (Ocean Spa) each with their own `@id`. Injected on every page via `layout.tsx`.
+**hotelSchema** — `LodgingBusiness` with `@id: https://www.althearesorts.com/#hotel`, `sameAs` (Instagram, Facebook, LinkedIn), coordinates, check-in/out, languages, amenities, nested Restaurant (AITHER) and HealthAndBeautyBusiness (Ocean Spa) each with their own `@id`. Injected on every page via `layout.tsx`.
 
-**organizationSchema** — `Organization` with `@id: https://althearesorts.com/#organization`, `sameAs`, `logo`, `contactPoint`. Injected sitewide via `layout.tsx`.
+**organizationSchema** — `Organization` with `@id: https://www.althearesorts.com/#organization`, `sameAs`, `logo`, `contactPoint`. Injected sitewide via `layout.tsx`.
 
 **Hreflang** — auto-derived in `generateMetadata()` from the canonical URL path. Pages with canonical starting `/el` get `el`/`en`/`x-default`; all others get `en`/`el`/`x-default`. No per-page manual maintenance needed.
 
