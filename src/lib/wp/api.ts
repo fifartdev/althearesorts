@@ -32,14 +32,15 @@ function apiBase(): string | null {
 
 const warned = new Set<string>()
 
-// Be gentle with WordPress during builds, when ~60 pages render in parallel: identical concurrent
-// requests share one fetch, at most MAX_CONCURRENT requests run at once per process, and 429/5xx
-// responses are retried with backoff (honouring Retry-After).
+// Be gentle with WordPress during builds, when ~60 pages render in parallel: at most MAX_CONCURRENT
+// requests run at once per process, and 429/5xx responses are retried with backoff (honouring
+// Retry-After). Identical requests are deliberately NOT shared between renders: each page must call
+// fetch() itself so Next.js records the cache tags on that page; otherwise a WordPress change could
+// not refresh it. Repeated requests are answered from the Next.js data cache anyway.
 const MAX_CONCURRENT = 4
 const MAX_ATTEMPTS = 4
 let active = 0
 const queue: Array<() => void> = []
-const inflight = new Map<string, Promise<unknown>>()
 
 async function withSlot<T>(fn: () => Promise<T>): Promise<T> {
   if (active >= MAX_CONCURRENT) await new Promise<void>((resolve) => queue.push(resolve))
@@ -75,12 +76,7 @@ async function wpGet<T>(route: string, tags: string[]): Promise<T | null> {
   if (!base) return null
   const url = `${base}/althea/v1${route}`
   try {
-    let pending = inflight.get(url) as Promise<T> | undefined
-    if (!pending) {
-      pending = fetchJson<T>(url, tags).finally(() => inflight.delete(url))
-      inflight.set(url, pending)
-    }
-    return await pending
+    return await fetchJson<T>(url, tags)
   } catch (error) {
     if (!warned.has(route)) {
       warned.add(route)

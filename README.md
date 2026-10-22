@@ -11,6 +11,7 @@ WordPress (staging.althearesorts.com)           Next.js (Vercel)
 ```
 
 - **Editing:** wp-admin → **Althea**. English and Greek fields are side by side. Saving updates the website within about a second.
+- **Everything is editable**, including SEO and GEO: per-page titles, descriptions, keywords and share images; the hotel/restaurant/spa structured data; robots.txt; llms.txt; screen-reader labels (Althea → Site pages → *SEO & GEO* and *Screen-reader labels*). Only layout, styling, animations and URLs are code.
 - **The WordPress site has no public front end.** Its public URLs show a blank `noindex` page with a button to the website.
 - **Contact form:** enquiries are saved in WordPress (**Althea → Form submissions**, private) and emailed via Resend. The visitor only sees an error if both fail.
 
@@ -53,6 +54,9 @@ Never commit `.env*` files except `.env.example`. On Vercel, the WordPress varia
 | `npm run cms:pull-fallback` | Refreshes `content.json` from WordPress so the outage fallback has the latest edits (`-- --check` only reports) |
 | `npm run cms:types` | Regenerates `src/lib/wp/schema-types.ts` after editing `schema.json` |
 | `npm run cms:deploy-plugin` | Uploads the plugin to `wp-content/mu-plugins/` over FTPS (`-- althea-cms/schema.json` for one file) |
+| `npm run cms:audit -- <snapshot dir> src/lib/wp/fallback/content.json` | Checks that every visible, screen-reader, SEO and structured-data string on every page comes from WordPress content (lists any that don't) |
+| `npm run cms:editability-test -- <site url> --yes` | Live proof on a non-public deployment: changes, creates and deletes content of every kind in WordPress and checks the site shows it within seconds; restores everything. Result in `scripts/content/editability-report.json` |
+| `npm run cms:check-tags` | After `npm run build`: every prerendered page must carry the WordPress cache tags (otherwise saving in WordPress could not refresh it) |
 | `npx tsx scripts/compare/snapshot.ts <url> <dir>` + `compare.ts <a> <b>` | Saves and compares every page (body, meta, canonical/hreflang, JSON-LD) between two running builds |
 
 ### Changing a field

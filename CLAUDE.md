@@ -112,9 +112,9 @@ src/lib/seo.ts              — generateMetadata(), buildBreadcrumb(), hotelSche
 src/app/(frontend)/
   layout.tsx                — fonts, JSON-LD schemas (hotelSchema + organizationSchema), GA4, skip-to-content (English)
   globals.css               — Tailwind v4 design system, all custom classes in @layer
-src/app/robots.ts           — MUST be at app/ root (not inside route group) to serve /robots.txt; AI training bots blocked; retrieval crawlers allowed
+src/app/robots.ts           — MUST be at app/ root (not inside route group); rules come from WordPress (SEO & GEO page); rendered per request so edits apply at once
 src/app/sitemap.ts          — MUST be at app/ root (not inside route group) to serve /sitemap.xml; 38 URLs with alternates.languages
-public/llms.txt             — LLMs.txt standard: structured site summary for AI model discoverability
+src/app/llms.txt/route.ts   — llms.txt from WordPress (SEO & GEO page); {rooms} expands to the current rooms
   faq/page.tsx              — server wrapper: metadata + FAQPage schema (14 Q&As)
   faq/FaqClient.tsx         — 'use client' accordion component
   faq/faqData.ts            — typed FaqCategory[] data (no 'use client' — importable by server + client)
@@ -240,7 +240,7 @@ export async function generateMetadata({ params }) {
 }
 ```
 
-**robots.ts** — Option D-A selective policy: AI training bots blocked (GPTBot, anthropic-ai, CCBot, Omgilibot); real-time retrieval crawlers allowed (ChatGPT-User, Claude-Web); Bingbot, Google-Extended, social crawlers (FacebookBot, Twitterbot) allowed.
+**robots.ts** — Option D-A selective policy (AI training bots blocked, retrieval crawlers and search engines allowed). The bot lists live in WordPress → SEO & GEO → robots.txt.
 
 **hotelSchema** — `LodgingBusiness` with `@id: https://althearesorts.com/#hotel`, `sameAs` (Instagram, Facebook, LinkedIn), coordinates, check-in/out, languages, amenities, nested Restaurant (AITHER) and HealthAndBeautyBusiness (Ocean Spa) each with their own `@id`. Injected on every page via `layout.tsx`.
 

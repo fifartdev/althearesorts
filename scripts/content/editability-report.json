@@ -1,0 +1,246 @@
+{
+  "site": "https://althea-cms-preview.vercel.app",
+  "date": "2026-10-22T06:38:07.583Z",
+  "results": [
+    {
+      "area": "Settings",
+      "check": "phone (footer + LodgingBusiness telephone)",
+      "ok": true,
+      "detail": "3.26s"
+    },
+    {
+      "area": "Settings",
+      "check": "site name (title suffix, og:site_name)",
+      "ok": true,
+      "detail": "1.445s"
+    },
+    {
+      "area": "Settings",
+      "check": "main menu (Greek)",
+      "ok": true,
+      "detail": "1.207s"
+    },
+    {
+      "area": "Settings",
+      "check": "booking engine URL",
+      "ok": true,
+      "detail": "1.303s"
+    },
+    {
+      "area": "Settings",
+      "check": "coordinates (GEO in structured data)",
+      "ok": true,
+      "detail": "1.85s"
+    },
+    {
+      "area": "Page text",
+      "check": "homepage hero tagline (EN)",
+      "ok": true,
+      "detail": "1.497s"
+    },
+    {
+      "area": "Page text",
+      "check": "homepage hero tagline (EL)",
+      "ok": true,
+      "detail": "1.588s"
+    },
+    {
+      "area": "Page text",
+      "check": "footer copyright (all pages)",
+      "ok": true,
+      "detail": "1.581s"
+    },
+    {
+      "area": "Page text",
+      "check": "contact form button",
+      "ok": true,
+      "detail": "1.283s"
+    },
+    {
+      "area": "Page text",
+      "check": "legal page (Terms)",
+      "ok": true,
+      "detail": "1.155s"
+    },
+    {
+      "area": "Accessibility",
+      "check": "skip link",
+      "ok": true,
+      "detail": "1.328s"
+    },
+    {
+      "area": "Accessibility",
+      "check": "section label (Greek)",
+      "ok": true,
+      "detail": "1.395s"
+    },
+    {
+      "area": "Images",
+      "check": "page image (Offers hero)",
+      "ok": true,
+      "detail": "1.067s"
+    },
+    {
+      "area": "SEO",
+      "check": "page title (About, EN)",
+      "ok": true,
+      "detail": "0.802s"
+    },
+    {
+      "area": "SEO",
+      "check": "meta description (About, EL)",
+      "ok": true,
+      "detail": "1.953s"
+    },
+    {
+      "area": "SEO",
+      "check": "keywords (Spa)",
+      "ok": true,
+      "detail": "1.755s"
+    },
+    {
+      "area": "SEO",
+      "check": "share image (Location, og:image)",
+      "ok": true,
+      "detail": "1.008s"
+    },
+    {
+      "area": "SEO",
+      "check": "room SEO title override",
+      "ok": true,
+      "detail": "1.222s"
+    },
+    {
+      "area": "Page text",
+      "check": "room description (EL)",
+      "ok": true,
+      "detail": "1.402s"
+    },
+    {
+      "area": "SEO",
+      "check": "blog post SEO description",
+      "ok": true,
+      "detail": "1.752s"
+    },
+    {
+      "area": "GEO",
+      "check": "hotel description (LodgingBusiness, every page)",
+      "ok": true,
+      "detail": "1.304s"
+    },
+    {
+      "area": "GEO",
+      "check": "amenities (LodgingBusiness)",
+      "ok": true,
+      "detail": "1.941s"
+    },
+    {
+      "area": "GEO",
+      "check": "AITHER Restaurant schema (Gastronomy)",
+      "ok": true,
+      "detail": "1.275s"
+    },
+    {
+      "area": "GEO",
+      "check": "spa treatments (Spa schema)",
+      "ok": true,
+      "detail": "1.135s"
+    },
+    {
+      "area": "GEO",
+      "check": "room bed type (HotelRoom schema)",
+      "ok": true,
+      "detail": "1.109s"
+    },
+    {
+      "area": "GEO",
+      "check": "FAQ answer (FAQPage schema, EL)",
+      "ok": true,
+      "detail": "0.729s"
+    },
+    {
+      "area": "GEO",
+      "check": "robots.txt (block an AI crawler)",
+      "ok": true,
+      "detail": "0.576s"
+    },
+    {
+      "area": "GEO",
+      "check": "llms.txt (AI summary)",
+      "ok": true,
+      "detail": "0.701s"
+    },
+    {
+      "area": "SEO",
+      "check": "default share image (og:image fallback)",
+      "ok": true,
+      "detail": "1.296s"
+    },
+    {
+      "area": "Rooms",
+      "check": "new room: page, list, sitemap, llms.txt; then deleted (404)",
+      "ok": true,
+      "detail": "appeared in 1.6s, removed in 1.9s"
+    },
+    {
+      "area": "Blog",
+      "check": "new post: list, article, sitemap; then deleted (404)",
+      "ok": true,
+      "detail": "appeared in 1.2s, removed in 1.7s"
+    },
+    {
+      "area": "FAQ",
+      "check": "question (EN page + FAQPage schema)",
+      "ok": true,
+      "detail": "created, updated and deleted; slowest 2.0s"
+    },
+    {
+      "area": "FAQ",
+      "check": "category (new term with its question)",
+      "ok": true,
+      "detail": "0.959s"
+    },
+    {
+      "area": "Gallery",
+      "check": "photo",
+      "ok": true,
+      "detail": "created, updated and deleted; slowest 2.5s"
+    },
+    {
+      "area": "Testimonials",
+      "check": "guest review (homepage)",
+      "ok": true,
+      "detail": "created, updated and deleted; slowest 3.6s"
+    },
+    {
+      "area": "Gastronomy",
+      "check": "venue",
+      "ok": true,
+      "detail": "created, updated and deleted; slowest 2.1s"
+    },
+    {
+      "area": "Spa",
+      "check": "facility",
+      "ok": true,
+      "detail": "created, updated and deleted; slowest 2.4s"
+    },
+    {
+      "area": "Location",
+      "check": "sightseeing",
+      "ok": true,
+      "detail": "created, updated and deleted; slowest 2.4s"
+    },
+    {
+      "area": "Offers",
+      "check": "offer",
+      "ok": true,
+      "detail": "created, updated and deleted; slowest 2.1s"
+    },
+    {
+      "area": "Offers",
+      "check": "reason to book direct",
+      "ok": true,
+      "detail": "created, updated and deleted; slowest 2.3s"
+    }
+  ]
+}

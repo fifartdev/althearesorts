@@ -2,6 +2,10 @@ import type { MetadataRoute } from 'next'
 import { SITE_URL } from '@/lib/constants'
 import { getItems, getPosts } from '@/lib/wp/api'
 
+// Rendered per request from the tagged WordPress data cache, so a WordPress change shows up at once
+// (a prerendered file would stay cached on the CDN until the next deploy).
+export const dynamic = 'force-dynamic'
+
 type SitemapEntry = MetadataRoute.Sitemap[number]
 
 function pair(enPath: string, elPath: string, changeFreq: SitemapEntry['changeFrequency'], priority: number): SitemapEntry[] {

@@ -14,6 +14,9 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
     "cms:migrate": "tsx scripts/migrate-to-wp.ts",
     "cms:verify": "tsx scripts/content/verify-wp.ts",
+    "cms:check-tags": "tsx scripts/content/check-cache-tags.ts",
+    "cms:audit": "tsx scripts/content/provenance.ts",
+    "cms:editability-test": "tsx scripts/content/editability-test.ts",
     "cms:pull-fallback": "tsx scripts/content/pull-fallback.ts",
     "cms:types": "tsx scripts/content/gen-types.ts",
     "cms:deploy-plugin": "bash wordpress/deploy-ftp.sh"

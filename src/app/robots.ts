@@ -3,6 +3,10 @@ import { SITE_URL } from '@/lib/constants'
 import { getPage } from '@/lib/wp/api'
 import { splitLines } from '@/lib/wp/text'
 
+// Rendered per request from the tagged WordPress data cache, so a WordPress change shows up at once
+// (a prerendered file would stay cached on the CDN until the next deploy).
+export const dynamic = 'force-dynamic'
+
 /** robots.txt from the "SEO & GEO" page in WordPress: hidden paths, allowed and blocked crawlers. */
 export default async function robots(): Promise<MetadataRoute.Robots> {
   const { robots: r } = await getPage('seo_geo')
