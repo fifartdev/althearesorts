@@ -60,7 +60,13 @@
         { "key": "tagline", "type": "text", "label": "Tagline", "l": true },
         { "key": "view", "type": "text", "label": "View", "l": true },
         { "key": "short_desc", "type": "textarea", "label": "Description", "l": true },
-        { "key": "features", "type": "lines", "label": "Features", "l": true, "help": "The accommodation list shows the first 6." }
+        { "key": "features", "type": "lines", "label": "Features", "l": true, "help": "The accommodation list shows the first 6." },
+        { "key": "seo_title", "type": "text", "label": "SEO title", "l": true, "help": "Empty = the room name." },
+        { "key": "seo_description", "type": "textarea", "label": "SEO description", "l": true, "help": "Empty = built from the description and view." },
+        { "key": "seo_keywords", "type": "lines", "label": "SEO keywords", "l": true, "help": "Empty = \"<room name> Althea\" + the default room keywords (SEO & GEO page)." },
+        { "key": "schema_bed", "type": "text", "label": "Bed type (Google structured data)", "help": "e.g. King or Twin" },
+        { "key": "schema_occupancy_min", "type": "text", "label": "Minimum guests (Google structured data)" },
+        { "key": "schema_occupancy_max", "type": "text", "label": "Maximum guests (Google structured data)" }
       ]
     },
     "althea_post": {
@@ -209,7 +215,8 @@
   "pageSeo": [
     { "key": "title", "type": "text", "label": "SEO title", "l": true, "help": "Shown as '<title> | Althea Resorts'. Empty on the homepage = site default." },
     { "key": "description", "type": "textarea", "label": "SEO description", "l": true },
-    { "key": "keywords", "type": "lines", "label": "SEO keywords", "l": true }
+    { "key": "keywords", "type": "lines", "label": "SEO keywords", "l": true },
+    { "key": "image", "type": "image", "label": "Social share image", "help": "Image shown when the page is shared (Facebook, WhatsApp, LinkedIn…). Empty = the default share image (SEO & GEO page)." }
   ],
 
   "pages": {
@@ -455,7 +462,8 @@
         { "key": "equipment", "type": "lines", "label": "Equipment & services", "l": true },
         { "key": "cta", "type": "text", "label": "Enquiry button", "l": true },
         { "key": "image", "type": "image", "label": "Image" },
-        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true },
+        { "key": "email_subject", "type": "text", "label": "Enquiry e-mail subject", "l": true }
       ]},
       { "key": "weddings", "label": "Weddings", "fields": [
         { "key": "label", "type": "text", "label": "Label", "l": true },
@@ -463,7 +471,8 @@
         { "key": "paragraphs", "type": "paragraphs", "label": "Text", "l": true },
         { "key": "cta", "type": "text", "label": "Enquiry button", "l": true },
         { "key": "image", "type": "image", "label": "Image" },
-        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true }
+        { "key": "image_alt", "type": "text", "label": "Image alt", "l": true },
+        { "key": "email_subject", "type": "text", "label": "Enquiry e-mail subject", "l": true }
       ]}
     ]},
 
@@ -502,7 +511,10 @@
         { "key": "body", "type": "html", "label": "Text", "l": true },
         { "key": "trigger_label", "type": "text", "label": "View button", "l": true },
         { "key": "image", "type": "image", "label": "Menu image" },
-        { "key": "image_alt", "type": "text", "label": "Menu image alt", "l": true }
+        { "key": "image_alt", "type": "text", "label": "Menu image alt", "l": true },
+        { "key": "open_label", "type": "text", "label": "\"Open in new tab\" button", "l": true },
+        { "key": "download_label", "type": "text", "label": "\"Download\" button", "l": true },
+        { "key": "close_label", "type": "text", "label": "\"Close\" button", "l": true }
       ]},
       { "key": "philosophy", "label": "Oceanis philosophy", "fields": [
         { "key": "label", "type": "text", "label": "Label", "l": true },
@@ -597,6 +609,27 @@
         { "key": "address", "type": "text", "label": "Address line", "l": true },
         { "key": "directions", "type": "text", "label": "Directions link", "l": true },
         { "key": "iframe_title", "type": "text", "label": "Map title (screen readers)", "l": true }
+      ]},
+      { "key": "form", "label": "Contact form", "fields": [
+        { "key": "heading", "type": "text", "label": "Heading", "l": true },
+        { "key": "first_name", "type": "text", "label": "First name", "l": true },
+        { "key": "last_name", "type": "text", "label": "Last name", "l": true },
+        { "key": "email", "type": "text", "label": "Email", "l": true },
+        { "key": "phone", "type": "text", "label": "Phone", "l": true },
+        { "key": "optional", "type": "text", "label": "\"(optional)\"", "l": true },
+        { "key": "subject", "type": "text", "label": "Subject (enquiry type)", "l": true },
+        { "key": "type_reservation", "type": "text", "label": "Type: reservation", "l": true },
+        { "key": "type_wedding", "type": "text", "label": "Type: wedding", "l": true },
+        { "key": "type_corporate", "type": "text", "label": "Type: corporate event", "l": true },
+        { "key": "type_restaurant", "type": "text", "label": "Type: restaurant", "l": true },
+        { "key": "type_general", "type": "text", "label": "Type: general", "l": true },
+        { "key": "message", "type": "text", "label": "Message", "l": true },
+        { "key": "submit", "type": "text", "label": "Send button", "l": true },
+        { "key": "submitting", "type": "text", "label": "Sending…", "l": true },
+        { "key": "success_title", "type": "text", "label": "Success heading", "l": true },
+        { "key": "success_body", "type": "textarea", "label": "Success message", "l": true },
+        { "key": "reset", "type": "text", "label": "\"Send another\" button", "l": true },
+        { "key": "error", "type": "textarea", "label": "Error message", "l": true, "help": "Shown if the message could not be sent." }
       ]}
     ]},
 
@@ -721,6 +754,109 @@
         { "key": "title", "type": "text", "label": "Title", "l": true },
         { "key": "updated", "type": "text", "label": "Last updated line", "l": true },
         { "key": "body", "type": "blocks", "label": "Text", "l": true }
+      ]}
+    ]},
+
+    "a11y": { "label": "Screen-reader labels (accessibility)", "seo": false, "sections": [
+      { "key": "layout", "label": "Header, footer & booking", "fields": [
+        { "key": "skip_link", "type": "text", "label": "\"Skip to main content\" link", "l": true, "help": "First link for keyboard users." },
+        { "key": "home_link", "type": "text", "label": "Logo link", "l": true },
+        { "key": "primary_nav", "type": "text", "label": "Main menu", "l": true },
+        { "key": "switch_language", "type": "text", "label": "Language switch", "l": true, "help": "Describes switching to the OTHER language: on English pages e.g. \"Εναλλαγή στα Ελληνικά\", on Greek pages \"Switch to English\"." },
+        { "key": "open_menu", "type": "text", "label": "Open mobile menu", "l": true },
+        { "key": "close_menu", "type": "text", "label": "Close mobile menu", "l": true },
+        { "key": "quick_booking", "type": "text", "label": "Booking bar", "l": true },
+        { "key": "floating_book", "type": "text", "label": "Floating \"Book\" button", "l": true },
+        { "key": "final_cta", "type": "text", "label": "Final booking banner", "l": true }
+      ]},
+      { "key": "home", "label": "Homepage sections", "fields": [
+        { "key": "hero", "type": "text", "label": "Hero", "l": true },
+        { "key": "brand_intro", "type": "text", "label": "About", "l": true },
+        { "key": "rooms", "type": "text", "label": "Rooms", "l": true },
+        { "key": "experiences", "type": "text", "label": "Experiences", "l": true },
+        { "key": "gastronomy", "type": "text", "label": "Gastronomy", "l": true },
+        { "key": "gallery", "type": "text", "label": "Gallery", "l": true },
+        { "key": "testimonials", "type": "text", "label": "Testimonials", "l": true },
+        { "key": "location", "type": "text", "label": "Location", "l": true },
+        { "key": "journal", "type": "text", "label": "Blog", "l": true },
+        { "key": "direct_booking", "type": "text", "label": "Reasons to book direct", "l": true }
+      ]},
+      { "key": "pages", "label": "Pages", "fields": [
+        { "key": "about", "type": "text", "label": "About hero", "l": true },
+        { "key": "accommodation", "type": "text", "label": "Accommodation hero", "l": true },
+        { "key": "accommodation_included", "type": "text", "label": "Accommodation \"all rooms include\"", "l": true },
+        { "key": "room_gallery", "type": "text", "label": "Room photo gallery", "l": true },
+        { "key": "experiences", "type": "text", "label": "Experiences hero", "l": true },
+        { "key": "events", "type": "text", "label": "Experiences events", "l": true },
+        { "key": "spa", "type": "text", "label": "Spa hero", "l": true },
+        { "key": "gastronomy", "type": "text", "label": "Gastronomy hero", "l": true },
+        { "key": "aither", "type": "text", "label": "Gastronomy AITHER", "l": true },
+        { "key": "gallery", "type": "text", "label": "Gallery", "l": true },
+        { "key": "location", "type": "text", "label": "Location hero", "l": true },
+        { "key": "offers", "type": "text", "label": "Offers hero", "l": true },
+        { "key": "faq", "type": "text", "label": "FAQ hero", "l": true },
+        { "key": "blog", "type": "text", "label": "Blog list", "l": true },
+        { "key": "related", "type": "text", "label": "Blog \"more articles\"", "l": true },
+        { "key": "contact", "type": "text", "label": "Contact hero", "l": true },
+        { "key": "contact_info", "type": "text", "label": "Contact: email link", "l": true, "help": "{email} is replaced by the address." },
+        { "key": "contact_reservations", "type": "text", "label": "Contact: reservations email link", "l": true, "help": "{email} is replaced by the address." },
+        { "key": "contact_map", "type": "text", "label": "Contact map", "l": true },
+        { "key": "contact_form", "type": "text", "label": "Contact form", "l": true }
+      ]}
+    ]},
+
+    "seo_geo": { "label": "SEO & GEO (structured data, robots, llms.txt)", "seo": false, "sections": [
+      { "key": "defaults", "label": "Defaults", "fields": [
+        { "key": "share_image", "type": "image", "label": "Default share image", "help": "Used for pages without their own share image. 1200×630." },
+        { "key": "room_keywords", "type": "lines", "label": "Default room keywords", "l": true, "help": "Added to every room page (one per line)." },
+        { "key": "article_keywords", "type": "lines", "label": "Default blog keywords", "l": true, "help": "Used for blog posts without their own keywords (after the category)." }
+      ]},
+      { "key": "hotel", "label": "Hotel (Google structured data on every page)", "fields": [
+        { "key": "name", "type": "text", "label": "Name" },
+        { "key": "alternate_name", "type": "text", "label": "Alternate name" },
+        { "key": "description", "type": "textarea", "label": "Description" },
+        { "key": "street", "type": "text", "label": "Street" },
+        { "key": "locality", "type": "text", "label": "Town" },
+        { "key": "region", "type": "text", "label": "Region" },
+        { "key": "postal_code", "type": "text", "label": "Postal code" },
+        { "key": "country", "type": "text", "label": "Country code", "help": "e.g. GR" },
+        { "key": "star_rating", "type": "text", "label": "Star rating" },
+        { "key": "rooms", "type": "text", "label": "Number of rooms" },
+        { "key": "checkin", "type": "text", "label": "Check-in time" },
+        { "key": "checkout", "type": "text", "label": "Check-out time" },
+        { "key": "currencies", "type": "text", "label": "Currencies accepted" },
+        { "key": "payment", "type": "text", "label": "Payment accepted" },
+        { "key": "price_range", "type": "text", "label": "Price range", "help": "e.g. €€€€" },
+        { "key": "languages", "type": "lines", "label": "Languages spoken" },
+        { "key": "amenities", "type": "lines", "label": "Amenities" },
+        { "key": "image", "type": "image", "label": "Image" },
+        { "key": "logo", "type": "image", "label": "Logo (organisation)" },
+        { "key": "contact_type", "type": "text", "label": "Contact type (organisation)", "help": "e.g. reservations" }
+      ]},
+      { "key": "restaurant", "label": "AITHER restaurant (structured data)", "fields": [
+        { "key": "name", "type": "text", "label": "Name" },
+        { "key": "description", "type": "textarea", "label": "Description (hotel data, every page)" },
+        { "key": "cuisines", "type": "lines", "label": "Cuisines (hotel data)" },
+        { "key": "price_range", "type": "text", "label": "Price range (hotel data)" },
+        { "key": "page_description", "type": "textarea", "label": "Description (Gastronomy page)" },
+        { "key": "page_cuisines", "type": "lines", "label": "Cuisines (Gastronomy page)" },
+        { "key": "page_price_range", "type": "text", "label": "Price range (Gastronomy page)" }
+      ]},
+      { "key": "spa", "label": "Ocean Spa (structured data)", "fields": [
+        { "key": "name", "type": "text", "label": "Name (hotel data, every page)" },
+        { "key": "description", "type": "textarea", "label": "Description (hotel data)" },
+        { "key": "page_name", "type": "text", "label": "Name (Spa page)" },
+        { "key": "page_description", "type": "textarea", "label": "Description (Spa page)" },
+        { "key": "catalog_name", "type": "text", "label": "Treatments list name" },
+        { "key": "treatments", "type": "lines", "label": "Treatments" }
+      ]},
+      { "key": "robots", "label": "robots.txt (search engines & AI crawlers)", "fields": [
+        { "key": "disallow", "type": "lines", "label": "Paths hidden from all crawlers" },
+        { "key": "allow_bots", "type": "lines", "label": "Crawlers explicitly allowed", "help": "Search engines and AI search/citation crawlers, one name per line." },
+        { "key": "block_bots", "type": "lines", "label": "Crawlers blocked", "help": "e.g. AI training crawlers, one name per line." }
+      ]},
+      { "key": "llms", "label": "llms.txt (summary for AI assistants)", "fields": [
+        { "key": "content", "type": "textarea", "label": "Content", "help": "Markdown. {rooms} is replaced by the list of rooms (English) from WordPress." }
       ]}
     ]}
   }

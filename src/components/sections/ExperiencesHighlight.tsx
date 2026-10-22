@@ -3,17 +3,19 @@ import Image from 'next/image'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { getPage } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Rich } from '@/lib/wp/Rich'
 
 type Locale = 'en' | 'el'
 
 export async function ExperiencesHighlight({ locale = 'en' }: { locale?: Locale }) {
+  const labels = await getLabels('home', locale)
   const c = (await getPage('home')).experiences
 
   return (
     <section
       className="section-padding bg-[#102027]"
-      aria-label="Experiences at Althea Resorts"
+      aria-label={labels.experiences}
     >
       <div className="container-luxury">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">

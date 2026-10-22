@@ -94,7 +94,7 @@ async function main() {
     console.log(`${diffs.length} difference(s):\n` + diffs.join('\n'))
     process.exit(1)
   }
-  console.log('WordPress content matches content.json exactly (settings, 16 pages, all items, terms, media references).')
+  console.log(`WordPress content matches content.json exactly (settings, ${Object.keys(content.pages).length} pages, all items, terms, media references).`)
 }
 
 main().catch((e) => {

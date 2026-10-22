@@ -4,17 +4,19 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { getPage } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Rich } from '@/lib/wp/Rich'
 import { splitParagraphs } from '@/lib/wp/text'
 
 type Locale = 'en' | 'el'
 
 export async function BrandIntro({ locale = 'en' }: { locale?: Locale }) {
+  const labels = await getLabels('home', locale)
   const c = (await getPage('home')).brand_intro
   const paragraphs = splitParagraphs(c.paragraphs[locale])
 
   return (
-    <section className="section-padding bg-[#f2f8fb]" aria-label="About Althea Resorts">
+    <section className="section-padding bg-[#f2f8fb]" aria-label={labels.brand_intro}>
       <div className="container-luxury">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           {/* Left — editorial text block */}

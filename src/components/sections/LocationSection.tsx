@@ -3,19 +3,21 @@ import Image from 'next/image'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { getPage } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Rich } from '@/lib/wp/Rich'
 import { splitParagraphs } from '@/lib/wp/text'
 
 type Locale = 'en' | 'el'
 
 export async function LocationSection({ locale = 'en' }: { locale?: Locale }) {
+  const labels = await getLabels('home', locale)
   const c = (await getPage('home')).location
   const paragraphs = splitParagraphs(c.paragraphs[locale])
 
   return (
     <section
       className="relative section-padding overflow-hidden"
-      aria-label="Location — Corinthia, Greece"
+      aria-label={labels.location}
     >
       <div className="absolute inset-0 bg-[#102027]" />
       <div className="absolute right-0 top-1/2 -translate-y-1/2 font-editorial text-[20vw] font-light text-white/[0.03] leading-none select-none pointer-events-none" aria-hidden="true">

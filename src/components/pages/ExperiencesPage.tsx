@@ -5,19 +5,21 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { getPage, getSettings, src } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import type { Locale } from '@/lib/wp/schema-types'
 import { Paragraphs, Rich, spaced } from '@/lib/wp/Rich'
 import { splitLines } from '@/lib/wp/text'
 
 const LINK = 'text-[#ad8b27] hover:underline font-light'
 
-// Screen-reader labels, enquiry e-mail subjects and reveal timings that differ per language.
+// Reveal timings and links that differ per language.
 const UI = {
-  en: { hero: 'Experiences', events: 'Events at Althea', corporateSubject: 'Corporate Event Enquiry', weddingSubject: 'Wedding Enquiry', spaHref: '/spa', equipmentDelay: 300, corporateCtaDelay: 350 },
-  el: { hero: 'Εμπειρίες', events: 'Εκδηλώσεις στο Althea', corporateSubject: 'Αίτημα Εταιρικής Εκδήλωσης', weddingSubject: 'Αίτημα Γάμου', spaHref: '/el/spa', equipmentDelay: 265, corporateCtaDelay: 280 },
+  en: { spaHref: '/spa', equipmentDelay: 300, corporateCtaDelay: 350 },
+  el: { spaHref: '/el/spa', equipmentDelay: 265, corporateCtaDelay: 280 },
 }
 
 export async function ExperiencesPage({ locale }: { locale: Locale }) {
+  const labels = await getLabels('pages', locale)
   const [c, settings] = await Promise.all([getPage('experiences'), getSettings()])
   const { hero, intro, activities, spa, pool, events, corporate, weddings } = c
   const ui = UI[locale]
@@ -27,7 +29,7 @@ export async function ExperiencesPage({ locale }: { locale: Locale }) {
       {/* Hero */}
       <section
         className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
-        aria-label={ui.hero}
+        aria-label={labels.experiences}
       >
         <Image
           src={src(hero.image)}
@@ -191,7 +193,7 @@ export async function ExperiencesPage({ locale }: { locale: Locale }) {
       </section>
 
       {/* Events header */}
-      <section className="section-padding bg-white" aria-label={ui.events}>
+      <section className="section-padding bg-white" aria-label={labels.events}>
         <div className="container-luxury text-center">
           <ScrollReveal>
             <SectionLabel className="mb-6 justify-center">{events.label[locale]}</SectionLabel>
@@ -267,7 +269,7 @@ export async function ExperiencesPage({ locale }: { locale: Locale }) {
 
               <ScrollReveal delay={ui.corporateCtaDelay}>
                 <a
-                  href={`mailto:${settings.email_reservations}?subject=${ui.corporateSubject}`}
+                  href={`mailto:${settings.email_reservations}?subject=${corporate.email_subject[locale]}`}
                   className="inline-flex items-center gap-2 h-11 px-7
                              text-xs uppercase tracking-[0.2em]
                              bg-[#102027] text-white border border-[#102027]
@@ -322,7 +324,7 @@ export async function ExperiencesPage({ locale }: { locale: Locale }) {
               </ScrollReveal>
               <ScrollReveal delay={250}>
                 <a
-                  href={`mailto:${settings.email_reservations}?subject=${ui.weddingSubject}`}
+                  href={`mailto:${settings.email_reservations}?subject=${weddings.email_subject[locale]}`}
                   className="inline-flex items-center gap-2 h-11 px-7
                              text-xs uppercase tracking-[0.2em]
                              bg-[#102027] text-white border border-[#102027]

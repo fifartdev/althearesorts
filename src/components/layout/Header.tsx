@@ -14,6 +14,7 @@ export function Header({ site }: { site: HeaderData }) {
 
   const isGreek = pathname.startsWith('/el')
   const links = isGreek ? site.nav.el : site.nav.en
+  const labels = isGreek ? site.labels.el : site.labels.en
   const logoHref = isGreek ? '/el' : '/'
   const bookLabel = isGreek ? site.bookLabel.el : site.bookLabel.en
   const journalSlugMatch = !isGreek ? pathname.match(/^\/journal\/(.+)$/) : null
@@ -61,11 +62,11 @@ export function Header({ site }: { site: HeaderData }) {
           {/* Logo */}
           <Link
             href={logoHref}
-            aria-label={isGreek ? 'Althea Resorts — Αρχική' : 'Althea Resorts — Home'}
+            aria-label={labels.home_link}
           >
             <Image
               src="/logos/althea_logo_white-f.png"
-              alt="Althea Resorts"
+              alt={site.siteName}
               width={140}
               height={44}
               className="object-contain"
@@ -76,7 +77,7 @@ export function Header({ site }: { site: HeaderData }) {
           {/* Desktop Navigation */}
           <nav
             className="hidden lg:flex items-center gap-5"
-            aria-label="Primary navigation"
+            aria-label={labels.primary_nav}
           >
             {links.map((link) => (
               <Link
@@ -120,7 +121,7 @@ export function Header({ site }: { site: HeaderData }) {
               className="hidden lg:inline-flex items-center h-9 px-3
                          text-[10px] uppercase tracking-[0.2em] text-white/50
                          hover:text-white transition-colors duration-300"
-              aria-label={isGreek ? 'Switch to English' : 'Εναλλαγή στα Ελληνικά'}
+              aria-label={labels.switch_language}
             >
               {isGreek ? 'EN' : 'ΕΛ'}
             </Link>
@@ -142,7 +143,7 @@ export function Header({ site }: { site: HeaderData }) {
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="lg:hidden flex flex-col gap-1.5 p-1 text-white"
-              aria-label={menuOpen ? (isGreek ? 'Κλείσιμο μενού' : 'Close menu') : (isGreek ? 'Άνοιγμα μενού' : 'Open menu')}
+              aria-label={menuOpen ? labels.close_menu : labels.open_menu}
               aria-expanded={menuOpen}
             >
               <span

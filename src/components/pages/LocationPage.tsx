@@ -4,12 +4,14 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { getItems, getPage, src } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Paragraphs, Rich, spaced } from '@/lib/wp/Rich'
 import type { Locale } from '@/lib/wp/schema-types'
 
 const LINK = 'text-[#ad8b27] hover:underline font-light'
 
 export async function LocationPage({ locale }: { locale: Locale }) {
+  const labels = await getLabels('pages', locale)
   const [c, sights] = await Promise.all([getPage('location'), getItems('althea_sight')])
   const { hero, intro, sights: sightsSection } = c
   const lead = intro.lead[locale]
@@ -18,7 +20,7 @@ export async function LocationPage({ locale }: { locale: Locale }) {
   return (
     <main id="main-content">
       {/* Hero */}
-      <section className="relative pt-40 pb-24 lg:pt-56 lg:pb-32 bg-[#35657a] overflow-hidden" aria-label={locale === 'el' ? 'Τοποθεσία' : 'Location'}>
+      <section className="relative pt-40 pb-24 lg:pt-56 lg:pb-32 bg-[#35657a] overflow-hidden" aria-label={labels.location}>
         <div className="absolute right-0 top-1/2 -translate-y-1/2 font-editorial text-[14vw] font-light text-white/[0.03] leading-none select-none" aria-hidden="true">
           {hero.watermark[locale]}
         </div>

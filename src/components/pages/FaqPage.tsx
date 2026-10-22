@@ -1,11 +1,13 @@
 import React from 'react'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { getItems, getPage, getSettings, getTerms } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import type { Locale } from '@/lib/wp/schema-types'
 import { FaqView, type FaqViewCategory } from './FaqView'
 
 /** FAQ page: FAQPage JSON-LD + content resolved on the server; tabs/accordion in FaqView (client). */
 export async function FaqPage({ locale }: { locale: Locale }) {
+  const labels = await getLabels('pages', locale)
   const [c, faqs, terms, settings] = await Promise.all([
     getPage('faq'),
     getItems('althea_faq'),
@@ -43,7 +45,7 @@ export async function FaqPage({ locale }: { locale: Locale }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <FaqView
-        ariaLabel={locale === 'el' ? 'Συχνές Ερωτήσεις' : 'FAQ'}
+        ariaLabel={labels.faq}
         label={c.hero.label[locale]}
         heading={c.hero.heading[locale]}
         intro={c.hero.intro[locale]}

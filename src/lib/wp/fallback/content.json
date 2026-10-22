@@ -661,7 +661,8 @@
           "keywords": {
             "en": "luxury hotel Corinthia Greece\nboutique resort Xylokastro\nAlthea Resorts\nspa resort near Athens\nhotel Corinthian Gulf\nluxury hotel Greece",
             "el": "πολυτελές ξενοδοχείο Κορινθία\nresort Ξυλόκαστρο\nAlthea Resorts Ελλάδα\nboutique hotel Κορινθία"
-          }
+          },
+          "image": null
         }
       }
     },
@@ -786,7 +787,8 @@
           "keywords": {
             "en": "luxury hotel Greece\nboutique resort Corinthia\nabout Althea Resorts",
             "el": "πολυτελές ξενοδοχείο Ελλάδα\nboutique resort Κορινθία\nAlthea Resorts σχετικά"
-          }
+          },
+          "image": null
         }
       }
     },
@@ -1001,6 +1003,10 @@
           "image_alt": {
             "en": "Conference facilities — Althea Resorts",
             "el": "Αίθουσα συνεδρίων — Althea Resorts"
+          },
+          "email_subject": {
+            "en": "Corporate Event Enquiry",
+            "el": "Αίτημα Εταιρικής Εκδήλωσης"
           }
         },
         "weddings": {
@@ -1026,6 +1032,10 @@
           "image_alt": {
             "en": "Wedding venue — Althea Resorts Corinthia",
             "el": "Γαμήλιος χώρος — Althea Resorts Κορινθία"
+          },
+          "email_subject": {
+            "en": "Wedding Enquiry",
+            "el": "Αίτημα Γάμου"
           }
         },
         "seo": {
@@ -1040,7 +1050,8 @@
           "keywords": {
             "en": "Ocean Spa Althea\nspa Corinthia Greece\nOceanis cosmetics hotel\nwedding venue Corinthia\ncorporate events Greece",
             "el": "Ocean Spa Althea\nspa Κορινθία\nκαλλυντικά Oceanis\nγάμοι Κορινθία\nεταιρικές εκδηλώσεις Ελλάδα"
-          }
+          },
+          "image": null
         }
       }
     },
@@ -1148,6 +1159,18 @@
           "image_alt": {
             "en": "Ocean Spa treatment menu and pricing — Althea Resorts",
             "el": "Κατάλογος θεραπειών και τιμών Ocean Spa — Althea Resorts"
+          },
+          "open_label": {
+            "en": "Open in New Tab",
+            "el": "Άνοιγμα σε Νέα Καρτέλα"
+          },
+          "download_label": {
+            "en": "Download",
+            "el": "Λήψη"
+          },
+          "close_label": {
+            "en": "Close",
+            "el": "Κλείσιμο"
           }
         },
         "philosophy": {
@@ -1189,7 +1212,8 @@
           "keywords": {
             "en": "Ocean Spa Althea\nspa Corinthia Greece\nOceanis cosmetics\nhammam Greece\nwellness hotel Corinthia\nspa treatments Xylokastro",
             "el": "Ocean Spa Althea\nspa Κορινθία\nκαλλυντικά Oceanis\nχαμάμ Ελλάδα\nξενοδοχείο ευεξίας Κορινθία"
-          }
+          },
+          "image": null
         }
       }
     },
@@ -1261,7 +1285,8 @@
           "keywords": {
             "en": "AITHER restaurant\nrooftop dining Corinthia\nGreek gastronomy\nAlthea Resorts restaurant",
             "el": "εστιατόριο AITHER\nεστιατόριο ταράτσας Κορινθία\nελληνική γαστρονομία\nAlthea Resorts εστιατόριο"
-          }
+          },
+          "image": null
         }
       }
     },
@@ -1352,7 +1377,8 @@
           "keywords": {
             "en": "Althea Resorts location\nXylokastro hotel\nCorinthia Greece\nnear Ancient Corinth\nhotel near Athens",
             "el": "τοποθεσία Althea Resorts\nξενοδοχείο Ξυλόκαστρο\nΚορινθία Ελλάδα\nκοντά στην Αρχαία Κόρινθο\nξενοδοχείο κοντά στην Αθήνα"
-          }
+          },
+          "image": null
         }
       }
     },
@@ -1393,7 +1419,8 @@
           "keywords": {
             "en": "Althea Resorts offers\nStay 3 Pay 2 hotel offer\nluxury resort near Athens\ndirect booking hotel Corinthia\nfree night hotel offer Greece",
             "el": "προσφορές Althea Resorts\nμείνετε 3 πληρώστε 2\nluxury resort κοντά Αθήνα\nάμεση κράτηση ξενοδοχείο Κορινθία\nδωρεάν διανυκτέρευση προσφορά Ελλάδα"
-          }
+          },
+          "image": null
         }
       }
     },
@@ -1484,6 +1511,85 @@
           "keywords": {
             "en": "contact Althea Resorts\nhotel phone number Corinthia\nreservations Greece",
             "el": "επικοινωνία Althea Resorts\nτηλέφωνο ξενοδοχείο Κορινθία\nκρατήσεις Ελλάδα"
+          },
+          "image": null
+        },
+        "form": {
+          "heading": {
+            "en": "Send a Message",
+            "el": "Στείλτε Μήνυμα"
+          },
+          "first_name": {
+            "en": "First Name",
+            "el": "Όνομα"
+          },
+          "last_name": {
+            "en": "Last Name",
+            "el": "Επώνυμο"
+          },
+          "email": {
+            "en": "Email Address",
+            "el": "Διεύθυνση Email"
+          },
+          "phone": {
+            "en": "Phone",
+            "el": "Τηλέφωνο"
+          },
+          "optional": {
+            "en": "(optional)",
+            "el": "(προαιρετικό)"
+          },
+          "subject": {
+            "en": "Subject",
+            "el": "Θέμα"
+          },
+          "type_reservation": {
+            "en": "Reservation Enquiry",
+            "el": "Αίτημα Κράτησης"
+          },
+          "type_wedding": {
+            "en": "Wedding Enquiry",
+            "el": "Αίτημα Γάμου"
+          },
+          "type_corporate": {
+            "en": "Corporate Events",
+            "el": "Εταιρικές Εκδηλώσεις"
+          },
+          "type_restaurant": {
+            "en": "Restaurant Reservation",
+            "el": "Κράτηση Εστιατορίου"
+          },
+          "type_general": {
+            "en": "General Enquiry",
+            "el": "Γενική Ερώτηση"
+          },
+          "message": {
+            "en": "Message",
+            "el": "Μήνυμα"
+          },
+          "submit": {
+            "en": "Send Message",
+            "el": "Αποστολή"
+          },
+          "submitting": {
+            "en": "Sending…",
+            "el": "Αποστολή…"
+          },
+          "success_title": {
+            "en": "Message Sent",
+            "el": "Το Μήνυμα Εστάλη"
+          },
+          "success_body": {
+            "en": "Thank you for reaching out. Our team will get back to you within 24 hours.",
+            "el": "Σας ευχαριστούμε για την επικοινωνία. Η ομάδα μας θα σας απαντήσει εντός 24 ωρών."
+          },
+          "reset": {
+            "en": "Send Another",
+            "el": "Νέο Μήνυμα"
+          },
+          "error": {
+            "en": "Something went wrong. Please try again.",
+            "el": "Κάτι πήγε στραβά. Παρακαλούμε δοκιμάστε ξανά."
           }
         }
       }
@@ -1587,7 +1693,8 @@
           "keywords": {
             "en": "Althea Resorts rooms\nluxury suites Corinthia\nprivate pool suite Greece\nloft suite jacuzzi Greece",
             "el": "δωμάτια Althea Resorts\nπολυτελείς σουίτες Κορινθία\nσουίτα ιδιωτική πισίνα Ελλάδα\nloft σουίτα jacuzzi Ελλάδα"
-          }
+          },
+          "image": null
         }
       }
     },
@@ -1725,7 +1832,8 @@
           "keywords": {
             "en": "Althea Resorts blog\nCorinthia travel guide\nGreece hotel journal\nXylokastro travel\nAITHER restaurant Corinthia",
             "el": "blog Althea Resorts\nοδηγός Κορινθία\nξενοδοχείο Ελλάδα ημερολόγιο\nταξίδι Ξυλόκαστρο\nεστιατόριο AITHER Κορινθία"
-          }
+          },
+          "image": null
         }
       }
     },
@@ -1766,7 +1874,8 @@
           "keywords": {
             "en": "Althea Resorts gallery\nhotel photos Corinthia\nluxury resort Greece photos\nCorinthian Gulf views",
             "el": "Althea Resorts γκαλερί\nφωτογραφίες ξενοδοχείο Κορινθία\nπολυτελές resort Ελλάδα φωτογραφίες\nθέα Κορινθιακός Κόλπος"
-          }
+          },
+          "image": null
         }
       }
     },
@@ -1816,7 +1925,8 @@
           "keywords": {
             "en": "Althea Resorts FAQ\nhotel questions Corinthia\ncheck-in time Althea\nOcean Spa booking",
             "el": "Althea Resorts FAQ\nερωτήσεις ξενοδοχείο Κορινθία\nώρα check-in Althea\nOcean Spa κράτηση"
-          }
+          },
+          "image": null
         }
       }
     },
@@ -1850,7 +1960,8 @@
           },
           "keywords": {
             "en": "Althea Resorts privacy policy\nGDPR\ndata protection"
-          }
+          },
+          "image": null
         }
       }
     },
@@ -1884,7 +1995,242 @@
           },
           "keywords": {
             "en": "Althea Resorts terms\nbooking conditions\nhotel terms and conditions"
+          },
+          "image": null
+        }
+      }
+    },
+    "a11y": {
+      "sections": {
+        "layout": {
+          "skip_link": {
+            "en": "Skip to main content",
+            "el": "Μετάβαση στο κύριο περιεχόμενο"
+          },
+          "home_link": {
+            "en": "Althea Resorts — Home",
+            "el": "Althea Resorts — Αρχική"
+          },
+          "primary_nav": {
+            "en": "Primary navigation",
+            "el": ""
+          },
+          "switch_language": {
+            "en": "Εναλλαγή στα Ελληνικά",
+            "el": "Switch to English"
+          },
+          "open_menu": {
+            "en": "Open menu",
+            "el": "Άνοιγμα μενού"
+          },
+          "close_menu": {
+            "en": "Close menu",
+            "el": "Κλείσιμο μενού"
+          },
+          "quick_booking": {
+            "en": "Quick booking",
+            "el": "Γρήγορη κράτηση"
+          },
+          "floating_book": {
+            "en": "Book your stay at Althea Resorts",
+            "el": ""
+          },
+          "final_cta": {
+            "en": "Book your stay",
+            "el": ""
           }
+        },
+        "home": {
+          "hero": {
+            "en": "Hero — Althea Resorts",
+            "el": ""
+          },
+          "brand_intro": {
+            "en": "About Althea Resorts",
+            "el": ""
+          },
+          "rooms": {
+            "en": "Rooms and Suites",
+            "el": ""
+          },
+          "experiences": {
+            "en": "Experiences at Althea Resorts",
+            "el": ""
+          },
+          "gastronomy": {
+            "en": "Gastronomy at Althea Resorts",
+            "el": ""
+          },
+          "gallery": {
+            "en": "Gallery preview",
+            "el": ""
+          },
+          "testimonials": {
+            "en": "Guest testimonials",
+            "el": ""
+          },
+          "location": {
+            "en": "Location — Corinthia, Greece",
+            "el": ""
+          },
+          "journal": {
+            "en": "Blog — Althea Articles",
+            "el": ""
+          },
+          "direct_booking": {
+            "en": "Reasons to book directly",
+            "el": ""
+          }
+        },
+        "pages": {
+          "about": {
+            "en": "About Us",
+            "el": "Σχετικά με Εμάς"
+          },
+          "accommodation": {
+            "en": "Accommodation hero",
+            "el": "Δωμάτια"
+          },
+          "accommodation_included": {
+            "en": "All rooms include",
+            "el": "Παροχές σε όλα τα δωμάτια"
+          },
+          "room_gallery": {
+            "en": "Room photo gallery",
+            "el": "Φωτογραφικό υλικό"
+          },
+          "experiences": {
+            "en": "Experiences",
+            "el": "Εμπειρίες"
+          },
+          "events": {
+            "en": "Events at Althea",
+            "el": "Εκδηλώσεις στο Althea"
+          },
+          "spa": {
+            "en": "Ocean Spa",
+            "el": ""
+          },
+          "gastronomy": {
+            "en": "Gastronomy",
+            "el": "Γαστρονομία"
+          },
+          "aither": {
+            "en": "AITHER rooftop restaurant",
+            "el": "Εστιατόριο AITHER"
+          },
+          "gallery": {
+            "en": "Gallery",
+            "el": "Γκαλερί"
+          },
+          "location": {
+            "en": "Location",
+            "el": "Τοποθεσία"
+          },
+          "offers": {
+            "en": "Offers",
+            "el": "Προσφορές"
+          },
+          "faq": {
+            "en": "FAQ",
+            "el": "Συχνές Ερωτήσεις"
+          },
+          "blog": {
+            "en": "Blog",
+            "el": ""
+          },
+          "related": {
+            "en": "More articles from the blog",
+            "el": "Περισσότερα άρθρα"
+          },
+          "contact": {
+            "en": "Contact",
+            "el": "Επικοινωνία"
+          },
+          "contact_info": {
+            "en": "Email us at {email}",
+            "el": "Στείλτε μας email στο {email}"
+          },
+          "contact_reservations": {
+            "en": "Email reservations at {email}",
+            "el": "Email κρατήσεων στο {email}"
+          },
+          "contact_map": {
+            "en": "Map — Althea Resorts location",
+            "el": "Χάρτης — Τοποθεσία Althea Resorts"
+          },
+          "contact_form": {
+            "en": "Contact form",
+            "el": ""
+          }
+        }
+      }
+    },
+    "seo_geo": {
+      "sections": {
+        "defaults": {
+          "share_image": {
+            "url": "/og-default.jpg"
+          },
+          "room_keywords": {
+            "en": "luxury room Corinthia\nbook hotel room Greece",
+            "el": "πολυτελές δωμάτιο Κορινθία\nκράτηση δωματίου Ελλάδα"
+          },
+          "article_keywords": {
+            "en": "Althea Resorts blog\nCorinthia\nXylokastro Greece",
+            "el": "Althea Resorts blog\nΚορινθία\nΞυλόκαστρο Ελλάδα"
+          }
+        },
+        "hotel": {
+          "name": "Althea Resorts",
+          "alternate_name": "Althea Exclusive Resorts & Spa",
+          "description": "A luxury boutique resort on the hillside of Ano Loutro, near Xylokastro, Corinthia, Greece. 60 minutes from Athens. 41 rooms and suites, Ocean Spa, and rooftop restaurant AITHER.",
+          "street": "Ano Loutro",
+          "locality": "Xylokastro",
+          "region": "Corinthia",
+          "postal_code": "20400",
+          "country": "GR",
+          "star_rating": "5",
+          "rooms": "41",
+          "checkin": "15:00",
+          "checkout": "11:00",
+          "currencies": "EUR",
+          "payment": "Cash, Credit Card, Debit Card",
+          "price_range": "€€€€",
+          "languages": "English\nGreek\nFrench",
+          "amenities": "Ocean Spa\nSauna\nHammam\nSwimming Pool\nRooftop Restaurant\nPool Bar\nFree WiFi\nConference Room\nFitness Centre\nYoga Room\nAir Conditioning\nParking",
+          "image": {
+            "url": "/og-default.jpg"
+          },
+          "logo": {
+            "url": "/logos/althea_logo_white-f.png"
+          },
+          "contact_type": "reservations"
+        },
+        "restaurant": {
+          "name": "AITHER",
+          "description": "Rooftop restaurant with panoramic views of the Corinthian Gulf. Mediterranean cuisine told through a Greek lens.",
+          "cuisines": "Greek\nMediterranean",
+          "price_range": "€€€€",
+          "page_description": "Rooftop restaurant at Althea Resorts — Mediterranean cuisine told through a Greek lens, with panoramic views of the Corinthian Gulf.",
+          "page_cuisines": "Mediterranean\nGreek",
+          "page_price_range": "€€€"
+        },
+        "spa": {
+          "name": "Ocean Spa",
+          "description": "Full-service spa with sauna, hammam, ice bath, dedicated pool, yoga room, gym, and three treatment cabins. Treatments use Oceanis certified Greek cosmetics.",
+          "page_name": "Ocean Spa at Althea Resorts",
+          "page_description": "The Ocean Spa — sauna, hammam, ice bath, dedicated spa pool, three treatment cabins, yoga room, fully equipped gym, and Oceanis boutique.",
+          "catalog_name": "Spa Treatments",
+          "treatments": "Signature Body Ritual\nDeep Tissue Massage\nAromatherapy Massage"
+        },
+        "robots": {
+          "disallow": "/admin/\n/api/",
+          "allow_bots": "Google-Extended\nBingbot\nFacebookBot\nTwitterbot\nChatGPT-User\nClaude-Web",
+          "block_bots": "GPTBot\nanthropic-ai\nCCBot\nOmgilibot"
+        },
+        "llms": {
+          "content": "# Althea Resorts\n\n> Althea Resorts is a 5-star luxury boutique hotel in Ano Loutro, Xylokastro, Corinthia, Greece — 60 minutes from Athens. The property features 41 rooms and suites with Corinthian Gulf views, the Ocean Spa by Oceanis, and rooftop restaurant AITHER. Direct bookings: https://althearesort.reserve-online.net\n\n## Rooms & Suites\n\n{rooms}\n\n## Experiences & Facilities\n\n- [Experiences](https://althearesorts.com/experiences): Swimming pool, spa, weddings, conferences, outdoor activities\n- [Ocean Spa](https://althearesorts.com/spa): Oceanis wellness treatments, hammam, 3 treatment cabins\n- [Gastronomy](https://althearesorts.com/gastronomy): AITHER rooftop restaurant, Lobby Bar, Pool Bar, Beach Bar, Main Restaurant\n\n## Information\n\n- [About Althea Resorts](https://althearesorts.com/about)\n- [Location](https://althearesorts.com/location): Ano Loutro, Xylokastro, Corinthia — 60 min from Athens, near Ancient Corinth and the Corinthian Gulf\n- [Photo Gallery](https://althearesorts.com/gallery)\n- [Special Offers](https://althearesorts.com/offers): 10% direct booking discount\n- [Frequently Asked Questions](https://althearesorts.com/faq)\n- [Journal](https://althearesorts.com/journal)\n- [Contact](https://althearesorts.com/contact): Tel +30 27430 24063 · reservations@althearesorts.com · Ano Loutro, Xylokastro 20400, Corinthia, Greece\n\n## Greek Language Version\n\n- [Αρχική (Home)](https://althearesorts.com/el)\n- [Διαμονή (Accommodation)](https://althearesorts.com/el/accommodation)\n- [Εμπειρίες (Experiences)](https://althearesorts.com/el/experiences)\n- [Ocean Spa](https://althearesorts.com/el/spa)\n- [Γαστρονομία (Gastronomy)](https://althearesorts.com/el/gastronomy)\n- [Συλλογή (Gallery)](https://althearesorts.com/el/gallery)\n- [Σχετικά (About)](https://althearesorts.com/el/about)\n- [Τοποθεσία (Location)](https://althearesorts.com/el/location)\n- [Προσφορές (Offers)](https://althearesorts.com/el/offers)\n- [Επικοινωνία (Contact)](https://althearesorts.com/el/contact)\n- [Συχνές Ερωτήσεις (FAQ)](https://althearesorts.com/el/faq)\n\n## Optional\n\n- [Privacy Policy](https://althearesorts.com/privacy-policy)\n- [Terms & Conditions](https://althearesorts.com/terms)"
         }
       }
     }
@@ -1937,7 +2283,22 @@
           "features": {
             "en": "King size or twin beds\nBalcony\nEnsuite bathroom\nFree WiFi\nAir conditioning\nFlat-screen TV\nMinibar\nSoundproofing",
             "el": "Κλιματισμός\nΕπίπεδη τηλεόραση\nΜπαλκόνι\nΜπάνιο En suite\nΜίνι μπαρ\nΗχομόνωση\nWi-Fi\nΚαλλυντικά Oceanis"
-          }
+          },
+          "seo_title": {
+            "en": "",
+            "el": ""
+          },
+          "seo_description": {
+            "en": "",
+            "el": ""
+          },
+          "seo_keywords": {
+            "en": "",
+            "el": ""
+          },
+          "schema_bed": "King or Twin",
+          "schema_occupancy_min": "1",
+          "schema_occupancy_max": "2"
         }
       },
       {
@@ -2034,7 +2395,22 @@
           "features": {
             "en": "King size or twin beds\nBalcony with view\nEnsuite bathroom\nFree WiFi\nAir conditioning\nFlat-screen TV\nMinibar\nSoundproofing",
             "el": "Θέα βουνό ή κόλπο\nΚλιματισμός\nΕπίπεδη τηλεόραση\nΜπαλκόνι με θέα\nΜπάνιο En suite\nΜίνι μπαρ\nWi-Fi\nΚαλλυντικά Oceanis"
-          }
+          },
+          "seo_title": {
+            "en": "",
+            "el": ""
+          },
+          "seo_description": {
+            "en": "",
+            "el": ""
+          },
+          "seo_keywords": {
+            "en": "",
+            "el": ""
+          },
+          "schema_bed": "King or Twin",
+          "schema_occupancy_min": "1",
+          "schema_occupancy_max": "2"
         }
       },
       {
@@ -2131,7 +2507,22 @@
           "features": {
             "en": "King size or twin beds\nSharing pool\nBalcony\nEnsuite bathroom\nFree WiFi\nAir conditioning\nFlat-screen TV\nMinibar\nSoundproofing",
             "el": "Ιδιωτική πισίνα\nΚλιματισμός\nΕπίπεδη τηλεόραση\nΜπαλκόνι\nΜπάνιο En suite\nΜίνι μπαρ\nWi-Fi\nΚαλλυντικά Oceanis"
-          }
+          },
+          "seo_title": {
+            "en": "",
+            "el": ""
+          },
+          "seo_description": {
+            "en": "",
+            "el": ""
+          },
+          "seo_keywords": {
+            "en": "",
+            "el": ""
+          },
+          "schema_bed": "King or Twin",
+          "schema_occupancy_min": "1",
+          "schema_occupancy_max": "2"
         }
       },
       {
@@ -2180,7 +2571,22 @@
           "features": {
             "en": "King size or twin beds\nSea view\nTerrace or Balcony\nEnsuite bathroom\nFree WiFi\nAir conditioning\nFlat-screen TV\nMinibar\nSoundproofing",
             "el": "Θέα θάλασσα\nΚλιματισμός\nΕπίπεδη τηλεόραση\nΜπαλκόνι\nΜπάνιο En suite\nΜίνι μπαρ\nWi-Fi\nΚαλλυντικά Oceanis"
-          }
+          },
+          "seo_title": {
+            "en": "",
+            "el": ""
+          },
+          "seo_description": {
+            "en": "",
+            "el": ""
+          },
+          "seo_keywords": {
+            "en": "",
+            "el": ""
+          },
+          "schema_bed": "King or Twin",
+          "schema_occupancy_min": "1",
+          "schema_occupancy_max": "2"
         }
       },
       {
@@ -2229,7 +2635,22 @@
           "features": {
             "en": "King size or twin beds\n1 bedroom\n1 living room\nPrivate pool\nBalcony with view\nEnsuite bathroom\nFree WiFi\nAir conditioning\nFlat-screen TV\nSoundproofing",
             "el": "Ιδιωτική πισίνα\nΧωριστό καθιστικό\nΚλιματισμός\nΒεράντα με θέα\nΜπάνιο En suite\nΗχομόνωση\nWi-Fi\nΚαλλυντικά Oceanis"
-          }
+          },
+          "seo_title": {
+            "en": "",
+            "el": ""
+          },
+          "seo_description": {
+            "en": "",
+            "el": ""
+          },
+          "seo_keywords": {
+            "en": "",
+            "el": ""
+          },
+          "schema_bed": "King or Twin",
+          "schema_occupancy_min": "1",
+          "schema_occupancy_max": "2"
         }
       },
       {
@@ -2287,7 +2708,22 @@
           "features": {
             "en": "King size or twin beds\n1 bedroom\n1 living room with sofa bed\nOutdoor Jacuzzi\nBalcony with view\nEnsuite bathroom\nFree WiFi\nAir conditioning\nFlat-screen TV\nMinibar\nSoundproofing",
             "el": "Εξωτερικό Jacuzzi\nΔιώροφη διαρρύθμιση\nΠανοραμική θέα\nΜπαλκόνι με θέα\nΜπάνιο En suite\nΜίνι μπαρ\nWi-Fi\nΚαλλυντικά Oceanis"
-          }
+          },
+          "seo_title": {
+            "en": "",
+            "el": ""
+          },
+          "seo_description": {
+            "en": "",
+            "el": ""
+          },
+          "seo_keywords": {
+            "en": "",
+            "el": ""
+          },
+          "schema_bed": "King or Twin",
+          "schema_occupancy_min": "1",
+          "schema_occupancy_max": "2"
         }
       }
     ],

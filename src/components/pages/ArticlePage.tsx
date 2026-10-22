@@ -9,16 +9,12 @@ import { GoldLine } from '@/components/ui/GoldLine'
 import { generateMetadata as genMeta } from '@/lib/seo'
 import { SITE_URL } from '@/lib/constants'
 import { getPage, getPosts, src } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { siteDefaults } from '@/lib/wp/metadata'
 import { Rich, decodeEntities } from '@/lib/wp/Rich'
 import { blocksToSections, parseBlocks, splitLines } from '@/lib/wp/text'
 import type { Item, Locale } from '@/lib/wp/schema-types'
 
-const DEFAULT_KEYWORDS = {
-  en: ['Althea Resorts blog', 'Corinthia', 'Xylokastro Greece'],
-  el: ['Althea Resorts blog', 'Κορινθία', 'Ξυλόκαστρο Ελλάδα'],
-}
-const ARIA_RELATED = { en: 'More articles from the blog', el: 'Περισσότερα άρθρα' }
 
 export async function articleStaticParams(locale: Locale) {
   return (await getPosts(locale)).map((p) => ({ slug: p.fields.route_slug }))
@@ -35,6 +31,7 @@ export async function articleMetadata(slug: string, locale: Locale): Promise<Met
   const post = (await getPosts(locale)).find((p) => p.fields.route_slug === slug)
   if (!post) return {}
   const f = post.fields
+  const [geo, site] = await Promise.all([getPage('seo_geo'), siteDefaults(locale)])
   const keywords = splitLines(f.seo_keywords)
   const url = `${SITE_URL}${locale === 'el' ? '/el' : ''}/journal/${slug}`
   const other = await translationUrl(post, locale)
@@ -45,15 +42,16 @@ export async function articleMetadata(slug: string, locale: Locale): Promise<Met
   return genMeta({
     title: f.seo_title || post.title,
     description: f.seo_description || post.excerpt,
-    keywords: keywords.length ? keywords : [f.category, ...DEFAULT_KEYWORDS[locale]],
+    keywords: keywords.length ? keywords : [f.category, ...splitLines(geo.defaults.article_keywords[locale])],
     canonical: url,
     image: src(post.image),
-    site: await siteDefaults(locale),
+    site,
     languages,
   })
 }
 
 export async function ArticlePage({ slug, locale }: { slug: string; locale: Locale }) {
+  const labels = await getLabels('pages', locale)
   const [posts, c] = await Promise.all([getPosts(locale), getPage('journal')])
   const post = posts.find((p) => p.fields.route_slug === slug)
   if (!post) notFound()
@@ -200,7 +198,7 @@ export async function ArticlePage({ slug, locale }: { slug: string; locale: Loca
 
       {/* Related stories */}
       {related.length > 0 && (
-        <section className="section-padding bg-[#faf8f4]" aria-label={ARIA_RELATED[locale]}>
+        <section className="section-padding bg-[#faf8f4]" aria-label={labels.related}>
           <div className="container-luxury">
             <ScrollReveal>
               <SectionLabel className="mb-10">{a.more_heading[locale]}</SectionLabel>

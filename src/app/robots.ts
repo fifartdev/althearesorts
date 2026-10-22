@@ -1,27 +1,16 @@
 import type { MetadataRoute } from 'next'
 import { SITE_URL } from '@/lib/constants'
+import { getPage } from '@/lib/wp/api'
+import { splitLines } from '@/lib/wp/text'
 
-export default function robots(): MetadataRoute.Robots {
+/** robots.txt from the "SEO & GEO" page in WordPress: hidden paths, allowed and blocked crawlers. */
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const { robots: r } = await getPage('seo_geo')
   return {
     rules: [
-      {
-        userAgent: '*',
-        allow: '/',
-        disallow: ['/admin/', '/api/'],
-      },
-      // Allow major search engine crawlers and AI citation crawlers
-      { userAgent: 'Google-Extended', allow: '/' },
-      { userAgent: 'Bingbot', allow: '/' },
-      { userAgent: 'FacebookBot', allow: '/' },
-      { userAgent: 'Twitterbot', allow: '/' },
-      // Allow real-time AI retrieval crawlers (web search / citation only — not training)
-      { userAgent: 'ChatGPT-User', allow: '/' },
-      { userAgent: 'Claude-Web', allow: '/' },
-      // Block AI training scrapers — content is proprietary
-      { userAgent: 'GPTBot', disallow: '/' },
-      { userAgent: 'anthropic-ai', disallow: '/' },
-      { userAgent: 'CCBot', disallow: '/' },
-      { userAgent: 'Omgilibot', disallow: '/' },
+      { userAgent: '*', allow: '/', disallow: splitLines(r.disallow) },
+      ...splitLines(r.allow_bots).map((userAgent) => ({ userAgent, allow: '/' })),
+      ...splitLines(r.block_bots).map((userAgent) => ({ userAgent, disallow: '/' })),
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,

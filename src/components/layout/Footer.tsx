@@ -22,7 +22,7 @@ export function Footer({ locale = 'en', site }: { locale?: Locale; site: Site })
             <div>
               <Image
                 src="/logos/althea_logo_white-f.png"
-                alt="Althea Resorts"
+                alt={settings.site_name}
                 width={160}
                 height={50}
                 className="object-contain"

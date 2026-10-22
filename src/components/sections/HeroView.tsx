@@ -7,7 +7,7 @@ import type { HomePage } from '@/lib/wp/schema-types'
 
 type Locale = 'en' | 'el'
 
-export function HeroView({ locale = 'en', c, bookingUrl }: { locale?: Locale; c: HomePage['hero']; bookingUrl: string }) {
+export function HeroView({ locale = 'en', c, bookingUrl, ariaLabel }: { locale?: Locale; c: HomePage['hero']; bookingUrl: string; ariaLabel: string }) {
   const headlineRef = useRef<HTMLHeadingElement>(null)
   const subtitleRef = useRef<HTMLParagraphElement>(null)
   const ctaRef = useRef<HTMLDivElement>(null)
@@ -46,7 +46,7 @@ export function HeroView({ locale = 'en', c, bookingUrl }: { locale?: Locale; c:
   return (
     <section
       className="relative h-screen min-h-[600px] flex items-end overflow-hidden"
-      aria-label="Hero — Althea Resorts"
+      aria-label={ariaLabel}
     >
       {/* Background image */}
       <div className="absolute inset-0">

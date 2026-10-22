@@ -3,10 +3,8 @@
 import React, { useState, useEffect } from 'react'
 import { cn } from '@/lib/cn'
 
-export function StickyBookingBar({ locale = 'en', tagline, cta, bookingUrl }: { locale?: 'en' | 'el'; tagline: string; cta: string; bookingUrl: string }) {
+export function StickyBookingBar({ tagline, cta, bookingUrl, ariaLabel }: { tagline: string; cta: string; bookingUrl: string; ariaLabel: string }) {
   const [visible, setVisible] = useState(false)
-  // Screen-reader label for the bar (UI microcopy, stays in code).
-  const ariaLabel = locale === 'el' ? 'Γρήγορη κράτηση' : 'Quick booking'
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.8)
@@ -46,7 +44,7 @@ export function StickyBookingBar({ locale = 'en', tagline, cta, bookingUrl }: { 
   )
 }
 
-export function FloatingBookingButton({ label, bookingUrl }: { label: string; bookingUrl: string }) {
+export function FloatingBookingButton({ label, bookingUrl, ariaLabel }: { label: string; bookingUrl: string; ariaLabel: string }) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -68,7 +66,7 @@ export function FloatingBookingButton({ label, bookingUrl }: { label: string; bo
         'transition-all duration-500',
         visible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0 pointer-events-none'
       )}
-      aria-label="Book your stay at Althea Resorts"
+      aria-label={ariaLabel}
     >
       {label}
     </a>

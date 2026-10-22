@@ -3,15 +3,17 @@ import Image from 'next/image'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { getPage } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Rich } from '@/lib/wp/Rich'
 
 type Locale = 'en' | 'el'
 
 export async function JournalPreview({ locale = 'en' }: { locale?: Locale }) {
+  const labels = await getLabels('home', locale)
   const c = (await getPage('home')).journal_preview
 
   return (
-    <section className="section-padding bg-white" aria-label="Blog — Althea Articles">
+    <section className="section-padding bg-white" aria-label={labels.journal}>
       <div className="container-luxury">
         <div className="flex items-end justify-between mb-12">
           <div>

@@ -5,14 +5,11 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { getItems, getPage, getSettings, src, tr } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Paragraphs, Rich, spaced } from '@/lib/wp/Rich'
 import { splitLines } from '@/lib/wp/text'
 import type { Item, Locale } from '@/lib/wp/schema-types'
 
-const ARIA = {
-  en: { hero: 'Accommodation hero', included: 'All rooms include' },
-  el: { hero: 'Δωμάτια', included: 'Παροχές σε όλα τα δωμάτια' },
-}
 
 /** Room texts in the page language (English fallback per field); the Greek section label is the view. */
 function roomTexts(room: Item<'althea_room'>, locale: Locale) {
@@ -27,6 +24,7 @@ function roomTexts(room: Item<'althea_room'>, locale: Locale) {
 }
 
 export async function AccommodationPage({ locale }: { locale: Locale }) {
+  const labels = await getLabels('pages', locale)
   const [c, rooms, settings] = await Promise.all([getPage('accommodation'), getItems('althea_room'), getSettings()])
   const { hero, intro, list, included } = c
   const roomBase = locale === 'el' ? '/el/accommodation' : '/accommodation'
@@ -37,7 +35,7 @@ export async function AccommodationPage({ locale }: { locale: Locale }) {
       {/* ── Hero ── */}
       <section
         className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
-        aria-label={ARIA[locale].hero}
+        aria-label={labels.accommodation}
       >
         <Image
           src={src(hero.image)}
@@ -203,7 +201,7 @@ export async function AccommodationPage({ locale }: { locale: Locale }) {
       })}
 
       {/* ── All rooms include ── */}
-      <section className="section-padding bg-[#faf8f4]" aria-label={ARIA[locale].included}>
+      <section className="section-padding bg-[#faf8f4]" aria-label={labels.accommodation_included}>
         <div className="container-luxury">
           <div className="text-center mb-14">
             <ScrollReveal>

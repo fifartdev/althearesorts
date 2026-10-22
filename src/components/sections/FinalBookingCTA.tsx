@@ -1,18 +1,20 @@
 import React from 'react'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { getPage, getSettings } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Rich } from '@/lib/wp/Rich'
 
 type Locale = 'en' | 'el'
 
 export async function FinalBookingCTA({ locale = 'en' }: { locale?: Locale }) {
+  const labels = await getLabels('layout', locale)
   const [shared, settings] = await Promise.all([getPage('shared'), getSettings()])
   const c = shared.final_cta
 
   return (
     <section
       className="relative py-32 lg:py-48 overflow-hidden"
-      aria-label="Book your stay"
+      aria-label={labels.final_cta}
     >
       <div className="absolute inset-0 bg-[#f7f4ef]" />
       <div

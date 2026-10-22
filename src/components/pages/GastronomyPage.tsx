@@ -4,24 +4,12 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
+import { buildRestaurantSchema } from '@/lib/seo'
 import { getItems, getPage, getSettings, src } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Paragraphs, Rich } from '@/lib/wp/Rich'
 import type { Locale } from '@/lib/wp/schema-types'
 
-// Structured data is only on the English page (as before the CMS migration).
-const aithirSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Restaurant',
-  '@id': 'https://althearesorts.com/gastronomy#aither',
-  name: 'AITHER',
-  description: 'Rooftop restaurant at Althea Resorts — Mediterranean cuisine told through a Greek lens, with panoramic views of the Corinthian Gulf.',
-  url: 'https://althearesorts.com/gastronomy',
-  servesCuisine: ['Mediterranean', 'Greek'],
-  priceRange: '€€€',
-  containedInPlace: {
-    '@id': 'https://althearesorts.com/#hotel',
-  },
-}
 
 // Section backgrounds per venue (layout stays in code; new venues alternate).
 const VENUE_BG: Record<string, string> = {
@@ -31,12 +19,11 @@ const VENUE_BG: Record<string, string> = {
   'pool-bar': 'bg-[#dde6ea]',
 }
 
-const ARIA = {
-  en: { hero: 'Gastronomy', aither: 'AITHER rooftop restaurant' },
-  el: { hero: 'Γαστρονομία', aither: 'Εστιατόριο AITHER' },
-}
 
 export async function GastronomyPage({ locale }: { locale: Locale }) {
+  // Structured data is only on the English page (as before the CMS migration).
+  const geo = await getPage('seo_geo')
+  const labels = await getLabels('pages', locale)
   const [c, venues, settings] = await Promise.all([getPage('gastronomy'), getItems('althea_venue'), getSettings()])
   const { hero, aither } = c
   const hasQuote = Boolean(aither.quote[locale])
@@ -45,14 +32,14 @@ export async function GastronomyPage({ locale }: { locale: Locale }) {
       {locale === 'en' && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(aithirSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildRestaurantSchema(geo)) }}
         />
       )}
     <main id="main-content">
       {/* Hero */}
       <section
         className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
-        aria-label={ARIA[locale].hero}
+        aria-label={labels.gastronomy}
       >
         <Image
           src={src(hero.image)}
@@ -81,7 +68,7 @@ export async function GastronomyPage({ locale }: { locale: Locale }) {
       </section>
 
       {/* AITHER featured section */}
-      <section id="aither" className="section-padding bg-[#e8e4dd]" aria-label={ARIA[locale].aither}>
+      <section id="aither" className="section-padding bg-[#e8e4dd]" aria-label={labels.aither}>
         <div className="container-luxury">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>

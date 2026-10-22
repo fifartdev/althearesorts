@@ -164,6 +164,13 @@ async function migrateMedia() {
   await pool(refs, 3, async (ref) => {
     const label = ref.key
     try {
+      // Remote images (Unsplash) are not byte-identical between downloads: once uploaded, keep that copy.
+      const uploaded = !ref.url.startsWith('/') && bySource.get(ref.key)
+      if (uploaded) {
+        mediaIds.set(ref.key, { id: uploaded.id, url: uploaded.url, hash: uploaded.hash })
+        record('media', 'skipped')
+        return
+      }
       const src = await loadSource(ref)
       const hash = sha1(src.data)
       const existing = bySource.get(ref.key) ?? byHash.get(hash)

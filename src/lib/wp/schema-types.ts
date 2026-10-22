@@ -173,6 +173,7 @@ export type HomePage = {
     title: { en: string; el: string }
     description: { en: string; el: string }
     keywords: { en: string; el: string }
+    image: Media | null
   }
 }
 
@@ -215,6 +216,7 @@ export type AboutPage = {
     title: { en: string; el: string }
     description: { en: string; el: string }
     keywords: { en: string; el: string }
+    image: Media | null
   }
 }
 
@@ -276,6 +278,7 @@ export type ExperiencesPage = {
     cta: { en: string; el: string }
     image: Media | null
     image_alt: { en: string; el: string }
+    email_subject: { en: string; el: string }
   }
   weddings: {
     label: { en: string; el: string }
@@ -284,11 +287,13 @@ export type ExperiencesPage = {
     cta: { en: string; el: string }
     image: Media | null
     image_alt: { en: string; el: string }
+    email_subject: { en: string; el: string }
   }
   seo: {
     title: { en: string; el: string }
     description: { en: string; el: string }
     keywords: { en: string; el: string }
+    image: Media | null
   }
 }
 
@@ -328,6 +333,9 @@ export type SpaPage = {
     trigger_label: { en: string; el: string }
     image: Media | null
     image_alt: { en: string; el: string }
+    open_label: { en: string; el: string }
+    download_label: { en: string; el: string }
+    close_label: { en: string; el: string }
   }
   philosophy: {
     label: { en: string; el: string }
@@ -343,6 +351,7 @@ export type SpaPage = {
     title: { en: string; el: string }
     description: { en: string; el: string }
     keywords: { en: string; el: string }
+    image: Media | null
   }
 }
 
@@ -368,6 +377,7 @@ export type GastronomyPage = {
     title: { en: string; el: string }
     description: { en: string; el: string }
     keywords: { en: string; el: string }
+    image: Media | null
   }
 }
 
@@ -399,6 +409,7 @@ export type LocationPage = {
     title: { en: string; el: string }
     description: { en: string; el: string }
     keywords: { en: string; el: string }
+    image: Media | null
   }
 }
 
@@ -416,6 +427,7 @@ export type OffersPage = {
     title: { en: string; el: string }
     description: { en: string; el: string }
     keywords: { en: string; el: string }
+    image: Media | null
   }
 }
 
@@ -443,10 +455,32 @@ export type ContactPage = {
     directions: { en: string; el: string }
     iframe_title: { en: string; el: string }
   }
+  form: {
+    heading: { en: string; el: string }
+    first_name: { en: string; el: string }
+    last_name: { en: string; el: string }
+    email: { en: string; el: string }
+    phone: { en: string; el: string }
+    optional: { en: string; el: string }
+    subject: { en: string; el: string }
+    type_reservation: { en: string; el: string }
+    type_wedding: { en: string; el: string }
+    type_corporate: { en: string; el: string }
+    type_restaurant: { en: string; el: string }
+    type_general: { en: string; el: string }
+    message: { en: string; el: string }
+    submit: { en: string; el: string }
+    submitting: { en: string; el: string }
+    success_title: { en: string; el: string }
+    success_body: { en: string; el: string }
+    reset: { en: string; el: string }
+    error: { en: string; el: string }
+  }
   seo: {
     title: { en: string; el: string }
     description: { en: string; el: string }
     keywords: { en: string; el: string }
+    image: Media | null
   }
 }
 
@@ -479,6 +513,7 @@ export type AccommodationPage = {
     title: { en: string; el: string }
     description: { en: string; el: string }
     keywords: { en: string; el: string }
+    image: Media | null
   }
 }
 
@@ -531,6 +566,7 @@ export type JournalPage = {
     title: { en: string; el: string }
     description: { en: string; el: string }
     keywords: { en: string; el: string }
+    image: Media | null
   }
 }
 
@@ -548,6 +584,7 @@ export type GalleryPage = {
     title: { en: string; el: string }
     description: { en: string; el: string }
     keywords: { en: string; el: string }
+    image: Media | null
   }
 }
 
@@ -567,6 +604,7 @@ export type FaqPage = {
     title: { en: string; el: string }
     description: { en: string; el: string }
     keywords: { en: string; el: string }
+    image: Media | null
   }
 }
 
@@ -584,6 +622,7 @@ export type PrivacyPolicyPage = {
     title: { en: string }
     description: { en: string }
     keywords: { en: string }
+    image: Media | null
   }
 }
 
@@ -601,6 +640,110 @@ export type TermsPage = {
     title: { en: string }
     description: { en: string }
     keywords: { en: string }
+    image: Media | null
+  }
+}
+
+export type A11yPage = {
+  layout: {
+    skip_link: { en: string; el: string }
+    home_link: { en: string; el: string }
+    primary_nav: { en: string; el: string }
+    switch_language: { en: string; el: string }
+    open_menu: { en: string; el: string }
+    close_menu: { en: string; el: string }
+    quick_booking: { en: string; el: string }
+    floating_book: { en: string; el: string }
+    final_cta: { en: string; el: string }
+  }
+  home: {
+    hero: { en: string; el: string }
+    brand_intro: { en: string; el: string }
+    rooms: { en: string; el: string }
+    experiences: { en: string; el: string }
+    gastronomy: { en: string; el: string }
+    gallery: { en: string; el: string }
+    testimonials: { en: string; el: string }
+    location: { en: string; el: string }
+    journal: { en: string; el: string }
+    direct_booking: { en: string; el: string }
+  }
+  pages: {
+    about: { en: string; el: string }
+    accommodation: { en: string; el: string }
+    accommodation_included: { en: string; el: string }
+    room_gallery: { en: string; el: string }
+    experiences: { en: string; el: string }
+    events: { en: string; el: string }
+    spa: { en: string; el: string }
+    gastronomy: { en: string; el: string }
+    aither: { en: string; el: string }
+    gallery: { en: string; el: string }
+    location: { en: string; el: string }
+    offers: { en: string; el: string }
+    faq: { en: string; el: string }
+    blog: { en: string; el: string }
+    related: { en: string; el: string }
+    contact: { en: string; el: string }
+    contact_info: { en: string; el: string }
+    contact_reservations: { en: string; el: string }
+    contact_map: { en: string; el: string }
+    contact_form: { en: string; el: string }
+  }
+}
+
+export type SeoGeoPage = {
+  defaults: {
+    share_image: Media | null
+    room_keywords: { en: string; el: string }
+    article_keywords: { en: string; el: string }
+  }
+  hotel: {
+    name: string
+    alternate_name: string
+    description: string
+    street: string
+    locality: string
+    region: string
+    postal_code: string
+    country: string
+    star_rating: string
+    rooms: string
+    checkin: string
+    checkout: string
+    currencies: string
+    payment: string
+    price_range: string
+    languages: string
+    amenities: string
+    image: Media | null
+    logo: Media | null
+    contact_type: string
+  }
+  restaurant: {
+    name: string
+    description: string
+    cuisines: string
+    price_range: string
+    page_description: string
+    page_cuisines: string
+    page_price_range: string
+  }
+  spa: {
+    name: string
+    description: string
+    page_name: string
+    page_description: string
+    catalog_name: string
+    treatments: string
+  }
+  robots: {
+    disallow: string
+    allow_bots: string
+    block_bots: string
+  }
+  llms: {
+    content: string
   }
 }
 
@@ -621,6 +764,8 @@ export type Pages = {
   "faq": FaqPage
   "privacy-policy": PrivacyPolicyPage
   "terms": TermsPage
+  "a11y": A11yPage
+  "seo_geo": SeoGeoPage
 }
 export type PageSlug = keyof Pages
 
@@ -632,6 +777,12 @@ export type RoomFields = {
   view: { en: string; el: string }
   short_desc: { en: string; el: string }
   features: { en: string; el: string }
+  seo_title: { en: string; el: string }
+  seo_description: { en: string; el: string }
+  seo_keywords: { en: string; el: string }
+  schema_bed: string
+  schema_occupancy_min: string
+  schema_occupancy_max: string
 }
 
 export type PostFields = {

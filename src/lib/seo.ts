@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from './constants'
-import type { Settings } from './wp/schema-types'
+import type { SeoGeoPage, Settings } from './wp/schema-types'
 
 interface SEOProps {
   title?: string
@@ -11,7 +11,7 @@ interface SEOProps {
   keywords?: string[]
   locale?: string
   /** Site-wide defaults from the CMS settings (name, tagline, default description). */
-  site?: { name?: string; tagline?: string; description?: string }
+  site?: { name?: string; tagline?: string; description?: string; shareImage?: string }
   /** Explicit hreflang alternates, for pages that exist in one language only (default: EN/EL pair). */
   languages?: Record<string, string>
 }
@@ -31,7 +31,7 @@ export function generateMetadata({
   const fullTitle = title ? `${title} | ${siteName}` : `${siteName} — ${site?.tagline || SITE_TAGLINE}`
   const defaultDesc = site?.description || `Luxury boutique hotel in Ano Loutro, Corinthia, 60 minutes from Athens. Elegant rooms, Ocean Spa & Corinthian Gulf views.`
   const metaDesc = description || defaultDesc
-  const ogImage = image || `${SITE_URL}/og-default.jpg`
+  const ogImage = image || (site?.shareImage ? absoluteUrl(site.shareImage) : `${SITE_URL}/og-default.jpg`)
   const canonicalUrl = canonical || SITE_URL
 
   // Auto-derive locale from canonical path if not explicitly provided
@@ -58,7 +58,7 @@ export function generateMetadata({
     title: fullTitle,
     description: metaDesc,
     keywords: keywords?.join(', '),
-    authors: [{ name: SITE_NAME }],
+    authors: [{ name: siteName }],
     robots: noIndex
       ? { index: false, follow: false }
       : { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
@@ -68,7 +68,7 @@ export function generateMetadata({
     },
     openGraph: {
       type: 'website',
-      siteName: SITE_NAME,
+      siteName: siteName,
       title: fullTitle,
       description: metaDesc,
       url: canonicalUrl,
@@ -108,95 +108,119 @@ export function buildBreadcrumb(items: BreadcrumbItem[]) {
   }
 }
 
-/** LodgingBusiness JSON-LD (every page), with contact details from the CMS settings. */
-export const buildHotelSchema = (settings: Settings) => ({
-  '@context': 'https://schema.org',
-  '@type': 'LodgingBusiness',
-  '@id': 'https://althearesorts.com/#hotel',
-  name: 'Althea Resorts',
-  alternateName: 'Althea Exclusive Resorts & Spa',
-  description: 'A luxury boutique resort on the hillside of Ano Loutro, near Xylokastro, Corinthia, Greece. 60 minutes from Athens. 41 rooms and suites, Ocean Spa, and rooftop restaurant AITHER.',
-  url: SITE_URL,
-  telephone: settings.phone,
-  email: settings.email_reservations,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Ano Loutro',
-    addressLocality: 'Xylokastro',
-    addressRegion: 'Corinthia',
-    postalCode: '20400',
-    addressCountry: 'GR',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: Number(settings.lat),
-    longitude: Number(settings.lng),
-  },
-  hasMap: settings.google_maps_url,
-  starRating: {
-    '@type': 'Rating',
-    ratingValue: '5',
-  },
-  numberOfRooms: 41,
-  checkinTime: '15:00',
-  checkoutTime: '11:00',
-  currenciesAccepted: 'EUR',
-  paymentAccepted: 'Cash, Credit Card, Debit Card',
-  availableLanguage: [
-    { '@type': 'Language', name: 'English' },
-    { '@type': 'Language', name: 'Greek' },
-    { '@type': 'Language', name: 'French' },
-  ],
-  amenityFeature: [
-    { '@type': 'LocationFeatureSpecification', name: 'Ocean Spa', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Sauna', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Hammam', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Swimming Pool', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Rooftop Restaurant', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Pool Bar', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Free WiFi', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Conference Room', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Fitness Centre', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Yoga Room', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Air Conditioning', value: true },
-    { '@type': 'LocationFeatureSpecification', name: 'Parking', value: true },
-  ],
-  priceRange: '€€€€',
-  image: `${SITE_URL}/og-default.jpg`,
-  sameAs: [settings.instagram_url, settings.facebook_url, settings.linkedin_url],
-  containsPlace: [
-    {
-      '@type': 'Restaurant',
-      '@id': 'https://althearesorts.com/gastronomy#aither',
-      name: 'AITHER',
-      description: 'Rooftop restaurant with panoramic views of the Corinthian Gulf. Mediterranean cuisine told through a Greek lens.',
-      servesCuisine: ['Greek', 'Mediterranean'],
-      priceRange: '€€€€',
-      url: `${SITE_URL}/gastronomy#aither`,
+/** Absolute URL for structured data (images in the repo are site-relative). */
+export const absoluteUrl = (url: string) => (url.startsWith('/') ? `${SITE_URL}${url}` : url)
+
+const lines = (s: string) => s.split('\n').map((l) => l.trim()).filter(Boolean)
+
+/** LodgingBusiness JSON-LD (every page), from the CMS settings and the "SEO & GEO" page. */
+export const buildHotelSchema = (settings: Settings, geo: SeoGeoPage) => {
+  const { hotel, restaurant, spa } = geo
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LodgingBusiness',
+    '@id': 'https://althearesorts.com/#hotel',
+    name: hotel.name,
+    alternateName: hotel.alternate_name,
+    description: hotel.description,
+    url: SITE_URL,
+    telephone: settings.phone,
+    email: settings.email_reservations,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: hotel.street,
+      addressLocality: hotel.locality,
+      addressRegion: hotel.region,
+      postalCode: hotel.postal_code,
+      addressCountry: hotel.country,
     },
-    {
-      '@type': 'HealthAndBeautyBusiness',
-      '@id': 'https://althearesorts.com/spa#ocean-spa',
-      name: 'Ocean Spa',
-      description: 'Full-service spa with sauna, hammam, ice bath, dedicated pool, yoga room, gym, and three treatment cabins. Treatments use Oceanis certified Greek cosmetics.',
-      url: `${SITE_URL}/spa`,
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: Number(settings.lat),
+      longitude: Number(settings.lng),
     },
-  ],
-})
+    hasMap: settings.google_maps_url,
+    starRating: {
+      '@type': 'Rating',
+      ratingValue: hotel.star_rating,
+    },
+    numberOfRooms: Number(hotel.rooms),
+    checkinTime: hotel.checkin,
+    checkoutTime: hotel.checkout,
+    currenciesAccepted: hotel.currencies,
+    paymentAccepted: hotel.payment,
+    availableLanguage: lines(hotel.languages).map((name) => ({ '@type': 'Language', name })),
+    amenityFeature: lines(hotel.amenities).map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
+    priceRange: hotel.price_range,
+    image: absoluteUrl(hotel.image?.url ?? `${SITE_URL}/og-default.jpg`),
+    sameAs: [settings.instagram_url, settings.facebook_url, settings.linkedin_url],
+    containsPlace: [
+      {
+        '@type': 'Restaurant',
+        '@id': 'https://althearesorts.com/gastronomy#aither',
+        name: restaurant.name,
+        description: restaurant.description,
+        servesCuisine: lines(restaurant.cuisines),
+        priceRange: restaurant.price_range,
+        url: `${SITE_URL}/gastronomy#aither`,
+      },
+      {
+        '@type': 'HealthAndBeautyBusiness',
+        '@id': 'https://althearesorts.com/spa#ocean-spa',
+        name: spa.name,
+        description: spa.description,
+        url: `${SITE_URL}/spa`,
+      },
+    ],
+  }
+}
 
 /** Organization JSON-LD (every page). */
-export const buildOrganizationSchema = (settings: Settings) => ({
+export const buildOrganizationSchema = (settings: Settings, geo: SeoGeoPage) => ({
   '@context': 'https://schema.org',
   '@type': 'Organization',
   '@id': 'https://althearesorts.com/#organization',
-  name: 'Althea Resorts',
+  name: geo.hotel.name,
   url: SITE_URL,
-  logo: `${SITE_URL}/logos/althea_logo_white-f.png`,
+  logo: absoluteUrl(geo.hotel.logo?.url ?? '/logos/althea_logo_white-f.png'),
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: settings.phone,
-    contactType: 'reservations',
-    availableLanguage: ['English', 'Greek', 'French'],
+    contactType: geo.hotel.contact_type,
+    availableLanguage: lines(geo.hotel.languages),
   },
   sameAs: [settings.instagram_url, settings.facebook_url, settings.linkedin_url],
+})
+
+/** Restaurant JSON-LD for the Gastronomy page. */
+export const buildRestaurantSchema = ({ restaurant }: SeoGeoPage) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  '@id': 'https://althearesorts.com/gastronomy#aither',
+  name: restaurant.name,
+  description: restaurant.page_description,
+  url: 'https://althearesorts.com/gastronomy',
+  servesCuisine: lines(restaurant.page_cuisines),
+  priceRange: restaurant.page_price_range,
+  containedInPlace: {
+    '@id': 'https://althearesorts.com/#hotel',
+  },
+})
+
+/** HealthAndBeautyBusiness JSON-LD for the Spa page. */
+export const buildSpaSchema = ({ spa }: SeoGeoPage) => ({
+  '@context': 'https://schema.org',
+  '@type': 'HealthAndBeautyBusiness',
+  '@id': 'https://althearesorts.com/spa#ocean-spa',
+  name: spa.page_name,
+  description: spa.page_description,
+  url: 'https://althearesorts.com/spa',
+  containedInPlace: {
+    '@id': 'https://althearesorts.com/#hotel',
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: spa.catalog_name,
+    itemListElement: lines(spa.treatments).map((name) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name } })),
+  },
 })

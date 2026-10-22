@@ -6,12 +6,12 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 
 export type Testimonial = { quote: string; name: string; origin: string; stay: string }
 
-export function TestimonialsSectionView({ heading, label, list }: { heading: string; label: string; list: Testimonial[] }) {
+export function TestimonialsSectionView({ heading, label, list, ariaLabel }: { heading: string; label: string; list: Testimonial[]; ariaLabel: string }) {
   const [active, setActive] = useState(0)
   const t = list[active]
 
   return (
-    <section className="section-padding bg-[#f2f8fb]" aria-label="Guest testimonials">
+    <section className="section-padding bg-[#f2f8fb]" aria-label={ariaLabel}>
       <div className="container-luxury">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-3">

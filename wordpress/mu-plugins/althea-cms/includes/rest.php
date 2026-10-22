@@ -41,7 +41,7 @@ function althea_register_routes() {
 		'callback'            => 'althea_rest_settings',
 	) );
 
-	register_rest_route( 'althea/v1', '/pages/(?P<slug>[a-z0-9-]+)', array(
+	register_rest_route( 'althea/v1', '/pages/(?P<slug>[a-z0-9_-]+)', array(
 		'methods'             => 'GET',
 		'permission_callback' => $public,
 		'callback'            => 'althea_rest_page',

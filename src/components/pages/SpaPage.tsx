@@ -5,41 +5,20 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { SpaMenuLightbox } from '@/components/ui/SpaMenuLightbox'
+import { buildSpaSchema } from '@/lib/seo'
 import { getItems, getPage, getSettings, src } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Paragraphs, Rich, spaced } from '@/lib/wp/Rich'
 import type { Locale } from '@/lib/wp/schema-types'
 
-// Structured data is only on the English page (as before the CMS migration).
-const oceanSpaSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'HealthAndBeautyBusiness',
-  '@id': 'https://althearesorts.com/spa#ocean-spa',
-  name: 'Ocean Spa at Althea Resorts',
-  description: 'The Ocean Spa — sauna, hammam, ice bath, dedicated spa pool, three treatment cabins, yoga room, fully equipped gym, and Oceanis boutique.',
-  url: 'https://althearesorts.com/spa',
-  containedInPlace: {
-    '@id': 'https://althearesorts.com/#hotel',
-  },
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Spa Treatments',
-    itemListElement: [
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Signature Body Ritual' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Deep Tissue Massage' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Aromatherapy Massage' } },
-    ],
-  },
-}
 
-// Lightbox controls (UI microcopy).
-const MENU_UI = {
-  en: { close: 'Close', open: 'Open in New Tab', download: 'Download' },
-  el: { close: 'Κλείσιμο', open: 'Άνοιγμα σε Νέα Καρτέλα', download: 'Λήψη' },
-}
 
 const LINK = 'text-[#ad8b27] hover:underline font-light'
 
 export async function SpaPage({ locale }: { locale: Locale }) {
+  // Structured data is only on the English page (as before the CMS migration).
+  const geo = await getPage('seo_geo')
+  const labels = await getLabels('pages', locale)
   const [c, items, settings] = await Promise.all([getPage('spa'), getItems('althea_spa_item'), getSettings()])
   const facilities = items.filter((i) => i.fields.kind === 'facility')
   const cabins = items.filter((i) => i.fields.kind === 'cabin')
@@ -50,14 +29,14 @@ export async function SpaPage({ locale }: { locale: Locale }) {
       {locale === 'en' && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(oceanSpaSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildSpaSchema(geo)) }}
         />
       )}
     <main id="main-content">
       {/* Hero */}
       <section
         className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
-        aria-label="Ocean Spa"
+        aria-label={labels.spa}
       >
         <Image
           src={src(hero.image)}
@@ -255,9 +234,9 @@ export async function SpaPage({ locale }: { locale: Locale }) {
                 src={src(menu.image)}
                 alt={menu.image_alt[locale]}
                 triggerLabel={menu.trigger_label[locale]}
-                closeLabel={MENU_UI[locale].close}
-                openLabel={MENU_UI[locale].open}
-                downloadLabel={MENU_UI[locale].download}
+                closeLabel={c.menu.close_label[locale]}
+                openLabel={c.menu.open_label[locale]}
+                downloadLabel={c.menu.download_label[locale]}
                 downloadFileName="althea-ocean-spa-menu.jpg"
               />
             </ScrollReveal>

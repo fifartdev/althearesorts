@@ -3,17 +3,19 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { RoomCard } from '@/components/ui/RoomCard'
 import { getItems, getPage, tr } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Rich } from '@/lib/wp/Rich'
 
 type Locale = 'en' | 'el'
 
 export async function RoomsShowcase({ locale = 'en' }: { locale?: Locale }) {
+  const labels = await getLabels('home', locale)
   const [home, rooms, shared] = await Promise.all([getPage('home'), getItems('althea_room'), getPage('shared')])
   const featuredRooms = rooms.slice(3)
   const c = home.rooms_showcase
 
   return (
-    <section className="section-padding bg-white" aria-label="Rooms and Suites">
+    <section className="section-padding bg-white" aria-label={labels.rooms}>
       <div className="container-luxury">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">
           <div>

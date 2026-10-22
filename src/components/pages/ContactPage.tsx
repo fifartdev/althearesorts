@@ -5,25 +5,21 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { ContactForm } from '@/components/contact/ContactForm'
 import { getPage, getSettings, src, tr } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Rich } from '@/lib/wp/Rich'
 import type { Locale } from '@/lib/wp/schema-types'
 
-// Screen-reader labels (UI microcopy).
-const ARIA = {
-  en: { hero: 'Contact', info: (e: string) => `Email us at ${e}`, reservations: (e: string) => `Email reservations at ${e}`, map: 'Map — Althea Resorts location' },
-  el: { hero: 'Επικοινωνία', info: (e: string) => `Στείλτε μας email στο ${e}`, reservations: (e: string) => `Email κρατήσεων στο ${e}`, map: 'Χάρτης — Τοποθεσία Althea Resorts' },
-}
 
 export async function ContactPage({ locale }: { locale: Locale }) {
+  const labels = await getLabels('pages', locale)
   const [c, settings] = await Promise.all([getPage('contact'), getSettings()])
-  const { hero, info, map } = c
-  const aria = ARIA[locale]
+  const { hero, info, map, form } = c
   return (
     <main id="main-content">
       {/* Hero */}
       <section
         className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
-        aria-label={aria.hero}
+        aria-label={labels.contact}
       >
         <Image
           src={src(hero.image)}
@@ -70,10 +66,10 @@ export async function ContactPage({ locale }: { locale: Locale }) {
                     <a href={`tel:${settings.phone.replace(/\s/g, '')}`} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200 block mb-1">
                       {settings.phone}
                     </a>
-                    <a href={`mailto:${settings.email_info}`} aria-label={aria.info(settings.email_info)} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200 block mb-1">
+                    <a href={`mailto:${settings.email_info}`} aria-label={labels.contact_info.replace('{email}', settings.email_info)} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200 block mb-1">
                       {info.general_label[locale]}
                     </a>
-                    <a href={`mailto:${settings.email_reservations}`} aria-label={aria.reservations(settings.email_reservations)} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200">
+                    <a href={`mailto:${settings.email_reservations}`} aria-label={labels.contact_reservations.replace('{email}', settings.email_reservations)} className="text-sm font-light text-[#102027] hover:text-[#ad8b27] transition-colors duration-200">
                       {info.reservations_label[locale]}
                     </a>
                   </div>
@@ -105,7 +101,26 @@ export async function ContactPage({ locale }: { locale: Locale }) {
             {/* Contact form */}
             <div className="lg:col-span-6 lg:col-start-7">
               <ScrollReveal delay={100}>
-                <ContactForm locale={locale} />
+                <ContactForm
+                  texts={{
+                    heading: form.heading[locale],
+                    firstName: form.first_name[locale],
+                    lastName: form.last_name[locale],
+                    email: form.email[locale],
+                    phone: form.phone[locale],
+                    phoneOptional: form.optional[locale],
+                    subject: form.subject[locale],
+                    message: form.message[locale],
+                    submit: form.submit[locale],
+                    submitting: form.submitting[locale],
+                    successTitle: form.success_title[locale],
+                    successBody: form.success_body[locale],
+                    reset: form.reset[locale],
+                    error: form.error[locale],
+                    ariaLabel: labels.contact_form,
+                    types: (['reservation', 'wedding', 'corporate', 'restaurant', 'general'] as const).map((value) => ({ value, label: form[`type_${value}`][locale] })),
+                  }}
+                />
               </ScrollReveal>
             </div>
           </div>
@@ -113,7 +128,7 @@ export async function ContactPage({ locale }: { locale: Locale }) {
       </section>
 
       {/* Map */}
-      <section className="relative h-[500px] overflow-hidden" aria-label={aria.map}>
+      <section className="relative h-[500px] overflow-hidden" aria-label={labels.contact_map}>
         <iframe
           src={`https://maps.google.com/maps?q=${settings.lat},${settings.lng}&z=15&output=embed`}
           width="100%"

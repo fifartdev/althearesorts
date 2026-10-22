@@ -6,10 +6,12 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { DirectBookingReasons } from '@/components/sections/DirectBookingReasons'
 import { getItems, getPage, src } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Rich } from '@/lib/wp/Rich'
 import type { Locale } from '@/lib/wp/schema-types'
 
 export async function OffersPage({ locale }: { locale: Locale }) {
+  const labels = await getLabels('pages', locale)
   const [c, offers] = await Promise.all([getPage('offers'), getItems('althea_offer')])
   const { hero } = c
   return (
@@ -17,7 +19,7 @@ export async function OffersPage({ locale }: { locale: Locale }) {
       {/* Hero */}
       <section
         className="relative h-[70vh] min-h-[520px] flex items-end overflow-hidden"
-        aria-label={locale === 'el' ? 'Προσφορές' : 'Offers'}
+        aria-label={labels.offers}
       >
         <Image
           src={src(hero.image)}

@@ -5,6 +5,7 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { getPage, src } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { pageMetadata } from '@/lib/wp/metadata'
 import { Paragraphs, Rich, spaced } from '@/lib/wp/Rich'
 import { splitLines, splitParagraphs } from '@/lib/wp/text'
@@ -21,14 +22,14 @@ const introClass = (i: number, n: number) =>
   i === 0 ? 'text-body-refined text-lg leading-relaxed mb-6' : i < n - 1 ? 'text-body-refined mb-6' : 'text-body-refined'
 
 export default async function GreekAboutPage() {
-  const c = await getPage('about')
+  const [c, labels] = await Promise.all([getPage('about'), getLabels('pages', 'el')])
   const intro = splitParagraphs(c.intro.paragraphs.el)
   return (
     <main id="main-content">
       {/* Page Hero */}
       <section
         className="relative pt-40 pb-24 lg:pt-56 lg:pb-32 bg-[#35657a] overflow-hidden"
-        aria-label="Σχετικά με Εμάς"
+        aria-label={labels.about}
       >
         <div className="absolute inset-0 opacity-10">
           <div className="absolute right-0 top-1/2 -translate-y-1/2 font-editorial text-[22vw] font-light text-white leading-none select-none">

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { getPage } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Rich } from '@/lib/wp/Rich'
 
 type Locale = 'en' | 'el'
@@ -11,11 +12,12 @@ type Locale = 'en' | 'el'
 const TILE_SPANS = ['col-span-2 row-span-2', 'col-span-1', 'col-span-1', 'col-span-1', 'col-span-1']
 
 export async function GalleryPreview({ locale = 'en' }: { locale?: Locale }) {
+  const labels = await getLabels('home', locale)
   const c = (await getPage('home')).gallery_preview
   const ctaHref = locale === 'el' ? '/el/gallery' : '/gallery'
 
   return (
-    <section className="section-padding bg-white" aria-label="Gallery preview">
+    <section className="section-padding bg-white" aria-label={labels.gallery}>
       <div className="container-luxury">
         <div className="flex items-end justify-between mb-12">
           <div>

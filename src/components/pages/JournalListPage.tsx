@@ -4,10 +4,12 @@ import Link from 'next/link'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { getPage, getPosts, src } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Rich } from '@/lib/wp/Rich'
 import type { Locale } from '@/lib/wp/schema-types'
 
 export async function JournalListPage({ locale }: { locale: Locale }) {
+  const labels = await getLabels('pages', locale)
   const [c, posts] = await Promise.all([getPage('journal'), getPosts(locale)])
   const base = locale === 'el' ? '/el/journal' : '/journal'
   // The ticked "Featured on the blog page" post goes to the top, otherwise the first by Order.
@@ -17,7 +19,7 @@ export async function JournalListPage({ locale }: { locale: Locale }) {
   return (
     <main id="main-content">
       {/* Header */}
-      <section className="pt-40 pb-16 lg:pt-56 lg:pb-20 bg-white" aria-label="Blog">
+      <section className="pt-40 pb-16 lg:pt-56 lg:pb-20 bg-white" aria-label={labels.blog}>
         <div className="container-luxury">
           <ScrollReveal>
             <SectionLabel className="mb-6">{c.list.label[locale]}</SectionLabel>

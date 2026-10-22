@@ -4,54 +4,27 @@ import React, { useState } from 'react'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
-const content = {
-  en: {
-    heading: 'Send a Message',
-    firstName: 'First Name',
-    lastName: 'Last Name',
-    email: 'Email Address',
-    phone: 'Phone',
-    phoneOptional: '(optional)',
-    subject: 'Subject',
-    message: 'Message',
-    submit: 'Send Message',
-    submitting: 'Sending…',
-    successTitle: 'Message Sent',
-    successBody: 'Thank you for reaching out. Our team will get back to you within 24 hours.',
-    reset: 'Send Another',
-    types: [
-      { value: 'reservation', label: 'Reservation Enquiry' },
-      { value: 'wedding', label: 'Wedding Enquiry' },
-      { value: 'corporate', label: 'Corporate Events' },
-      { value: 'restaurant', label: 'Restaurant Reservation' },
-      { value: 'general', label: 'General Enquiry' },
-    ],
-  },
-  el: {
-    heading: 'Στείλτε Μήνυμα',
-    firstName: 'Όνομα',
-    lastName: 'Επώνυμο',
-    email: 'Διεύθυνση Email',
-    phone: 'Τηλέφωνο',
-    phoneOptional: '(προαιρετικό)',
-    subject: 'Θέμα',
-    message: 'Μήνυμα',
-    submit: 'Αποστολή',
-    submitting: 'Αποστολή…',
-    successTitle: 'Το Μήνυμα Εστάλη',
-    successBody: 'Σας ευχαριστούμε για την επικοινωνία. Η ομάδα μας θα σας απαντήσει εντός 24 ωρών.',
-    reset: 'Νέο Μήνυμα',
-    types: [
-      { value: 'reservation', label: 'Αίτημα Κράτησης' },
-      { value: 'wedding', label: 'Αίτημα Γάμου' },
-      { value: 'corporate', label: 'Εταιρικές Εκδηλώσεις' },
-      { value: 'restaurant', label: 'Κράτηση Εστιατορίου' },
-      { value: 'general', label: 'Γενική Ερώτηση' },
-    ],
-  },
+/** Form texts in the page language, from the Contact page in WordPress. */
+export type ContactFormTexts = {
+  heading: string
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  phoneOptional: string
+  subject: string
+  message: string
+  submit: string
+  submitting: string
+  successTitle: string
+  successBody: string
+  reset: string
+  error: string
+  ariaLabel: string
+  types: { value: string; label: string }[]
 }
 
-export function ContactForm({ locale = 'en' }: { locale?: 'en' | 'el' }) {
+export function ContactForm({ texts: c }: { texts: ContactFormTexts }) {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
   const [form, setForm] = useState({
@@ -62,8 +35,6 @@ export function ContactForm({ locale = 'en' }: { locale?: 'en' | 'el' }) {
     formType: 'reservation',
     message: '',
   })
-
-  const c = content[locale]
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
@@ -87,16 +58,13 @@ export function ContactForm({ locale = 'en' }: { locale?: 'en' | 'el' }) {
         }),
       })
 
-      if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error || 'Submission failed.')
-      }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
 
       setStatus('success')
       setForm({ firstName: '', lastName: '', email: '', phone: '', formType: 'reservation', message: '' })
-    } catch (err: any) {
+    } catch {
       setStatus('error')
-      setErrorMsg(err?.message || 'Something went wrong. Please try again.')
+      setErrorMsg(c.error)
     }
   }
 
@@ -122,7 +90,7 @@ export function ContactForm({ locale = 'en' }: { locale?: 'en' | 'el' }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6" aria-label="Contact form" noValidate>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6" aria-label={c.ariaLabel} noValidate>
       <h3 className="text-label-upper text-[#102027] mb-2">{c.heading}</h3>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

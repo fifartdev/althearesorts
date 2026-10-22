@@ -6,6 +6,7 @@ import { GoldLine } from '@/components/ui/GoldLine'
 import { FinalBookingCTA } from '@/components/sections/FinalBookingCTA'
 import { StatBar } from '@/components/ui/StatBar'
 import { getPage, src } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { pageMetadata } from '@/lib/wp/metadata'
 import { Paragraphs, Rich, spaced } from '@/lib/wp/Rich'
 
@@ -16,13 +17,13 @@ export async function generateMetadata() {
 const LINK = 'text-[#ad8b27] hover:underline font-light'
 
 export default async function AboutPage() {
-  const c = await getPage('about')
+  const [c, labels] = await Promise.all([getPage('about'), getLabels('pages', 'en')])
   return (
     <main id="main-content">
       {/* Page Hero */}
       <section
         className="relative pt-40 pb-24 lg:pt-56 lg:pb-32 bg-[#35657a] overflow-hidden"
-        aria-label="About Us"
+        aria-label={labels.about}
       >
         <div className="absolute inset-0 opacity-10">
           <div className="absolute right-0 top-1/2 -translate-y-1/2 font-editorial text-[22vw] font-light text-white leading-none select-none">

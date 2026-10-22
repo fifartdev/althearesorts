@@ -1,10 +1,12 @@
 import React from 'react'
 import { getItems, getPage, getTerms, src } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import type { Locale } from '@/lib/wp/schema-types'
 import { GalleryView } from './GalleryView'
 
 /** Gallery page: content resolved on the server; filtering runs in GalleryView (client). */
 export async function GalleryPage({ locale }: { locale: Locale }) {
+  const labels = await getLabels('pages', locale)
   const [c, items, terms] = await Promise.all([getPage('gallery'), getItems('althea_gallery'), getTerms('althea_gallery_cat', 'althea_gallery')])
   const catName = (t: { name: string; name_el: string }) => (locale === 'el' ? t.name_el : t.name)
   return (
@@ -15,7 +17,7 @@ export async function GalleryPage({ locale }: { locale: Locale }) {
       heroAlt={c.hero.image_alt[locale]}
       allLabel={c.filter.all_label[locale]}
       categories={terms.map(catName)}
-      ariaLabel={locale === 'el' ? 'Γκαλερί' : 'Gallery'}
+      ariaLabel={labels.gallery}
       items={items.map((i) => ({
         src: src(i.image),
         caption: i.fields.caption[locale],

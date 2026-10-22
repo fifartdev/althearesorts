@@ -10,11 +10,11 @@ type Locale = 'en' | 'el'
 
 export type Reason = { title: string; body: string }
 
-export function DirectBookingReasonsView({ locale = 'en', c, reasons, bookingUrl }: { locale?: Locale; c: SharedPage['direct_booking']; reasons: Reason[]; bookingUrl: string }) {
+export function DirectBookingReasonsView({ locale = 'en', c, reasons, bookingUrl, ariaLabel }: { locale?: Locale; c: SharedPage['direct_booking']; reasons: Reason[]; bookingUrl: string; ariaLabel: string }) {
   const [open, setOpen] = useState<number>(0)
 
   return (
-    <section className="section-padding bg-[#f2f8fb]" aria-label="Reasons to book directly">
+    <section className="section-padding bg-[#f2f8fb]" aria-label={ariaLabel}>
       <div className="container-luxury">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           <div className="lg:col-span-5 lg:sticky lg:top-32">

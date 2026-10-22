@@ -4,17 +4,19 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { getPage } from '@/lib/wp/api'
+import { getLabels } from '@/lib/wp/site'
 import { Rich } from '@/lib/wp/Rich'
 import { splitLines, splitParagraphs } from '@/lib/wp/text'
 
 type Locale = 'en' | 'el'
 
 export async function GastronomySection({ locale = 'en' }: { locale?: Locale }) {
+  const labels = await getLabels('home', locale)
   const c = (await getPage('home')).gastronomy
   const paragraphs = splitParagraphs(c.paragraphs[locale])
 
   return (
-    <section className="section-padding bg-[#faf8f4]" aria-label="Gastronomy at Althea Resorts">
+    <section className="section-padding bg-[#faf8f4]" aria-label={labels.gastronomy}>
       <div className="container-luxury">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* Image side */}

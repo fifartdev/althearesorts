@@ -41,17 +41,17 @@ const dmSans = DM_Sans({
 
 export default async function GreekLayout({ children }: { children: React.ReactNode }) {
   const site = await getSite()
-  const { settings, shared } = site
+  const { settings, shared, seoGeo } = site
   return (
     <html lang="el" className={`scroll-smooth ${cormorant.variable} ${dmSans.variable}`}>
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildHotelSchema(settings)) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildHotelSchema(settings, seoGeo)) }}
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildOrganizationSchema(settings)) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildOrganizationSchema(settings, seoGeo)) }}
         />
       </head>
       <body className="antialiased">
@@ -60,7 +60,7 @@ export default async function GreekLayout({ children }: { children: React.ReactN
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50
                      focus:bg-[#102027] focus:text-white focus:px-4 focus:py-2 focus:text-sm"
         >
-          Μετάβαση στο κύριο περιεχόμενο
+          {site.header.labels.el.skip_link}
         </a>
 
         {/* Google Analytics */}
@@ -79,8 +79,8 @@ export default async function GreekLayout({ children }: { children: React.ReactN
         <Header site={site.header} />
         {children}
         <Footer locale="el" site={site} />
-        <StickyBookingBar locale="el" tagline={shared.booking_bar.tagline.el} cta={shared.booking_bar.cta.el} bookingUrl={settings.booking_url} />
-        <FloatingBookingButton label={shared.booking_bar.floating_label.el} bookingUrl={settings.booking_url} />
+        <StickyBookingBar tagline={shared.booking_bar.tagline.el} cta={shared.booking_bar.cta.el} bookingUrl={settings.booking_url} ariaLabel={site.header.labels.el.quick_booking} />
+        <FloatingBookingButton label={shared.booking_bar.floating_label.el} bookingUrl={settings.booking_url} ariaLabel={site.header.labels.el.floating_book} />
         <ClientShells cookie={{ heading: shared.cookie.heading.el, body: shared.cookie.body.el, accept: shared.cookie.accept.el, reject: shared.cookie.reject.el }} />
       </body>
     </html>

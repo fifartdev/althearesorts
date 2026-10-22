@@ -10,6 +10,7 @@ import { generateMetadata as genMeta } from '@/lib/seo'
 import { SITE_URL } from '@/lib/constants'
 import { getItems, getPage, getSettings, src, tr } from '@/lib/wp/api'
 import { siteDefaults } from '@/lib/wp/metadata'
+import { getLabels } from '@/lib/wp/site'
 import { splitLines } from '@/lib/wp/text'
 import type { Item, Locale } from '@/lib/wp/schema-types'
 
@@ -32,35 +33,34 @@ export async function roomMetadata(slug: string, locale: Locale): Promise<Metada
   const { room } = await findRoom(slug)
   if (!room) return {}
   const f = room.fields
-  const site = await siteDefaults(locale)
-  if (locale === 'el') {
+  const [site, geo] = await Promise.all([siteDefaults(locale), getPage('seo_geo')])
+  // The room's own SEO fields win; otherwise defaults built from the room name, description and view.
+  const ownKeywords = splitLines(f.seo_keywords[locale])
+  const keywords = ownKeywords.length ? ownKeywords : [`${room.title} Althea`, ...splitLines(geo.defaults.room_keywords[locale])]
+  const path = locale === 'el' ? `/el/accommodation/${slug}` : `/accommodation/${room.slug}`
+  let description = f.seo_description[locale]
+  if (!description && locale === 'el') {
     const grDesc = f.short_desc.el
-    return genMeta({
-      title: room.title,
-      description: `${room.title} στην Althea Resorts — ${grDesc ? grDesc.slice(0, 80) : f.short_desc.en}. ${tr(f.view, locale)}.`,
-      keywords: [`${room.title} Althea`, 'πολυτελές δωμάτιο Κορινθία', 'κράτηση δωματίου Ελλάδα'],
-      canonical: `${SITE_URL}/el/accommodation/${slug}`,
-      image: src(room.image),
-      site,
-    })
+    description = `${room.title} στην Althea Resorts — ${grDesc ? grDesc.slice(0, 80) : f.short_desc.en}. ${tr(f.view, locale)}.`
   }
+  if (!description) description = `${room.title} at Althea Resorts — ${f.short_desc.en} ${f.size}. ${f.view.en}.`
   return genMeta({
-    title: room.title,
-    description: `${room.title} at Althea Resorts — ${f.short_desc.en} ${f.size}. ${f.view.en}.`,
-    keywords: [`${room.title} Althea`, 'luxury room Corinthia', 'book hotel room Greece'],
-    canonical: `${SITE_URL}/accommodation/${room.slug}`,
+    title: f.seo_title[locale] || room.title,
+    description,
+    keywords,
+    canonical: `${SITE_URL}${path}`,
     image: src(room.image),
     site,
   })
 }
 
 const UI = {
-  en: { gallery: 'Room photo gallery', galleryBg: 'bg-cream', galleryHeading: 'text-deep', galleryCell: 'aspect-4/3' },
-  el: { gallery: 'Φωτογραφικό υλικό', galleryBg: 'bg-[#faf8f4]', galleryHeading: 'text-[#102027]', galleryCell: 'aspect-[4/3]' },
+  en: { galleryBg: 'bg-cream', galleryHeading: 'text-deep', galleryCell: 'aspect-4/3' },
+  el: { galleryBg: 'bg-[#faf8f4]', galleryHeading: 'text-[#102027]', galleryCell: 'aspect-[4/3]' },
 }
 
 export async function RoomPage({ slug, locale }: { slug: string; locale: Locale }) {
-  const [{ rooms, room }, c, shared, settings] = await Promise.all([findRoom(slug), getPage('room'), getPage('shared'), getSettings()])
+  const [{ rooms, room }, c, shared, settings, labels] = await Promise.all([findRoom(slug), getPage('room'), getPage('shared'), getSettings(), getLabels('pages', locale)])
   if (!room) notFound()
 
   const similarRooms = rooms.filter((r) => r.slug !== slug).slice(0, 3)
@@ -83,8 +83,8 @@ export async function RoomPage({ slug, locale }: { slug: string; locale: Locale 
       value: parseInt(room.fields.size),
       unitCode: 'MTK',
     },
-    bed: { '@type': 'BedDetails', typeOfBed: 'King or Twin' },
-    occupancy: { '@type': 'QuantitativeValue', maxValue: 2, minValue: 1 },
+    bed: { '@type': 'BedDetails', typeOfBed: room.fields.schema_bed },
+    occupancy: { '@type': 'QuantitativeValue', maxValue: Number(room.fields.schema_occupancy_max), minValue: Number(room.fields.schema_occupancy_min) },
     containedInPlace: {
       '@id': `${SITE_URL}/#hotel`,
     },
@@ -216,7 +216,7 @@ export async function RoomPage({ slug, locale }: { slug: string; locale: Locale 
 
       {/* Photo Gallery */}
       {photos.length > 0 && (
-        <section className={`section-padding ${ui.galleryBg}`} aria-label={ui.gallery}>
+        <section className={`section-padding ${ui.galleryBg}`} aria-label={labels.room_gallery}>
           <div className="container-luxury">
             <ScrollReveal>
               <SectionLabel className="mb-6">{c.gallery.label[locale]}</SectionLabel>
