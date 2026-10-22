@@ -22,7 +22,7 @@ Every field is defined in [`mu-plugins/althea-cms/schema.json`](mu-plugins/althe
 
 The website's contact form stores each enquiry as a private **Form submission** (`althea_submission`, under Althea in wp-admin). It is not website content: it is never in the read API, never triggers revalidation, and has its own capabilities. Administrators and editors can read, edit (set *Status* to in progress/done) and delete them.
 
-The website writes them as a dedicated user with the **Althea website (form submissions)** role (`althea_forms`), which can only create submissions. Create that user once (any email), add an application password, and set `WP_FORMS_USER` / `WP_FORMS_APP_PASSWORD` on Vercel. On staging this user is `althea-forms`.
+The website writes them as a dedicated user with the **Althea website (form submissions)** role (`althea_forms`), which can only create submissions. Create that user once (any email), add an application password, and set `WP_FORMS_USER` / `WP_FORMS_APP_PASSWORD` on Vercel. On cms this user is `althea-forms`.
 
 ## Roles
 
@@ -61,7 +61,7 @@ Manual install:
    ```
    Add these **after** the initial content migration. Otherwise every migrated item triggers its own refresh request.
 
-   **Staging today** (set 2026-10-18) points at the preview `https://althea-cms-preview.vercel.app/api/revalidate`. When going live, add the production URL (comma-separated) or replace it.
+   **Production** (cms.althearesorts.com, since 2026-10-22) points at `https://www.althearesorts.com/api/revalidate`. Preview deployments are not notified (they refresh within the hour); to notify one too, add its URL comma-separated and set `ALTHEA_VERCEL_BYPASS`.
 
 Requirements: WordPress 6.5+ and PHP 7.4+. Tested on WordPress 7.1.3 / PHP 8.2. No other plugins or page builders are needed.
 

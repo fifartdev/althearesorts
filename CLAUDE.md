@@ -1,6 +1,6 @@
 # Claude Code — Althea Resorts
 
-All content (text, images, rooms, settings, SEO) is managed in **WordPress as a headless CMS** (staging.althearesorts.com, Althea CMS must-use plugin in `wordpress/`). Read `README.md` and `wordpress/README.md` first: data layer `src/lib/wp/`, field definitions in `wordpress/mu-plugins/althea-cms/schema.json`, instant revalidation, outage fallback. Payload CMS was removed.
+All content (text, images, rooms, settings, SEO) is managed in **WordPress as a headless CMS** (https://cms.althearesorts.com, Althea CMS must-use plugin in `wordpress/`; the old staging.althearesorts.com is being retired). Read `README.md` and `wordpress/README.md` first: data layer `src/lib/wp/`, field definitions in `wordpress/mu-plugins/althea-cms/schema.json`, instant revalidation, outage fallback. Payload CMS was removed.
 
 ---
 
@@ -196,7 +196,6 @@ A dark logo variant does not exist yet — if a white-background context needs o
 
 Content images live in the WordPress media library (uploaded by `npm run cms:migrate`). The originals in `/public/images` stay: the outage fallback (`src/lib/wp/fallback/content.json`) references them. The notes below describe where each image is used.
 
-- Staging site images: `https://staging.althearesorts.com/wp-content/uploads/2026/02/` and `/2025/11/`
 - Fallback: Unsplash URLs with `?auto=format&fit=crop&w=900&q=80`
 - Homepage hero: `/images/new-images/althea-front.jpg` (client-supplied hotel entrance shot)
 - Room images: defined in `ROOMS` array in constants.ts — each room has a primary `image` (hero) and an `images: string[]` gallery array

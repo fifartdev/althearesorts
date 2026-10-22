@@ -3,7 +3,7 @@
 Next.js 16 (App Router) site for [althearesorts.com](https://www.althearesorts.com), with all content managed in **WordPress as a headless CMS**.
 
 ```
-WordPress (staging.althearesorts.com)           Next.js (Vercel)
+WordPress (cms.althearesorts.com)               Next.js (Vercel, www.althearesorts.com)
   Althea CMS must-use plugin                     src/lib/wp/  ← all WordPress access
   ├─ content types, fields, wp-admin forms  ───▶  api.ts      read API (server only, cached, tagged)
   ├─ read API  /wp-json/althea/v1/*              fallback/   offline snapshot if WordPress is down
@@ -25,7 +25,7 @@ npm run dev
 
 | Variable | Used by | Purpose |
 |---|---|---|
-| `WP_API_URL` | site, scripts | WordPress REST root, e.g. `https://staging.althearesorts.com/wp-json` (HTTPS only) |
+| `WP_API_URL` | site, scripts | WordPress REST root, `https://cms.althearesorts.com/wp-json` (HTTPS only) |
 | `WP_USERNAME`, `WP_APP_PASSWORD` | scripts | WordPress user + [application password](https://make.wordpress.org/core/2020/11/05/application-passwords-integration-guide/) for the migration (writes). The site itself only reads public endpoints. |
 | `REVALIDATE_SECRET` | site | Shared secret for `POST /api/revalidate`. Must equal `ALTHEA_REVALIDATE_SECRET` in `wp-config.php`. |
 | `VERCEL_BYPASS` | scripts/tests | Vercel *Protection Bypass for Automation* secret (lets WordPress reach protected preview deployments). |
@@ -33,7 +33,7 @@ npm run dev
 | `WP_FORMS_USER`, `WP_FORMS_APP_PASSWORD` | contact form | WordPress user with the *Althea website (form submissions)* role (can only create submissions) + its application password |
 | `RESEND_API_KEY`, `RESEND_TO`, `RESEND_FROM` | contact form | Notification email |
 
-Never commit `.env*` files except `.env.example`. On Vercel, the WordPress variables are set for the **Preview** environment.
+Never commit `.env*` files except `.env.example`. On Vercel, the WordPress variables are set for **Production** and **Preview**; both read cms. The migration login (`WP_USERNAME`, `WP_APP_PASSWORD`) is only in `.env.local`, for the scripts. Plugin changes are tested on a throwaway local WordPress (`wordpress/tests/run-local.sh`); the live editability test refuses to run against production.
 
 ## How content is read
 

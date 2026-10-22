@@ -5,7 +5,8 @@
  * deployed site shows the change within seconds (webhook → /api/revalidate). Everything is restored
  * and every test item deleted afterwards, also on failure.
  *
- * It briefly changes live WordPress content, so only run it against a site that is not public yet:
+ * It briefly changes WordPress content, so it refuses to run against production (the public site
+ * or the production WordPress, cms.althearesorts.com). Run it against a test WordPress and site:
  *   npx tsx scripts/content/editability-test.ts https://althea-cms-preview.vercel.app --yes
  * Needs WP_API_URL, WP_USERNAME, WP_APP_PASSWORD (and VERCEL_BYPASS for a protected preview) in .env.local.
  */
@@ -26,6 +27,11 @@ const env = Object.fromEntries(
     .map((l) => [l.slice(0, l.indexOf('=')), l.slice(l.indexOf('=') + 1).trim().replace(/^"|"$/g, '')]),
 )
 const API = env.WP_API_URL.replace(/\/$/, '')
+const PRODUCTION = ['cms.althearesorts.com', 'www.althearesorts.com', 'althearesorts.com']
+if (PRODUCTION.includes(new URL(API).host) || PRODUCTION.includes(new URL(SITE).host)) {
+  console.error(`Refusing to run: ${new URL(API).host} / ${new URL(SITE).host} is production. Point WP_API_URL and the site at a test WordPress.`)
+  process.exit(1)
+}
 const AUTH = 'Basic ' + Buffer.from(`${env.WP_USERNAME}:${env.WP_APP_PASSWORD}`).toString('base64')
 const BYPASS: Record<string, string> = env.VERCEL_BYPASS ? { 'x-vercel-protection-bypass': env.VERCEL_BYPASS } : {}
 const TIMEOUT = 30_000
