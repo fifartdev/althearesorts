@@ -100,6 +100,8 @@ All Greek pages mirror their English counterparts at `/el/*`. The route group `(
 | `/el/contact` | `el/contact/page.tsx` |
 | `/el/journal` | `el/journal/page.tsx` |
 | `/el/faq` | `el/faq/page.tsx` |
+| `/el/privacy-policy` | `el/privacy-policy/page.tsx` (Greek fields fall back to English until translated) |
+| `/el/terms` | `el/terms/page.tsx` (same) |
 
 ---
 

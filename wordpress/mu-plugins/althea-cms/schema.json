@@ -61,6 +61,7 @@
         { "key": "view", "type": "text", "label": "View", "l": true },
         { "key": "short_desc", "type": "textarea", "label": "Description", "l": true },
         { "key": "features", "type": "lines", "label": "Features", "l": true, "help": "The accommodation list shows the first 6." },
+        { "key": "booking_url", "type": "url", "label": "Booking link for this room type", "help": "The booking engine link that opens this room type. Empty = the central booking link (Settings → Booking)." },
         { "key": "seo_title", "type": "text", "label": "SEO title", "l": true, "help": "Empty = the room name." },
         { "key": "seo_description", "type": "textarea", "label": "SEO description", "l": true, "help": "Empty = built from the description and view." },
         { "key": "seo_keywords", "type": "lines", "label": "SEO keywords", "l": true, "help": "Empty = \"<room name> Althea\" + the default room keywords (SEO & GEO page)." },
@@ -154,7 +155,7 @@
       "supports": ["title", "thumbnail", "page-attributes"],
       "fields": [
         { "key": "active", "type": "bool", "label": "Show on Offers page" },
-        { "key": "booking_url", "type": "url", "label": "Booking link for this offer" },
+        { "key": "booking_url", "type": "url", "label": "Booking link for this offer", "help": "The booking engine link for this offer (e.g. with its offer id). Avoid fixed check-in dates, they expire. Empty = the central booking link." },
         { "key": "eyebrow", "type": "text", "label": "Eyebrow", "l": true },
         { "key": "heading", "type": "html", "label": "Heading", "l": true },
         { "key": "body", "type": "html", "label": "Text", "l": true },
@@ -733,7 +734,7 @@
       ]}
     ]},
 
-    "privacy-policy": { "label": "Privacy Policy", "locales": ["en"], "sections": [
+    "privacy-policy": { "label": "Privacy Policy", "sections": [
       { "key": "notice", "label": "Legal review notice", "fields": [
         { "key": "title", "type": "text", "label": "Title", "l": true },
         { "key": "body", "type": "html", "label": "Text", "l": true }
@@ -745,7 +746,7 @@
       ]}
     ]},
 
-    "terms": { "label": "Terms & Conditions", "locales": ["en"], "sections": [
+    "terms": { "label": "Terms & Conditions", "sections": [
       { "key": "notice", "label": "Legal review notice", "fields": [
         { "key": "title", "type": "text", "label": "Title", "l": true },
         { "key": "body", "type": "html", "label": "Text", "l": true }

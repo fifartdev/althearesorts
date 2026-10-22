@@ -1,5 +1,6 @@
 import React from 'react'
-import { getPage } from '@/lib/wp/api'
+import { getPage, tr } from '@/lib/wp/api'
+import type { Locale } from '@/lib/wp/schema-types'
 import { Rich } from '@/lib/wp/Rich'
 import { parseBlocks, type Block } from '@/lib/wp/text'
 
@@ -36,24 +37,25 @@ function LegalBlock({ block, first }: { block: Block; first: boolean }) {
   }
 }
 
-/** Privacy Policy / Terms (English only), from the CMS "blocks" body. */
-export async function LegalPage({ slug }: { slug: 'privacy-policy' | 'terms' }) {
+/** Privacy Policy / Terms from the CMS "blocks" body. Greek fields fall back to English until translated. */
+export async function LegalPage({ slug, locale = 'en' }: { slug: 'privacy-policy' | 'terms'; locale?: Locale }) {
   const c = await getPage(slug)
-  const sections = sectionsOf(parseBlocks(c.main.body.en))
+  const t = (field: { en: string; el?: string }) => tr(field, locale)
+  const sections = sectionsOf(parseBlocks(t(c.main.body)))
   return (
     <main id="main-content" className="pt-40 pb-24 lg:pt-56 lg:pb-32 bg-white">
       <div className="container-luxury max-w-3xl">
 
         {/* LEGAL REVIEW NOTICE — remove before publishing */}
-        {c.notice.title.en && (
+        {t(c.notice.title) && (
           <div className="mb-10 p-6 border-2 border-[#ad8b27] bg-[#faf8f4]">
-            <p className="text-xs uppercase tracking-widest text-[#ad8b27] font-medium mb-2">{c.notice.title.en}</p>
-            <p className="text-sm text-[#6b6b6b] font-light"><Rich html={c.notice.body.en} /></p>
+            <p className="text-xs uppercase tracking-widest text-[#ad8b27] font-medium mb-2">{t(c.notice.title)}</p>
+            <p className="text-sm text-[#6b6b6b] font-light"><Rich html={t(c.notice.body)} /></p>
           </div>
         )}
 
-        <h1 className="text-display-lg text-[#102027] mb-4">{c.main.title.en}</h1>
-        <p className="text-sm text-[#6b6b6b] font-light mb-12">{c.main.updated.en}</p>
+        <h1 className="text-display-lg text-[#102027] mb-4">{t(c.main.title)}</h1>
+        <p className="text-sm text-[#6b6b6b] font-light mb-12">{t(c.main.updated)}</p>
 
         <div className="prose prose-sm max-w-none text-[#6b6b6b] font-light leading-loose space-y-8">
           {sections.map((section, i) => (

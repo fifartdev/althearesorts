@@ -610,36 +610,36 @@ export type FaqPage = {
 
 export type PrivacyPolicyPage = {
   notice: {
-    title: { en: string }
-    body: { en: string }
+    title: { en: string; el: string }
+    body: { en: string; el: string }
   }
   main: {
-    title: { en: string }
-    updated: { en: string }
-    body: { en: string }
+    title: { en: string; el: string }
+    updated: { en: string; el: string }
+    body: { en: string; el: string }
   }
   seo: {
-    title: { en: string }
-    description: { en: string }
-    keywords: { en: string }
+    title: { en: string; el: string }
+    description: { en: string; el: string }
+    keywords: { en: string; el: string }
     image: Media | null
   }
 }
 
 export type TermsPage = {
   notice: {
-    title: { en: string }
-    body: { en: string }
+    title: { en: string; el: string }
+    body: { en: string; el: string }
   }
   main: {
-    title: { en: string }
-    updated: { en: string }
-    body: { en: string }
+    title: { en: string; el: string }
+    updated: { en: string; el: string }
+    body: { en: string; el: string }
   }
   seo: {
-    title: { en: string }
-    description: { en: string }
-    keywords: { en: string }
+    title: { en: string; el: string }
+    description: { en: string; el: string }
+    keywords: { en: string; el: string }
     image: Media | null
   }
 }
@@ -777,6 +777,7 @@ export type RoomFields = {
   view: { en: string; el: string }
   short_desc: { en: string; el: string }
   features: { en: string; el: string }
+  booking_url: string
   seo_title: { en: string; el: string }
   seo_description: { en: string; el: string }
   seo_keywords: { en: string; el: string }

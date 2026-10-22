@@ -134,7 +134,7 @@ export async function RoomPage({ slug, locale }: { slug: string; locale: Locale 
           </ScrollReveal>
           <ScrollReveal delay={200}>
             <a
-              href={settings.booking_url}
+              href={room.fields.booking_url || settings.booking_url}
               target="_blank"
               rel="noopener noreferrer"
               className="h-11 px-8 inline-flex items-center
@@ -196,7 +196,7 @@ export async function RoomPage({ slug, locale }: { slug: string; locale: Locale 
                     </div>
                   </div>
                   <a
-                    href={settings.booking_url}
+                    href={room.fields.booking_url || settings.booking_url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="h-11 px-6 inline-flex items-center justify-center

@@ -168,7 +168,7 @@ export async function AccommodationPage({ locale }: { locale: Locale }) {
                   <ScrollReveal delay={250}>
                     <div className="flex flex-wrap gap-4">
                       <a
-                        href={settings.booking_url}
+                        href={room.fields.booking_url || settings.booking_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="h-11 px-7 inline-flex items-center

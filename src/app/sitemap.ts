@@ -35,8 +35,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...pair('/contact', '/el/contact', 'monthly', 0.6),
     ...pair('/journal', '/el/journal', 'weekly', 0.7),
     ...pair('/faq', '/el/faq', 'monthly', 0.6),
-    { url: `${SITE_URL}/privacy-policy`, lastModified: new Date(), changeFrequency: 'yearly' as const, priority: 0.3 },
-    { url: `${SITE_URL}/terms`, lastModified: new Date(), changeFrequency: 'yearly' as const, priority: 0.3 },
+    ...pair('/privacy-policy', '/el/privacy-policy', 'yearly', 0.3),
+    ...pair('/terms', '/el/terms', 'yearly', 0.3),
   ]
 
   const rooms = await getItems('althea_room')

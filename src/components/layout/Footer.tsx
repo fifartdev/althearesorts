@@ -97,10 +97,10 @@ export function Footer({ locale = 'en', site }: { locale?: Locale; site: Site })
             {f.copyright[locale].replace('{year}', String(year))}
           </p>
           <div className="flex items-center justify-center gap-6">
-            <Link href="/privacy-policy" className="text-xs text-white/30 hover:text-white/60 transition-colors duration-200 uppercase tracking-wider">
+            <Link href={locale === 'el' ? '/el/privacy-policy' : '/privacy-policy'} className="text-xs text-white/30 hover:text-white/60 transition-colors duration-200 uppercase tracking-wider">
               {f.privacy[locale]}
             </Link>
-            <Link href="/terms" className="text-xs text-white/30 hover:text-white/60 transition-colors duration-200 uppercase tracking-wider">
+            <Link href={locale === 'el' ? '/el/terms' : '/terms'} className="text-xs text-white/30 hover:text-white/60 transition-colors duration-200 uppercase tracking-wider">
               {f.terms[locale]}
             </Link>
           </div>

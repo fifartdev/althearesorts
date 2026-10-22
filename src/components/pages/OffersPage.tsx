@@ -5,14 +5,14 @@ import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { GoldLine } from '@/components/ui/GoldLine'
 import { DirectBookingReasons } from '@/components/sections/DirectBookingReasons'
-import { getItems, getPage, src } from '@/lib/wp/api'
+import { getItems, getPage, src, getSettings } from '@/lib/wp/api'
 import { getLabels } from '@/lib/wp/site'
 import { Rich } from '@/lib/wp/Rich'
 import type { Locale } from '@/lib/wp/schema-types'
 
 export async function OffersPage({ locale }: { locale: Locale }) {
   const labels = await getLabels('pages', locale)
-  const [c, offers] = await Promise.all([getPage('offers'), getItems('althea_offer')])
+  const [c, offers, settings] = await Promise.all([getPage('offers'), getItems('althea_offer'), getSettings()])
   const { hero } = c
   return (
     <main id="main-content">
@@ -78,7 +78,7 @@ export async function OffersPage({ locale }: { locale: Locale }) {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4">
                       <a
-                        href={f.booking_url}
+                        href={f.booking_url || settings.booking_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="h-11 px-8 inline-flex items-center justify-center gap-3
