@@ -29,6 +29,7 @@
         { "key": "phone_mobile", "type": "text", "label": "Phone (mobile)" },
         { "key": "email_reservations", "type": "text", "label": "Reservations email" },
         { "key": "email_info", "type": "text", "label": "General enquiries email" },
+        { "key": "form_recipient", "type": "text", "label": "Contact form notifications to", "help": "Email address that receives the website's contact form messages (also saved under Form submissions). Several addresses: separate with commas." },
         { "key": "address", "type": "text", "label": "Address", "l": true },
         { "key": "lat", "type": "text", "label": "Latitude" },
         { "key": "lng", "type": "text", "label": "Longitude" },

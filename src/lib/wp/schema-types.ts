@@ -12,6 +12,7 @@ export type Settings = {
   phone_mobile: string
   email_reservations: string
   email_info: string
+  form_recipient: string
   address: { en: string; el: string }
   lat: string
   lng: string

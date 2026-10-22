@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 add_action( 'admin_menu', function () {
 	add_menu_page( 'Althea', 'Althea', 'edit_posts', 'althea', 'althea_render_overview', 'dashicons-palmtree', 3 );
 	add_submenu_page( 'althea', 'Althea — Overview', 'Overview', 'edit_posts', 'althea', 'althea_render_overview' );
-	add_submenu_page( 'althea', 'Althea — Settings', 'Settings', 'manage_options', 'althea-settings', 'althea_render_settings_page' );
+	add_submenu_page( 'althea', 'Althea — Settings', 'Settings', 'althea_manage_settings', 'althea-settings', 'althea_render_settings_page' );
 	foreach ( althea_schema()['taxonomies'] as $taxonomy => $def ) {
 		add_submenu_page( 'althea', $def['label'], $def['label'], 'manage_categories', 'edit-tags.php?taxonomy=' . $taxonomy );
 	}

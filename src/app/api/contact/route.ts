@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { getSettings } from '@/lib/wp/api'
 import { FORM_TYPES, saveSubmission, submissionsAdminUrl, type FormType, type Submission } from '@/lib/wp/submissions'
 
 const FORM_TYPE_LABELS: Record<FormType, string> = {
@@ -10,6 +11,8 @@ const FORM_TYPE_LABELS: Record<FormType, string> = {
   contact: 'Contact',
   general: 'General Enquiry',
 }
+
+const EMAIL = /^[^\s@<>,]+@[^\s@<>,]+\.[a-z]{2,}$/i
 
 const MAX_LENGTH = { name: 200, email: 200, phone: 50, subject: 300, message: 10_000 }
 
@@ -57,7 +60,9 @@ function emailHtml(s: Submission, typeLabel: string): string {
 async function sendEmail(s: Submission, typeLabel: string): Promise<boolean> {
   if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 're_your_api_key_here') return false
   const resend = new Resend(process.env.RESEND_API_KEY)
-  const to = process.env.RESEND_TO ?? 'reservations@althearesorts.com'
+  // Recipient(s) from WordPress (Settings → Contact form notifications to), else the env default.
+  const fromCms = ((await getSettings()).form_recipient ?? '').split(',').map((a) => a.trim()).filter((a) => EMAIL.test(a))
+  const to = fromCms.length ? fromCms : (process.env.RESEND_TO ?? 'reservations@althearesorts.com')
   const from = process.env.RESEND_FROM ?? 'noreply@althearesorts.com'
   const { error } = await resend.emails.send({
     from: `Althea Resorts Website <${from}>`,

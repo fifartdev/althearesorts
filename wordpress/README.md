@@ -24,6 +24,14 @@ The website's contact form stores each enquiry as a private **Form submission** 
 
 The website writes them as a dedicated user with the **Althea website (form submissions)** role (`althea_forms`), which can only create submissions. Create that user once (any email), add an application password, and set `WP_FORMS_USER` / `WP_FORMS_APP_PASSWORD` on Vercel. On staging this user is `althea-forms`.
 
+## Roles
+
+- **Administrator**: everything.
+- **Althea content manager** (`althea_manager`): everything the website shows (all Althea content, site pages, Althea → Settings, media, categories, form submissions). No plugins, themes, users or WordPress settings; the unused core Posts, Comments and Tools are hidden and redirect to Althea. Althea settings use their own capability, `althea_manage_settings`.
+- **Althea website (form submissions)** (`althea_forms`): only creates form submissions (used by the website).
+
+Contact form notifications go to **Althea → Settings → Contact → Contact form notifications to** (comma-separated for several addresses), else `RESEND_TO`.
+
 ## Headless mode
 
 WordPress is only the backend. Every public page of the WordPress site (home, posts, archives, feeds, 404s) shows a blank white page with one **Visit althearesorts.com** button, served with `noindex, nofollow`. `robots.txt` disallows everything and the WordPress sitemap is disabled. wp-admin, wp-login.php, the REST API and media files are unaffected. The button target can be changed with `define( 'ALTHEA_FRONTEND_URL', '…' );` in `wp-config.php`.

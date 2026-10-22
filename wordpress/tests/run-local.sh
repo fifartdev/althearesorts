@@ -34,6 +34,7 @@ ln -sfn "$PLUGIN/althea-cms" wordpress/wp-content/mu-plugins/althea-cms
 wp user application-password create admin test --porcelain > apppass.txt
 wp user create forms forms@example.com --role=althea_forms --porcelain > /dev/null
 wp user application-password create forms test --porcelain > formspass.txt
+wp user create manager manager@example.com --role=althea_manager --user_pass=manager-pass --porcelain > /dev/null
 
 php -S "localhost:$PORT" -t wordpress > server.log 2>&1 &
 SERVER=$!
@@ -44,6 +45,7 @@ python3 -I "$HERE/rest_test.py" apppass.txt formspass.txt
 python3 -I "$HERE/form_test.py" \
   "$(wp post list --post_type=althea_page --name=home --field=ID)" \
   "$(wp post list --post_type=althea_room --field=ID | head -1)"
+python3 -I "$HERE/manager_test.py" "$(wp post list --post_type=althea_room --field=ID | head -1)"
 
 # Headless front end: button page with noindex everywhere public; admin/login/REST untouched.
 hfail=0
