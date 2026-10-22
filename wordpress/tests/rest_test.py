@@ -101,7 +101,7 @@ st, bad = req('POST', '/wp/v2/althea-posts', {'title': 'T2', 'status': 'draft', 
 check('select rejects invalid option', st == 400, bad)
 
 st, sch = req('GET', '/althea/v1/schema', auth=False)
-check('schema route', sch['pluginVersion'] == '1.3.0' and 'althea_room' in sch['schema']['postTypes'], sch.keys() if isinstance(sch, dict) else sch)
+check('schema route', sch['pluginVersion'] == '1.3.1' and 'althea_room' in sch['schema']['postTypes'], sch.keys() if isinstance(sch, dict) else sch)
 
 # 9. form submissions: the forms user can only create them; always private, never public
 sub = {'title': 'Contact — Maria', 'status': 'publish', 'meta': {'name': 'Maria <b>P</b>', 'email': 'm@example.com', 'form_type': 'wedding', 'message': 'Hello & bye\nLine 2', 'state': 'new'}}

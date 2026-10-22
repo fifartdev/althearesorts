@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Althea CMS
  * Description: Content types, fields, admin screens and REST API for the headless Althea Resorts website (Next.js).
- * Version:     1.3.0
+ * Version:     1.3.1
  * Author:      The Tailor
  * Author URI:  https://www.thetailor.gr
  *
@@ -19,9 +19,10 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'ALTHEA_CMS_VERSION', '1.3.0' );
+define( 'ALTHEA_CMS_VERSION', '1.3.1' );
 define( 'ALTHEA_CMS_DIR', __DIR__ . '/althea-cms' );
 
+require_once ALTHEA_CMS_DIR . '/includes/mail-guard.php';
 require_once ALTHEA_CMS_DIR . '/includes/schema.php';
 require_once ALTHEA_CMS_DIR . '/includes/sanitize.php';
 require_once ALTHEA_CMS_DIR . '/includes/post-types.php';
