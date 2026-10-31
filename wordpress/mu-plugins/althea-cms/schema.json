@@ -160,6 +160,8 @@
         { "key": "eyebrow", "type": "text", "label": "Eyebrow", "l": true },
         { "key": "heading", "type": "html", "label": "Heading", "l": true },
         { "key": "body", "type": "html", "label": "Text", "l": true },
+        { "key": "includes_label", "type": "text", "label": "'Included' heading", "l": true, "help": "e.g. The package includes. Shown above the list below." },
+        { "key": "includes", "type": "lines", "label": "Included in the package", "l": true, "help": "One item per line, shown as a list under the text. Leave empty for no list." },
         { "key": "cta_label", "type": "text", "label": "Booking button label", "l": true },
         { "key": "read_more_label", "type": "text", "label": "Second button label", "l": true },
         { "key": "read_more_href", "type": "url", "label": "Second button link", "l": true },

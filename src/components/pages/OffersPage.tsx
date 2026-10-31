@@ -8,6 +8,7 @@ import { DirectBookingReasons } from '@/components/sections/DirectBookingReasons
 import { getItems, getPage, src, getSettings } from '@/lib/wp/api'
 import { getLabels } from '@/lib/wp/site'
 import { Rich } from '@/lib/wp/Rich'
+import { splitLines } from '@/lib/wp/text'
 import type { Locale } from '@/lib/wp/schema-types'
 
 export async function OffersPage({ locale }: { locale: Locale }) {
@@ -46,6 +47,7 @@ export async function OffersPage({ locale }: { locale: Locale }) {
       {offers.filter((o) => o.fields.active).map((offer) => {
         const f = offer.fields
         const readMoreHref = f.read_more_href[locale]
+        const includes = splitLines(f.includes[locale])
         const readMoreClass = `h-11 px-7 inline-flex items-center justify-center
                                text-xs uppercase tracking-[0.2em]
                                bg-transparent text-[#102027] border border-[#102027]
@@ -76,6 +78,21 @@ export async function OffersPage({ locale }: { locale: Locale }) {
                     <p className="text-body-refined mb-8">
                       <Rich html={f.body[locale]} />
                     </p>
+                    {includes.length > 0 && (
+                      <div className="mb-10">
+                        {f.includes_label[locale] && (
+                          <span className="text-label-upper text-[#ad8b27] block mb-4">{f.includes_label[locale]}</span>
+                        )}
+                        <ul className="flex flex-col gap-3">
+                          {includes.map((item) => (
+                            <li key={item} className="flex gap-3 text-sm font-light text-[#102027] leading-relaxed">
+                              <span className="text-[#ad8b27] shrink-0" aria-hidden="true">—</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                     <div className="flex flex-col sm:flex-row gap-4">
                       <a
                         href={f.booking_url || settings.booking_url}
