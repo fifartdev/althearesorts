@@ -50,6 +50,10 @@ export type SharedPage = {
     accept: { en: string; el: string }
     reject: { en: string; el: string }
   }
+  offer_popup: {
+    view_offer: { en: string; el: string }
+    close: { en: string; el: string }
+  }
   final_cta: {
     eyebrow: { en: string; el: string }
     heading: { en: string; el: string }
@@ -845,6 +849,7 @@ export type SightFields = {
 
 export type OfferFields = {
   active: boolean
+  popup: boolean
   booking_url: string
   eyebrow: { en: string; el: string }
   heading: { en: string; el: string }

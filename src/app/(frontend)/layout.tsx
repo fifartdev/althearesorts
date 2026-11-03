@@ -81,7 +81,7 @@ export default async function FrontendLayout({ children }: { children: React.Rea
         <Footer site={site} />
         <StickyBookingBar tagline={shared.booking_bar.tagline.en} cta={shared.booking_bar.cta.en} bookingUrl={settings.booking_url} ariaLabel={site.header.labels.en.quick_booking} />
         <FloatingBookingButton label={shared.booking_bar.floating_label.en} bookingUrl={settings.booking_url} ariaLabel={site.header.labels.en.floating_book} />
-        <ClientShells cookie={{ heading: shared.cookie.heading.en, body: shared.cookie.body.en, accept: shared.cookie.accept.en, reject: shared.cookie.reject.en }} />
+        <ClientShells cookie={{ heading: shared.cookie.heading.en, body: shared.cookie.body.en, accept: shared.cookie.accept.en, reject: shared.cookie.reject.en }} popup={site.popup?.en} />
       </body>
     </html>
   )

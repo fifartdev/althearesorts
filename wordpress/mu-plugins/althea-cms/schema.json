@@ -156,6 +156,7 @@
       "supports": ["title", "thumbnail", "page-attributes"],
       "fields": [
         { "key": "active", "type": "bool", "label": "Show on Offers page" },
+        { "key": "popup", "type": "bool", "label": "Show as pop-up on every page", "help": "Pop-up with this offer on every page of the website (also needs 'Show on Offers page'). Visitors who close it see it again after 1 hour. If several offers are ticked, the first by Order is used." },
         { "key": "booking_url", "type": "url", "label": "Booking link for this offer", "help": "The exact booking engine link for this offer. Empty = the central booking link. Unpublish the offer when it ends." },
         { "key": "eyebrow", "type": "text", "label": "Eyebrow", "l": true },
         { "key": "heading", "type": "html", "label": "Heading", "l": true },
@@ -249,6 +250,10 @@
         { "key": "body", "type": "textarea", "label": "Text", "l": true },
         { "key": "accept", "type": "text", "label": "Accept button", "l": true },
         { "key": "reject", "type": "text", "label": "Reject button", "l": true }
+      ]},
+      { "key": "offer_popup", "label": "Offer pop-up", "fields": [
+        { "key": "view_offer", "type": "text", "label": "'View the offer' link", "l": true },
+        { "key": "close", "type": "text", "label": "Close button (screen readers)", "l": true }
       ]},
       { "key": "final_cta", "label": "Final booking banner (bottom of most pages)", "fields": [
         { "key": "eyebrow", "type": "text", "label": "Eyebrow", "l": true },

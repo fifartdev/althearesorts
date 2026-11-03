@@ -1,5 +1,5 @@
 {
-  "generated": "scripts/content/build-content.ts — do not edit by hand",
+  "generated": "Offline fallback, refreshed from WordPress by scripts/content/pull-fallback.ts — do not edit by hand",
   "settings": {
     "site_name": "Althea Resorts",
     "site_tagline": {
@@ -108,6 +108,16 @@
           "reject": {
             "en": "Reject Non-Essential",
             "el": "Απόρριψη Μη Απαραίτητων"
+          }
+        },
+        "offer_popup": {
+          "view_offer": {
+            "en": "View the offer",
+            "el": "Δείτε την προσφορά"
+          },
+          "close": {
+            "en": "Close",
+            "el": "Κλείσιμο"
           }
         },
         "final_cta": {
@@ -1500,21 +1510,6 @@
             "el": "Althea Resorts — Άνω Λουτρό, Ξυλόκαστρο, Κορινθία, Ελλάδα"
           }
         },
-        "seo": {
-          "title": {
-            "en": "Contact",
-            "el": "Επικοινωνία"
-          },
-          "description": {
-            "en": "Contact Althea Resorts in Ano Loutro, Xylokastro, Corinthia. Phone, email, and directions from Athens.",
-            "el": "Επικοινωνήστε με την Althea Resorts. Άνω Λουτρό, Ξυλόκαστρο, Κορινθία. Τηλέφωνο, email και οδηγίες από Αθήνα."
-          },
-          "keywords": {
-            "en": "contact Althea Resorts\nhotel phone number Corinthia\nreservations Greece",
-            "el": "επικοινωνία Althea Resorts\nτηλέφωνο ξενοδοχείο Κορινθία\nκρατήσεις Ελλάδα"
-          },
-          "image": null
-        },
         "form": {
           "heading": {
             "en": "Send a Message",
@@ -1592,6 +1587,21 @@
             "en": "Something went wrong. Please try again.",
             "el": "Κάτι πήγε στραβά. Παρακαλούμε δοκιμάστε ξανά."
           }
+        },
+        "seo": {
+          "title": {
+            "en": "Contact",
+            "el": "Επικοινωνία"
+          },
+          "description": {
+            "en": "Contact Althea Resorts in Ano Loutro, Xylokastro, Corinthia. Phone, email, and directions from Athens.",
+            "el": "Επικοινωνήστε με την Althea Resorts. Άνω Λουτρό, Ξυλόκαστρο, Κορινθία. Τηλέφωνο, email και οδηγίες από Αθήνα."
+          },
+          "keywords": {
+            "en": "contact Althea Resorts\nhotel phone number Corinthia\nreservations Greece",
+            "el": "επικοινωνία Althea Resorts\nτηλέφωνο ξενοδοχείο Κορινθία\nκρατήσεις Ελλάδα"
+          },
+          "image": null
         }
       }
     },
@@ -5895,51 +5905,52 @@
     ],
     "althea_offer": [
       {
-        "slug": "stay-3-pay-2",
-        "title": "Stay 3, Pay 2",
+        "slug": "festive-package-2026",
+        "title": "Festive Package 2026 – Christmas &amp; New Year",
         "excerpt": "",
-        "menuOrder": 0,
+        "menuOrder": -1,
         "image": {
-          "url": "/images/new-images/New-Hero.jpg"
+          "url": "/images/spa/indoor-pool.jpg"
         },
         "fields": {
           "active": true,
-          "booking_url": "https://althearesort.reserve-online.net/?checkin=2026-10-02&rooms=1&nights=3&adults=2&offerid=59803",
+          "popup": false,
+          "booking_url": "",
           "eyebrow": {
-            "en": "Book Direct & Save",
-            "el": "Κλείστε Απευθείας & Εξοικονομήστε"
+            "en": "Festive Package",
+            "el": "Εορταστικό Πακέτο"
           },
           "heading": {
-            "en": "Stay 3, Pay 2<br><em>Three Nights, Two Nights' Price</em>",
-            "el": "Μείνετε 3, Πληρώστε 2<br><em>Τρεις Διανυκτερεύσεις, στην Τιμή των Δύο</em>"
+            "en": "Christmas &amp; New Year<br><em>at Althea</em>",
+            "el": "Χριστούγεννα &amp; Πρωτοχρονιά<br><em>στην Althea</em>"
           },
           "body": {
-            "en": "Book three nights at Althea Resorts &amp; Spa and pay for only two. No codes, no fine print — just extra time by the Corinthian Gulf, reserved directly with us.",
-            "el": "Κλείστε τρεις διανυκτερεύσεις στην Althea Resorts &amp; Spa και πληρώστε μόνο για δύο. Χωρίς κωδικούς, χωρίς ψιλά γράμματα — απλώς περισσότερος χρόνος δίπλα στον Κορινθιακό Κόλπο, με απευθείας κράτηση μαζί μας."
+            "en": "Celebrate the festive season at Althea, overlooking the Corinthian Gulf, just an hour from Athens. Festive tables, warm moments and time to unwind at the Ocean Spa, for an escape to remember.",
+            "el": "Γιορτάστε τις φετινές γιορτές στην Althea, με θέα τον Κορινθιακό Κόλπο, μόλις μία ώρα από την Αθήνα. Εορταστικά τραπέζια, ζεστές στιγμές και χαλάρωση στο Ocean Spa, για μια απόδραση που θα θυμάστε."
           },
           "includes_label": {
-            "en": "",
-            "el": ""
+            "en": "The package includes",
+            "el": "Το πακέτο περιλαμβάνει"
           },
           "includes": {
-            "en": "",
-            "el": ""
+            "en": "Festive welcome treat in your room upon arrival\nFestive Christmas Eve dinner\nComplimentary use of the wet areas, heated indoor pool and sauna (reservation required)\n15% discount on all Spa treatments\nSpecial rates with up to 30% off before, between and after Christmas and New Year",
+            "el": "Εορταστικό καλωσόρισμα στο δωμάτιο\nΕορταστικό δείπνο την παραμονή των Χριστουγέννων\nΔωρεάν χρήση της εσωτερικής θερμαινόμενης πισίνας και της σάουνας (κατόπιν κράτησης)\n15% έκπτωση σε όλες τις θεραπείες του Spa\nΕιδικές εκπτωτικές τιμές έως και 30% πριν, ενδιάμεσα και μετά τα Χριστούγεννα και την Πρωτοχρονιά"
           },
           "cta_label": {
-            "en": "Book This Offer",
-            "el": "Κλείστε Αυτή την Προσφορά"
+            "en": "Book the Package",
+            "el": "Κλείστε το Πακέτο"
           },
           "read_more_label": {
-            "en": "Read More",
+            "en": "Contact Us",
             "el": "Επικοινωνία"
           },
           "read_more_href": {
-            "en": "/journal/august-escape-near-athens",
+            "en": "/contact",
             "el": "/el/contact"
           },
           "image_alt": {
-            "en": "Althea Resorts pool and resort exterior — luxury hotel near Athens, Corinthia, Greece",
-            "el": "Althea Resorts πισίνα και εξωτερικό — luxury ξενοδοχείο κοντά στην Αθήνα, Κορινθία"
+            "en": "The heated indoor pool at the Ocean Spa, Althea Resorts, Xylokastro",
+            "el": "Η εσωτερική θερμαινόμενη πισίνα του Ocean Spa, Althea Resorts, Ξυλόκαστρο"
           }
         }
       }

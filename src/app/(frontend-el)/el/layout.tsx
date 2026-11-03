@@ -81,7 +81,7 @@ export default async function GreekLayout({ children }: { children: React.ReactN
         <Footer locale="el" site={site} />
         <StickyBookingBar tagline={shared.booking_bar.tagline.el} cta={shared.booking_bar.cta.el} bookingUrl={settings.booking_url} ariaLabel={site.header.labels.el.quick_booking} />
         <FloatingBookingButton label={shared.booking_bar.floating_label.el} bookingUrl={settings.booking_url} ariaLabel={site.header.labels.el.floating_book} />
-        <ClientShells cookie={{ heading: shared.cookie.heading.el, body: shared.cookie.body.el, accept: shared.cookie.accept.el, reject: shared.cookie.reject.el }} />
+        <ClientShells cookie={{ heading: shared.cookie.heading.el, body: shared.cookie.body.el, accept: shared.cookie.accept.el, reject: shared.cookie.reject.el }} popup={site.popup?.el} />
       </body>
     </html>
   )
