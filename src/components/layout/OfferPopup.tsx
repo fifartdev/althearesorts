@@ -121,6 +121,13 @@ export function OfferPopup({ offer }: { offer: OfferPopupData }) {
             {offer.viewLabel}
           </Link>
         </div>
+
+        {(offer.noteTitle || offer.noteText) && (
+          <div className="mt-8 pt-6 border-t border-[#e8e4dd]">
+            {offer.noteTitle && <p className="text-sm font-medium text-[#102027] mb-1">{offer.noteTitle}</p>}
+            {offer.noteText && <p className="text-sm font-light text-[#6b6b6b] leading-relaxed whitespace-pre-line">{offer.noteText}</p>}
+          </div>
+        )}
       </div>
     </div>
   )

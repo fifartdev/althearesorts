@@ -42,6 +42,8 @@ export type OfferPopupData = {
   body: string
   includesLabel: string
   includes: string[]
+  noteTitle: string
+  noteText: string
   ctaLabel: string
   bookingUrl: string
   viewLabel: string
@@ -80,6 +82,8 @@ export async function getSite() {
               body: t(f.body),
               includesLabel: t(f.includes_label),
               includes: splitLines(t(f.includes)),
+              noteTitle: t(f.note_title),
+              noteText: t(f.note_text),
               ctaLabel: t(f.cta_label),
               bookingUrl: f.booking_url || settings.booking_url,
               viewLabel: t(shared.offer_popup.view_offer),

@@ -14,6 +14,8 @@ const offer = {
   body: 'Celebrate the festive season at Althea.',
   includesLabel: 'The package includes',
   includes: ['Festive Christmas Eve dinner', '15% discount on all Spa treatments'],
+  noteTitle: 'Stay Longer, Enjoy More!',
+  noteText: 'Special rates for longer festive stays, up to 30% off.',
   ctaLabel: 'Book the Package',
   bookingUrl: 'https://althearesort.reserve-online.net',
   viewLabel: 'View the offer',
@@ -44,6 +46,7 @@ describe('OfferPopup', () => {
     expect(screen.getByText('Festive Christmas Eve dinner')).toBeTruthy()
     expect(screen.getByText('Book the Package').getAttribute('href')).toBe(offer.bookingUrl)
     expect(screen.getByText('View the offer').getAttribute('href')).toBe('/offers')
+    expect(screen.getByText('Stay Longer, Enjoy More!')).toBeTruthy()
   })
 
   it.each([

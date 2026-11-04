@@ -856,6 +856,8 @@ export type OfferFields = {
   body: { en: string; el: string }
   includes_label: { en: string; el: string }
   includes: { en: string; el: string }
+  note_title: { en: string; el: string }
+  note_text: { en: string; el: string }
   cta_label: { en: string; el: string }
   read_more_label: { en: string; el: string }
   read_more_href: { en: string; el: string }

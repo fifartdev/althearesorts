@@ -119,6 +119,12 @@ export async function OffersPage({ locale }: { locale: Locale }) {
                         </a>
                       ))}
                     </div>
+                    {(f.note_title[locale] || f.note_text[locale]) && (
+                      <div className="mt-10 pt-6 border-t border-[#e8e4dd]">
+                        {f.note_title[locale] && <p className="text-sm font-medium text-[#102027] mb-1">{f.note_title[locale]}</p>}
+                        {f.note_text[locale] && <p className="text-sm font-light text-[#6b6b6b] leading-relaxed whitespace-pre-line">{f.note_text[locale]}</p>}
+                      </div>
+                    )}
                   </ScrollReveal>
                 </div>
                 <ScrollReveal variant="image" delay={100} className="aspect-[4/5] w-full relative overflow-hidden">

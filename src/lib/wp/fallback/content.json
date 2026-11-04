@@ -5914,27 +5914,35 @@
         },
         "fields": {
           "active": true,
-          "popup": false,
-          "booking_url": "",
+          "popup": true,
+          "booking_url": "https://althearesort.reserve-online.net/?checkin=2026-12-24&rooms=1&nights=2&adults=2",
           "eyebrow": {
             "en": "Festive Package",
             "el": "Εορταστικό Πακέτο"
           },
           "heading": {
-            "en": "Christmas &amp; New Year<br><em>at Althea</em>",
-            "el": "Χριστούγεννα &amp; Πρωτοχρονιά<br><em>στην Althea</em>"
+            "en": "Let the Festive Moments Begin<br><em>at Althea Resorts &amp; Spa.</em>",
+            "el": "Let the Festive Moments Begin<br><em>at Althea Resorts &amp; Spa.</em>"
           },
           "body": {
-            "en": "Celebrate the festive season at Althea, overlooking the Corinthian Gulf, just an hour from Athens. Festive tables, warm moments and time to unwind at the Ocean Spa, for an escape to remember.",
-            "el": "Γιορτάστε τις φετινές γιορτές στην Althea, με θέα τον Κορινθιακό Κόλπο, μόλις μία ώρα από την Αθήνα. Εορταστικά τραπέζια, ζεστές στιγμές και χαλάρωση στο Ocean Spa, για μια απόδραση που θα θυμάστε."
+            "en": "Welcome Christmas and the New Year with moments of warmth, relaxation and exceptional hospitality. Indulge in festive culinary experiences, share precious moments with your loved ones and treat yourself to a rejuvenating escape at Ocean Spa.\nDiscover our festive packages and make this holiday season truly special.",
+            "el": "Welcome Christmas and the New Year with moments of warmth, relaxation and exceptional hospitality. Indulge in festive culinary experiences, share precious moments with your loved ones and treat yourself to a rejuvenating escape at Ocean Spa.\nDiscover our festive packages and make this holiday season truly special."
           },
           "includes_label": {
             "en": "The package includes",
             "el": "Το πακέτο περιλαμβάνει"
           },
           "includes": {
-            "en": "Festive welcome treat in your room upon arrival\nFestive Christmas Eve dinner\nComplimentary use of the wet areas, heated indoor pool and sauna (reservation required)\n15% discount on all Spa treatments\nSpecial rates with up to 30% off before, between and after Christmas and New Year",
-            "el": "Εορταστικό καλωσόρισμα στο δωμάτιο\nΕορταστικό δείπνο την παραμονή των Χριστουγέννων\nΔωρεάν χρήση της εσωτερικής θερμαινόμενης πισίνας και της σάουνας (κατόπιν κράτησης)\n15% έκπτωση σε όλες τις θεραπείες του Spa\nΕιδικές εκπτωτικές τιμές έως και 30% πριν, ενδιάμεσα και μετά τα Χριστούγεννα και την Πρωτοχρονιά"
+            "en": "Festive welcome treat upon arrival\nFestive Christmas Eve & New Year's Eve Dinner\nChristmas Day & New Year's Day Festive Brunch\nComplimentary access to the heated indoor swimming pool and sauna (reservation required)\n15% discount on all Spa treatments",
+            "el": "Εορταστικό καλωσόρισμα στο δωμάτιο κατά την άφιξη.\nΕορταστικό δείπνο παραμονή Χριστουγέννων & Πρωτοχρονιάς.\nΕορταστικό brunch ανήμερα Χριστουγέννων & Πρωτοχρονιάς.\nΔωρεάν χρήση της εσωτερικής θερμαινόμενης πισίνας και της σάουνας (κατόπιν κράτησης).\n15% έκπτωση σε όλες τις θεραπείες Spa."
+          },
+          "note_title": {
+            "en": "",
+            "el": ""
+          },
+          "note_text": {
+            "en": "",
+            "el": ""
           },
           "cta_label": {
             "en": "Book the Package",
